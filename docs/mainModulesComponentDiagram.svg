@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<svg
+	baseProfile="full"
+	height="100%"
+	version="1.1"
+	viewBox="0 0 675 372"
+	width="100%"
+	xmlns="http://www.w3.org/2000/svg"
+	xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:xlink="http://www.w3.org/1999/xlink">
+
+	<g>
+
+		<polygon
+			fill="rgb(229, 229, 229)"
+			points="0, 2 192, 2 192, 104 0, 104 0, 2 "
+			stroke="rgb(0, 0, 0)"
+			stroke-width="1.275000"
+			style="stroke-linejoin:bevel;stroke-linecap:square;"/>
+
+		<text
+			fill="rgb(0, 0, 0)"
+			font-family="Arial"
+			font-size="12.750000"
+			text-anchor="middle"
+			x="96"
+			y="15">
+			«component»
+		</text>
+
+		<text
+			fill="rgb(0, 0, 0)"
+			font-family="Arial"
+			font-size="12.750000"
+			text-anchor="middle"
+			x="96"
+			y="27">
+			Game
+		</text>
+
+	</g>
+
+	<image
+		height="16.000000"
+		width="16.000000"
+		x="164.000000"
+		xlink:href="ucomponentd_3.gif"
+		y="18.000000"/>
+
+	<g>
+
+		<polygon
+			fill="rgb(229, 229, 229)"
+			points="473, 0 665, 0 665, 102 473, 102 473, 0 "
+			stroke="rgb(0, 0, 0)"
+			stroke-width="1.275000"
+			style="stroke-linejoin:bevel;stroke-linecap:square;"/>
+
+		<text
+			fill="rgb(0, 0, 0)"
+			font-family="Arial"
+			font-size="12.750000"
+			text-anchor="middle"
+			x="569"
+			y="13">
+			«component»
+		</text>
+
+		<text
+			fill="rgb(0, 0, 0)"
+			font-family="Arial"
+			font-size="12.750000"
+			text-anchor="middle"
+			x="569"
+			y="25">
+			LeaderBoards
+		</text>
+
+	</g>
+
+	<image
+		height="16.000000"
+		width="16.000000"
+		x="637.000000"
+		xlink:href="ucomponentd_3.gif"
+		y="16.000000"/>
+
+	<g>
+
+		<polygon
+			fill="rgb(229, 229, 229)"
+			points="281, 260 473, 260 473, 362 281, 362 281, 260 "
+			stroke="rgb(0, 0, 0)"
+			stroke-width="1.275000"
+			style="stroke-linejoin:bevel;stroke-linecap:square;"/>
+
+		<line
+			fill="rgb(0, 0, 0)"
+			stroke="rgb(0, 0, 0)"
+			stroke-width="1.275000"
+			style="stroke-linejoin:bevel;stroke-linecap:square;"
+			x1="287"
+			x2="287"
+			y1="260"
+			y2="362"/>
+
+		<line
+			fill="rgb(0, 0, 0)"
+			stroke="rgb(0, 0, 0)"
+			stroke-width="1.275000"
+			style="stroke-linejoin:bevel;stroke-linecap:square;"
+			x1="467"
+			x2="467"
+			y1="260"
+			y2="362"/>
+
+		<text
+			fill="rgb(0, 0, 0)"
+			font-family="Arial"
+			font-size="12.750000"
+			text-anchor="middle"
+			x="377"
+			y="276">
+			«component»
+		</text>
+
+		<text
+			fill="rgb(0, 0, 0)"
+			font-family="Arial"
+			font-size="12.750000"
+			text-anchor="middle"
+			x="377"
+			y="288">
+			AccountManager
+		</text>
+
+	</g>
+
+	<image
+		height="16.000000"
+		width="16.000000"
+		x="445.000000"
+		xlink:href="ucomponentd_3.gif"
+		y="276.000000"/>
+
+	<g>
+
+		<path
+			d="M 319.000000 32.000000 A 8 8 0 1 1 318.999996 31.992000 "
+			fill="rgb(229, 229, 229)"
+			stroke="rgb(0, 0, 0)"
+			stroke-width="1.275000"
+			style="stroke-linejoin:bevel;stroke-linecap:square;"/>
+
+		<text
+			fill="rgb(0, 0, 0)"
+			font-family="Arial"
+			font-size="12.750000"
+			font-style="italic"
+			text-anchor="middle"
+			x="311"
+			y="24">
+			Playable
+		</text>
+
+	</g>
+
+	<g>
+
+		<path
+			d="M 464.000000 186.000000 A 8 8 0 1 1 463.999996 185.992000 "
+			fill="rgb(229, 229, 229)"
+			stroke="rgb(0, 0, 0)"
+			stroke-width="1.275000"
+			style="stroke-linejoin:bevel;stroke-linecap:square;"/>
+
+		<text
+			fill="rgb(0, 0, 0)"
+			font-family="Arial"
+			font-size="12.750000"
+			font-style="italic"
+			text-anchor="middle"
+			x="456"
+			y="178">
+			Rankable
+		</text>
+
+	</g>
+
+	<g>
+
+		<line
+			fill="rgb(0, 0, 0)"
+			stroke="rgb(0, 0, 0)"
+			stroke-width="1.275000"
+			style="stroke-linejoin:bevel;stroke-linecap:square;"
+			x1="461"
+			x2="464"
+			y1="180"
+			y2="160"/>
+
+		<line
+			fill="rgb(0, 0, 0)"
+			stroke="rgb(0, 0, 0)"
+			stroke-width="1.275000"
+			style="stroke-linejoin:bevel;stroke-linecap:square;"
+			x1="464"
+			x2="479"
+			y1="160"
+			y2="171"/>
+
+		<line
+			fill="rgb(0, 0, 0)"
+			stroke="rgb(0, 0, 0)"
+			stroke-width="1.275000"
+			style="stroke-linejoin:bevel;stroke-linecap:square;"
+			x1="479"
+			x2="461"
+			y1="171"
+			y2="180"/>
+
+		<line
+			fill="rgb(0, 0, 0)"
+			stroke="rgb(0, 0, 0)"
+			stroke-dasharray="25.500000, 12.750000"
+			stroke-width="1.275000"
+			style="stroke-linejoin:bevel;stroke-linecap:square;"
+			x1="518"
+			x2="471"
+			y1="102"
+			y2="165"/>
+
+	</g>
+
+	<g>
+
+		<line
+			fill="rgb(0, 0, 0)"
+			stroke="rgb(0, 0, 0)"
+			stroke-width="1.275000"
+			style="stroke-linejoin:bevel;stroke-linecap:square;"
+			x1="450"
+			x2="444"
+			y1="190"
+			y2="208"/>
+
+		<line
+			fill="rgb(0, 0, 0)"
+			stroke="rgb(0, 0, 0)"
+			stroke-width="1.275000"
+			style="stroke-linejoin:bevel;stroke-linecap:square;"
+			x1="435"
+			x2="450"
+			y1="201"
+			y2="190"/>
+
+		<line
+			fill="rgb(0, 0, 0)"
+			stroke="rgb(0, 0, 0)"
+			stroke-dasharray="25.500000, 12.750000"
+			stroke-width="1.275000"
+			style="stroke-linejoin:bevel;stroke-linecap:square;"
+			x1="400"
+			x2="450"
+			y1="260"
+			y2="190"/>
+
+	</g>
+
+	<g>
+
+		<line
+			fill="rgb(0, 0, 0)"
+			stroke="rgb(0, 0, 0)"
+			stroke-width="1.275000"
+			style="stroke-linejoin:bevel;stroke-linecap:square;"
+			x1="310"
+			x2="320"
+			y1="39"
+			y2="55"/>
+
+		<line
+			fill="rgb(0, 0, 0)"
+			stroke="rgb(0, 0, 0)"
+			stroke-width="1.275000"
+			style="stroke-linejoin:bevel;stroke-linecap:square;"
+			x1="308"
+			x2="310"
+			y1="58"
+			y2="39"/>
+
+		<line
+			fill="rgb(0, 0, 0)"
+			stroke="rgb(0, 0, 0)"
+			stroke-dasharray="25.500000, 12.750000"
+			stroke-width="1.275000"
+			style="stroke-linejoin:bevel;stroke-linecap:square;"
+			x1="359"
+			x2="310"
+			y1="260"
+			y2="39"/>
+
+	</g>
+
+	<g>
+
+		<line
+			fill="rgb(0, 0, 0)"
+			stroke="rgb(0, 0, 0)"
+			stroke-width="1.275000"
+			style="stroke-linejoin:bevel;stroke-linecap:square;"
+			x1="304"
+			x2="285"
+			y1="33"
+			y2="40"/>
+
+		<line
+			fill="rgb(0, 0, 0)"
+			stroke="rgb(0, 0, 0)"
+			stroke-width="1.275000"
+			style="stroke-linejoin:bevel;stroke-linecap:square;"
+			x1="285"
+			x2="287"
+			y1="40"
+			y2="22"/>
+
+		<line
+			fill="rgb(0, 0, 0)"
+			stroke="rgb(0, 0, 0)"
+			stroke-width="1.275000"
+			style="stroke-linejoin:bevel;stroke-linecap:square;"
+			x1="287"
+			x2="304"
+			y1="22"
+			y2="33"/>
+
+		<line
+			fill="rgb(0, 0, 0)"
+			stroke="rgb(0, 0, 0)"
+			stroke-dasharray="25.500000, 12.750000"
+			stroke-width="1.275000"
+			style="stroke-linejoin:bevel;stroke-linecap:square;"
+			x1="192"
+			x2="286"
+			y1="21"
+			y2="31"/>
+
+	</g>
+
+	<g>
+
+		<line
+			fill="rgb(0, 0, 0)"
+			stroke="rgb(0, 0, 0)"
+			stroke-width="1.275000"
+			style="stroke-linejoin:bevel;stroke-linecap:square;"
+			x1="318"
+			x2="336"
+			y1="30"
+			y2="23"/>
+
+		<line
+			fill="rgb(0, 0, 0)"
+			stroke="rgb(0, 0, 0)"
+			stroke-width="1.275000"
+			style="stroke-linejoin:bevel;stroke-linecap:square;"
+			x1="336"
+			x2="318"
+			y1="35"
+			y2="30"/>
+
+		<line
+			fill="rgb(0, 0, 0)"
+			stroke="rgb(0, 0, 0)"
+			stroke-dasharray="25.500000, 12.750000"
+			stroke-width="1.275000"
+			style="stroke-linejoin:bevel;stroke-linecap:square;"
+			x1="473"
+			x2="318"
+			y1="24"
+			y2="30"/>
+
+	</g>
+
+</svg>
+

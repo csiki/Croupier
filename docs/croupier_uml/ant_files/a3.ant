@@ -1,0 +1,43 @@
+FileObject 1
+{
+    { Name "a3" }
+    { Type ObjectAnnotation }
+    { GUID "UID_39A54269-3552-4826-AD97-EBF58960C814" }
+}
+
+NodeObject 99999
+{
+    { Name "Playable" }
+    { Type UmlClass }
+    { ObjectId 134 }
+    { AnnotFileId 1 }
+    { Sig "" }
+    { ScopeNodeId 0 }
+    { GUID "UID_A22219A1-DD2B-4b7b-82AC-BC564A2ACC4D" }
+}
+
+NoteObject 2
+{
+    { Type UmlExtensibilityDefinition }
+    { Name "" }
+    { OwnerId 99999 }
+    { ObjectId 177 }
+}
+
+NoteObject 3
+{
+    { Type GenericObject }
+    { Name "" }
+    { OwnerId 99999 }
+    { ObjectId 179 }
+}
+
+ItemObject 4
+{
+    { Type ObjectName }
+    { Value "Playable" }
+    { GuidRef "" }
+    { NoteId 3 }
+    { ObjectId 180 }
+}
+
