@@ -1,8 +1,10 @@
 #if !defined(_BOTCOMMUNICATIONTRANSLATOR_H)
 #define _BOTCOMMUNICATIONTRANSLATOR_H
+
 #include "Process.h"
 #include "XYTranslator.h"
 #include "Comment.h"
+
 class BotCommunicationTranslator : public Bot
 {
 private:
