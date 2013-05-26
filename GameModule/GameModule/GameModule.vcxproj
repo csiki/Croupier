@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{097BB896-5B70-45EB-895F-D3528F11F706}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>GameModule</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Bot.h" />
+    <ClInclude Include="BotCommunicationTranslator.h" />
+    <ClInclude Include="BotCommunicator.h" />
+    <ClInclude Include="BotHandler.h" />
+    <ClInclude Include="BotInfo.h" />
+    <ClInclude Include="BotKnowledgeHandler.h" />
+    <ClInclude Include="BotLoader.h" />
+    <ClInclude Include="BotManager.h" />
+    <ClInclude Include="BroadcastMember.h" />
+    <ClInclude Include="BroadcastMessage.h" />
+    <ClInclude Include="BroadcastStation.h" />
+    <ClInclude Include="Card.h" />
+    <ClInclude Include="Comment.h" />
+    <ClInclude Include="CppBotLoader.h" />
+    <ClInclude Include="Croupier.h" />
+    <ClInclude Include="Deck.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="Event.h" />
+    <ClInclude Include="GameOwner.h" />
+    <ClInclude Include="HandEvaluator.h" />
+    <ClInclude Include="HandRank.h" />
+    <ClInclude Include="Hostess.h" />
+    <ClInclude Include="KnowledgeDataType.h" />
+    <ClInclude Include="KnowledgeTable.h" />
+    <ClInclude Include="Log.h" />
+    <ClInclude Include="Loggable.h" />
+    <ClInclude Include="Logger.h" />
+    <ClInclude Include="LogXMLHandler.h" />
+    <ClInclude Include="GameModule.h" />
+    <ClInclude Include="Process.h" />
+    <ClInclude Include="Rulz.h" />
+    <ClInclude Include="RulzXMLHandler.h" />
+    <ClInclude Include="Severity.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Table.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="XYBotLoader.h" />
+    <ClInclude Include="XYTranslator.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Bot.cpp" />
+    <ClCompile Include="BotCommunicationTranslator.cpp" />
+    <ClCompile Include="BotCommunicator.cpp" />
+    <ClCompile Include="BotHandler.cpp" />
+    <ClCompile Include="BotInfo.cpp" />
+    <ClCompile Include="BotKnowledgeHandler.cpp" />
+    <ClCompile Include="BotManager.cpp" />
+    <ClCompile Include="BroadcastMember.cpp" />
+    <ClCompile Include="BroadcastStation.cpp" />
+    <ClCompile Include="CppBotLoader.cpp" />
+    <ClCompile Include="Croupier.cpp" />
+    <ClCompile Include="Deck.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="GameModule.cpp" />
+    <ClCompile Include="GameOwner.cpp" />
+    <ClCompile Include="HandEvaluator.cpp" />
+    <ClCompile Include="Hostess.cpp" />
+    <ClCompile Include="KnowledgeTable.cpp" />
+    <ClCompile Include="Log.cpp" />
+    <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="LogXMLHandler.cpp" />
+    <ClCompile Include="Process.cpp" />
+    <ClCompile Include="Rulz.cpp" />
+    <ClCompile Include="RulzXMLHandler.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Table.cpp" />
+    <ClCompile Include="XYBotLoader.cpp" />
+    <ClCompile Include="XYTranslator.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
