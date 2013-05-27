@@ -8,22 +8,22 @@
 class Table
 {
 private:
-	int numOfCards;
 	int numOfBots;
-	BotInfo *bots;
-	Card *cards;
+	BotInfo **bots;
+	int numOfCards;
+	Card **cards;
 	Rulz *rules;
 public:
-	void provideBotInfos(int numOfBots, BotInfo* bis);
+	void provideBotInfos(int numOfBots, BotInfo** bis);
 	void addCard(Card* c);
 	int getNumOfCards();
 	Card* rmCard(int cardIndex);
-	Card* getCard(int cardIndex);
-	BotInfo* getBotByIndex(int index);
+	const Card* getCard(int cardIndex);
+	const BotInfo* getBotByIndex(int index);
 	int getNumOfBots();
 	int getPot();
-	void sit(BotInfo* bot);
-	void getUp(BotInfo* bot);
+	void sit(const BotInfo* bot);
+	void getUp(const BotInfo* bot);
 };
 
 #endif  //_TABLE_H

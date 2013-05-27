@@ -27,17 +27,17 @@ int Hostess::getSmallBlindAtRound(int round)
 	return 0;
 }
 
-BotInfo* Hostess::getBotToTheLeft(int nth)
+const BotInfo* Hostess::getBotToTheLeft(int nth)
 {
 	return 0;
 }
 
-BotInfo* Hostess::getBotToTheRight(int nth)
+const BotInfo* Hostess::getBotToTheRight(int nth)
 {
 	return 0;
 }
 
-BotInfo* Hostess::getBotByID(int botID)
+const BotInfo* Hostess::getBotByID(int botID)
 {
 	return 0;
 }

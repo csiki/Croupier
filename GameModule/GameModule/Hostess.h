@@ -11,19 +11,19 @@
 class Hostess : public BroadcastMember
 {
 private:
-	Table* const table;
+	const Table* table;
+	const Rulz* rules;
+	map<int, const BotInfo*> botsByID;
 	int callAmount;
-	map<int,BotInfo*> botsByID;
-	Rulz *rules;
 public:
 	int getCallAmount();
 	int getMinRaise();
 	int getBigBlindAtRound(int round);
 	int getNextBlindShiftDeadline();
 	int getSmallBlindAtRound(int round);
-	BotInfo* getBotToTheLeft(int nth);
-	BotInfo* getBotToTheRight(int nth);
-	BotInfo* getBotByID(int botID);
+	const BotInfo* getBotToTheLeft(int nth);
+	const BotInfo* getBotToTheRight(int nth);
+	const BotInfo* getBotByID(int botID);
 	int getBotIDByIndex(int index);
 	int getNumOfBots(bool onlyInRound = false);
 	void receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data);

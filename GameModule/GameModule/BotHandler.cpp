@@ -16,7 +16,7 @@ void BotHandler::forceBlind(int blind)
 
 }
 
-void BotHandler::receiveCard(Card* c)
+void BotHandler::receiveCard(const Card* c)
 {
 
 }
@@ -31,7 +31,7 @@ void BotHandler::revealCards()
 
 }
 
-Card* BotHandler::takeHand(int cardIndex)
+const Card* BotHandler::takeHand(int cardIndex)
 {
 	return 0;
 }

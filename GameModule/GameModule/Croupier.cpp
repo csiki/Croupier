@@ -92,12 +92,12 @@ int Croupier::getBotIDByIndex(int botIndex)
 	return 0;
 }
 
-void Croupier::provideBotHandlers(int numOfBots, BotHandler* bhs)
+void Croupier::provideBotHandlers(int numOfBots, BotHandler** bhs)
 {
 
 }
 
-void Croupier::provideTable(Table* table)
+void Croupier::provideTable(const Table* table)
 {
 
 }

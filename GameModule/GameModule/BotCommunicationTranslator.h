@@ -13,7 +13,7 @@ private:
 protected:
 	virtual void interpret(const char* msg) = 0;
 	virtual void send(bool msg) = 0;
-	virtual void send(Card* msg) = 0;
+	virtual void send(const Card* msg) = 0;
 	virtual void send(Comment msg) = 0;
 	virtual void send(int msg) = 0;
 	virtual void send(int msgSize, const int* msg) = 0;

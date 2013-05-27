@@ -5,10 +5,10 @@
 
 class BotLoader
 {
-public:
-	virtual Bot* loadBot(const char* botFilePath) = 0;
 protected:
 	const int botLang;
+public:
+	virtual Bot* loadBot(const char* botFilePath) = 0;
 };
 
 #endif  //_BOTLOADER_H

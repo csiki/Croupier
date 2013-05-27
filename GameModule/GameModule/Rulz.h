@@ -8,10 +8,11 @@ using namespace std;
 class Rulz
 {
 private:
-	vector<int> smallBlinds;
-	vector<int> bigBlinds;
+	int* smallBlinds;
+	int* bigBlinds;
+	int* blindShiftDeadlines;
+	int numOfBlinds;
 	int rebuyDeadline;
-	vector<int> blindShiftDeadlines;
 	int numOfRebuysAllowed;
 	bool talkAllowed;
 	bool knowledgeBaseAllowed;
@@ -20,10 +21,11 @@ private:
 	int startingChips;
 public:
 	int getBigBlind(int index);
+	int getSmallBlind(int index);
 	int getBlindShiftDeadline(int index);
+	int getNumOfBlinds();
 	int getNumOfRebuysAllowed();
 	int getRebuyDeadline();
-	int getSmallBlind(int index);
 	bool isTalkAllowed();
 	bool isKnowledgeBaseAllowed();
 	long getAllowedBotCalcTime();

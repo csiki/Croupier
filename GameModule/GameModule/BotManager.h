@@ -21,11 +21,11 @@ private:
 	int numOfRebuys;
 	int reservedCredit;
 	BotKnowledgeHandler *bkHandler;
-	Bot *bot;
+	Bot **bot;
 	Table *table;
 	BroadcastStation *broadcast;
 	Hostess *hostess;
-	Rulz *rules;
+	const Rulz *rules;
 public:
 	bool allin();
 	bool call();
@@ -38,8 +38,8 @@ public:
 	bool check();
 	bool fold();
 	int getNumOfBots(bool onlyInRound = false);
-	BotInfo* getBotByIndex(int botIndex);
-	BotInfo* getBot(int botID);
+	const BotInfo* getBotByIndex(int botIndex);
+	const BotInfo* getBot(int botID);
 	int getBotIDByIndex(int index);
 	const char* getBotName(int botID);
 	bool isBotDealer(int botID);
@@ -49,11 +49,11 @@ public:
 	int getBotLang(int botID);
 	bool isBotInGame(int botID);
 	bool isBotInRound(bool botID);
-	Card* lookAtBotHand(int botID, int cardIndex);
+	const Card* lookAtBotHand(int botID, int cardIndex);
 	int getReservedCredit();
 	const Table* getTable();
 	int getCallAmount();
-	Card* getTableCard(int cardIndex);
+	const Card* getTableCard(int cardIndex);
 	int getMinRaise();
 	int getPotSum();
 	int getBigBlind(int blindIndex);
@@ -66,16 +66,16 @@ public:
 	bool raise(int raiseAmount);
 	bool rebuy(int rebuyAmount);
 	void talk(Comment comment);
-	BotKnowledgeHandler* getBotKnowledge();
+	BotKnowledgeHandler* getBotKnowledge(); // can be dangerous; smart ptr a must
 	int addKnowledgeTableRow(int tableID);
 	int createKnowledgeTable(int numOfCols, int* colTypes);
 	bool deleteKnowledgeTableData(int tableID, int row, int col);
-	KnowledgeTable* getKnowledgeTable(int tableID);
+	KnowledgeTable* getKnowledgeTable(int tableID); // can be dangerous, bot does bad to itself if deletes; smart ptr a must
 	KnowledgeDataType getKnowledgeTableDataType(int tableID, int col);
 	int getKnowledgeTableDataInt(int tableID, int row, int col, bool* error = 0);
 	bool getKnowledgeTableDataBool(int tableID, int row, int col, bool* error = 0);
 	char getKnowledgeTableDataChar(int tableID, int row, int col, bool* error = 0);
-	char* getKnowledgeTableDataString(int tableID, int row, int col, bool* error = 0);
+	const char* getKnowledgeTableDataString(int tableID, int row, int col, bool* error = 0);
 	float getKnowledgeTableDataFloat(int tableID, int row, int col, bool* error = 0);
 	int getKnowledgeTableNumOfCols(int tableID);
 	int getKnowledgeTableNumOfRows(int tableID);
@@ -86,8 +86,8 @@ public:
 	void setKnowledgeTableDataChar(char val, int tableID, int row, int col, bool* error = 0);
 	void setKnowledgeTableDataString(char* val, int tableID, int row, int col, bool* error = 0);
 	void setKnowledgeTableDataFloat(float val, int tableID, int row, int col, bool* error = 0);
-	BotInfo* getBotToTheLeft(int nth);
-	BotInfo* getBotToTheRight(int nth);
+	const BotInfo* getBotToTheLeft(int nth);
+	const BotInfo* getBotToTheRight(int nth);
 	int getNumOfBots();
 	long getAllowedBotCalcTime();
 	int getStartingChips();

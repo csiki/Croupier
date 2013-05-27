@@ -1,14 +1,9 @@
 #include "stdafx.h"
 #include "Log.h"
 
-Event* Log::getEvent(int id)
+void Log::getEventsIterator(list<Event*>::iterator& begin, list<Event*>::iterator& end)
 {
-	return 0;
-}
-
-int Log::getNumOfEvents()
-{
-	return 0;
+	
 }
 
 void Log::log(Event* e)
@@ -16,3 +11,12 @@ void Log::log(Event* e)
 
 }
 
+/*Event* Log::getEvent(int id)
+{
+	return 0;
+}
+
+int Log::getNumOfEvents()
+{
+	return 0;
+}*/

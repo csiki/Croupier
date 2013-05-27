@@ -5,9 +5,8 @@
 
 class Event
 {
-private:
-	Severity *severity;
 public:
+	const Severity severity;
 	const int loggerID;
 	const char* const msg;
 	const long time;

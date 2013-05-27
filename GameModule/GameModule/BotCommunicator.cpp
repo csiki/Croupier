@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "BotCommunicator.h"
 
-Card* BotCommunicator::getHand(int cardIndex)
+const Card* BotCommunicator::getHand(int cardIndex)
 {
 	return 0;
 }

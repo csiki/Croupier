@@ -12,11 +12,11 @@ private:
 	char* rulzPath;
 	char* botsDataPath;
 	char* resultsPath;
-	Bot* bots;
 	int numOfBots;
+	Bot* bots;
+	BotManager* botManagers;
 	Log* log;
 	Rulz* rulz;
-	BotManager* botManagers;
 public:
 	bool initialiseGame();
 	int startGame();

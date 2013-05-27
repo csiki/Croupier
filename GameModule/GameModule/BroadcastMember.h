@@ -10,7 +10,7 @@ class BroadcastMember : public Entity
 private:
 	BroadcastStation *broadcastStation;
 protected:
-	void broadcast(BroadcastMessage msg, int dataSize, int* data);
+	void broadcast(BroadcastMessage msg, int dataSize, const int* data);
 	void subscribe();
 	void unsubscribe();
 public:

@@ -15,13 +15,19 @@ class Croupier : public Logger, public BroadcastMember
 private:
 	Card** burnt;
 	int numberOfBurntCards;
-	Rulz* const rules;
+	const Rulz* rules;
 	int round;
 	int currentBotIndex;
 	int lastBotRaisedIndex;
 	int nextBlindShiftAt;
 	int* kicksAtRound;
 	int numOfBots;
+	Deck* deck;
+	const Table* table;
+	BotHandler** bots;
+	BroadcastStation* broadcast;
+	HandEvaluator* handEvaluator;
+
 	void burn(Card* c);
 	void collectCards();
 	void betRound();
@@ -37,17 +43,12 @@ private:
 	void handOutPot(int numOfWinners, const int* winnersIndex);
 	void refreshBlinds();
 	void determineWinners(int numOfWinners, int* winnersIndex);
-	Deck *deck;
-	Table *table;
-	BotHandler *bots;
-	BroadcastStation *broadcast;
-	HandEvaluator *handEvaluator;
 public:
 	void letsPoker();
 	int getKickAtRound(int botIndex);
 	int getBotIDByIndex(int botIndex);
-	void provideBotHandlers(int numOfBots, BotHandler* bhs);
-	void provideTable(Table* table);
+	void provideBotHandlers(int numOfBots, BotHandler** bhs);
+	void provideTable(const Table* table);
 	void receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data);
 };
 

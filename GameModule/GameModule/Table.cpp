@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Table.h"
 
-void Table::provideBotInfos(int numOfBots, BotInfo* bis)
+void Table::provideBotInfos(int numOfBots, BotInfo** bis)
 {
 
 }
@@ -21,12 +21,12 @@ Card* Table::rmCard(int cardIndex)
 	return 0;
 }
 
-Card* Table::getCard(int cardIndex)
+const Card* Table::getCard(int cardIndex)
 {
 	return 0;
 }
 
-BotInfo* Table::getBotByIndex(int index)
+const BotInfo* Table::getBotByIndex(int index)
 {
 	return 0;
 }
@@ -41,12 +41,12 @@ int Table::getPot()
 	return 0;
 }
 
-void Table::sit(BotInfo* bot)
+void Table::sit(const BotInfo* bot)
 {
 
 }
 
-void Table::getUp(BotInfo* bot)
+void Table::getUp(const BotInfo* bot)
 {
 
 }

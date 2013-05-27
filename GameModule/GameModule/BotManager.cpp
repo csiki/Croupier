@@ -59,12 +59,12 @@ int BotManager::getNumOfBots(bool onlyInRound)
 	return 0;
 }
 
-BotInfo* BotManager::getBotByIndex(int botIndex)
+const BotInfo* BotManager::getBotByIndex(int botIndex)
 {
 	return 0;
 }
 
-BotInfo* BotManager::getBot(int botID)
+const BotInfo* BotManager::getBot(int botID)
 {
 	return 0;
 }
@@ -114,7 +114,7 @@ bool BotManager::isBotInRound(bool botID)
 	return 0;
 }
 
-Card* BotManager::lookAtBotHand(int botID, int cardIndex)
+const Card* BotManager::lookAtBotHand(int botID, int cardIndex)
 {
 	return 0;
 }
@@ -134,7 +134,7 @@ int BotManager::getCallAmount()
 	return 0;
 }
 
-Card* BotManager::getTableCard(int cardIndex)
+const Card* BotManager::getTableCard(int cardIndex)
 {
 	return 0;
 }
@@ -244,7 +244,7 @@ char BotManager::getKnowledgeTableDataChar(int tableID, int row, int col, bool* 
 	return 0;
 }
 
-char* BotManager::getKnowledgeTableDataString(int tableID, int row, int col, bool* error)
+const char* BotManager::getKnowledgeTableDataString(int tableID, int row, int col, bool* error)
 {
 	return 0;
 }
@@ -299,12 +299,12 @@ void BotManager::setKnowledgeTableDataFloat(float val, int tableID, int row, int
 
 }
 
-BotInfo* BotManager::getBotToTheLeft(int nth)
+const BotInfo* BotManager::getBotToTheLeft(int nth)
 {
 	return 0;
 }
 
-BotInfo* BotManager::getBotToTheRight(int nth)
+const BotInfo* BotManager::getBotToTheRight(int nth)
 {
 	return 0;
 }

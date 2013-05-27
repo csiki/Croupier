@@ -9,9 +9,9 @@ using namespace std;
 class KnowledgeTable
 {
 private:
+	//int numOfRows; // in data
+	//int numOfCols; // in data
 	vector<vector<void*> > data;
-	int numOfRows;
-	int numOfCols;
 	KnowledgeDataType *columnTypes;
 public:
 	int addRow();
