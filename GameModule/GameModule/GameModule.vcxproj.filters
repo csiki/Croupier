@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ReadMe.txt" />
+    <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -24,112 +24,115 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="XYTranslator.h">
+    <ClInclude Include="..\src\XYTranslator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="XYBotLoader.h">
+    <ClInclude Include="..\src\XYBotLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Table.h">
+    <ClInclude Include="..\src\Table.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Severity.h">
+    <ClInclude Include="..\src\Severity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RulzXMLHandler.h">
+    <ClInclude Include="..\src\RulzXMLHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Rulz.h">
+    <ClInclude Include="..\src\Rulz.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Process.h">
+    <ClInclude Include="..\src\Process.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LogXMLHandler.h">
+    <ClInclude Include="..\src\LogXMLHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Logger.h">
+    <ClInclude Include="..\src\Logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Loggable.h">
+    <ClInclude Include="..\src\Loggable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Log.h">
+    <ClInclude Include="..\src\Log.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="KnowledgeTable.h">
+    <ClInclude Include="..\src\KnowledgeTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="KnowledgeDataType.h">
+    <ClInclude Include="..\src\KnowledgeDataType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Hostess.h">
+    <ClInclude Include="..\src\Hostess.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HandRank.h">
+    <ClInclude Include="..\src\HandRank.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HandEvaluator.h">
+    <ClInclude Include="..\src\HandEvaluator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameOwner.h">
+    <ClInclude Include="..\src\GameOwner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Event.h">
+    <ClInclude Include="..\src\GameModule.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity.h">
+    <ClInclude Include="..\src\Event.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Deck.h">
+    <ClInclude Include="..\src\Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Croupier.h">
+    <ClInclude Include="..\src\Deck.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CppBotLoader.h">
+    <ClInclude Include="..\src\Croupier.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Comment.h">
+    <ClInclude Include="..\src\CppBotLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Card.h">
+    <ClInclude Include="..\src\Comment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BroadcastStation.h">
+    <ClInclude Include="..\src\Card.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BroadcastMessage.h">
+    <ClInclude Include="..\src\BroadcastStation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BroadcastMember.h">
+    <ClInclude Include="..\src\BroadcastMessage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BotManager.h">
+    <ClInclude Include="..\src\BroadcastMember.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BotLoader.h">
+    <ClInclude Include="..\src\BotManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BotKnowledgeHandler.h">
+    <ClInclude Include="..\src\BotLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BotInfo.h">
+    <ClInclude Include="..\src\BotKnowledgeHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BotHandler.h">
+    <ClInclude Include="..\src\BotInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BotCommunicator.h">
+    <ClInclude Include="..\src\BotHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BotCommunicationTranslator.h">
+    <ClInclude Include="..\src\BotCommunicator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Bot.h">
+    <ClInclude Include="..\src\BotCommunicationTranslator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameModule.h">
+    <ClInclude Include="..\src\Bot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Emotion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -137,85 +140,88 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameModule.cpp">
+    <ClCompile Include="..\src\Bot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Bot.cpp">
+    <ClCompile Include="..\src\BotCommunicationTranslator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BotCommunicationTranslator.cpp">
+    <ClCompile Include="..\src\BotCommunicator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BotCommunicator.cpp">
+    <ClCompile Include="..\src\BotHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BotHandler.cpp">
+    <ClCompile Include="..\src\BotInfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BotInfo.cpp">
+    <ClCompile Include="..\src\BotKnowledgeHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BotKnowledgeHandler.cpp">
+    <ClCompile Include="..\src\BotManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BotManager.cpp">
+    <ClCompile Include="..\src\BroadcastMember.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BroadcastMember.cpp">
+    <ClCompile Include="..\src\BroadcastStation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BroadcastStation.cpp">
+    <ClCompile Include="..\src\CppBotLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CppBotLoader.cpp">
+    <ClCompile Include="..\src\Croupier.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Croupier.cpp">
+    <ClCompile Include="..\src\Deck.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Deck.cpp">
+    <ClCompile Include="..\src\Entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Entity.cpp">
+    <ClCompile Include="..\src\GameModule.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameOwner.cpp">
+    <ClCompile Include="..\src\GameOwner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="HandEvaluator.cpp">
+    <ClCompile Include="..\src\HandEvaluator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Hostess.cpp">
+    <ClCompile Include="..\src\Hostess.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="KnowledgeTable.cpp">
+    <ClCompile Include="..\src\KnowledgeTable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Log.cpp">
+    <ClCompile Include="..\src\Log.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Logger.cpp">
+    <ClCompile Include="..\src\Logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LogXMLHandler.cpp">
+    <ClCompile Include="..\src\LogXMLHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Process.cpp">
+    <ClCompile Include="..\src\Process.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Rulz.cpp">
+    <ClCompile Include="..\src\Rulz.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RulzXMLHandler.cpp">
+    <ClCompile Include="..\src\RulzXMLHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Table.cpp">
+    <ClCompile Include="..\src\Table.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="XYBotLoader.cpp">
+    <ClCompile Include="..\src\XYBotLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="XYTranslator.cpp">
+    <ClCompile Include="..\src\XYTranslator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Card.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

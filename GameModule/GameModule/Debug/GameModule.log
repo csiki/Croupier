@@ -1,16 +1,26 @@
-﻿Build started 2013.05.27. 19:49:14.
-     1>Project "c:\CSIKI\PROGRAMING\C++\main\Croupier\GameModule\GameModule\GameModule.vcxproj" on node 2 (build target(s)).
-     1>InitializeBuildStatus:
-         Touching "Debug\GameModule.unsuccessfulbuild".
-       ClCompile:
-         All outputs are up-to-date.
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\GameModule.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Log.cpp
-         Log.cpp
-       ManifestResourceCompile:
-         All outputs are up-to-date.
+﻿Build started 2013.06.08. 20:41:38.
+     1>Project "c:\CSIKI\PROGRAMING\C++\main\Croupier\GameModule\GameModule\GameModule.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\GameModule.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /FR"Debug\\" /Gd /TP /analyze- /errorReport:prompt ..\src\Bot.cpp ..\src\BotCommunicationTranslator.cpp ..\src\BotCommunicator.cpp ..\src\BotHandler.cpp ..\src\BotInfo.cpp ..\src\BotManager.cpp ..\src\CppBotLoader.cpp ..\src\Croupier.cpp ..\src\GameModule.cpp ..\src\GameOwner.cpp ..\src\Hostess.cpp ..\src\Table.cpp ..\src\XYBotLoader.cpp ..\src\XYTranslator.cpp
+         Bot.cpp
+         Generating Code...
+         Compiling...
+         XYTranslator.cpp
+         XYBotLoader.cpp
+         Table.cpp
+         Hostess.cpp
+         GameOwner.cpp
+         GameModule.cpp
+         Croupier.cpp
+         CppBotLoader.cpp
+         BotManager.cpp
+         BotInfo.cpp
+         BotHandler.cpp
+         BotCommunicator.cpp
+         BotCommunicationTranslator.cpp
+         Generating Code...
        Link:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\CSIKI\PROGRAMING\C++\main\Croupier\GameModule\Debug\GameModule.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\GameModule.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\CSIKI\PROGRAMING\C++\main\Croupier\GameModule\Debug\GameModule.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\CSIKI\PROGRAMING\C++\main\Croupier\GameModule\Debug\GameModule.lib" /MACHINE:X86 Debug\GameModule.exe.embed.manifest.res
-         Debug\Bot.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\CSIKI\PROGRAMING\C++\main\Croupier\GameModule\Debug\GameModule.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\CSIKI\PROGRAMING\C++\main\Croupier\GameModule\Debug\GameModule.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\CSIKI\PROGRAMING\C++\main\Croupier\GameModule\Debug\GameModule.lib" /MACHINE:X86 Debug\Bot.obj
          Debug\BotCommunicationTranslator.obj
          Debug\BotCommunicator.obj
          Debug\BotHandler.obj
@@ -19,6 +29,7 @@
          Debug\BotManager.obj
          Debug\BroadcastMember.obj
          Debug\BroadcastStation.obj
+         Debug\Card.obj
          Debug\CppBotLoader.obj
          Debug\Croupier.obj
          Debug\Deck.obj
@@ -34,21 +45,15 @@
          Debug\Process.obj
          Debug\Rulz.obj
          Debug\RulzXMLHandler.obj
-         Debug\stdafx.obj
          Debug\Table.obj
          Debug\XYBotLoader.obj
          Debug\XYTranslator.obj
-       Manifest:
-         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\GameModule.exe.embed.manifest" /manifest Debug\GameModule.exe.intermediate.manifest
-         All outputs are up-to-date.
-       LinkEmbedManifest:
-         All outputs are up-to-date.
+         Debug\stdafx.obj
          GameModule.vcxproj -> C:\CSIKI\PROGRAMING\C++\main\Croupier\GameModule\Debug\GameModule.exe
-       FinalizeBuildStatus:
-         Deleting file "Debug\GameModule.unsuccessfulbuild".
-         Touching "Debug\GameModule.lastbuildstate".
-     1>Done Building Project "c:\CSIKI\PROGRAMING\C++\main\Croupier\GameModule\GameModule\GameModule.vcxproj" (build target(s)).
+       BscMake:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\bscmake.exe /nologo /o"C:\CSIKI\PROGRAMING\C++\main\Croupier\GameModule\Debug\GameModule.bsc" /n Debug\Bot.sbr Debug\BotCommunicationTranslator.sbr Debug\BotCommunicator.sbr Debug\BotHandler.sbr Debug\BotInfo.sbr Debug\BotKnowledgeHandler.sbr Debug\BotManager.sbr Debug\BroadcastMember.sbr Debug\BroadcastStation.sbr Debug\Card.sbr Debug\CppBotLoader.sbr Debug\Croupier.sbr Debug\Deck.sbr Debug\Entity.sbr Debug\GameModule.sbr Debug\GameOwner.sbr Debug\HandEvaluator.sbr Debug\Hostess.sbr Debug\KnowledgeTable.sbr Debug\Log.sbr Debug\Logger.sbr Debug\LogXMLHandler.sbr Debug\Process.sbr Debug\Rulz.sbr Debug\RulzXMLHandler.sbr Debug\Table.sbr Debug\XYBotLoader.sbr Debug\XYTranslator.sbr Debug\stdafx.sbr
+     1>Done Building Project "c:\CSIKI\PROGRAMING\C++\main\Croupier\GameModule\GameModule\GameModule.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.83
+Time Elapsed 00:00:02.87

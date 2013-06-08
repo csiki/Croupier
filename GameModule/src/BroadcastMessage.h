@@ -1,0 +1,28 @@
+#if !defined(_BROADCASTMESSAGE_H)
+#define _BROADCASTMESSAGE_H
+
+/**	Enum of the possible broadcast message subjects.
+*/
+enum BroadcastMessage
+{
+	ALLINED,
+	BLINDSRAISED,
+	CALLED,
+	CHECKED,
+	FLOP,
+	FOLDED,
+	GAMEWINNER,
+	LEFTGAME,
+	LISTEN,
+	PREFLOP,
+	RAISED,
+	REBUYDEADLINEREACHED,
+	RIVER,
+	ROUNDENDED,
+	ROUNDSTARTED,
+	ROUNDWINNERS,
+	SHOWDOWN,
+	TURN
+};
+
+#endif  //_BROADCASTMESSAGE_H
