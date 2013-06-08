@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "XYTranslator.h"
 
-void XYTranslator::interpret(const char* msg)
+void XYTranslator::interpret(std::string msg)
 {
 }
 
@@ -9,7 +9,7 @@ void XYTranslator::send(bool msg)
 {
 }
 
-void XYTranslator::send(Card* msg)
+void XYTranslator::send(Card& msg)
 {
 }
 
@@ -25,7 +25,7 @@ void XYTranslator::send(int msgSize, const int* msg)
 {
 }
 
-void XYTranslator::send(const char* msg)
+void XYTranslator::send(string msg)
 {
 }
 

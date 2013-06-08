@@ -3,7 +3,7 @@
 #include "Severity.h"
 #include "BroadcastMessage.h"
 
-void Logger::log(Severity severity, const char* msg)
+void Logger::log(Severity severity, std::string msg)
 {
 
 }

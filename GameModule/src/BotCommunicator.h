@@ -90,6 +90,7 @@ public:
 	virtual void setKnowledgeTableData(bool val, int tableID, int row, int col, bool* error = 0) = 0;
 	virtual void setKnowledgeTableData(char val, int tableID, int row, int col, bool* error = 0) = 0;
 	virtual void setKnowledgeTableData(char* val, int tableID, int row, int col, bool* error = 0) = 0;
+	virtual void setKnowledgeTableData(std::string val, int tableID, int row, int col, bool* error = 0) = 0; // same as char*
 	virtual void setKnowledgeTableData(float val, int tableID, int row, int col, bool* error = 0) = 0;
 };
 

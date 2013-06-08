@@ -6,6 +6,7 @@
 #include "Loggable.h"
 #include "Severity.h"
 #include "BroadcastMessage.h"
+#include <iostream>
 
 /**	Base class for logging entities.
 */
@@ -14,7 +15,7 @@ class Logger : public Entity
 private:
 	Loggable *loggable;
 protected:
-	void log(Severity severity, const char* msg);
+	void log(Severity severity, std::string msg);
 };
 
 #endif  //_LOGGER_H

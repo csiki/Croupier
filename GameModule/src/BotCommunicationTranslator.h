@@ -13,13 +13,13 @@ class BotCommunicationTranslator : public Bot
 private:
 	Process* process;
 protected:
-	virtual void interpret(const char* msg) = 0;
+	virtual void interpret(const string) = 0;
 	virtual void send(bool msg) = 0;
-	virtual void send(const Card* msg) = 0;
+	virtual void send(Card& msg) = 0;
 	virtual void send(Comment msg) = 0;
 	virtual void send(int msg) = 0;
 	virtual void send(int msgSize, const int* msg) = 0;
-	virtual void send(const char* msg) = 0;
+	virtual void send(string msg) = 0;
 public:
 	virtual void allined(int botID, int amount) = 0;
 	virtual void blindsRaised(int newSmallBlind, int newBigBlind) = 0;

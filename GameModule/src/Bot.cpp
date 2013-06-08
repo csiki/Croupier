@@ -1,17 +1,23 @@
 #include "stdafx.h"
 #include "Bot.h"
 
+/**	Returns AI's id.
+*/
 int Bot::getID() const
 {
-	return 0;
+	return this->id;
 }
 
+/** Returns the programming language the AI is written in.
+*/
 int Bot::getLang() const
 {
-	return 0;
+	return this->lang;
 }
 
-const char* Bot::getName() const
+/**	Returns AI's name.
+*/
+string Bot::getName() const
 {
-	return 0;
+	return this->name;
 }

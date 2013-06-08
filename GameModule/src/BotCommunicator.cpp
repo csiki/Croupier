@@ -1,23 +1,16 @@
 #include "stdafx.h"
 #include "BotCommunicator.h"
 
+/**	Returns one of AI's card in hand.
+*/
 Card BotCommunicator::getHand(int cardIndex)
 {
 	return Card::getNullCard();
 }
 
-int BotCommunicator::getID()
+/** Sets the AI's emotion.
+*/
+void BotCommunicator::setEmotion(Emotion emotion)
 {
-	return 0;
+	this->emotion = emotion;
 }
-
-std::string BotCommunicator::getName()
-{
-	return 0;
-}
-
-int BotCommunicator::getLang()
-{
-	return 0;
-}
-

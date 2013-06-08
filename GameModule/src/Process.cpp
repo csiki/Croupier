@@ -6,12 +6,12 @@ void Process::start()
 
 }
 
-char* Process::readOutput()
+std::string Process::readOutput()
 {
 	return 0;
 }
 
-void Process::writeInput(const char* msg)
+void Process::writeInput(std::string msg)
 {
 
 }

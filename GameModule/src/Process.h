@@ -1,6 +1,8 @@
 #if !defined(_PROCESS_H)
 #define _PROCESS_H
 
+#include<iostream>
+
 // TODO neki még lesznek adattagjai, amin keresztül eléri a futó processt
 
 /**	Handles other than its own processes.
@@ -9,8 +11,8 @@ class Process
 {
 public:
 	void start();
-	char* readOutput();
-	void writeInput(const char* msg);
+	std::string readOutput();
+	void writeInput(const std::string msg);
 	void exit();
 };
 

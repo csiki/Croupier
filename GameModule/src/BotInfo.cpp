@@ -1,38 +1,57 @@
 #include "stdafx.h"
 #include "BotInfo.h"
 
+/** Returns AI's amount of chips.
+*/
 int BotInfo::getChips() const
 {
-	return 0;
+	return this->chips;
 }
 
+/** Returns AI's pot in game.
+*/
 int BotInfo::getPot() const
 {
-	return 0;
+	return this->pot;
 }
 
+/** Returns if AI's the dealer.
+*/
 bool BotInfo::isDealer() const
 {
-	return 0;
+	return this->dealer;
 }
 
+/** Returns if AI's hand is revealed.
+*/
 bool BotInfo::isHandRevealed() const
 {
-	return 0;
+	return this->cardsRevealed;
 }
 
+/** Returns if AI is in game (haven't lost all its chips).
+*/
 bool BotInfo::isInGame() const
 {
-	return 0;
+	return this->inGame;
 }
 
+/** Returns if AI is in round (haven't folded).
+*/
 bool BotInfo::isInRound() const
 {
-	return 0;
+	return this->inRound;
 }
 
+/** Checks a card of the AI's hand (without touching it).
+*/
 Card BotInfo::lookAtHand(int cardIndex) const
 {
+	if (this->cardsRevealed && cardIndex < this->numOfCardsInHand && cardIndex >= 0)
+	{
+		return *this->hand[cardIndex];
+	}
+
 	return Card::getNullCard();
 }
 

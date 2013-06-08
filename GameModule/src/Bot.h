@@ -15,12 +15,12 @@ class Bot
 {
 private:
 	const int id;
-	const char* const name;
+	const string name;
 	const int lang;
 public:
 	int getID() const;
 	int getLang() const;
-	const char* getName() const;
+	std::string getName() const;
 	
 	virtual void allined(int botID, int amount) = 0;
 	virtual void blindsRaised(int newSmallBlind, int newBigBlind) = 0;

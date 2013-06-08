@@ -99,6 +99,7 @@ public:
 	void setKnowledgeTableData(bool val, int tableID, int row, int col, bool* error = 0);
 	void setKnowledgeTableData(char val, int tableID, int row, int col, bool* error = 0);
 	void setKnowledgeTableData(char* val, int tableID, int row, int col, bool* error = 0);
+	void setKnowledgeTableData(std::string val, int tableID, int row, int col, bool* error = 0); // same as char*
 	void setKnowledgeTableData(float val, int tableID, int row, int col, bool* error = 0);
 	// bothandler
 	void step();

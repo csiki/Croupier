@@ -12,13 +12,13 @@
 class XYTranslator : public BotCommunicationTranslator
 {
 protected:
-	void interpret(const char* msg);
+	void interpret(const std::string msg);
 	void send(bool msg);
-	void send(Card* msg);
+	void send(Card& msg);
 	void send(Comment msg);
 	void send(int msg);
 	void send(int msgSize, const int* msg);
-	void send(const char* msg);
+	void send(std::string msg);
 public:
 	void allined(int botID, int amount);
 	void blindsRaised(int newSmallBlind, int newBigBlind);

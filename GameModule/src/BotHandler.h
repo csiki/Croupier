@@ -14,7 +14,7 @@ public:
 	void addDealerButton();
 	void rmDealerButton();
 	void forceBlind(int blind);
-	void receiveCard(const Card* c);
+	void receiveCard(Card* c);
 	void recieveChips(int chipsAmount);
 	void revealCards();
 	Card* takeHand(int cardIndex);

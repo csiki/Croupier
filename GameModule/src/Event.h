@@ -10,7 +10,7 @@ class Event
 public:
 	const Severity severity;
 	const int loggerID;
-	const char* const msg;
+	const std::string msg;
 	const long time;
 };
 

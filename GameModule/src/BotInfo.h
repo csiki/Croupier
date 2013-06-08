@@ -9,15 +9,15 @@
 */
 class BotInfo
 {
-private:
-	Card *hand;
 protected:
+	int numOfCardsInHand;
 	int chips;
 	int pot;
-	bool dealer;
 	bool cardsRevealed;
+	bool dealer;
 	bool inGame;
 	bool inRound;
+	Card **hand;
 	Emotion emotion;
 public:
 	int getChips() const;
