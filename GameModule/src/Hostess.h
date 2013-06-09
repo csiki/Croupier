@@ -5,7 +5,6 @@
 #include "Table.h"
 #include "Rulz.h"
 #include "BroadcastMessage.h"
-#include <map>
 #include "BotInfo.h"
 
 /**	Helper for AIs.

@@ -5,6 +5,7 @@
 */
 enum KnowledgeDataType
 {
+	NONE,
 	BOOL,
 	CHAR,
 	INT,

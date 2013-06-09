@@ -3,9 +3,10 @@
 
 #include "KnowledgeTable.h"
 #include "KnowledgeDataType.h"
+#include "../pugixml/pugixml.hpp"
 
 // TODO át kell írni a analízis doksiba, hogy a getTable...() parancsok egyike sem tölt be új táblát,
-// a játék elején betöltjük a botok által requestelt összes táblát (mondjuk egy mindig betöltött táblában tarthatják számon ha új táblát készítettek játék közben - kva részletkérdés)
+// a játék elején betöltjük a botok által requestelt összes táblát
 
 /**	Class for handling AIs' permanent knowledge.
 */
@@ -13,12 +14,13 @@ class BotKnowledgeHandler
 {
 private:
 	const int botID;
-	int numOfTables;
-	KnowledgeTable** loadedTables;
+	map<int, KnowledgeTable*> loadedTables;
 
 	KnowledgeTable* loadTable(int tableID);
+	void saveTable(KnowledgeTable* table);
+	bool isTableLoaded(int tableID) const;
 public:
-	// konstruktorba töltjük be a táblákat ! konstruktor paraméterei legalább: numofRequestedTable:int, requestedTables: int*
+	// konstruktorba töltjük be a táblákat ! konstruktor paraméterei legalább: botID, numofRequestedTable:int, requestedTables: int*
 	int addTableRow(int tableID);
 	int createTable(int numOfCols, KnowledgeDataType* colTypes);
 	KnowledgeDataType getTableColumnType(int tableID, int col) const;

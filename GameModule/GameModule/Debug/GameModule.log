@@ -1,10 +1,27 @@
-﻿Build started 2013.06.09. 1:24:58.
+﻿Build started 2013.06.09. 13:52:43.
      1>Project "c:\CSIKI\PROGRAMING\C++\main\Croupier\GameModule\GameModule\GameModule.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\GameModule.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /FR"Debug\\" /Gd /TP /analyze- /errorReport:prompt ..\src\BotInfo.cpp
-         BotInfo.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp"Debug\GameModule.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /FR"Debug\\" /Gd /TP /analyze- /errorReport:prompt ..\src\Bot.cpp ..\src\BotCommunicationTranslator.cpp ..\src\BotCommunicator.cpp ..\src\BotKnowledgeHandler.cpp ..\src\BotManager.cpp ..\src\CppBotLoader.cpp ..\src\Croupier.cpp ..\src\GameModule.cpp ..\src\GameOwner.cpp ..\src\Hostess.cpp ..\src\KnowledgeTable.cpp ..\src\KnowledgeTableXMLHandler.cpp ..\src\Rulz.cpp ..\src\RulzXMLHandler.cpp ..\src\Table.cpp ..\src\XYBotLoader.cpp ..\src\XYTranslator.cpp
+         XYTranslator.cpp
+         XYBotLoader.cpp
+         Table.cpp
+         RulzXMLHandler.cpp
+         Rulz.cpp
+         KnowledgeTableXMLHandler.cpp
+         KnowledgeTable.cpp
+         Hostess.cpp
+         GameOwner.cpp
+         GameModule.cpp
+         Croupier.cpp
+         CppBotLoader.cpp
+         BotManager.cpp
+         BotKnowledgeHandler.cpp
+         BotCommunicator.cpp
+         BotCommunicationTranslator.cpp
+         Bot.cpp
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\CSIKI\PROGRAMING\C++\main\Croupier\GameModule\Debug\GameModule.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\CSIKI\PROGRAMING\C++\main\Croupier\GameModule\Debug\GameModule.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\CSIKI\PROGRAMING\C++\main\Croupier\GameModule\Debug\GameModule.lib" /MACHINE:X86 Debug\Bot.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\CSIKI\PROGRAMING\C++\main\Croupier\GameModule\Debug\GameModule.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\CSIKI\PROGRAMING\C++\main\Croupier\GameModule\Debug\GameModule.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\CSIKI\PROGRAMING\C++\main\Croupier\GameModule\Debug\GameModule.lib" /MACHINE:X86 Debug\pugixml.obj
+         Debug\Bot.obj
          Debug\BotCommunicationTranslator.obj
          Debug\BotCommunicator.obj
          Debug\BotHandler.obj
@@ -23,21 +40,22 @@
          Debug\HandEvaluator.obj
          Debug\Hostess.obj
          Debug\KnowledgeTable.obj
+         Debug\KnowledgeTableXMLHandler.obj
          Debug\Log.obj
          Debug\Logger.obj
          Debug\LogXMLHandler.obj
          Debug\Process.obj
          Debug\Rulz.obj
          Debug\RulzXMLHandler.obj
+         Debug\stdafx.obj
          Debug\Table.obj
          Debug\XYBotLoader.obj
          Debug\XYTranslator.obj
-         Debug\stdafx.obj
          GameModule.vcxproj -> C:\CSIKI\PROGRAMING\C++\main\Croupier\GameModule\Debug\GameModule.exe
        BscMake:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\bscmake.exe /nologo /o"C:\CSIKI\PROGRAMING\C++\main\Croupier\GameModule\Debug\GameModule.bsc" /n Debug\Bot.sbr Debug\BotCommunicationTranslator.sbr Debug\BotCommunicator.sbr Debug\BotHandler.sbr Debug\BotInfo.sbr Debug\BotKnowledgeHandler.sbr Debug\BotManager.sbr Debug\BroadcastMember.sbr Debug\BroadcastStation.sbr Debug\Card.sbr Debug\CppBotLoader.sbr Debug\Croupier.sbr Debug\Deck.sbr Debug\Entity.sbr Debug\GameModule.sbr Debug\GameOwner.sbr Debug\HandEvaluator.sbr Debug\Hostess.sbr Debug\KnowledgeTable.sbr Debug\Log.sbr Debug\Logger.sbr Debug\LogXMLHandler.sbr Debug\Process.sbr Debug\Rulz.sbr Debug\RulzXMLHandler.sbr Debug\Table.sbr Debug\XYBotLoader.sbr Debug\XYTranslator.sbr Debug\stdafx.sbr
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\bscmake.exe /nologo /o"C:\CSIKI\PROGRAMING\C++\main\Croupier\GameModule\Debug\GameModule.bsc" /n Debug\pugixml.sbr Debug\Bot.sbr Debug\BotCommunicationTranslator.sbr Debug\BotCommunicator.sbr Debug\BotHandler.sbr Debug\BotInfo.sbr Debug\BotKnowledgeHandler.sbr Debug\BotManager.sbr Debug\BroadcastMember.sbr Debug\BroadcastStation.sbr Debug\Card.sbr Debug\CppBotLoader.sbr Debug\Croupier.sbr Debug\Deck.sbr Debug\Entity.sbr Debug\GameModule.sbr Debug\GameOwner.sbr Debug\HandEvaluator.sbr Debug\Hostess.sbr Debug\KnowledgeTable.sbr Debug\KnowledgeTableXMLHandler.sbr Debug\Log.sbr Debug\Logger.sbr Debug\LogXMLHandler.sbr Debug\Process.sbr Debug\Rulz.sbr Debug\RulzXMLHandler.sbr Debug\stdafx.sbr Debug\Table.sbr Debug\XYBotLoader.sbr Debug\XYTranslator.sbr
      1>Done Building Project "c:\CSIKI\PROGRAMING\C++\main\Croupier\GameModule\GameModule\GameModule.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.03
+Time Elapsed 00:00:05.39

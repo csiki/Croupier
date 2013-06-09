@@ -48,7 +48,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>Create</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -110,6 +110,7 @@
     <ClInclude Include="..\src\Hostess.h" />
     <ClInclude Include="..\src\KnowledgeDataType.h" />
     <ClInclude Include="..\src\KnowledgeTable.h" />
+    <ClInclude Include="..\src\KnowledgeTableXMLHandler.h" />
     <ClInclude Include="..\src\Log.h" />
     <ClInclude Include="..\src\Loggable.h" />
     <ClInclude Include="..\src\Logger.h" />
@@ -118,13 +119,14 @@
     <ClInclude Include="..\src\Rulz.h" />
     <ClInclude Include="..\src\RulzXMLHandler.h" />
     <ClInclude Include="..\src\Severity.h" />
+    <ClInclude Include="..\src\stdafx.h" />
     <ClInclude Include="..\src\Table.h" />
+    <ClInclude Include="..\src\targetver.h" />
     <ClInclude Include="..\src\XYBotLoader.h" />
     <ClInclude Include="..\src\XYTranslator.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\pugixml\pugixml.cpp" />
     <ClCompile Include="..\src\Bot.cpp" />
     <ClCompile Include="..\src\BotCommunicationTranslator.cpp" />
     <ClCompile Include="..\src\BotCommunicator.cpp" />
@@ -144,19 +146,17 @@
     <ClCompile Include="..\src\HandEvaluator.cpp" />
     <ClCompile Include="..\src\Hostess.cpp" />
     <ClCompile Include="..\src\KnowledgeTable.cpp" />
+    <ClCompile Include="..\src\KnowledgeTableXMLHandler.cpp" />
     <ClCompile Include="..\src\Log.cpp" />
     <ClCompile Include="..\src\Logger.cpp" />
     <ClCompile Include="..\src\LogXMLHandler.cpp" />
     <ClCompile Include="..\src\Process.cpp" />
     <ClCompile Include="..\src\Rulz.cpp" />
     <ClCompile Include="..\src\RulzXMLHandler.cpp" />
+    <ClCompile Include="..\src\stdafx.cpp" />
     <ClCompile Include="..\src\Table.cpp" />
     <ClCompile Include="..\src\XYBotLoader.cpp" />
     <ClCompile Include="..\src\XYTranslator.cpp" />
-    <ClCompile Include="stdafx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-    </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

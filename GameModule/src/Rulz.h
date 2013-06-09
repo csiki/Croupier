@@ -1,8 +1,6 @@
 #if !defined(_RULZ_H)
 #define _RULZ_H
 
-#include <vector>
-
 using namespace std;
 
 // TODO gondolkodni, hogy kellenek e még szabályok, mert egy plusz szabály nem csak egy bejegyzés (pl. BotCommunicator...)
