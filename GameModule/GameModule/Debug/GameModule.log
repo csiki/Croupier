@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿Build started 2013.06.12. 0:44:55.
      1>Project "c:\CSIKI\PROGRAMING\C++\main\Croupier\GameModule\GameModule\GameModule.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
@@ -8,6 +9,23 @@
          KnowledgeTable.cpp
          GameOwner.cpp
          GameModule.cpp
+=======
+﻿Build started 2013.06.09. 13:52:43.
+     1>Project "c:\CSIKI\PROGRAMING\C++\main\Croupier\GameModule\GameModule\GameModule.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp"Debug\GameModule.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /FR"Debug\\" /Gd /TP /analyze- /errorReport:prompt ..\src\Bot.cpp ..\src\BotCommunicationTranslator.cpp ..\src\BotCommunicator.cpp ..\src\BotKnowledgeHandler.cpp ..\src\BotManager.cpp ..\src\CppBotLoader.cpp ..\src\Croupier.cpp ..\src\GameModule.cpp ..\src\GameOwner.cpp ..\src\Hostess.cpp ..\src\KnowledgeTable.cpp ..\src\KnowledgeTableXMLHandler.cpp ..\src\Rulz.cpp ..\src\RulzXMLHandler.cpp ..\src\Table.cpp ..\src\XYBotLoader.cpp ..\src\XYTranslator.cpp
+         XYTranslator.cpp
+         XYBotLoader.cpp
+         Table.cpp
+         RulzXMLHandler.cpp
+         Rulz.cpp
+         KnowledgeTableXMLHandler.cpp
+         KnowledgeTable.cpp
+         Hostess.cpp
+         GameOwner.cpp
+         GameModule.cpp
+         Croupier.cpp
+>>>>>>> cf974ee6748a109d25d1e01cafa31d97e05c707f
          CppBotLoader.cpp
          BotManager.cpp
          BotKnowledgeHandler.cpp
@@ -53,4 +71,8 @@
 
 Build succeeded.
 
+<<<<<<< HEAD
 Time Elapsed 00:00:05.56
+=======
+Time Elapsed 00:00:05.39
+>>>>>>> cf974ee6748a109d25d1e01cafa31d97e05c707f
