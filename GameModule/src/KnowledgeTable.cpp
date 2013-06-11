@@ -1,6 +1,11 @@
 #include "stdafx.h"
 #include "KnowledgeTable.h"
 
+KnowledgeTable::KnowledgeTable(int numOfCols, KnowledgeDataType* colTypes, bool updated)
+{
+	// TODO
+}
+
 int KnowledgeTable::addRow()
 {
 	return 0;
@@ -8,7 +13,12 @@ int KnowledgeTable::addRow()
 
 KnowledgeDataType KnowledgeTable::getColumnType(int col) const
 {
-	return KnowledgeDataType::BOOL;
+	if (this->numOfCols > col && col >= 0)
+	{
+		return this->columnTypes[col];
+	}
+
+	return KnowledgeDataType::NONE;
 }
 
 
@@ -20,6 +30,16 @@ int KnowledgeTable::getNumOfCols() const
 int KnowledgeTable::getNumOfRows() const
 {
 	return 0;
+}
+
+bool KnowledgeTable::isRemoved() const
+{
+	return 0;
+}
+
+void KnowledgeTable::remove()
+{
+
 }
 
 bool KnowledgeTable::removeRow(int row)

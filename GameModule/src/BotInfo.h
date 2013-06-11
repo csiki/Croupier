@@ -4,7 +4,6 @@
 #include "Card.h"
 #include "Emotion.h"
 
-
 /**	Interface for AIs to other AIs.
 */
 class BotInfo

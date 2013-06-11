@@ -6,7 +6,6 @@
 #include "Loggable.h"
 #include "Severity.h"
 #include "BroadcastMessage.h"
-#include <iostream>
 
 /**	Base class for logging entities.
 */

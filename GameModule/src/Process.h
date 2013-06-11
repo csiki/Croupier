@@ -1,8 +1,6 @@
 #if !defined(_PROCESS_H)
 #define _PROCESS_H
 
-#include<iostream>
-
 // TODO neki még lesznek adattagjai, amin keresztül eléri a futó processt
 
 /**	Handles other than its own processes.
