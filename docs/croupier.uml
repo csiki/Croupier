@@ -14641,7 +14641,7 @@
 <XPD:REF name="Associations[1]">f91H+FSrWUSyR2u5RLk3pQAA</XPD:REF>
 <XPD:ATTR name="#Attributes" type="integer">2</XPD:ATTR>
 <XPD:OBJ name="Attributes[0]" type="UMLAttribute" guid="8VxBRwKrHEyqmnYyqp0nPgAA">
-<XPD:ATTR name="Name" type="string">botID</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">userID</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">const int</XPD:ATTR>
 <XPD:REF name="Owner">idz9UnHIA0u/U5G1guAtYwAA</XPD:REF>

@@ -15,6 +15,11 @@
 #include "KnowledgeDataType.h"
 #include "BroadcastMessage.h"
 
+// Warning: botID == entityID only when the bot is created and used by the same user.
+
+// TODO idõlimit programozási nyelv alapján minden egyes hívásra
+// TODO memórialimit, foglalás módjának meghatározása
+
 /**	Class for managing AIs' communication and validating moves.
 */
 class BotManager : public BotCommunicator, public BotHandler, public Logger, public BroadcastMember

@@ -4,7 +4,7 @@
 #include "Bot.h"
 #include "Process.h"
 
-/**	Base class for AI loader classes (abstract factory pattern).
+/**	Base class for AI loader classes (factory pattern).
 */
 class BotLoader
 {

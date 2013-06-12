@@ -13,14 +13,14 @@
 class BotKnowledgeHandler
 {
 private:
-	const int botID;
+	const int userID;
 	map<int, KnowledgeTable*> loadedTables;
 
 	KnowledgeTable* loadTable(int tableID);
 	void saveTable(KnowledgeTable* table);
 	bool isTableLoaded(int tableID) const;
 public:
-	// konstruktorba töltjük be a táblákat ! konstruktor paraméterei legalább: botID, numofRequestedTable:int, requestedTables: int*
+	// konstruktorba töltjük be a táblákat ! konstruktor paraméterei legalább: userID, numofRequestedTable:int, requestedTables: int*
 	int addTableRow(int tableID);
 	int createTable(int numOfCols, KnowledgeDataType* colTypes);
 	KnowledgeDataType getTableColumnType(int tableID, int col) const;

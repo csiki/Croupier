@@ -3,6 +3,8 @@
 
 #include "KnowledgeTable.h"
 
+/**	Loads and saves AI's permanent data in xml format.
+*/
 class KnowledgeTableXMLHandler {
 public:
 	static KnowledgeTable* loadXML(const char* xmlpath);
