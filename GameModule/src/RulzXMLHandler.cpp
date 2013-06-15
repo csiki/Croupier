@@ -1,12 +1,12 @@
 #include "stdafx.h"
 #include "RulzXMLHandler.h"
 
-Rulz* RulzXMLHandler::loadXML(const char* xmlPath)
+Rulz* RulzXMLHandler::loadXML(string xmlPath)
 {
 	return 0;
 }
 
-bool RulzXMLHandler::saveXML(Rulz* log, const char* xmlPath)
+bool RulzXMLHandler::saveXML(Rulz* log, string xmlPath)
 {
 	return 0;
 }

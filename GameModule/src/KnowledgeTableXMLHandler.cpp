@@ -1,12 +1,13 @@
 #include "stdafx.h"
 #include "KnowledgeTableXMLHandler.h"
 
-KnowledgeTable* KnowledgeTableXMLHandler::loadXML(const char* xmlpath)
+KnowledgeTable* KnowledgeTableXMLHandler::loadXML(string xmlpath)
 {
+	// check if file exists !
 	return 0;
 }
 
-bool KnowledgeTableXMLHandler::saveXML(KnowledgeTable* kt, const char* xmlpath)
+bool KnowledgeTableXMLHandler::saveXML(KnowledgeTable* kt, string xmlpath)
 {
 	return 0;
 }

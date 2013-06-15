@@ -12,7 +12,10 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include <fstream>
 
-
-static const char _BOT_KNOWLEDGE_RELATIVE_PATH_[] = "";
-static const int _BOT_KNOWLEDGE_RELATIVE_PATH_LENGTH_ = sizeof(_BOT_KNOWLEDGE_RELATIVE_PATH_);
+namespace
+{
+	const char _BOT_KNOWLEDGE_RELATIVE_PATH_[] = ""; // must end with "/" if any
+	const int _BOT_KNOWLEDGE_RELATIVE_PATH_LENGTH_ = sizeof(_BOT_KNOWLEDGE_RELATIVE_PATH_);
+}

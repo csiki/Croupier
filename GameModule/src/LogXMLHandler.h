@@ -8,8 +8,8 @@
 class LogXMLHandler
 {
 public:
-	static Log* loadXML(const char* xmlPath);
-	static bool saveXML(Log* log, const char* xmlPath);
+	static Log* loadXML(string xmlPath);
+	static bool saveXML(Log* log, string xmlPath);
 };
 
 #endif  //_LOGXMLHANDLER_H

@@ -17,7 +17,7 @@ private:
 	map<int, KnowledgeTable*> loadedTables;
 
 	KnowledgeTable* loadTable(int tableID);
-	void saveTable(KnowledgeTable* table);
+	void saveTable(int tableID, KnowledgeTable* table);
 	bool isTableLoaded(int tableID) const;
 public:
 	// konstruktorba töltjük be a táblákat ! konstruktor paraméterei legalább: userID, numofRequestedTable:int, requestedTables: int*
@@ -29,9 +29,9 @@ public:
 	bool removeTable(int tableID);
 	bool removeTableRow(int tableID, int row);
 	template <typename T>
-		T getTableData(int tableID, int row, int col) const;
+		T getTableData(int tableID, int row, int col, bool* error) const;
 	template <typename T>
-		bool setTableData(T val, int tableID, int row, int col);
+		void setTableData(T val, int tableID, int row, int col, bool* error);
 };
 
 #endif  //_BOTKNOWLEDGEHANDLER_H

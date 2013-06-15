@@ -6,16 +6,26 @@
 */
 KnowledgeTable* BotKnowledgeHandler::loadTable(int tableID)
 {
-	// TODO open xml with pugixml, using _BOT_KNOWLEDGE_RELATIVE_PATH_/botID/tableID.xml ...
-	// use KnowledgeTableXMLHandler
-	return 0;
+	string path = _BOT_KNOWLEDGE_RELATIVE_PATH_;
+	path += this->userID;
+	path += "/";
+	path += tableID;
+	path += ".xml";
+
+	return KnowledgeTableXMLHandler::loadXML(path);
 }
 
 /** Saves/serializes a knowledge table.
 */
-void BotKnowledgeHandler::saveTable(KnowledgeTable* table)
+void BotKnowledgeHandler::saveTable(int tableID, KnowledgeTable* table)
 {
-	KnowledgeTableXMLHandler::saveXML(table, _BOT_KNOWLEDGE_RELATIVE_PATH_);
+	string path = _BOT_KNOWLEDGE_RELATIVE_PATH_;
+	path += this->userID;
+	path += "/";
+	path += tableID;
+	path += ".xml";
+
+	KnowledgeTableXMLHandler::saveXML(table, path);
 }
 
 /** Returns if a knowledge table is loaded.
@@ -83,18 +93,56 @@ KnowledgeDataType BotKnowledgeHandler::getTableColumnType(int tableID, int col) 
 /** Returns knowledge table's data in specified cell.
 */
 template <typename T>
-T BotKnowledgeHandler::getTableData(int tableID, int row, int col) const
+T BotKnowledgeHandler::getTableData(int tableID, int row, int col, bool* error) const
 {
-	// TODO
+	// same precheck at setTableData()
+	if (this->isTableLoaded(tableID))
+	{
+		KnowledgeTable* ktb = loadedTables.at(tableID);
+		if (ktb->getNumOfCols > col && ktb->getNumOfRows > row && col >= 0 && row >= 0)
+		{
+			if (
+				typeof(T) == int && ktb->getColumnType(col) == KnowledgeDataType::INT
+				|| typeof(T) == std::string && ktb->getColumnType(col) == KnowledgeDataType::STRING
+				|| typeof(T) == char && ktb->getColumnType(col) == KnowledgeDataType::CHAR
+				|| typeof(T) == float && ktb->getColumnType(col) == KnowledgeDataType::FLOAT
+				|| typeof(T) == bool && ktb->getColumnType(col) == KnowledgeDataType::BOOL
+				)
+			{
+				return ktb->getData<T>(row, col);
+			}
+		}
+	}
+
+	error = true;
+	// problems with no return ?
 }
 
 /** Sets data of a specified cell.
 */
 template <typename T>
-bool BotKnowledgeHandler::setTableData(T val, int tableID, int row, int col)
+void BotKnowledgeHandler::setTableData(T val, int tableID, int row, int col, bool* error)
 {
-	// TODO
-	return 0;
+	// same precheck at getTableData()
+	if (this->isTableLoaded(tableID))
+	{
+		KnowledgeTable* ktb = loadedTables.at(tableID);
+		if (ktb->getNumOfCols > col && ktb->getNumOfRows > row && col >= 0 && row >= 0)
+		{
+			if (
+				typeof(T) == int && ktb->getColumnType(col) == KnowledgeDataType::INT
+				|| typeof(T) == std::string && ktb->getColumnType(col) == KnowledgeDataType::STRING
+				|| typeof(T) == char && ktb->getColumnType(col) == KnowledgeDataType::CHAR
+				|| typeof(T) == float && ktb->getColumnType(col) == KnowledgeDataType::FLOAT
+				|| typeof(T) == bool && ktb->getColumnType(col) == KnowledgeDataType::BOOL
+				)
+			{
+				return ktb->setData<T>(val, row, col);
+			}
+		}
+	}
+
+	error = true;
 }
 
 /** Returns number of columns of a specified table.

@@ -7,8 +7,8 @@
 */
 class KnowledgeTableXMLHandler {
 public:
-	static KnowledgeTable* loadXML(const char* xmlpath);
-	static bool saveXML(KnowledgeTable* kt, const char* xmlpath);
+	static KnowledgeTable* loadXML(string xmlpath);
+	static bool saveXML(KnowledgeTable* kt, string xmlpath);
 };
 
 #endif  //_KNOWLEDGETABLEXMLHANDLER_H

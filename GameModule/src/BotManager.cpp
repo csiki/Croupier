@@ -4,76 +4,108 @@
 #include "KnowledgeDataType.h"
 #include "BroadcastMessage.h"
 
-/// broadcast
-void BotManager::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data) {}
-/// botinfo
+// broadcast
+/** Inherited method to handle incoming broadcast messages.
+*/
+void BotManager::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data)
+{
+	// TODO
+}
+
+// botinfo
+/** Returns id of the managed AI.
+*/
 int BotManager::getID() const
 {
-	return 0;
+	return this->bot->getID();
 }
 
+/** Returns name of the managed AI.
+*/
 std::string BotManager::getName() const
 {
+	return this->bot->getName();
+}
+
+/** Returns language of the managed AI.
+*/
+int BotManager::getLang() const
+{
+	// TODO -> which language represents which number?
 	return 0;
 }
 
-int BotManager::getLang() const
-{
-	return 0;
-}
-/// botcommunicator
+// botcommunicator
+/** Returns reserved credit of the user.
+*/
 int BotManager::getReservedCredit() const
 {
-	return 0;
+	return this->reservedCredit;
 }
+
+/** Returns number of rebuys already done by the managed AI (in current game).
+*/
 int BotManager::getNumOfRebuys() const
 {
-	return 0;
+	return this->numOfRebuys;
 }
+
+
 std::string BotManager::getBotName(int botID) const
 {
 	return 0;
 }
+
 bool BotManager::isBotDealer(int botID) const
 {
 	return 0;
 }
+
 int BotManager::getBotChips(int botID) const
 {
 	return 0;
 }
+
 int BotManager::getBotPot(int botID) const
 {
 	return 0;
 }
+
 Emotion BotManager::getBotEmotion(int botID) const
 {
 	return Emotion::HIDDEN;
 }
+
 bool BotManager::isBotHandRevealed(int botID) const
 {
 	return 0;
 }
+
 int BotManager::getBotLang(int botID) const
 {
 	return 0;
 }
+
 bool BotManager::isBotInGame(int botID) const
 {
 	return 0;
 }
+
 bool BotManager::isBotInRound(bool botID) const
 {
 	return 0;
 }
+
 Card BotManager::lookAtBotHand(int botID, int cardIndex) const
 {
 	return Card::getNullCard();
 }
+
 bool BotManager::allin()
 {
 	return 0;
 }
+
 bool BotManager::call() 
 {
 	return 0;
@@ -266,7 +298,7 @@ void BotManager::setKnowledgeTableData(std::string val, int tableID, int row, in
 
 }
 void BotManager::setKnowledgeTableData(float val, int tableID, int row, int col, bool* error) {}
-/// bothandler
+// bothandler
 void BotManager::step() {}
 void BotManager::quit() {}
 bool BotManager::rebuyOrLeave()

@@ -28,7 +28,7 @@ private:
 	int numOfRebuys;
 	int reservedCredit;
 	BotKnowledgeHandler *bkHandler;
-	Bot **bot;
+	Bot *bot;
 	BroadcastStation *broadcast;
 	Hostess *hostess;
 	const Table *table;

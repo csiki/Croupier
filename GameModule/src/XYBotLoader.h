@@ -9,9 +9,9 @@
 class XYBotLoader : public BotLoader
 {
 protected:
-	Process* initProcess(const char* botFilePath);
+	Process* initProcess(string botFilePath);
 public:
-	Bot* loadBot(int botLang, const char* botFilePath);
+	Bot* loadBot(int botLang, string botFilePath);
 };
 
 #endif  //_XYBOTLOADER_H
