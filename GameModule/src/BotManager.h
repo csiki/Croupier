@@ -29,13 +29,13 @@ private:
 	int reservedCredit;
 	BotKnowledgeHandler *bkHandler;
 	Bot *bot;
-	BroadcastStation *broadcast;
 	Hostess *hostess;
 	const Table *table;
 	const Rulz *rules;
 public:
 	// broadcast
 	void receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data);
+
 	// botinfo
 	int getID() const;
 	std::string getName() const;
@@ -55,6 +55,8 @@ public:
 	Card lookAtBotHand(int botID, int cardIndex) const;
 	bool allin();
 	bool call();
+	bool canTalk() const;
+	bool canStep() const;
 	bool canAllin() const;
 	bool canCall() const;
 	bool canCheck() const;
@@ -72,10 +74,11 @@ public:
 	int getBotIDToTheLeft(int nth = 1, bool onlyInRound = false) const;
 	int getCallAmount() const;
 	int getMinRaise() const;
-	int getBigBlindAtRound(int round) const;
+	int getBigBlindAtRound(int round = -1) const; // -1 means current round
 	int getBlindShiftDeadline(int shiftDeadlineIndex) const;
 	int getNextBlindShiftDeadline() const;
-	int getSmallBlindAtRound(int round) const;
+	int getSmallBlindAtRound(int round = -1) const; // -1 means current round
+	int getCurrentRound() const;
 	int getTableNumOfCards() const;
 	Card getTableCard(int cardIndex) const;
 	int getPotSum() const;

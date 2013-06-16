@@ -28,9 +28,9 @@ public:
 	bool isInRound() const;
 	Card lookAtHand(int cardIndex) const;
 
-	virtual int getID() = 0;
-	virtual std::string getName() = 0;
-	virtual int getLang() = 0;
+	virtual int getID() const = 0;
+	virtual std::string getName() const = 0;
+	virtual int getLang() const = 0;
 };
 
 #endif  //_BOTINFO_H

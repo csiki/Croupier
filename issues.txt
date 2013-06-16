@@ -2,3 +2,6 @@ Bitcoin beépítése
 Botok metódusainak futási idejének mérése
 Botok memory usage-jének mérése - http://stackoverflow.com/questions/910172/track-c-memory-allocations
 Hogy helyes e a template adat azt ne a botknowledgehandlerbe, hanem már a communicatorbe egyszerûbb lenne ellenõrizni és akkor nem kell plusz error bool tovább meg visszaadható null return.
+Rendes exception rendszer kell
+Logolási rendszert külön késõbb megcsinálni
+Virtual fvényeket is berakni constnak (amelyiket kell nyilván)

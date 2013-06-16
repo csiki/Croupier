@@ -13,6 +13,8 @@
 #include <map>
 #include <vector>
 #include <fstream>
+#include <memory>
+#include <algorithm>
 
 namespace
 {

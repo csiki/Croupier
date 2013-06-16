@@ -15,6 +15,13 @@ int BotInfo::getPot() const
 	return this->pot;
 }
 
+/** Returns AI's current emotion.
+*/
+Emotion BotInfo::getEmotion() const
+{
+	return this->emotion;
+}
+
 /** Returns if AI's the dealer.
 */
 bool BotInfo::isDealer() const
