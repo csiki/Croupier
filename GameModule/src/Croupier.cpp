@@ -17,11 +17,6 @@ void Croupier::betRound()
 
 }
 
-void Croupier::fillDeck(Deck& deck)
-{
-
-}
-
 void Croupier::dealing()
 {
 

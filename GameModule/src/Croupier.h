@@ -34,7 +34,6 @@ private:
 	void burn(Card* c);
 	void collectCards();
 	void betRound();
-	void fillDeck(Deck& deck);
 	void dealing();
 	void preflop();
 	void flop();
