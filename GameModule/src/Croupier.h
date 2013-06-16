@@ -27,7 +27,6 @@ private:
 	int* kicksAtRound;
 	const Rulz* rules;
 	Table* table; // direkt nem konstans
-	BroadcastStation* broadcast;
 	HandEvaluator* handEvaluator;
 
 	int nextActiveBot(int from = -1) const; // parameter from default: currentBotIndex

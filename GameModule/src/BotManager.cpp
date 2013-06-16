@@ -50,117 +50,257 @@ int BotManager::getNumOfRebuys() const
 	return this->numOfRebuys;
 }
 
-
+/** Returns a specified AI's name.
+*/
 std::string BotManager::getBotName(int botID) const
 {
-	return 0;
+	return this->hostess->getBotByID(botID)->getName();
 }
 
+/** Returns if a specified AI is a dealer.
+*/
 bool BotManager::isBotDealer(int botID) const
 {
-	return 0;
+	return this->hostess->getBotByID(botID)->isDealer();
 }
 
+/** Returns a specified AI's chips at hand.
+*/
 int BotManager::getBotChips(int botID) const
 {
-	return 0;
+	return this->hostess->getBotByID(botID)->getChips();
 }
 
+/** Returns a specified AI's pot in game.
+*/
 int BotManager::getBotPot(int botID) const
 {
-	return 0;
+	return this->hostess->getBotByID(botID)->getPot();
 }
 
+/** Returns a specified AI's name.
+*/
 Emotion BotManager::getBotEmotion(int botID) const
 {
-	return Emotion::HIDDEN;
+	return this->hostess->getBotByID(botID)->getEmotion();
 }
 
+/** Returns if a specified AI's hand is revealed.
+*/
 bool BotManager::isBotHandRevealed(int botID) const
 {
-	return 0;
+	return this->hostess->getBotByID(botID)->isHandRevealed();
 }
 
+/** Returns a specified AI's languge it is written in.
+*/
 int BotManager::getBotLang(int botID) const
 {
-	return 0;
+	return this->hostess->getBotByID(botID)->getLang();
 }
 
+/** Returns if a specified AI's is in game (haven't fallen out or quited).
+*/
 bool BotManager::isBotInGame(int botID) const
 {
-	return 0;
+	return this->hostess->getBotByID(botID)->isInGame();
 }
 
+/** Returns if a specified AI's is in round (in game and haven't folded).
+*/
 bool BotManager::isBotInRound(bool botID) const
 {
-	return 0;
+	return this->hostess->getBotByID(botID)->isInRound();
 }
 
+/** Returns a specified AI's card in hand if revealed, else NullCard.
+*/
 Card BotManager::lookAtBotHand(int botID, int cardIndex) const
 {
-	return Card::getNullCard();
+	return this->hostess->getBotByID(botID)->lookAtHand(cardIndex);
 }
 
-bool BotManager::allin()
+/** Returns if a specified AI can talk.
+*/
+bool BotManager::canTalk() const
 {
-	return 0;
+	return this->talkToken;
 }
 
-bool BotManager::call() 
+/** Returns if a specified AI can step (check or fold or ...).
+*/
+bool BotManager::canStep() const
 {
-	return 0;
+	return this->stepToken;
 }
+
+/** Returns if allin is a possible movement.
+*/
 bool BotManager::canAllin() const
 {
-	return 0;
+	return this->stepToken && this->chips > 0;
 }
+
+/** Returns if call is a possible movement.
+*/
 bool BotManager::canCall() const
 {
-	return 0;
+	return this->stepToken
+		&& (this->hostess->getCallAmount() - this->pot) > 0 // to have anything to call (else should check)
+		&& this->chips <= (this->hostess->getCallAmount() - this->pot);
 }
+
+/** Returns if check is a possible movement.
+*/
 bool BotManager::canCheck() const
 {
-	return 0;
+	return this->stepToken && (this->hostess->getCallAmount() - this->pot) == 0;
 }
+
+/** Returns if fold is a possible movement.
+*/
 bool BotManager::canFold() const
 {
-	return 0;
+	return this->stepToken;
 }
+
+/** Returns if raising raiseAmount is a possible movement.
+ *  Checks if the raiseAmount (= potToPutIn - callAmount) minimum the amount of current bigblind.
+*/
 bool BotManager::canRaise(int raiseAmount) const
 {
-	return 0;
+	return this->stepToken && raiseAmount > this->getBigBlindAtRound();
 }
+
+/** Bot signals allin.
+*/
+bool BotManager::allin()
+{
+	if (this->canAllin())
+	{
+		this->pot += this->chips;
+		this->chips = 0;
+
+		this->stepToken = false;
+		return true;
+	}
+
+	return false;
+}
+
+/** Bot signals call.
+*/
+bool BotManager::call() 
+{
+	if (this->canCall())
+	{
+		int callAmount = this->hostess->getCallAmount() - this->pot;
+		this->chips -= callAmount;
+		this->pot += callAmount;
+
+		this->stepToken = false;
+		return true;
+	}
+
+	return false;
+}
+
+/** Bot signals check.
+*/
 bool BotManager::check()
 {
-	return 0;
+	if (this->canCheck())
+	{
+		this->stepToken = false;
+		return true;
+	}
+
+	return false;
 }
+
+/** Bot signals fold.
+*/
 bool BotManager::fold()
 {
-	return 0;
+	if (this->canFold())
+	{
+		this->inRound = false;
+
+		this->stepToken = false;
+		return true;
+	}
+
+	return false;
 }
+
+/** Bot signals raise.
+*/
 bool BotManager::raise(int raiseAmount)
 {
-	return 0;
+	if (this->canRaise(raiseAmount))
+	{
+		int chipsToMove = this->hostess->getCallAmount() - this->pot + raiseAmount;
+		this->chips -= chipsToMove;
+		this->pot += chipsToMove;
+
+		this->stepToken = false;
+		return true;
+	}
+
+	return false;
 }
+
+/** Returns if a rebuy is possible.
+*/
 bool BotManager::canRebuy(int rebuyAmount) const
 {
-	return 0;
+	return this->numOfRebuys < this->rules->getNumOfRebuysAllowed()
+		&& this->hostess->getCurrentRound() <= this->rules->getRebuyDeadline()
+		&& rebuyAmount <= this->reservedCredit;
 }
+
+/** Bot signals rebuy.
+*/
 bool BotManager::rebuy(int rebuyAmount)
 {
-	return 0;
+	if (this->canRebuy(rebuyAmount))
+	{
+		this->reservedCredit -= rebuyAmount;
+		this->chips += rebuyAmount;
+
+		return true;
+	}
+
+	return false;
 }
+
+/** Bot signals talk.
+*/
 void BotManager::talk(Comment comment)
 {
+	if (this->talkToken)
+	{
+		int* p = new int;
+		*p = comment;
+		this->broadcast(BroadcastMessage::LISTEN, 1, p);
+		delete p;
+	}
 }
+
+/** Returns the number of AIs.
+*/
 int BotManager::getNumOfBots(bool onlyInGame, bool onlyInRound) const
 {
-	return 0;
+	return this->hostess->getNumOfBots(onlyInGame, onlyInRound);
 }
+
+/** Returns AI's id by indexing (index: from 0 to n-1 same order at table; n: number of bots).
+*/
 int BotManager::getBotIDByIndex(int index) const
 {
-	return 0;
+	this->table->getBotByIndex(index)->getID();
 }
+
 int BotManager::getBotIDToTheRight(int nth, bool onlyInRound) const
 {
 	return 0;
@@ -193,6 +333,11 @@ int BotManager::getSmallBlindAtRound(int round) const
 {
 	return 0;
 }
+int BotManager::getCurrentRound() const
+{
+	return 0;
+}
+
 int BotManager::getTableNumOfCards() const
 {
 	return 0;

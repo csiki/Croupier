@@ -6,6 +6,8 @@ void Hostess::fillBotsByID()
 {
 }
 
+/** Returns the maximum of the pots on table (by AIs).
+*/
 int Hostess::getCallAmount() const
 {
 	return 0;
@@ -46,3 +48,7 @@ void Hostess::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, c
 
 }
 
+int Hostess::getCurrentRound() const
+{
+	return 0;
+}

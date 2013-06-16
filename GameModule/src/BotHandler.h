@@ -5,7 +5,7 @@
 
 /**	Interface for the Croupier to direct AIs.
 */
-class BotHandler : public BotInfo
+class BotHandler : virtual public BotInfo
 {
 protected:
 	bool stepToken;
@@ -22,9 +22,9 @@ public:
 	virtual void step() = 0;
 	virtual void quit() = 0;
 	virtual bool rebuyOrLeave() = 0;
-	virtual int getID() = 0;
-	virtual std::string getName() = 0;
-	virtual int getLang() = 0;
+	virtual int getID() const = 0;
+	virtual std::string getName() const = 0;
+	virtual int getLang() const = 0;
 };
 
 #endif  //_BOTHANDLER_H

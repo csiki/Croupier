@@ -18,6 +18,7 @@ private:
 	int callAmount;
 	bool* botsInRound;
 	bool* botsInGame;
+	int round;
 
 	void fillBotsByID();
 public:
@@ -32,6 +33,7 @@ public:
 	int getBotIDByIndex(int index) const;
 	int getNumOfBots(bool onlyInGame, bool onlyInRound) const;
 	void receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data);
+	int getCurrentRound() const;
 };
 
 #endif  //_HOSTESS_H

@@ -1,9 +1,6 @@
 #if !defined(_DECK_H)
 #define _DECK_H
 
-#include <vector>
-#include <memory>
-#include <algorithm>
 #include "Card.h"
 
 using namespace std;

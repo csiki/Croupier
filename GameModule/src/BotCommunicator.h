@@ -11,7 +11,7 @@
 
 /**	Communication interface for AIs.
 */
-class BotCommunicator : public BotInfo
+class BotCommunicator : virtual public BotInfo
 {
 public:
 	// botmanager
@@ -35,6 +35,8 @@ public:
 	virtual bool isBotInRound(bool botID) = 0;
 	virtual Card lookAtBotHand(int botID, int cardIndex) = 0;
 	// move
+	virtual bool canTalk() = 0;
+	virtual bool canStep() = 0;
 	virtual bool allin() = 0;
 	virtual bool call() = 0;
 	virtual bool canAllin() = 0;
@@ -55,10 +57,11 @@ public:
 	virtual int getBotIDToTheLeft(int nth = 1, bool onlyInRound = false) = 0;
 	virtual int getCallAmount() = 0;
 	virtual int getMinRaise() = 0;
-	virtual int getBigBlindAtRound(int round) = 0;
+	virtual int getBigBlindAtRound(int round = -1) = 0; // -1 means current round
 	virtual int getBlindShiftDeadline(int shiftDeadlineIndex) = 0;
 	virtual int getNextBlindShiftDeadline() = 0;
-	virtual int getSmallBlindAtRound(int round) = 0;
+	virtual int getSmallBlindAtRound(int round = -1) = 0; // -1 means current round
+	virtual int getCurrentRound() = 0;
 	// table
 	virtual int getTableNumOfCards();
 	virtual Card getTableCard(int cardIndex) = 0;
