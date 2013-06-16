@@ -1,9 +1,10 @@
 #if !defined(_DECK_H)
 #define _DECK_H
 
-#include <list>
-#include "Card.h"
+#include <vector>
 #include <memory>
+#include <algorithm>
+#include "Card.h"
 
 using namespace std;
 
@@ -12,7 +13,7 @@ using namespace std;
 class Deck
 {
 private:
-	list<auto_ptr<Card>> cards;
+	vector<Card*> cards;
 public:
 	Deck();
 	int num() const;

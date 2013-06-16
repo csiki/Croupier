@@ -1,14 +1,17 @@
 #include "stdafx.h"
 #include "Log.h"
 
-void Log::getEventsIterators(list<Event*>::iterator& begin, list<Event*>::iterator& end) const
+/** Returns the begin and end const_iterator of the events list.
+*/
+void Log::getEventsIterators(list<Event*>::const_iterator& begin, list<Event*>::const_iterator& end) const
 {
-	//TODO: ezt mi a rákért nem fogadja el?
-	//begin = events.begin();
-	//end = events.end();
+	begin = events.cbegin();
+	end = events.cend();
 }
 
+/** Push an event to the log.
+*/
 void Log::log(Event* e)
 {
-	events.push_front(e);
+	events.push_back(e);
 }

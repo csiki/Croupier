@@ -15,7 +15,7 @@ private:
 	list<Event*> events;
 public:
 	void log(Event* e);
-	void getEventsIterators(list<Event*>::iterator& begin, list<Event*>::iterator& end) const;
+	void getEventsIterators(list<Event*>::const_iterator& begin, list<Event*>::const_iterator& end) const;
 };
 
 #endif  //_LOG_H
