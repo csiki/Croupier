@@ -3,6 +3,7 @@
 
 #include <list>
 #include "Card.h"
+#include <memory>
 
 using namespace std;
 
@@ -11,8 +12,9 @@ using namespace std;
 class Deck
 {
 private:
-	list<Card*> cards;
+	list<auto_ptr<Card>> cards;
 public:
+	Deck();
 	int num() const;
 	Card* pop();
 	void push(Card* c);

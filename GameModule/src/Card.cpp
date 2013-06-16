@@ -8,6 +8,10 @@ Card Card::getNullCard()
 
 bool Card::isNullCard(Card& card)
 {
+	if (card.suit == Card::Suit::NULLSUIT || card.rank == Card::Rank::NULLRANK)
+	{
+		return true;
+	}
 	return false;
 }
 
