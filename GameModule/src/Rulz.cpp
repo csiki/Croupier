@@ -41,7 +41,7 @@ bool Rulz::isBotKnowledgeUseAllowed() const
 	return 0;
 }
 
-long Rulz::getAllowedBotCalcTime(int langID) const
+int Rulz::getAllowedBotCalcTime(int langID) const
 {
 	return 0;
 }

@@ -15,6 +15,9 @@
 #include <fstream>
 #include <memory>
 #include <algorithm>
+#include <list>
+
+using namespace std;
 
 namespace
 {
