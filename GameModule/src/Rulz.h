@@ -20,7 +20,7 @@ private:
 	bool emotionAllowed;
 	bool knowledgeBaseAllowed;
 	int maxNumOfRaises;
-	long allowedBotCalcTime;
+	int *allowedBotCalcTime;
 	int startingChips;
 public:
 	int getBigBlind(int index) const;
@@ -32,7 +32,7 @@ public:
 	bool isTalkAllowed() const;
 	bool isEmotionAllowed() const;
 	bool isBotKnowledgeUseAllowed() const;
-	long getAllowedBotCalcTime(int langID) const;
+	int getAllowedBotCalcTime(int langID) const;
 	int getStartingChips() const;
 };
 
