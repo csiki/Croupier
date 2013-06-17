@@ -47,14 +47,44 @@ bool KnowledgeTable::removeRow(int row)
 	return 0;
 }
 
-template <typename T>
-T KnowledgeTable::getData(int row, int col) const
+bool KnowledgeTable::getData(int& val, int row, int col) const
 {
-
+	return 0;
+}
+bool KnowledgeTable::getData(bool& val, int row, int col) const
+{
+	return 0;
+}
+bool KnowledgeTable::getData(char& val, int row, int col) const
+{
+	return 0;
+}
+bool KnowledgeTable::getData(string& val, int row, int col) const
+{
+	return 0;
+}
+bool KnowledgeTable::getData(float& val, int row, int col) const
+{
+	return 0;
 }
 
-template <typename T>
-bool KnowledgeTable::setData(T val, int row, int col)
+bool KnowledgeTable::setData(int val, int row, int col)
+{
+	return 0;
+}
+bool KnowledgeTable::setData(bool val, int row, int col)
+{
+	return 0;
+}
+bool KnowledgeTable::setData(char val, int row, int col)
+{
+	return 0;
+}
+bool KnowledgeTable::setData(string val, int row, int col)
+{
+	return 0;
+}
+bool KnowledgeTable::setData(float val, int row, int col)
 {
 	return 0;
 }

@@ -31,12 +31,17 @@ bool Rulz::isTalkAllowed() const
 	return 0;
 }
 
+bool Rulz::isEmotionAllowed() const
+{
+	return 0;
+}
+
 bool Rulz::isBotKnowledgeUseAllowed() const
 {
 	return 0;
 }
 
-long Rulz::getAllowedBotCalcTime() const
+long Rulz::getAllowedBotCalcTime(int langID) const
 {
 	return 0;
 }
@@ -46,3 +51,7 @@ int Rulz::getStartingChips() const
 	return 0;
 }
 
+int Rulz::getNumOfBlinds() const
+{
+	return 0;
+}

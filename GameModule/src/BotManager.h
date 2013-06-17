@@ -14,6 +14,7 @@
 #include "Comment.h"
 #include "KnowledgeDataType.h"
 #include "BroadcastMessage.h"
+#include "Comment.h"
 
 // Warning: botID == entityID only when the bot is created and used by the same user.
 
@@ -32,6 +33,9 @@ private:
 	Hostess *hostess;
 	const Table *table;
 	const Rulz *rules;
+	
+	/// Bot's index at table
+	int nthAtTable;
 public:
 	// broadcast
 	void receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data);
@@ -85,33 +89,35 @@ public:
 	int getBigBlind(int blindIndex) const;
 	int getRebuyDeadline() const;
 	int getSmallBlind(int blindIndex) const;
-	long getAllowedBotCalcTime() const;
+	long getAllowedBotCalcTime(int langID) const;
 	int getStartingChips() const;
 	int genNumOfBlinds() const;
 	int getNumOfRebuysAllowed() const;
 	bool isTalkAllowed() const;
+	bool isEmotionAllowed() const;
 	bool isBotKnowledgeUseAllowed() const;
 	int addKnowledgeTableRow(int tableID);
 	int createKnowledgeTable(int numOfCols, KnowledgeDataType* colTypes);
 	KnowledgeDataType getKnowledgeTableDataType(int tableID, int col) const;
-	int getKnowledgeTableDataInt(int tableID, int row, int col, bool* error = 0) const;
-	bool getKnowledgeTableDataBool(int tableID, int row, int col, bool* error = 0) const;
-	char getKnowledgeTableDataChar(int tableID, int row, int col, bool* error = 0) const;
-	std::string getKnowledgeTableDataString(int tableID, int row, int col, bool* error = 0) const;
-	float getKnowledgeTableDataFloat(int tableID, int row, int col, bool* error = 0) const;
 	int getKnowledgeTableNumOfCols(int tableID) const;
 	int getKnowledgeTableNumOfRows(int tableID) const;
 	bool removeKnowledgeTable(int tableID);
 	bool removeKnowledgeTableRow(int tableID, int row);
-	void setKnowledgeTableData(int val, int tableID, int row, int col, bool* error = 0);
-	void setKnowledgeTableData(bool val, int tableID, int row, int col, bool* error = 0);
-	void setKnowledgeTableData(char val, int tableID, int row, int col, bool* error = 0);
-	void setKnowledgeTableData(char* val, int tableID, int row, int col, bool* error = 0);
-	void setKnowledgeTableData(std::string val, int tableID, int row, int col, bool* error = 0); // same as char*
-	void setKnowledgeTableData(float val, int tableID, int row, int col, bool* error = 0);
+
+	bool getKnowledgeTableData(int& val, int tableID, int row, int col) const;
+	bool getKnowledgeTableData(bool& val, int tableID, int row, int col) const;
+	bool getKnowledgeTableData(char& val, int tableID, int row, int col) const;
+	bool getKnowledgeTableData(std::string& val, int tableID, int row, int col) const;
+	bool getKnowledgeTableData(float& val, int tableID, int row, int col) const;
+
+	bool setKnowledgeTableData(int val, int tableID, int row, int col);
+	bool setKnowledgeTableData(bool val, int tableID, int row, int col);
+	bool setKnowledgeTableData(char val, int tableID, int row, int col);
+	bool setKnowledgeTableData(std::string val, int tableID, int row, int col);
+	bool setKnowledgeTableData(float val, int tableID, int row, int col);
 	// bothandler
 	void step();
-	void quit();
+	void leave();
 	bool rebuyOrLeave();
 };
 
