@@ -1,8 +1,5 @@
 #include "stdafx.h"
 #include "BotManager.h"
-#include "Comment.h"
-#include "KnowledgeDataType.h"
-#include "BroadcastMessage.h"
 
 // broadcast
 /** Inherited method to handle incoming broadcast messages.
@@ -31,8 +28,7 @@ std::string BotManager::getName() const
 */
 int BotManager::getLang() const
 {
-	// TODO -> which language represents which number?
-	return 0;
+	return this->bot->getLang();
 }
 
 // botcommunicator
@@ -298,155 +294,400 @@ int BotManager::getNumOfBots(bool onlyInGame, bool onlyInRound) const
 */
 int BotManager::getBotIDByIndex(int index) const
 {
-	this->table->getBotByIndex(index)->getID();
+	return this->table->getBotByIndex(index)->getID();
 }
 
+/** Returns nth AI's id to the right (at table).
+*/
 int BotManager::getBotIDToTheRight(int nth, bool onlyInRound) const
 {
-	return 0;
+	return this->hostess->getBotIDToTheRight(this->nthAtTable, nth, onlyInRound);
 }
+
+/** Returns nth AI's id to the left (at table).
+*/
 int BotManager::getBotIDToTheLeft(int nth, bool onlyInRound) const
 {
-	return 0;
+	return this->hostess->getBotIDToTheLeft(this->nthAtTable, nth, onlyInRound);
 }
+
+/** Returns the maximum of pots on table / AI.
+*/
 int BotManager::getCallAmount() const
 {
-	return 0;
+	return this->hostess->getCallAmount();
 }
+
+/** Returns the minimum of raise that can be put in above callamount (~bigblind).
+*/
 int BotManager::getMinRaise() const
 {
-	return 0;
+	return this->hostess->getMinRaise();
 }
+
+/** Returns big blind at specific round (present/future/past).
+*/
 int BotManager::getBigBlindAtRound(int round) const
 {
-	return 0;
+	return this->hostess->getBigBlindAtRound(round);
 }
+
+/** Returns the round when the croupier shifts blind at shiftDeadlineIndex time.
+*/
 int BotManager::getBlindShiftDeadline(int shiftDeadlineIndex) const
 {
-	return 0;
+	return this->rules->getBlindShiftDeadline(shiftDeadlineIndex);
 }
+
+/** Returns the number of the round when croupier shifts blind next time.
+*/
 int BotManager::getNextBlindShiftDeadline() const
 {
-	return 0;
+	return this->hostess->getNextBlindShiftDeadline();
 }
+
+/** Returns small blind at specific round (present/future/past).
+*/
 int BotManager::getSmallBlindAtRound(int round) const
 {
-	return 0;
+	return this->hostess->getSmallBlindAtRound(round);
 }
+
+/** Returns the number of the current round.
+*/
 int BotManager::getCurrentRound() const
 {
-	return 0;
+	return this->hostess->getCurrentRound();
 }
 
+/** Returns the number of cards on table (flop = 3 etc.).
+*/
 int BotManager::getTableNumOfCards() const
 {
-	return 0;
+	return this->table->getNumOfCards();
 }
+
+/** Returns a card from table.
+*/
 Card BotManager::getTableCard(int cardIndex) const
 {
-	return Card::getNullCard();
+	return *this->table->getCard(cardIndex);
 }
+
+/** Returns the amount of pot on table.
+*/
 int BotManager::getPotSum() const
 {
-	return 0;
+	return this->table->getPot();
 }
+
+/** Returns a big blind.
+*/
 int BotManager::getBigBlind(int blindIndex) const
 {
-	return 0;
+	return this->rules->getBigBlind(blindIndex);
 }
+
+/** Returns deadline till rebuy is allowed.
+*/
 int BotManager::getRebuyDeadline() const
 {
-	return 0;
+	return this->rules->getRebuyDeadline();
 }
+
+/** Returns small blind.
+*/
 int BotManager::getSmallBlind(int blindIndex) const
 {
-	return 0;
+	return this->rules->getSmallBlind(blindIndex);
 }
-long BotManager::getAllowedBotCalcTime() const
+
+/** Returns allowed time for AI calculation with specific language (0 = cpp etc.).
+*/
+long BotManager::getAllowedBotCalcTime(int langID) const
 {
-	return 0;
+	return this->rules->getAllowedBotCalcTime(langID);
 }
+
+/** Returns the amount of chips with all the bot starts.
+*/
 int BotManager::getStartingChips() const
 {
-	return 0;
+	return this->rules->getStartingChips();
 }
+
+/** Returns number of blind shifts / or the number of blinds.
+*/
 int BotManager::genNumOfBlinds() const
 {
-	return 0;
+	return this->rules->getNumOfBlinds();
 }
+
+/** Returns number of rebuys allowed.
+*/
 int BotManager::getNumOfRebuysAllowed() const
 {
-	return 0;
+	return this->rules->getNumOfRebuysAllowed();
 }
+
+/** Returns if talk is allowed.
+*/
 bool BotManager::isTalkAllowed() const
 {
-	return 0;
+	return this->rules->isTalkAllowed();
 }
+
+/** Returns if expressing emotions are allowed.
+*/
+bool BotManager::isEmotionAllowed() const
+{
+	return this->rules->isEmotionAllowed();
+}
+
+/** Returns if using botknowledge is permitted.
+*/
 bool BotManager::isBotKnowledgeUseAllowed() const
 {
-	return 0;
+	return this->rules->isBotKnowledgeUseAllowed();
 }
+
+/** Adds a row to the specified table.
+*/
 int BotManager::addKnowledgeTableRow(int tableID)
 {
+	if (this->rules->isBotKnowledgeUseAllowed())
+	{
+		return this->bkHandler->addTableRow(tableID);
+	}
+
 	return 0;
 }
+
+/** Creates a knowledge table.
+*/
 int BotManager::createKnowledgeTable(int numOfCols, KnowledgeDataType* colTypes)
 {
+	if (this->rules->isBotKnowledgeUseAllowed())
+	{
+		return this->createKnowledgeTable(numOfCols, colTypes);
+	}
+
 	return 0;
 }
+
+/** Returns data type of specific column.
+*/
 KnowledgeDataType BotManager::getKnowledgeTableDataType(int tableID, int col) const
 {
-	return KnowledgeDataType::BOOL;
+	if (this->rules->isBotKnowledgeUseAllowed())
+	{
+		return this->bkHandler->getTableColumnType(tableID, col);
+	}
+
+	return KnowledgeDataType::NONE;
 }
-int BotManager::getKnowledgeTableDataInt(int tableID, int row, int col, bool* error) const
+
+/** Gets knowledge table data (int).
+*/
+bool BotManager::getKnowledgeTableData(int& val, int tableID, int row, int col) const
 {
-	return 0;
+	if (this->rules->isBotKnowledgeUseAllowed())
+	{
+		return this->bkHandler->getTableData(val, tableID, row, col);
+	}
+
+	return false;
 }
-bool BotManager::getKnowledgeTableDataBool(int tableID, int row, int col, bool* error) const
+
+/** Gets knowledge table data (bool).
+*/
+bool BotManager::getKnowledgeTableData(bool& val, int tableID, int row, int col) const
 {
-	return 0;
+	if (this->rules->isBotKnowledgeUseAllowed())
+	{
+		return this->bkHandler->getTableData(val, tableID, row, col);
+	}
+
+	return false;
 }
-char BotManager::getKnowledgeTableDataChar(int tableID, int row, int col, bool* error) const
+
+/** Gets knowledge table data (char).
+*/
+bool BotManager::getKnowledgeTableData(char& val, int tableID, int row, int col) const
 {
-	return 0;
+	if (this->rules->isBotKnowledgeUseAllowed())
+	{
+		return this->bkHandler->getTableData(val, tableID, row, col);
+	}
+
+	return false;
 }
-std::string BotManager::getKnowledgeTableDataString(int tableID, int row, int col, bool* error) const
+
+/** Gets knowledge table data (string).
+*/
+bool BotManager::getKnowledgeTableData(std::string& val, int tableID, int row, int col) const
 {
-	return 0;
+	if (this->rules->isBotKnowledgeUseAllowed())
+	{
+		return this->bkHandler->getTableData(val, tableID, row, col);
+	}
+
+	return false;
 }
-float BotManager::getKnowledgeTableDataFloat(int tableID, int row, int col, bool* error) const
+
+/** Gets knowledge table data (float).
+*/
+bool BotManager::getKnowledgeTableData(float& val, int tableID, int row, int col) const
 {
-	return 0;
+	if (this->rules->isBotKnowledgeUseAllowed())
+	{
+		return this->bkHandler->getTableData(val, tableID, row, col);
+	}
+
+	return false;
 }
+
+/** Sets data at specific cell in a knowledge table (int).
+*/
+bool BotManager::setKnowledgeTableData(int val, int tableID, int row, int col)
+{
+	if (this->rules->isBotKnowledgeUseAllowed())
+	{
+		return this->bkHandler->setTableData(val, tableID, row, col);
+	}
+
+	return false;
+}
+
+/** Sets data at specific cell in a knowledge table (bool).
+*/
+bool BotManager::setKnowledgeTableData(bool val, int tableID, int row, int col)
+{
+	if (this->rules->isBotKnowledgeUseAllowed())
+	{
+		return this->bkHandler->setTableData(val, tableID, row, col);
+	}
+
+	return false;
+}
+
+/** Sets data at specific cell in a knowledge table (char).
+*/
+bool BotManager::setKnowledgeTableData(char val, int tableID, int row, int col)
+{
+	if (this->rules->isBotKnowledgeUseAllowed())
+	{
+		return this->bkHandler->setTableData(val, tableID, row, col);
+	}
+
+	return false;
+}
+
+/** Sets data at specific cell in a knowledge table (std::string).
+*/
+bool BotManager::setKnowledgeTableData(std::string val, int tableID, int row, int col)
+{
+	if (this->rules->isBotKnowledgeUseAllowed())
+	{
+		return this->bkHandler->setTableData(val, tableID, row, col);
+	}
+
+	return false;
+}
+
+/** Sets data at specific cell in a knowledge table (float).
+*/
+bool BotManager::setKnowledgeTableData(float val, int tableID, int row, int col)
+{
+	if (this->rules->isBotKnowledgeUseAllowed())
+	{
+		return this->bkHandler->setTableData(val, tableID, row, col);
+	}
+
+	return false;
+}
+
+/** Returns number of columns of specific knowledge table.
+*/
 int BotManager::getKnowledgeTableNumOfCols(int tableID) const
 {
+	if (this->rules->isBotKnowledgeUseAllowed())
+	{
+		return this->bkHandler->getTableNumOfCols(tableID);
+	}
+
 	return 0;
 }
+
+/** Returns number of rows of specific knowledge table.
+*/
 int BotManager::getKnowledgeTableNumOfRows(int tableID) const
 {
+	if (this->rules->isBotKnowledgeUseAllowed())
+	{
+		return this->bkHandler->getTableNumOfRows(tableID);
+	}
+
 	return 0;
 }
+
+/** Removes a specific knowledge table permanently.
+*/
 bool BotManager::removeKnowledgeTable(int tableID)
 {
-	return 0;
+	if (this->rules->isBotKnowledgeUseAllowed())
+	{
+		return this->bkHandler->removeTable(tableID);
+	}
+
+	return false;
 }
+
+/** Removes a specific row of a knowledge table permanently.
+*/
 bool BotManager::removeKnowledgeTableRow(int tableID, int row)
 {
-	return 0;
-}
-void BotManager::setKnowledgeTableData(int val, int tableID, int row, int col, bool* error) {}
-void BotManager::setKnowledgeTableData(bool val, int tableID, int row, int col, bool* error) {}
-void BotManager::setKnowledgeTableData(char val, int tableID, int row, int col, bool* error) {}
-void BotManager::setKnowledgeTableData(char* val, int tableID, int row, int col, bool* error) {}
-void BotManager::setKnowledgeTableData(std::string val, int tableID, int row, int col, bool* error) // same as char*
-{
+	if (this->rules->isBotKnowledgeUseAllowed())
+	{
+		return this->bkHandler->removeTableRow(tableID, row);
+	}
 
+	return false;
 }
-void BotManager::setKnowledgeTableData(float val, int tableID, int row, int col, bool* error) {}
+
 // bothandler
-void BotManager::step() {}
-void BotManager::quit() {}
+/** Croupier signals that AI should make a move.
+*/
+void BotManager::step()
+{
+	// TODO idõt mérni !!!
+	this->bot->step();
+
+	if (this->stepToken)
+	{
+		this->fold(); // default move if no made
+	}
+}
+
+/** Croupier signals that AI should quit permanently.
+*/
+void BotManager::leave()
+{
+	// TODO idõt mérni !!!
+	this->bot->leave();
+}
+
+/** Croupier signals that AI should rebuy or else leave the game.
+*/
 bool BotManager::rebuyOrLeave()
 {
-	return 0;
+	// TODO idõt mérni !!!
+	this->bot->rebuyOrLeave();
+
+	if (this->chips > 0)
+	{
+		return true;
+	}
+
+	return false;
 }

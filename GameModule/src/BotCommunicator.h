@@ -70,31 +70,33 @@ public:
 	virtual int getBigBlind(int blindIndex) = 0;
 	virtual int getRebuyDeadline() = 0;
 	virtual int getSmallBlind(int blindIndex) = 0;
-	virtual long getAllowedBotCalcTime() = 0;
+	virtual long getAllowedBotCalcTime(int langID) = 0;
 	virtual int getStartingChips() = 0;
 	virtual int genNumOfBlinds() = 0;
 	virtual int getNumOfRebuysAllowed() = 0;
 	virtual bool isTalkAllowed() = 0;
+	virtual bool isEmotionAllowed() = 0;
 	virtual bool isBotKnowledgeUseAllowed() = 0;
 	// knowledge handler
+	virtual bool getKnowledgeTableData(int& val, int tableID, int row, int col) = 0;
+	virtual bool getKnowledgeTableData(bool& val, int tableID, int row, int col) = 0;
+	virtual bool getKnowledgeTableData(char& val, int tableID, int row, int col) = 0;
+	virtual bool getKnowledgeTableData(std::string& val, int tableID, int row, int col) = 0;
+	virtual bool getKnowledgeTableData(float& val, int tableID, int row, int col) = 0;
+
+	virtual bool setKnowledgeTableData(int val, int tableID, int row, int col) = 0;
+	virtual bool setKnowledgeTableData(bool val, int tableID, int row, int col) = 0;
+	virtual bool setKnowledgeTableData(char val, int tableID, int row, int col) = 0;
+	virtual bool setKnowledgeTableData(std::string val, int tableID, int row, int col) = 0;
+	virtual bool setKnowledgeTableData(float val, int tableID, int row, int col) = 0;
+
+	virtual KnowledgeDataType getKnowledgeTableDataType(int tableID, int col) = 0;
 	virtual int addKnowledgeTableRow(int tableID) = 0;
 	virtual int createKnowledgeTable(int numOfCols, KnowledgeDataType* colTypes) = 0;
-	virtual KnowledgeDataType getKnowledgeTableDataType(int tableID, int col) = 0;
-	virtual int getKnowledgeTableDataInt(int tableID, int row, int col, bool* error = 0) = 0;
-	virtual bool getKnowledgeTableDataBool(int tableID, int row, int col, bool* error = 0) = 0;
-	virtual char getKnowledgeTableDataChar(int tableID, int row, int col, bool* error = 0) = 0;
-	virtual std::string getKnowledgeTableDataString(int tableID, int row, int col, bool* error = 0) = 0;
-	virtual float getKnowledgeTableDataFloat(int tableID, int row, int col, bool* error = 0) = 0;
 	virtual int getKnowledgeTableNumOfCols(int tableID) = 0;
 	virtual int getKnowledgeTableNumOfRows(int tableID) = 0;
 	virtual bool removeKnowledgeTable(int tableID) = 0;
 	virtual bool removeKnowledgeTableRow(int tableID, int row) = 0;
-	virtual void setKnowledgeTableData(int val, int tableID, int row, int col, bool* error = 0) = 0;
-	virtual void setKnowledgeTableData(bool val, int tableID, int row, int col, bool* error = 0) = 0;
-	virtual void setKnowledgeTableData(char val, int tableID, int row, int col, bool* error = 0) = 0;
-	virtual void setKnowledgeTableData(char* val, int tableID, int row, int col, bool* error = 0) = 0;
-	virtual void setKnowledgeTableData(std::string val, int tableID, int row, int col, bool* error = 0) = 0; // same as char*
-	virtual void setKnowledgeTableData(float val, int tableID, int row, int col, bool* error = 0) = 0;
 };
 
 #endif  //_BOTCOMMUNICATOR_H

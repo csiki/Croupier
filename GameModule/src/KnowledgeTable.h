@@ -25,10 +25,18 @@ public:
 	bool isRemoved() const;
 	void remove();
 	bool removeRow(int row);
-	template <typename T>
-		T getData(int row, int col) const;
-	template <typename T>
-		bool setData(T val, int row, int col);
+
+	bool getData(int& val, int row, int col) const;
+	bool getData(bool& val, int row, int col) const;
+	bool getData(char& val, int row, int col) const;
+	bool getData(string& val, int row, int col) const;
+	bool getData(float& val, int row, int col) const;
+
+	bool setData(int val, int row, int col);
+	bool setData(bool val, int row, int col);
+	bool setData(char val, int row, int col);
+	bool setData(string val, int row, int col);
+	bool setData(float val, int row, int col);
 };
 
 #endif  //_KNOWLEDGETABLE_H

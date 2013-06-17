@@ -27,8 +27,8 @@ public:
 	int getBigBlindAtRound(int round) const;
 	int getNextBlindShiftDeadline() const;
 	int getSmallBlindAtRound(int round) const;
-	int getBotIDToTheRight(int nth, bool onlyInRound) const;
-	int getBotIDToTheLeft(int nth, bool onlyInRound) const;
+	int getBotIDToTheRight(int from, int nth, bool onlyInRound) const;
+	int getBotIDToTheLeft(int from, int nth, bool onlyInRound) const;
 	const BotInfo* getBotByID(int botID) const;
 	int getBotIDByIndex(int index) const;
 	int getNumOfBots(bool onlyInGame, bool onlyInRound) const;

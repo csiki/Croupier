@@ -3,6 +3,7 @@
 
 #include "KnowledgeTable.h"
 #include "KnowledgeDataType.h"
+#include "KnowledgeTableXMLHandler.h"
 #include "../pugixml/pugixml.hpp"
 
 // TODO át kell írni a analízis doksiba, hogy a getTable...() parancsok egyike sem tölt be új táblát,
@@ -28,10 +29,18 @@ public:
 	int getTableNumOfRows(int tableID) const;
 	bool removeTable(int tableID);
 	bool removeTableRow(int tableID, int row);
-	template <typename T>
-		T getTableData(int tableID, int row, int col, bool* error) const;
-	template <typename T>
-		void setTableData(T val, int tableID, int row, int col, bool* error);
+	
+	bool getTableData(int& val, int tableID, int row, int col) const;
+	bool getTableData(bool& val, int tableID, int row, int col) const;
+	bool getTableData(char& val, int tableID, int row, int col) const;
+	bool getTableData(float& val, int tableID, int row, int col) const;
+	bool getTableData(string& val, int tableID, int row, int col) const;
+
+	bool setTableData(int val, int tableID, int row, int col);
+	bool setTableData(bool val, int tableID, int row, int col);
+	bool setTableData(char val, int tableID, int row, int col);
+	bool setTableData(float val, int tableID, int row, int col);
+	bool setTableData(string val, int tableID, int row, int col);
 };
 
 #endif  //_BOTKNOWLEDGEHANDLER_H

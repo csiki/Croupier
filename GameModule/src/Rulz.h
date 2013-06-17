@@ -17,6 +17,7 @@ private:
 	int rebuyDeadline;
 	int numOfRebuysAllowed;
 	bool talkAllowed;
+	bool emotionAllowed;
 	bool knowledgeBaseAllowed;
 	int maxNumOfRaises;
 	long allowedBotCalcTime;
@@ -29,8 +30,9 @@ public:
 	int getNumOfRebuysAllowed() const;
 	int getRebuyDeadline() const;
 	bool isTalkAllowed() const;
+	bool isEmotionAllowed() const;
 	bool isBotKnowledgeUseAllowed() const;
-	long getAllowedBotCalcTime() const;
+	long getAllowedBotCalcTime(int langID) const;
 	int getStartingChips() const;
 };
 

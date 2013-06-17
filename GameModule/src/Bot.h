@@ -32,7 +32,7 @@ public:
 	virtual void leftGame(int botID) = 0;
 	virtual void listen(int botID, Comment comment) = 0;
 	virtual void preflop() = 0;
-	virtual void quit() = 0;
+	virtual void leave() = 0;
 	virtual void raised(int botID, int amount) = 0;
 	virtual void rebuyDeadlineReached() = 0;
 	virtual void rebuyOrLeave() = 0;

@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "BotKnowledgeHandler.h"
-#include "KnowledgeTableXMLHandler.h"
 
 /** Loads a knowledge table.
 */
@@ -90,59 +89,124 @@ KnowledgeDataType BotKnowledgeHandler::getTableColumnType(int tableID, int col) 
 	return KnowledgeDataType::NONE;
 }
 
-/** Returns knowledge table's data in specified cell.
+/** Returns knowledge table's data in specified cell (int).
 */
-template <typename T>
-T BotKnowledgeHandler::getTableData(int tableID, int row, int col, bool* error) const
+bool BotKnowledgeHandler::getTableData(int& val, int tableID, int row, int col) const
 {
-	// same precheck at setTableData()
 	if (this->isTableLoaded(tableID))
 	{
-		KnowledgeTable* ktb = loadedTables.at(tableID);
-		if (ktb->getNumOfCols > col && ktb->getNumOfRows > row && col >= 0 && row >= 0)
-		{
-			if (
-				typeof(T) == int && ktb->getColumnType(col) == KnowledgeDataType::INT
-				|| typeof(T) == std::string && ktb->getColumnType(col) == KnowledgeDataType::STRING
-				|| typeof(T) == char && ktb->getColumnType(col) == KnowledgeDataType::CHAR
-				|| typeof(T) == float && ktb->getColumnType(col) == KnowledgeDataType::FLOAT
-				|| typeof(T) == bool && ktb->getColumnType(col) == KnowledgeDataType::BOOL
-				)
-			{
-				return ktb->getData<T>(row, col);
-			}
-		}
+		return this->loadedTables.at(tableID)->getData(val, row, col);
 	}
 
-	error = true;
-	// problems with no return ?
+	return false;
 }
 
-/** Sets data of a specified cell.
+/** Returns knowledge table's data in specified cell (bool).
 */
-template <typename T>
-void BotKnowledgeHandler::setTableData(T val, int tableID, int row, int col, bool* error)
+bool BotKnowledgeHandler::getTableData(bool& val, int tableID, int row, int col) const
 {
-	// same precheck at getTableData()
 	if (this->isTableLoaded(tableID))
 	{
-		KnowledgeTable* ktb = loadedTables.at(tableID);
-		if (ktb->getNumOfCols > col && ktb->getNumOfRows > row && col >= 0 && row >= 0)
-		{
-			if (
-				typeof(T) == int && ktb->getColumnType(col) == KnowledgeDataType::INT
-				|| typeof(T) == std::string && ktb->getColumnType(col) == KnowledgeDataType::STRING
-				|| typeof(T) == char && ktb->getColumnType(col) == KnowledgeDataType::CHAR
-				|| typeof(T) == float && ktb->getColumnType(col) == KnowledgeDataType::FLOAT
-				|| typeof(T) == bool && ktb->getColumnType(col) == KnowledgeDataType::BOOL
-				)
-			{
-				return ktb->setData<T>(val, row, col);
-			}
-		}
+		return this->loadedTables.at(tableID)->getData(val, row, col);
 	}
 
-	error = true;
+	return false;
+}
+
+/** Returns knowledge table's data in specified cell (char).
+*/
+bool BotKnowledgeHandler::getTableData(char& val, int tableID, int row, int col) const
+{
+	if (this->isTableLoaded(tableID))
+	{
+		return this->loadedTables.at(tableID)->getData(val, row, col);
+	}
+
+	return false;
+}
+
+/** Returns knowledge table's data in specified cell (float).
+*/
+bool BotKnowledgeHandler::getTableData(float& val, int tableID, int row, int col) const
+{
+	if (this->isTableLoaded(tableID))
+	{
+		return this->loadedTables.at(tableID)->getData(val, row, col);
+	}
+
+	return false;
+}
+
+/** Returns knowledge table's data in specified cell (std::string).
+*/
+bool BotKnowledgeHandler::getTableData(std::string& val, int tableID, int row, int col) const
+{
+	if (this->isTableLoaded(tableID))
+	{
+		return this->loadedTables.at(tableID)->getData(val, row, col);
+	}
+
+	return false;
+}
+
+/** Sets data of a specified cell (int).
+*/
+bool BotKnowledgeHandler::setTableData(int val, int tableID, int row, int col)
+{
+	if (this->isTableLoaded(tableID))
+	{
+		return this->loadedTables.at(tableID)->setData(val, row, col);
+	}
+
+	return false;
+}
+
+/** Sets data of a specified cell (bool).
+*/
+bool BotKnowledgeHandler::setTableData(bool val, int tableID, int row, int col)
+{
+	if (this->isTableLoaded(tableID))
+	{
+		return this->loadedTables.at(tableID)->setData(val, row, col);
+	}
+
+	return false;
+}
+
+/** Sets data of a specified cell (char).
+*/
+bool BotKnowledgeHandler::setTableData(char val, int tableID, int row, int col)
+{
+	if (this->isTableLoaded(tableID))
+	{
+		return this->loadedTables.at(tableID)->setData(val, row, col);
+	}
+
+	return false;
+}
+
+/** Sets data of a specified cell (float).
+*/
+bool BotKnowledgeHandler::setTableData(float val, int tableID, int row, int col)
+{
+	if (this->isTableLoaded(tableID))
+	{
+		return this->loadedTables.at(tableID)->setData(val, row, col);
+	}
+
+	return false;
+}
+
+/** Sets data of a specified cell (std::string).
+*/
+bool BotKnowledgeHandler::setTableData(std::string val, int tableID, int row, int col)
+{
+	if (this->isTableLoaded(tableID))
+	{
+		return this->loadedTables.at(tableID)->setData(val, row, col);
+	}
+
+	return false;
 }
 
 /** Returns number of columns of a specified table.

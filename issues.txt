@@ -5,3 +5,5 @@ Hogy helyes e a template adat azt ne a botknowledgehandlerbe, hanem már a commun
 Rendes exception rendszer kell
 Logolási rendszert külön késõbb megcsinálni
 Virtual fvényeket is berakni constnak (amelyiket kell nyilván)
+createKnowledgeTable-nél fel kell szabadítani a végén a lefoglalt knowledgedatatype-ot?
+Bot tesztelésnél ne mentsük el a botknowledge table-ök megváltozott állapotát!
