@@ -39,7 +39,6 @@ private:
 public:
 	// broadcast
 	void receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data);
-
 	// botinfo
 	int getID() const;
 	std::string getName() const;

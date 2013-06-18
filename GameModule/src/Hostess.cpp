@@ -67,3 +67,8 @@ int Hostess::getNumOfBots(bool onlyInGame, bool onlyInRound) const
 {
 	return 0;
 }
+
+bool Hostess::canRaise() const
+{
+	return 0;
+}

@@ -19,9 +19,11 @@ private:
 	bool* botsInRound;
 	bool* botsInGame;
 	int round;
+	int numberOfRaisesSoFar;
 
 	void fillBotsByID();
 public:
+	void receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data);
 	int getCallAmount() const;
 	int getMinRaise() const;
 	int getBigBlindAtRound(int round) const;
@@ -32,8 +34,8 @@ public:
 	const BotInfo* getBotByID(int botID) const;
 	int getBotIDByIndex(int index) const;
 	int getNumOfBots(bool onlyInGame, bool onlyInRound) const;
-	void receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data);
 	int getCurrentRound() const;
+	bool canRaise() const;
 };
 
 #endif  //_HOSTESS_H

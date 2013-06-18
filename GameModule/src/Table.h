@@ -15,7 +15,8 @@ private:
 	int numOfCards;
 	Card **cards;
 public:
-	// konstruktorba megkapja numOfBots-ot, így le tudja foglalni a helyet nekik, mire leülnek
+	// TODO konstruktorba megkapja numOfBots-ot, így le tudja foglalni a helyet nekik, mire leülnek
+
 	void addCard(Card* c);
 	int getNumOfCards() const;
 	Card* rmCard(int cardIndex);

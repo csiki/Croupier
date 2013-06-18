@@ -37,14 +37,13 @@ void BotHandler::receiveCard(Card* c)
 {
 	if (this->numOfCardsInHand < 2)
 	{
-		this->hand[this->numOfCardsInHand] = c;
-		++this->numOfCardsInHand;
+		this->hand[this->numOfCardsInHand++] = c;
 	}
 }
 
 /**	Adds more chips to AI's existing chips.
 */
-void BotHandler::recieveChips(int chipsAmount)
+void BotHandler::receiveChips(int chipsAmount)
 {
 	this->chips += chipsAmount;
 }

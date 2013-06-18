@@ -235,7 +235,7 @@ bool BotManager::canFold() const
 */
 bool BotManager::canRaise(int raiseAmount) const
 {
-	return this->stepToken && raiseAmount > this->getBigBlindAtRound();
+	return this->stepToken && raiseAmount > this->getBigBlindAtRound() && this->hostess->canRaise();
 }
 
 /** Bot signals allin.

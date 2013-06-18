@@ -21,15 +21,17 @@ private:
 	int round;
 	int currentBotIndex;
 	int lastBotRaisedIndex;
+	int currentSmallBlind;
+	int currentBigBlind;
 	int nextBlindShiftAt;
 	int numOfBots;
 	BotHandler** bots;
 	int* kicksAtRound;
 	const Rulz* rules;
-	Table* table; // direkt nem konstans
+	Table* table;
 	HandEvaluator* handEvaluator;
 
-	int nextActiveBot(int from = -1) const; // parameter from default: currentBotIndex
+	int nextActiveBot(int from = -1) const; // default: -1 ~ currentBotIndex
 	void burn(Card* c);
 	void collectCards();
 	void betRound();
@@ -43,13 +45,16 @@ private:
 	void handOutPot(int numOfWinners, const int* winnersIndex);
 	void refreshBlinds();
 	void determineWinners(int numOfWinners, int* winnersIndex);
+	void kickBot(int botID);
+	int findBotIndexByID(int botID) const;
+	int findDealerBotIndex() const;
 public:
+	void receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data);
 	void letsPoker();
 	int getKickAtRound(int botIndex) const;
 	int getBotIDByIndex(int botIndex) const;
 	void provideBotHandlers(int numOfBots, BotHandler** bhs);
-	void provideTable(const Table* table);
-	void receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data);
+	void provideTable(Table* table);
 };
 
 #endif  //_CROUPIER_H
