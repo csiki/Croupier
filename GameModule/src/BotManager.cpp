@@ -6,7 +6,72 @@
 */
 void BotManager::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data)
 {
-	// TODO
+	// TODO idõ mérése !
+	switch (msg)
+	{
+		case ALLINED:
+			this->bot->allined(data[0], data[1]);
+			break;
+		case BLINDSRAISED:
+			this->bot->blindsRaised(data[0], data[1]);
+			break;
+		case CALLED:
+			this->bot->called(data[0], data[1]);
+			break;
+		case CHECKED:
+			this->bot->checked(data[0]);
+			break;
+		case FLOP:
+			this->bot->flop();
+			break;
+		case FOLDED:
+			this->bot->folded(data[0]);
+			break;
+		case GAMEWINNER:
+			this->bot->gameWinner(data[0]);
+			break;
+		case LEFTGAME:
+			this->bot->leftGame(data[0]);
+			break;
+		case LISTEN:
+			this->bot->listen(data[0], (Comment)data[1]);
+			break;
+		case PREFLOP:
+			this->bot->preflop();
+			break;
+		case RAISED:
+			this->bot->raised(data[0], data[1]);
+			break;
+		case REBUYDEADLINEREACHED:
+			this->bot->rebuyDeadlineReached();
+			break;
+		case RIVER:
+			this->bot->river();
+			break;
+		case ROUNDENDED:
+			this->bot->roundEnded();
+			break;
+		case ROUNDSTARTED:
+			this->bot->roundStarted(data[0]);
+			break;
+		case ROUNDWINNERS:
+			// copying data, can't let bots delete it
+			int *dataCopy = new int[dataSize];
+			for (int i = 0; i < dataSize; ++i)
+				dataCopy[i] = data[i];
+ 			this->bot->roundWinners(dataSize, dataCopy);
+			delete [] dataCopy;
+			break;
+		case SHOWDOWN:
+			this->bot->showdown();
+			break;
+		case TURN:
+			this->bot->turn();
+			break;
+		default:
+			// TODO ide vmi logot a rossz mûködésre vagy exception
+	}
+	// idõmérés vége
 }
 
 // botinfo
