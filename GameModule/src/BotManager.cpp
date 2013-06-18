@@ -55,9 +55,9 @@ void BotManager::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize
 			this->bot->roundStarted(data[0]);
 			break;
 		case ROUNDWINNERS:
-			// copying data, can't let bots to delete it
+			// copying data, can't let bots delete it
 			int *dataCopy = new int[dataSize];
-			for (int i = 0; i < dataSize; ++i) 
+			for (int i = 0; i < dataSize; ++i)
 				dataCopy[i] = data[i];
  			this->bot->roundWinners(dataSize, dataCopy);
 			delete [] dataCopy;
@@ -69,7 +69,7 @@ void BotManager::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize
 			this->bot->turn();
 			break;
 		default:
-			// TODO ide vmi logot a rossz mûködésre
+			// TODO ide vmi logot a rossz mûködésre vagy exception
 	}
 	// idõmérés vége
 }
