@@ -16,7 +16,7 @@ class Croupier : public Logger, public BroadcastMember
 {
 private:
 	Deck* deck;
-	Card** burnt;
+	Card* burnt[3];
 	int numberOfBurntCards;
 	int round;
 	int currentBotIndex;
