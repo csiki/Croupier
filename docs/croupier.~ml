@@ -13909,12 +13909,12 @@
 <XPD:ATTR name="Name" type="string">getAllowedBotCalcTime</XPD:ATTR>
 <XPD:REF name="Owner">vEoBNmAKEkuTzNkZyqIZNgAA</XPD:REF>
 <XPD:ATTR name="#Parameters" type="integer">2</XPD:ATTR>
-<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="6e3KvtlE0kO9AFFXhI8LpwAA">
+<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="Up10yftv+Ea2VcBrqYjd7gAA">
 <XPD:ATTR name="DirectionKind" type="UMLParameterDirectionKind">pdkReturn</XPD:ATTR>
-<XPD:ATTR name="TypeExpression" type="string">long</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">int</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">8e2Uel190UG9KhRq/HT88wAA</XPD:REF>
 </XPD:OBJ>
-<XPD:OBJ name="Parameters[1]" type="UMLParameter" guid="TrmgJ2DIIkSyYFKbUzhYLAAA">
+<XPD:OBJ name="Parameters[1]" type="UMLParameter" guid="uCWrK3jRo06kIzJbkx30tAAA">
 <XPD:ATTR name="Name" type="string">langID</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">int</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">8e2Uel190UG9KhRq/HT88wAA</XPD:REF>
@@ -14003,7 +14003,7 @@
 <XPD:ATTR name="Name" type="string">allowedBotCalcTime</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:ATTR name="Multiplicity" type="string">1..*</XPD:ATTR>
-<XPD:ATTR name="TypeExpression" type="string">long</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">int</XPD:ATTR>
 <XPD:REF name="Owner">vEoBNmAKEkuTzNkZyqIZNgAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="Attributes[11]" type="UMLAttribute" guid="1mqrGyXgsEG0DomQz52Y7AAA">
@@ -23415,7 +23415,7 @@
 <XPD:OBJ name="NameLabel" type="EdgeLabelView" guid="6Q7PIHlp9UOCeHK8He5rbgAA">
 <XPD:ATTR name="Alpha" type="real">1,5707963267949</XPD:ATTR>
 <XPD:ATTR name="Distance" type="real">10</XPD:ATTR>
-<XPD:ATTR name="Text" type="string">5 : T := getData&lt;T&gt;()</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">5 : T := getData()</XPD:ATTR>
 <XPD:REF name="Model">9aS99p1lakq3PUjJEQlQkwAA</XPD:REF>
 <XPD:REF name="HostEdge">/G7ra9KRbUqhi7DrxsayJgAA</XPD:REF>
 </XPD:OBJ>
@@ -23938,7 +23938,7 @@
 <XPD:OBJ name="NameLabel" type="EdgeLabelView" guid="fon95sPn20y+SvKlHweUeAAA">
 <XPD:ATTR name="Alpha" type="real">1,5707963267949</XPD:ATTR>
 <XPD:ATTR name="Distance" type="real">10</XPD:ATTR>
-<XPD:ATTR name="Text" type="string">8 : bool := setTableData&lt;T&gt;()</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">8 : bool := setTableData()</XPD:ATTR>
 <XPD:REF name="Model">XHuLZCMCxEWKGkKJZZ9UKQAA</XPD:REF>
 <XPD:REF name="HostEdge">d0kMMvsg+kuq53wrX3alwgAA</XPD:REF>
 </XPD:OBJ>
@@ -23974,7 +23974,7 @@
 <XPD:OBJ name="NameLabel" type="EdgeLabelView" guid="YwXriU2tk0WfLVEZhjn5qwAA">
 <XPD:ATTR name="Alpha" type="real">1,5707963267949</XPD:ATTR>
 <XPD:ATTR name="Distance" type="real">10</XPD:ATTR>
-<XPD:ATTR name="Text" type="string">9 : bool := setData&lt;T&gt;()</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">9 : bool := setData()</XPD:ATTR>
 <XPD:REF name="Model">gZ6B3/oVhUSIe21Nw95gBAAA</XPD:REF>
 <XPD:REF name="HostEdge">AMw/AXeT20+agXO/9qtpHwAA</XPD:REF>
 </XPD:OBJ>
@@ -27313,7 +27313,7 @@
 <XPD:OBJ name="NameLabel" type="EdgeLabelView" guid="U/ps74Y3+kyTlS+QtUCRNwAA">
 <XPD:ATTR name="Alpha" type="real">1,5707963267949</XPD:ATTR>
 <XPD:ATTR name="Distance" type="real">10</XPD:ATTR>
-<XPD:ATTR name="Text" type="string">4 : quit()</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">4 : leave()</XPD:ATTR>
 <XPD:REF name="Model">SvoeouZgdEODXaQQkHzq7gAA</XPD:REF>
 <XPD:REF name="HostEdge">brcfzlHTb02kz408PtHsAwAA</XPD:REF>
 </XPD:OBJ>
@@ -27349,7 +27349,7 @@
 <XPD:OBJ name="NameLabel" type="EdgeLabelView" guid="n46XBFMFmUCBPuQNAtU1SgAA">
 <XPD:ATTR name="Alpha" type="real">1,5707963267949</XPD:ATTR>
 <XPD:ATTR name="Distance" type="real">10</XPD:ATTR>
-<XPD:ATTR name="Text" type="string">5 : quit()</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">5 : leave()</XPD:ATTR>
 <XPD:REF name="Model">P5bSIKV49Um8l4pOaGwNrQAA</XPD:REF>
 <XPD:REF name="HostEdge">XQv+iA4O1Uuc/NBhb7o2AgAA</XPD:REF>
 </XPD:OBJ>
@@ -27385,7 +27385,7 @@
 <XPD:OBJ name="NameLabel" type="EdgeLabelView" guid="JF2CAQ9070q7MtztJSQl2QAA">
 <XPD:ATTR name="Alpha" type="real">1,5707963267949</XPD:ATTR>
 <XPD:ATTR name="Distance" type="real">10</XPD:ATTR>
-<XPD:ATTR name="Text" type="string">6 : quit()</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">6 : leave()</XPD:ATTR>
 <XPD:REF name="Model">trV0fUJsEkCRlLZiUXGniAAA</XPD:REF>
 <XPD:REF name="HostEdge">Qfe2KXonWUm50Gu0ZURNUgAA</XPD:REF>
 </XPD:OBJ>
@@ -27421,7 +27421,7 @@
 <XPD:OBJ name="NameLabel" type="EdgeLabelView" guid="scDhLN7cdkG4ULEPfabL1wAA">
 <XPD:ATTR name="Alpha" type="real">1,5707963267949</XPD:ATTR>
 <XPD:ATTR name="Distance" type="real">10</XPD:ATTR>
-<XPD:ATTR name="Text" type="string">7 : quit()</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">7 : leave()</XPD:ATTR>
 <XPD:REF name="Model">OqHTU5uVOUu1tuaSl6ZxlgAA</XPD:REF>
 <XPD:REF name="HostEdge">Y+Ng3FPN+ke6SBrhfilPNwAA</XPD:REF>
 </XPD:OBJ>

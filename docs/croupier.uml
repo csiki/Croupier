@@ -10457,12 +10457,12 @@
 <XPD:ATTR name="Name" type="string">rmCard</XPD:ATTR>
 <XPD:REF name="Owner">7ON9iHK0Sk2lVCMrg16gfgAA</XPD:REF>
 <XPD:ATTR name="#Parameters" type="integer">2</XPD:ATTR>
-<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="lWgHowFtYUyGKdC8TfKO1gAA">
+<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="oUcs61OysEmErRt7eXFQqwAA">
 <XPD:ATTR name="DirectionKind" type="UMLParameterDirectionKind">pdkReturn</XPD:ATTR>
-<XPD:ATTR name="TypeExpression" type="string">const Card*</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">Card*</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">+TH4+1ib3UyMFvZzvZ2/IQAA</XPD:REF>
 </XPD:OBJ>
-<XPD:OBJ name="Parameters[1]" type="UMLParameter" guid="c483b01xHE2TAWk3UOl0EQAA">
+<XPD:OBJ name="Parameters[1]" type="UMLParameter" guid="0Dp4rvHWnEy22ztp7qPXxAAA">
 <XPD:ATTR name="Name" type="string">cardIndex</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">int</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">+TH4+1ib3UyMFvZzvZ2/IQAA</XPD:REF>

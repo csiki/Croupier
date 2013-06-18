@@ -7,6 +7,9 @@
 void BotManager::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data)
 {
 	// TODO idõ mérése !
+	int *dataCopy;
+	this->talkToken = true; // bot can comment when receiving a message
+
 	switch (msg)
 	{
 		case ALLINED:
@@ -56,7 +59,7 @@ void BotManager::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize
 			break;
 		case ROUNDWINNERS:
 			// copying data, can't let bots delete it
-			int *dataCopy = new int[dataSize];
+			dataCopy = new int[dataSize];
 			for (int i = 0; i < dataSize; ++i)
 				dataCopy[i] = data[i];
  			this->bot->roundWinners(dataSize, dataCopy);
@@ -68,9 +71,11 @@ void BotManager::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize
 		case TURN:
 			this->bot->turn();
 			break;
-		default:
+		default: ;
 			// TODO ide vmi logot a rossz mûködésre vagy exception
 	}
+
+	this->talkToken = false;
 	// idõmérés vége
 }
 
