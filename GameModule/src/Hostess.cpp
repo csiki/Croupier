@@ -4,13 +4,19 @@
 
 void Hostess::fillBotsByID()
 {
+	botsByID.clear();
+	int numOfBots = table->getNumOfBots();
+	for (int i = 0; i < numOfBots; i++)
+	{
+		botsByID.insert(std::pair<int, const BotInfo*>(i, table->getBotByIndex(i)));
+	}
 }
 
 /** Returns the maximum of the pots on table (by AIs).
 */
 int Hostess::getCallAmount() const
 {
-	return 0;
+	return callAmount;
 }
 
 int Hostess::getMinRaise() const
@@ -35,12 +41,16 @@ int Hostess::getSmallBlindAtRound(int round) const
 
 const BotInfo* Hostess::getBotByID(int botID) const
 {
-	return 0;
+	std::pair<const int, const BotInfo*> p = *botsByID.find(botID);
+	return p.second;
 }
 
 int Hostess::getBotIDByIndex(int index) const
 {
-	return 0;
+	for (int i = 0; i < botsByID; i++)
+	{
+
+	}
 }
 
 void Hostess::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data)

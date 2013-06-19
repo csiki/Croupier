@@ -7,11 +7,14 @@
 */
 class Event
 {
+private:
+	long getTime() const;
 public:
 	const Severity severity;
 	const int loggerID;
 	const std::string msg;
 	const long time;
+	Event(Severity severity, int loggerID, std::string msg); 
 };
 
 #endif  //_EVENT_H

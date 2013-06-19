@@ -75,7 +75,7 @@ void Croupier::betRound()
 		}
 
 		botIndex = (botIndex + 1) % this->numOfBots;
-	} while (botIndex != this->lastBotRaisedIndex);
+	} while (botIndex != this->lastBotRaisedIndex); // TODO it depends on the poker game type
 }
 
 /** Deals cards to bots.

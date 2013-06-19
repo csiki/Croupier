@@ -141,6 +141,7 @@
     <ClCompile Include="..\src\Croupier.cpp" />
     <ClCompile Include="..\src\Deck.cpp" />
     <ClCompile Include="..\src\Entity.cpp" />
+    <ClCompile Include="..\src\Event.cpp" />
     <ClCompile Include="..\src\GameModule.cpp" />
     <ClCompile Include="..\src\GameOwner.cpp" />
     <ClCompile Include="..\src\HandEvaluator.cpp" />

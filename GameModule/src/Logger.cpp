@@ -5,5 +5,5 @@
 
 void Logger::log(Severity severity, std::string msg)
 {
-
+	loggable->log(new Event(severity, getID(), msg));
 }
