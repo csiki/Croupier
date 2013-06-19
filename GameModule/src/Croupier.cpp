@@ -259,6 +259,10 @@ int Croupier::findBotIndexByID(int botID) const
 			return i;
 		}
 	}
+
+	throw "No bot found"; // TEST
+
+	return -1;
 }
 
 /** Finds the currently dealer bot's index.
@@ -272,6 +276,10 @@ int Croupier::findDealerBotIndex() const
 			return i;
 		}
 	}
+
+	throw "No bot found"; // TEST
+
+	return -1;
 }
 
 void Croupier::letsPoker()

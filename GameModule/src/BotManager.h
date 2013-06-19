@@ -73,8 +73,9 @@ public:
 	void talk(Comment comment);
 	int getNumOfBots(bool onlyInGame = false, bool onlyInRound = false) const;
 	int getBotIDByIndex(int index) const;
-	int getBotIDToTheRight(int nth = 1, bool onlyInRound = false) const;
-	int getBotIDToTheLeft(int nth = 1, bool onlyInRound = false) const;
+	int getBotIndexByID(int botID) const;
+	int getBotIDToTheRight(int nth = 1, bool onlyInGame = false, bool onlyInRound = false) const;
+	int getBotIDToTheLeft(int nth = 1, bool onlyInGame = false, bool onlyInRound = false) const;
 	int getCallAmount() const;
 	int getMinRaise() const;
 	int getBigBlindAtRound(int round = -1) const; // -1 means current round
@@ -102,6 +103,7 @@ public:
 	int getKnowledgeTableNumOfRows(int tableID) const;
 	bool removeKnowledgeTable(int tableID);
 	bool removeKnowledgeTableRow(int tableID, int row);
+	int getMaxNumOfRaises() const;
 
 	bool getKnowledgeTableData(int& val, int tableID, int row, int col) const;
 	bool getKnowledgeTableData(bool& val, int tableID, int row, int col) const;

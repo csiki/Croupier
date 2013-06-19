@@ -55,3 +55,13 @@ int Rulz::getNumOfBlinds() const
 {
 	return 0;
 }
+
+BettingSystem Rulz::getBettingSystem() const
+{
+	return BettingSystem::NOLIMIT;
+}
+
+int Rulz::getMaxNumOfRaises() const
+{
+	return 0;
+}

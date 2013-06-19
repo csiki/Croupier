@@ -235,7 +235,7 @@ bool BotManager::canFold() const
 */
 bool BotManager::canRaise(int raiseAmount) const
 {
-	return this->stepToken && raiseAmount > this->getBigBlindAtRound() && this->hostess->canRaise();
+	return this->stepToken && raiseAmount > this->getBigBlindAtRound() && this->hostess->getNumberOfRaisesLeft() > 0;
 }
 
 /** Bot signals allin.
@@ -367,18 +367,25 @@ int BotManager::getBotIDByIndex(int index) const
 	return this->table->getBotByIndex(index)->getID();
 }
 
+/** Returns AI's index by id (index: from 0 to n-1 same order at table; n: number of bots).
+*/
+int BotManager::getBotIndexByID(int botID) const
+{
+	return this->hostess->getBotIDByIndex(botID);
+}
+
 /** Returns nth AI's id to the right (at table).
 */
-int BotManager::getBotIDToTheRight(int nth, bool onlyInRound) const
+int BotManager::getBotIDToTheRight(int nth, bool onlyInGame, bool onlyInRound) const
 {
-	return this->hostess->getBotIDToTheRight(this->nthAtTable, nth, onlyInRound);
+	return this->hostess->getBotIDToTheRight(this->nthAtTable, nth, onlyInGame, onlyInRound);
 }
 
 /** Returns nth AI's id to the left (at table).
 */
-int BotManager::getBotIDToTheLeft(int nth, bool onlyInRound) const
+int BotManager::getBotIDToTheLeft(int nth, bool onlyInGame, bool onlyInRound) const
 {
-	return this->hostess->getBotIDToTheLeft(this->nthAtTable, nth, onlyInRound);
+	return this->hostess->getBotIDToTheLeft(this->nthAtTable, nth, onlyInGame, onlyInRound);
 }
 
 /** Returns the maximum of pots on table / AI.
@@ -463,6 +470,13 @@ int BotManager::getBigBlind(int blindIndex) const
 int BotManager::getRebuyDeadline() const
 {
 	return this->rules->getRebuyDeadline();
+}
+
+/** Returns max number of raises in a round.
+*/
+int BotManager::getMaxNumOfRaises() const
+{
+	return this->rules->getMaxNumOfRaises();
 }
 
 /** Returns small blind.
