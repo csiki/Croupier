@@ -1,9 +1,9 @@
 #if !defined(_RULZ_H)
 #define _RULZ_H
 
-using namespace std;
+#include "BettingSystem.h"
 
-// TODO gondolkodni, hogy kellenek e még szabályok, mert egy plusz szabály nem csak egy bejegyzés (pl. BotCommunicator...)
+// TODO attribútumok constansnak ?
 
 /**	Contains all the rules of a game.
 */
@@ -22,6 +22,7 @@ private:
 	int maxNumOfRaises;
 	int *allowedBotCalcTime;
 	int startingChips;
+	BettingSystem bs;
 public:
 	int getBigBlind(int index) const;
 	int getSmallBlind(int index) const;
@@ -34,6 +35,8 @@ public:
 	bool isBotKnowledgeUseAllowed() const;
 	int getAllowedBotCalcTime(int langID) const;
 	int getStartingChips() const;
+	BettingSystem getBettingSystem() const;
+	int getMaxNumOfRaises() const;
 };
 
 #endif  //_RULZ_H

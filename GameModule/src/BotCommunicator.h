@@ -53,8 +53,9 @@ public:
 	// hostess
 	virtual int getNumOfBots(bool onlyInGame = false, bool onlyInRound = false) = 0;
 	virtual int getBotIDByIndex(int index) = 0;
-	virtual int getBotIDToTheRight(int nth = 1, bool onlyInRound = false) = 0;
-	virtual int getBotIDToTheLeft(int nth = 1, bool onlyInRound = false) = 0;
+	virtual int getBotIndexByID(int botID) = 0;
+	virtual int getBotIDToTheRight(int nth = 1, bool onlyInGame = false, bool onlyInRound = false) = 0;
+	virtual int getBotIDToTheLeft(int nth = 1, bool onlyInGame = false, bool onlyInRound = false) = 0;
 	virtual int getCallAmount() = 0;
 	virtual int getMinRaise() = 0;
 	virtual int getBigBlindAtRound(int round = -1) = 0; // -1 means current round
@@ -77,6 +78,7 @@ public:
 	virtual bool isTalkAllowed() = 0;
 	virtual bool isEmotionAllowed() = 0;
 	virtual bool isBotKnowledgeUseAllowed() = 0;
+	virtual int getMaxNumOfRaises() = 0;
 	// knowledge handler
 	virtual bool getKnowledgeTableData(int& val, int tableID, int row, int col) = 0;
 	virtual bool getKnowledgeTableData(bool& val, int tableID, int row, int col) = 0;

@@ -84,6 +84,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\BettingSystem.h" />
     <ClInclude Include="..\src\Bot.h" />
     <ClInclude Include="..\src\BotCommunicationTranslator.h" />
     <ClInclude Include="..\src\BotCommunicator.h" />
