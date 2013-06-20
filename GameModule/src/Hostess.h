@@ -17,14 +17,16 @@ private:
 	const Table* table;
 	const Rulz* rules;
 	map<int, const BotInfo*> botsByID;
-	int callAmount;
-	bool* botsInRound;
-	bool* botsInGame;
+	bool* botsInRound; // define at constructor
+	bool* botsInGame; // define at constructor
 	int round;
-	int numberOfRaisesSoFar;
+	int callAmount;
 	int minRaise;
-	void fillBotsByID();
-	int nextBlindShiftDeadline;
+	int numberOfRaisesSoFar;
+	int nextBlindShiftDeadlineIndex;
+
+	void fillBotsByID(); // TODO must be called in constructor
+	void handleRaise(int raiseAmount);
 public:
 	void receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data);
 	int getCallAmount() const;

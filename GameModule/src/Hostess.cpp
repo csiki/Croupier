@@ -6,20 +6,93 @@
 */
 void Hostess::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data)
 {
-	/*BettingSystem bs = this->rules->getBettingSystem();
-	
-	if (bs == BettingSystem::FIXLIMIT)
+	if (msg == BroadcastMessage::ALLINED)
 	{
-
+		int potPutIn = data[1];
+		if (this->callAmount < potPutIn) // raise happened
+		{
+			this->handleRaise(potPutIn - this->callAmount);
+		}
 	}
-	else if (bs == BettingSystem::POTLIMIT)
+	else if (msg == BroadcastMessage::BLINDSRAISED)
 	{
-
+		if (nextBlindShiftDeadlineIndex < this->rules->getNumOfBlinds() - 2)
+		{
+			// -1 because numOfBlinds = numOfBlindShift + 1; one more -1, bacause we don't want to index over
+			++nextBlindShiftDeadlineIndex;
+		}
 	}
-	else // BettingSystem::NOLIMIT
+	else if (msg == BroadcastMessage::PREFLOP)
 	{
-		
-	}*/
+		this->numberOfRaisesSoFar = 0;
+
+		// whether bettingsystem, at preflop and flop the minRaise is the same
+		// at turn fixlimit changes (others not)
+		// during the betting potlimit changes (others not)
+		this->minRaise = this->getBigBlindAtRound(this->round);
+	}
+	else if (msg == BroadcastMessage::FLOP)
+	{
+		this->numberOfRaisesSoFar = 0;
+
+		if (this->rules->getBettingSystem() == BettingSystem::POTLIMIT)
+		{
+			// if potlimit, the minRaise may change during a betting round (there we reset it)
+			this->minRaise = this->getBigBlindAtRound(this->round);
+		}
+	}
+	else if (msg == BroadcastMessage::FOLDED)
+	{
+		int botIndex = this->getBotIndexByID(data[0]);
+		this->botsInRound[botIndex] = false;
+	}
+	else if (msg == BroadcastMessage::LEFTGAME)
+	{
+		int botIndex = this->getBotIndexByID(data[0]);
+		this->botsInGame[botIndex] = false;
+		this->botsInRound[botIndex] = false;
+	}
+	else if (msg == BroadcastMessage::RAISED)
+	{
+		this->handleRaise(data[1]);
+	}
+	else if (msg == BroadcastMessage::ROUNDSTARTED)
+	{
+		// update botsInRound
+		for (int i = 0; i < this->table->getNumOfBots(); ++i)
+		{
+			this->botsInRound[i] = this->botsInGame[i];
+		}
+
+		this->round = data[0];
+		this->callAmount = 0;
+	}
+	else if (msg == BroadcastMessage::TURN)
+	{
+		this->numberOfRaisesSoFar = 0;
+
+		BettingSystem bs = this->rules->getBettingSystem();
+		if (bs == BettingSystem::FIXLIMIT)
+		{
+			// if fixlimit minRaise doubles
+			this->minRaise = 2 * this->minRaise;
+		}
+		else if (bs == BettingSystem::POTLIMIT)
+		{
+			// if potlimit, the minRaise may change during a betting round (there we reset it)
+			this->minRaise = this->getBigBlindAtRound(this->round);
+		}
+	}
+	else if (msg == BroadcastMessage::RIVER)
+	{
+		this->numberOfRaisesSoFar = 0;
+
+		if (this->rules->getBettingSystem() == BettingSystem::POTLIMIT)
+		{
+			// if potlimit, the minRaise may change during a betting round (there we reset it)
+			this->minRaise = this->getBigBlindAtRound(this->round);
+		}
+	}
 }
 
 /** Fills botsByID with bot reference and id pairs.
@@ -32,6 +105,24 @@ void Hostess::fillBotsByID()
 	for (int i = 0; i < numOfBots; ++i)
 	{
 		this->botsByID.insert(std::pair<int, const BotInfo*>(this->table->getBotByIndex(i)->getID(), this->table->getBotByIndex(i)));
+	}
+}
+
+/** Do the needed changes to attibrutes, when raise happens.
+ *	Sets numberOfRaisesSoFar, callAmount, minRaise.
+*/
+void Hostess::handleRaise(int raiseAmount)
+{
+	// number of raises so far
+	++this->numberOfRaisesSoFar;
+
+	// call amount
+	this->callAmount = this->callAmount + raiseAmount;
+
+	// minimum amount of raise (only at potlimit)
+	if (this->rules->getBettingSystem() == BettingSystem::POTLIMIT)
+	{
+		this->minRaise = raiseAmount;
 	}
 }
 
@@ -70,7 +161,7 @@ int Hostess::getBigBlindAtRound(int round) const
 */
 int Hostess::getNextBlindShiftDeadline() const
 {
-	return this->nextBlindShiftDeadline;
+	return this->rules->getBlindShiftDeadline(nextBlindShiftDeadlineIndex);
 }
 
 /** Returns small blind at a specific (present/past/future) round.
@@ -292,5 +383,10 @@ int Hostess::getNumOfBots(bool onlyInGame, bool onlyInRound) const
 */
 int Hostess::getNumberOfRaisesLeft() const
 {
-	return this->rules->getMaxNumOfRaises() - this->numberOfRaisesSoFar;
+	if (this->rules->getMaxNumOfRaises() > 0) // zero means no limit for number of raises
+	{
+		return this->rules->getMaxNumOfRaises() - this->numberOfRaisesSoFar;
+	}
+
+	return 1; // 1 is enough to let a player raise if there's no limit
 }

@@ -8,6 +8,9 @@
 // --> több file-t is tud szerkeszteni és az egészet egybe compile-oljuk
 // + dekstop bot tester
 // TODO : bufferoverflow ellen védelmet !!!
+// rajzolni ábrát ami a játékmenet szerint milyen helyzetekben hívódnak meg a függvények (pl. flop() után step() stb.)
+
+// TODO quit engedélyezése csak round endednél!
 
 /**	Base class for AIs.
 */
