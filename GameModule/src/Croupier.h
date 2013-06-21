@@ -31,6 +31,7 @@ private:
 	Table* table;
 	HandEvaluator* handEvaluator;
 
+	bool botComparatorByPot(int botIndex1, int botIndex2);
 	int nextActiveBot(int from = -1) const; // default: -1 ~ currentBotIndex
 	void burn(Card* c);
 	void collectCards();
@@ -42,7 +43,7 @@ private:
 	void river();
 	void showdown();
 	void handOutPot(int winnerIndex);
-	void handOutPot(int numOfWinners, const int* winnersIndex);
+	void handOutPot(int numOfWinners, int* winnersIndex);
 	void refreshBlinds();
 	void determineWinners(int numOfWinners, int* winnersIndex);
 	void kickBot(int botID);

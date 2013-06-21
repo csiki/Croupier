@@ -66,10 +66,15 @@ Card* BotHandler::takeHand(int cardIndex)
 
 /**	Takes all the pot of the AI, and returns its amount.
 */
-int BotHandler::takePot()
+int BotHandler::takePot(int amount)
 {
-	int temp = this->pot;
-	this->pot = 0;
-	return temp;
+	if (this->pot < amount || amount == -1)
+	{
+		// if ask more than pot or default -1, it gives all the pot
+		amount = this->pot;
+	}
+
+	this->pot -= amount;
+	return amount;
 }
 

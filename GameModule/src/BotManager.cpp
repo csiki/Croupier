@@ -210,8 +210,9 @@ bool BotManager::canAllin() const
 	return this->stepToken
 		&& this->chips > 0
 		&& (
-			(bs == BettingSystem::FIXLIMIT && this->chips <= callAmountOfPlayer) // if fixlimit, allin is only possible, when chips <= call
-			|| (bs == BettingSystem::POTLIMIT && this->chips <= this->table->getPot() + callAmountOfPlayer)
+			bs == BettingSystem::NOLIMIT
+			|| (bs == BettingSystem::FIXLIMIT && this->chips <= callAmountOfPlayer) // if fixlimit, allin is only possible, when chips <= call
+			|| (bs == BettingSystem::POTLIMIT && this->chips <= this->table->getPot() + callAmountOfPlayer) // if potlimit, it's max is the whole pot + player's call
 			);
 }
 
@@ -219,9 +220,11 @@ bool BotManager::canAllin() const
 */
 bool BotManager::canCall() const
 {
+	int callAmountOfPlayer = this->hostess->getCallAmount() - this->pot;
+
 	return this->stepToken
-		&& (this->hostess->getCallAmount() - this->pot) > 0 // to have anything to call (else should check)
-		&& this->chips >= (this->hostess->getCallAmount() - this->pot);
+		&& callAmountOfPlayer > 0 // to have anything to call (else should check)
+		&& this->chips >= callAmountOfPlayer; // to have enough chips (else allin)
 }
 
 /** Returns if check is a possible movement.
@@ -243,17 +246,17 @@ bool BotManager::canFold() const
 bool BotManager::canRaise(int raiseAmount) const
 {
 	int minRaise = this->hostess->getMinRaise();
-	int callAmount = this->hostess->getCallAmount();
+	int callAmountOfPlayer = this->hostess->getCallAmount() - this->pot;
 	BettingSystem bs = this->rules->getBettingSystem();
 
 	return this->stepToken
 		&& this->hostess->getNumberOfRaisesLeft() > 0
-		&& this->chips >= (callAmount - this->pot) + raiseAmount
+		&& this->chips >= callAmountOfPlayer + raiseAmount
 		&& (
 			(bs == BettingSystem::NOLIMIT && raiseAmount >= minRaise) // raise >= bigblind (minRaise)
 			|| (bs == BettingSystem::FIXLIMIT && raiseAmount == minRaise) // raise == bigblind or 2*bigblind (minRaise)
 			|| (bs == BettingSystem::POTLIMIT && raiseAmount >= minRaise
-				&& raiseAmount <= this->table->getPot() + (this->hostess->getCallAmount() - this->pot)) // bigblind <= last raise amount (minRaise) <= raise <= potsize+call
+				&& raiseAmount <= this->table->getPot() + callAmountOfPlayer) // bigblind <= last raise amount (minRaise) <= raise <= potsize+call
 			);
 }
 
@@ -324,7 +327,7 @@ bool BotManager::raise(int raiseAmount)
 {
 	if (this->canRaise(raiseAmount))
 	{
-		int chipsToMove = this->hostess->getCallAmount() - this->pot + raiseAmount;
+		int chipsToMove = (this->hostess->getCallAmount() - this->pot) + raiseAmount;
 		this->chips -= chipsToMove;
 		this->pot += chipsToMove;
 

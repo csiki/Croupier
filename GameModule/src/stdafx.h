@@ -16,6 +16,7 @@
 #include <memory>
 #include <algorithm>
 #include <list>
+#include <functional>
 
 using namespace std;
 

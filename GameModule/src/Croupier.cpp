@@ -17,6 +17,13 @@ void Croupier::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, 
 	}
 }
 
+/** Comparator for sorting bots by their amount of pot.
+*/
+bool Croupier::botComparatorByPot(int botIndex1, int botIndex2)
+{
+	return this->bots[botIndex1]->getPot() < this->bots[botIndex2]->getPot();
+}
+
 /** Burn a card.
 */
 void Croupier::burn(Card* c)
@@ -225,17 +232,87 @@ void Croupier::showdown()
 */
 void Croupier::handOutPot(int winnerIndex)
 {
+	BotHandler* winner = this->bots[winnerIndex];
+	int winnersPot = winner->getPot();
+
 	for (int i = 0; i < this->numOfBots; ++i)
 	{
-		this->bots[winnerIndex]->receiveChips(this->bots[i]->takePot());
+		// give the winner at least the amount of pot he got
+		winner->receiveChips(this->bots[i]->takePot(winnersPot));
+
+		// if there's more pot at the loosers (or the winner), then they should take it
+		this->bots[i]->receiveChips(this->bots[i]->takePot());
 	}
 }
 
 /** Hand out pot for more than one winners.
 */
-void Croupier::handOutPot(int numOfWinners, const int* winnersIndex)
+void Croupier::handOutPot(int numOfWinners, int* winnersIndex)
 {
-	// TODO
+	// TODO check if it works entirely properly !!!
+
+	// fill winners to easily find out if a given index represents a winning or losing bot
+	bool* areWinners = new bool[this->numOfBots];
+	for (int i = 0; i < this->numOfBots; ++i)
+	{
+		areWinners[i] = false;
+		for (int j = 0; j < numOfWinners; ++j)
+		{
+			if (winnersIndex[j] == i)
+			{
+				areWinners[i] = true;
+				break;
+			}
+		}
+	}
+
+	// sort winners compared by pots
+	std::sort(winnersIndex, winnersIndex + numOfWinners,
+		std::bind(&Croupier::botComparatorByPot, this, std::placeholders::_1, std::placeholders::_2));
+
+	// split pot
+	int amountToTake, amountAlreadyTaken, divider, loosersOriginalPot;
+	BotHandler *winnerBot, *looserBot;
+
+	for (int l = 0; l < this->numOfBots; ++l) // iterate through...
+	{
+		amountAlreadyTaken = 0;
+		if (!areWinners[l]) // ... loosers
+		{
+			looserBot = this->bots[l];
+			loosersOriginalPot = looserBot->getPot();
+			divider = numOfWinners;
+
+			for (int w = 0; w < numOfWinners; ++w) // iterate through winners
+			{
+				winnerBot = this->bots[winnersIndex[w]];
+				if (loosersOriginalPot < winnerBot->getPot())
+				{
+					// Looser got less, so we get his amount of pot, divide it
+					// and take it from it, than give it to the winner.
+					amountToTake = looserBot->getPot() / divider;
+				}
+				else
+				{
+					// Winner got less, so we get his amount of pot (minus already taken from looser), divide it
+					// and take it from the looser, than give it to the winner.
+					amountToTake = (winnerBot->getPot() - amountAlreadyTaken) / divider;
+				}
+
+				// give looser's pot to winner
+				winnerBot->receiveChips( looserBot->takePot(amountToTake) );
+
+				// decrease divider
+				--divider;
+			}
+		}
+	}
+
+	// take the rest of the pot to chips / bot
+	for (int i = 0; i < this->numOfBots; ++i)
+	{
+		this->bots[i]->receiveChips(this->bots[i]->takePot());
+	}
 }
 
 void Croupier::refreshBlinds()
