@@ -82,7 +82,7 @@ void Croupier::betRound()
 		}
 
 		botIndex = (botIndex + 1) % this->numOfBots;
-	} while (botIndex != this->lastBotRaisedIndex); // TODO it depends on the poker game type
+	} while (botIndex != this->lastBotRaisedIndex);
 }
 
 /** Deals cards to bots.
@@ -315,9 +315,14 @@ void Croupier::handOutPot(int numOfWinners, int* winnersIndex)
 	}
 }
 
+/** Change blinds if necessary.
+*/
 void Croupier::refreshBlinds()
 {
-	
+	if (this->nextBlindShiftAt == this->round)
+	{
+
+	}
 }
 
 void Croupier::determineWinners(int numOfWinners, int* winnersIndex)

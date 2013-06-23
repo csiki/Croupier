@@ -8,6 +8,7 @@
 #include "BotInfo.h"
 
 // TODO playerek azért fizethetnek, hogy a hostess egyes algoritmusait kihasználhatják (használatonként/havonta)
+// !TODO legyen numOfBots változója, és ne a tablejét kérje le mindig
 
 /**	Helper for AIs.
 */
