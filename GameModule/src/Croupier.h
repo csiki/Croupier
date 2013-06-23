@@ -21,9 +21,8 @@ private:
 	int round;
 	int currentBotIndex;
 	int lastBotRaisedIndex;
-	int currentSmallBlind;
-	int currentBigBlind;
-	int nextBlindShiftAt;
+	int currentBlindIndex;
+	int nextBlindShiftAtIndex;
 	int numOfBots;
 	BotHandler** bots;
 	int* kicksAtRound;

@@ -137,10 +137,10 @@ void Croupier::preflop()
 	int botIndex = this->findDealerBotIndex(); // dealer
 	
 	botIndex = this->nextActiveBot(botIndex); // small blind
-	this->bots[botIndex]->forceBlind(this->currentSmallBlind);
+	this->bots[botIndex]->forceBlind(this->rules->getSmallBlind(this->currentBlindIndex));
 	
 	botIndex = this->nextActiveBot(botIndex); // big blind
-	this->bots[botIndex]->forceBlind(this->currentBigBlind);
+	this->bots[botIndex]->forceBlind(this->rules->getBigBlind(this->currentBlindIndex));
 
 	// deal cards
 	this->dealing();
@@ -315,16 +315,26 @@ void Croupier::handOutPot(int numOfWinners, int* winnersIndex)
 	}
 }
 
-/** Change blinds if necessary.
+/** Changes blinds if necessary.
 */
 void Croupier::refreshBlinds()
 {
-	if (this->nextBlindShiftAt == this->round)
+	if (this->rules->getBlindShiftDeadline(this->nextBlindShiftAtIndex) == this->round)
 	{
+		// change blinds
+		++this->currentBlindIndex;
 
+		// refresh next blind shift index
+		if (this->nextBlindShiftAtIndex < this->rules->getNumOfBlinds() - 2)
+		{
+			// -1 because (blindsNum == blindShiftNum + 1), and -1 because increasing index
+			++this->nextBlindShiftAtIndex;
+		}
 	}
 }
 
+/** Determine one or multiple winners. 
+*/
 void Croupier::determineWinners(int numOfWinners, int* winnersIndex)
 {
 	// TODO broadcast!
@@ -364,9 +374,12 @@ int Croupier::findDealerBotIndex() const
 	return -1;
 }
 
+/** Direct a game.
+ *	GameOwner calls it, signalling the start of the game.
+*/
 void Croupier::letsPoker()
 {
-
+	// TODO
 }
 
 /** Returns the round when a specified bot is kicked or left the game.
