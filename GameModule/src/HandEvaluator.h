@@ -11,7 +11,7 @@ class HandEvaluator
 private:
 	HandRank evalFiveCards(const Card** cards);
 public:
-	HandRank evalHand(const Card** cards);
+	HandRank evalHand(const Card** cards, const Card** bestHand);
 	int handComparator(HandRank rank, const Card** bestHand1, const Card** bestHand2);
 };
 

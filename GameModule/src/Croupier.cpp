@@ -335,9 +335,91 @@ void Croupier::refreshBlinds()
 
 /** Determine one or multiple winners. 
 */
-void Croupier::determineWinners(int numOfWinners, int* winnersIndex)
+void Croupier::determineWinners(int& numOfWinners, int** winnersIndex)
 {
-	// TODO broadcast!
+	const Card** tmpHand = new const Card*[7];
+
+	// tmpHand array first five items are the cards on table
+	for (int i = 0; i < 5; ++i)
+	{
+		tmpHand[i] = this->table->getCard(i);
+	}
+
+	// eval all hands in game, find hands with the (same) highest rank, compare them
+	// by iterating through inRound bots only once
+	list<int> *winners = new list<int>(); // storing (possible) winners' indexes
+	const Card** winnerBestHand = new const Card*[5];
+	const Card** tmpBestHand = new const Card*[5];
+	HandRank tmpRank;
+	HandRank winnerRank = HandRank::None;
+	int winnerIndex = -1;
+	int comparison;
+
+	for (int i = 0; i < this->numOfBots; ++i)
+	{
+		if (this->bots[i]->isInRound())
+		{
+			// tmpHand array last 2 elements are the ones in the actual player's hand
+			tmpHand[5] = &this->bots[i]->lookAtHand(0);
+			tmpHand[6] = &this->bots[i]->lookAtHand(1);
+
+			tmpRank = this->handEvaluator.evalHand(tmpHand, tmpBestHand);
+
+			if (winnerRank < tmpRank) // higher rank found
+			{
+				winnerRank = tmpRank;
+				winnerIndex = i;
+				
+				winners->clear();
+				winners->push_back(i);
+
+				// winnerBestHand = tmpBestHand (copy)
+				for (int j = 0; j < 5; ++j)
+				{
+					winnerBestHand[j] = tmpBestHand[j];
+				}
+			}
+			else if (winnerRank == tmpRank)
+			{
+				// hand found with same HandRank
+				// compare bestHands to see which is higher
+				comparison = this->handEvaluator.handComparator(
+					winnerRank, winnerBestHand, tmpBestHand);
+
+				if (comparison == -1) // winnerBestHand < tmpBestHand
+				{
+					winnerIndex = i;
+
+					// winnerBestHand = tmpBestHand (copy)
+					for (int j = 0; j < 5; ++j)
+					{
+						winnerBestHand[j] = tmpBestHand[j];
+					}
+				}
+				else if (comparison == 0) // winnerBestHand == tmpBestHand
+				{
+					// one more (possible) winner
+					winners->push_back(i);
+				}
+			}
+		}
+	}
+
+	// fill winnersIndex, declare numOfWinners
+	numOfWinners = winners->size();
+	*winnersIndex = new int[numOfWinners];
+
+	int i = 0;
+	for (list<int>::iterator it = winners->begin(); it != winners->end(); ++it)
+	{
+		(*winnersIndex)[i++] = *it;
+	}
+
+	// free shit
+	delete winners;
+	delete [] tmpHand;
+	delete [] winnerBestHand;
+	delete [] tmpBestHand;
 }
 
 /** Finds a bot's index in bots array by the given id.

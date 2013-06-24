@@ -37,6 +37,7 @@ public:
 	const Suit suit;
 	const Rank rank;
 
+	Card() : suit(Suit::NULLSUIT), rank(Rank::NULLRANK) {}
 	Card(int s, int r) : suit((Card::Suit)s), rank((Card::Rank)r) {}
 	int getVal() const; // suit*100 + rank
 

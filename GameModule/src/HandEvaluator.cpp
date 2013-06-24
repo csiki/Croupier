@@ -7,7 +7,7 @@ HandRank HandEvaluator::evalFiveCards(const Card** cards)
 	return HandRank::None;
 }
 
-HandRank HandEvaluator::evalHand(const Card** cards)
+HandRank HandEvaluator::evalHand(const Card** cards, const Card** bestHand)
 {
 	return HandRank::None;
 }

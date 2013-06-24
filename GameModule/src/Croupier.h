@@ -10,6 +10,8 @@
 #include "HandEvaluator.h"
 #include "BroadcastMessage.h"
 
+// TODO free shit everywhere !
+
 /**	Directs the game, and the bots; deals cards.
 */
 class Croupier : public Logger, public BroadcastMember
@@ -28,7 +30,7 @@ private:
 	int* kicksAtRound;
 	const Rulz* rules;
 	Table* table;
-	HandEvaluator* handEvaluator;
+	HandEvaluator handEvaluator;
 
 	bool botComparatorByPot(int botIndex1, int botIndex2);
 	int nextActiveBot(int from = -1) const; // default: -1 ~ currentBotIndex
@@ -44,7 +46,7 @@ private:
 	void handOutPot(int winnerIndex);
 	void handOutPot(int numOfWinners, int* winnersIndex);
 	void refreshBlinds();
-	void determineWinners(int numOfWinners, int* winnersIndex);
+	void determineWinners(int& numOfWinners, int** winnersIndex);
 	void kickBot(int botID);
 	int findBotIndexByID(int botID) const;
 	int findDealerBotIndex() const;

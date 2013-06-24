@@ -13353,19 +13353,19 @@
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:REF name="Owner">nhUA69+mKUmp7w6prQ1VUgAA</XPD:REF>
 <XPD:ATTR name="#Parameters" type="integer">3</XPD:ATTR>
-<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="sDTUtbMx7UOtGH7FR+ZYLwAA">
+<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="jSt63sZFZUekkG34aVWW3QAA">
 <XPD:ATTR name="DirectionKind" type="UMLParameterDirectionKind">pdkReturn</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">void</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">t/mERIwm6Eugf88UPqnyygAA</XPD:REF>
 </XPD:OBJ>
-<XPD:OBJ name="Parameters[1]" type="UMLParameter" guid="mpqlY9mAnUieT5HvryqKtQAA">
+<XPD:OBJ name="Parameters[1]" type="UMLParameter" guid="UwfjrxzfkE2iNI5jaLpS+AAA">
 <XPD:ATTR name="Name" type="string">numOfWinners</XPD:ATTR>
-<XPD:ATTR name="TypeExpression" type="string">int</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">int&amp;</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">t/mERIwm6Eugf88UPqnyygAA</XPD:REF>
 </XPD:OBJ>
-<XPD:OBJ name="Parameters[2]" type="UMLParameter" guid="fouGx/zoJEOVAaIX/gvlGwAA">
+<XPD:OBJ name="Parameters[2]" type="UMLParameter" guid="VmWqGoNAQECj/1r2qCdc7QAA">
 <XPD:ATTR name="Name" type="string">winnersIndex</XPD:ATTR>
-<XPD:ATTR name="TypeExpression" type="string">int*</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">int**</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">t/mERIwm6Eugf88UPqnyygAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
@@ -17457,14 +17457,19 @@
 <XPD:ATTR name="Name" type="string">evalFiveCards</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:REF name="Owner">+tQb3xhmpUyaVovszW6gJwAA</XPD:REF>
-<XPD:ATTR name="#Parameters" type="integer">2</XPD:ATTR>
-<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="JRoItbyPVEiBs5l36Gq65gAA">
+<XPD:ATTR name="#Parameters" type="integer">3</XPD:ATTR>
+<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="U0aXSy8gXkCmueRx3vG1kQAA">
 <XPD:ATTR name="DirectionKind" type="UMLParameterDirectionKind">pdkReturn</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">EFzrwS7/XEWm20OwpuCeQwAA</XPD:REF>
 <XPD:REF name="Type_">HqsxRJAuJUeL6kpgCkJjkAAA</XPD:REF>
 </XPD:OBJ>
-<XPD:OBJ name="Parameters[1]" type="UMLParameter" guid="6LsWDyneXE+pC43kV8ywpAAA">
+<XPD:OBJ name="Parameters[1]" type="UMLParameter" guid="kQqmIWBxm0aUILGwK4kcAAAA">
 <XPD:ATTR name="Name" type="string">cards</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">const Card**</XPD:ATTR>
+<XPD:REF name="BehavioralFeature">EFzrwS7/XEWm20OwpuCeQwAA</XPD:REF>
+</XPD:OBJ>
+<XPD:OBJ name="Parameters[2]" type="UMLParameter" guid="YEzUQcE9OUK89W3TlJYG4QAA">
+<XPD:ATTR name="Name" type="string">bestHand</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">const Card**</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">EFzrwS7/XEWm20OwpuCeQwAA</XPD:REF>
 </XPD:OBJ>
@@ -17542,10 +17547,11 @@
 <XPD:REF name="Views[8]">5IeK94Ff3EGPXurpoj53hwAA</XPD:REF>
 <XPD:ATTR name="#SupplierDependencies" type="integer">1</XPD:ATTR>
 <XPD:REF name="SupplierDependencies[0]">tCXB3s3T4US+ZHegP1fVLgAA</XPD:REF>
-<XPD:ATTR name="#TypedParameters" type="integer">3</XPD:ATTR>
+<XPD:ATTR name="#TypedParameters" type="integer">4</XPD:ATTR>
 <XPD:REF name="TypedParameters[0]">JRoItbyPVEiBs5l36Gq65gAA</XPD:REF>
 <XPD:REF name="TypedParameters[1]">X9dtRvTJEUupXPykg5En5wAA</XPD:REF>
 <XPD:REF name="TypedParameters[2]">UFSgNAbvSEe+yFM/h9UizAAA</XPD:REF>
+<XPD:REF name="TypedParameters[3]">U0aXSy8gXkCmueRx3vG1kQAA</XPD:REF>
 <XPD:ATTR name="#Literals" type="integer">11</XPD:ATTR>
 <XPD:OBJ name="Literals[0]" type="UMLEnumerationLiteral" guid="oIB4qHw/XEW5C6vqPaFYpgAA">
 <XPD:ATTR name="Name" type="string">None</XPD:ATTR>
