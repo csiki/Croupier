@@ -11,6 +11,7 @@
 #include "BroadcastMessage.h"
 
 // TODO free shit everywhere !
+// TODO "UNIT" tagot mindenhova ahol unit test szükséges - bonyolultabb algóknál, objektum együttmûködõseknél
 
 /**	Directs the game, and the bots; deals cards.
 */
@@ -22,6 +23,7 @@ private:
 	int numberOfBurntCards;
 	int round;
 	int currentBotIndex;
+	int currentDealerIndex;
 	int lastBotRaisedIndex;
 	int currentBlindIndex;
 	int nextBlindShiftAtIndex;
@@ -49,14 +51,18 @@ private:
 	void determineWinners(int& numOfWinners, int** winnersIndex);
 	void kickBot(int botID);
 	int findBotIndexByID(int botID) const;
-	int findDealerBotIndex() const;
+	bool canStartNewRound() const;
+	bool canRoundGoOn() const;
 public:
+	//Croupier();
+
 	void receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data);
 	void letsPoker();
 	int getKickAtRound(int botIndex) const;
 	int getBotIDByIndex(int botIndex) const;
 	void provideBotHandlers(int numOfBots, BotHandler** bhs);
 	void provideTable(Table* table);
+	void provideRulz(const Rulz* rules);
 };
 
 #endif  //_CROUPIER_H

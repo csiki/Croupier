@@ -55,6 +55,10 @@ void BotManager::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize
 			this->bot->roundEnded();
 			break;
 		case ROUNDSTARTED:
+			if (this->inGame)
+			{
+				this->inRound = true;
+			}
 			this->bot->roundStarted(data[0]);
 			break;
 		case ROUNDWINNERS:

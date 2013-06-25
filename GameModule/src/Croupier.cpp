@@ -2,6 +2,13 @@
 #include "Croupier.h"
 #include "BroadcastMessage.h"
 
+/** Method for creating Croupier, seting its attibrutes to default.
+*/
+/*Croupier::Croupier()
+{
+	// TODO
+}*/
+
 /** Inherited method to handle incoming broadcast messages.
 */
 void Croupier::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data)
@@ -134,7 +141,7 @@ int Croupier::nextActiveBot(int from) const
 void Croupier::preflop()
 {
 	// force blinds
-	int botIndex = this->findDealerBotIndex(); // dealer
+	int botIndex = this->currentDealerIndex; // dealer
 	
 	botIndex = this->nextActiveBot(botIndex); // small blind
 	this->bots[botIndex]->forceBlind(this->rules->getSmallBlind(this->currentBlindIndex));
@@ -169,7 +176,7 @@ void Croupier::flop()
 	this->broadcast(BroadcastMessage::FLOP, 0, 0);
 
 	// start bet round
-	this->currentBotIndex = this->nextActiveBot(this->findDealerBotIndex()); // the one after the dealer (small blind)
+	this->currentBotIndex = this->nextActiveBot(this->currentDealerIndex); // the one after the dealer (small blind)
 	this->betRound();
 }
 
@@ -187,7 +194,7 @@ void Croupier::turn()
 	this->broadcast(BroadcastMessage::TURN, 0, 0);
 
 	// start bet round
-	this->currentBotIndex = this->nextActiveBot(this->findDealerBotIndex()); // the one after the dealer (small blind)
+	this->currentBotIndex = this->nextActiveBot(this->currentDealerIndex); // the one after the dealer (small blind)
 	this->betRound();
 }
 
@@ -205,7 +212,7 @@ void Croupier::river()
 	this->broadcast(BroadcastMessage::RIVER, 0, 0);
 
 	// start bet round
-	this->currentBotIndex = this->nextActiveBot(this->findDealerBotIndex()); // the one after the dealer (small blind)
+	this->currentBotIndex = this->nextActiveBot(this->currentDealerIndex); // the one after the dealer (small blind)
 	this->betRound();
 }
 
@@ -439,29 +446,47 @@ int Croupier::findBotIndexByID(int botID) const
 	return -1;
 }
 
-/** Finds the currently dealer bot's index.
-*/
-int Croupier::findDealerBotIndex() const
-{
-	for (int i = 0; i < this->numOfBots; ++i)
-	{
-		if (this->bots[i]->isDealer())
-		{
-			return i;
-		}
-	}
-
-	throw "No bot found"; // TEST
-
-	return -1;
-}
-
 /** Direct a game.
  *	GameOwner calls it, signalling the start of the game.
 */
 void Croupier::letsPoker()
 {
-	// TODO
+	while (this->canStartNewRound())
+	{
+		// push the dealer button to the next active bot
+		this->bots[this->currentDealerIndex]->rmDealerButton();
+		this->currentDealerIndex = this->nextActiveBot(this->currentDealerIndex);
+		this->bots[this->currentDealerIndex]->addDealerButton();
+
+		// preflop
+		this->preflop();
+
+		// flop
+		if (this->canRoundGoOn())
+		{
+			this->flop();
+
+			// turn
+			if (this->canRoundGoOn())
+			{
+				this->turn();
+
+				// river
+				if (this->canRoundGoOn())
+				{
+					this->river();
+
+					// showdown
+					if (this->canRoundGoOn())
+					{
+						this->showdown();
+					}
+				}
+			}
+		}
+
+		// TODO rewardWinners() method should be added !!!
+	}
 }
 
 /** Returns the round when a specified bot is kicked or left the game.
@@ -494,6 +519,13 @@ void Croupier::provideTable(Table* table)
 	this->table = table;
 }
 
+/** Stores the given rules.
+*/
+void Croupier::provideRulz(const Rulz* rules)
+{
+	this->rules = rules;
+}
+
 /** Kicks a bot (inGame := false).
 */
 void Croupier::kickBot(int botID)
@@ -502,4 +534,52 @@ void Croupier::kickBot(int botID)
 	
 	this->bots[botIndex]->quit();
 	this->kicksAtRound[botIndex] = this->round;
+}
+
+/** Returns if a new round can be started (or the game ended).
+*/
+bool Croupier::canStartNewRound() const
+{
+	// count the number of bots inGame
+	int numOfBotsInGame = 0;
+	for (int i = 0; i < this->numOfBots; ++i)
+	{
+		if (this->bots[i]->isInGame())
+		{
+			++numOfBotsInGame;
+		}
+	}
+
+	if (numOfBotsInGame < 2)
+	{
+		return false;
+	}
+
+	// [here more checks can made]
+
+	return true;
+}
+
+/** Returns if the round can go on (or ended for example because of one inRound player left).
+*/
+bool Croupier::canRoundGoOn() const
+{
+	// count the number of bots inRound
+	int numOfBotsInRound = 0;
+	for (int i = 0; i < this->numOfBots; ++i)
+	{
+		if (this->bots[i]->isInRound())
+		{
+			++numOfBotsInRound;
+		}
+	}
+
+	if (numOfBotsInRound < 2)
+	{
+		return false;
+	}
+
+	// [here more checks can made]
+
+	return true;
 }
