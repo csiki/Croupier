@@ -89,7 +89,8 @@ void Croupier::betRound()
 		}
 
 		botIndex = (botIndex + 1) % this->numOfBots;
-	} while (botIndex != this->lastBotRaisedIndex);
+
+	} while (botIndex != this->lastBotRaisedIndex && this->numOfBotsInRound() > 1);
 }
 
 /** Deals cards to bots.
@@ -337,13 +338,43 @@ void Croupier::refreshBlinds()
 			// -1 because (blindsNum == blindShiftNum + 1), and -1 because increasing index
 			++this->nextBlindShiftAtIndex;
 		}
+
+		// broadcast blind raise
+		int* msgdata = new int[2];
+		msgdata[0] = this->rules->getSmallBlind(this->currentBlindIndex);
+		msgdata[1] = this->rules->getBigBlind(this->currentBlindIndex);
+		this->broadcast(BroadcastMessage::BLINDSRAISED, 2, msgdata);
+		delete [] msgdata;
 	}
 }
 
-/** Determine one or multiple winners. 
+/** Determine one or multiple winners.
 */
 void Croupier::determineWinners(int& numOfWinners, int** winnersIndex)
 {
+	// count bots in round (here we don't use numOfBotsInRound() method because we need tmpIfOneWinnerIndex)
+	int numOfBotsInRound = 0;
+	int tmpIfOneWinnerIndex; // if one bot stayed, it stores its index, so don't have to look up again later
+	for (int i = 0; i < this->numOfBots; ++i)
+	{
+		if (this->bots[i]->isInRound())
+		{
+			++numOfBotsInRound;
+			tmpIfOneWinnerIndex = i;
+		}
+	}
+
+	// if only one bot stayed, all others folded (showdown have not happened)
+	if (numOfBotsInRound == 1)
+	{
+		numOfWinners = 1;
+		*winnersIndex = new int;
+		(*winnersIndex)[0] = tmpIfOneWinnerIndex;
+
+		return;
+	}
+
+	// if showdown went down, and multiple bots stayed in round
 	const Card** tmpHand = new const Card*[7];
 
 	// tmpHand array first five items are the cards on table
@@ -451,12 +482,23 @@ int Croupier::findBotIndexByID(int botID) const
 */
 void Croupier::letsPoker()
 {
+	this->round = 1; // the very first round, not 0
+
 	while (this->canStartNewRound())
 	{
 		// push the dealer button to the next active bot
 		this->bots[this->currentDealerIndex]->rmDealerButton();
 		this->currentDealerIndex = this->nextActiveBot(this->currentDealerIndex);
 		this->bots[this->currentDealerIndex]->addDealerButton();
+
+		// broadcast round started
+		this->broadcast(BroadcastMessage::ROUNDSTARTED, 1, &this->round);
+
+		// broadcast rebuy deadline reach if reached
+		if (this->round == this->rules->getRebuyDeadline())
+		{
+			this->broadcast(BroadcastMessage::REBUYDEADLINEREACHED, 0, 0);
+		}
 
 		// preflop
 		this->preflop();
@@ -485,8 +527,60 @@ void Croupier::letsPoker()
 			}
 		}
 
-		// TODO rewardWinners() method should be added !!!
+		// determine winners
+		int numOfWinners = 0;
+		int* winnersIndex;
+		this->determineWinners(numOfWinners, &winnersIndex);
+
+		if (numOfWinners == 1) // only one winner, obvious handout
+		{
+			this->handOutPot(winnersIndex[0]);
+		}
+		else // multiple winners
+		{
+			this->handOutPot(numOfWinners, winnersIndex);
+		}
+
+		// send rebuyOrLeave() to bots out of chips (if rebuy is possible)
+		// botmanager runs canRebuy() before forward the message to bot
+		if (this->rules->getNumOfRebuysAllowed() > 0)
+		{
+			for (int i = 0; i < this->numOfBots; ++i)
+			{
+				if (this->bots[i]->getChips() == 0)
+				{
+					this->bots[i]->rebuyOrLeave();
+				}
+			}
+		}
+
+		// send quit() to those bots, who still has 0 chips
+		for (int i = 0; i < this->numOfBots; ++i)
+		{
+			if (this->bots[i]->getChips() == 0)
+			{
+				this->bots[i]->quit();
+			}
+		}
+
+		// broadcast end of round
+		this->broadcast(BroadcastMessage::ROUNDENDED, 0, 0);
+
+		++this->round;
 	}
+
+	// declare winner
+	int winnerIndex;
+	for (int i = 0; i < this->numOfBots; ++i)
+	{
+		if (this->bots[i]->isInGame())
+		{
+			winnerIndex = i;
+			break;
+		}
+	}
+
+	this->broadcast(BroadcastMessage::GAMEWINNER, 1, &winnerIndex);
 }
 
 /** Returns the round when a specified bot is kicked or left the game.
@@ -564,7 +658,20 @@ bool Croupier::canStartNewRound() const
 */
 bool Croupier::canRoundGoOn() const
 {
-	// count the number of bots inRound
+	if (this->numOfBotsInRound() < 2)
+	{
+		return false;
+	}
+
+	// [here more checks can made]
+
+	return true;
+}
+
+/** Returns the number of bots in round (have not folded).
+*/
+int Croupier::numOfBotsInRound() const
+{
 	int numOfBotsInRound = 0;
 	for (int i = 0; i < this->numOfBots; ++i)
 	{
@@ -574,12 +681,5 @@ bool Croupier::canRoundGoOn() const
 		}
 	}
 
-	if (numOfBotsInRound < 2)
-	{
-		return false;
-	}
-
-	// [here more checks can made]
-
-	return true;
+	return numOfBotsInRound;
 }

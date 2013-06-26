@@ -32,6 +32,7 @@ public:
 	void preflop();
 	void quit();
 	void raised(int botID, int amount);
+	void rebuyOccurred(int botID, int amount);
 	void rebuyDeadlineReached();
 	void rebuyOrLeave();
 	void river();

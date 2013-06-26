@@ -53,6 +53,7 @@ private:
 	int findBotIndexByID(int botID) const;
 	bool canStartNewRound() const;
 	bool canRoundGoOn() const;
+	int numOfBotsInRound() const;
 public:
 	//Croupier();
 

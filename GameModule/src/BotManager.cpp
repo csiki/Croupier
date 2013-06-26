@@ -45,6 +45,9 @@ void BotManager::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize
 		case RAISED:
 			this->bot->raised(data[0], data[1]);
 			break;
+		case REBUYOCCURRED:
+			this->bot->rebuyOccurred(data[0], data[1]);
+			break;
 		case REBUYDEADLINEREACHED:
 			this->bot->rebuyDeadlineReached();
 			break;
@@ -270,10 +273,19 @@ bool BotManager::allin()
 {
 	if (this->canAllin())
 	{
+		int allinAmount = this->chips;
 		this->pot += this->chips;
 		this->chips = 0;
 
 		this->stepToken = false;
+
+		// broadcast allin
+		int* msgdata = new int[2];
+		msgdata[0] = this->getID();
+		msgdata[1] = allinAmount;
+		this->broadcast(BroadcastMessage::ALLINED, 2, msgdata);
+		delete [] msgdata;
+
 		return true;
 	}
 
@@ -291,6 +303,14 @@ bool BotManager::call()
 		this->pot += callAmount;
 
 		this->stepToken = false;
+
+		// broadcast call
+		int* msgdata = new int[2];
+		msgdata[0] = this->getID();
+		msgdata[1] = callAmount;
+		this->broadcast(BroadcastMessage::CALLED, 2, msgdata);
+		delete [] msgdata;
+
 		return true;
 	}
 
@@ -304,6 +324,11 @@ bool BotManager::check()
 	if (this->canCheck())
 	{
 		this->stepToken = false;
+
+		// broadcast check
+		int msgdata = this->getID();
+		this->broadcast(BroadcastMessage::CHECKED, 1, &msgdata);
+
 		return true;
 	}
 
@@ -317,8 +342,12 @@ bool BotManager::fold()
 	if (this->canFold())
 	{
 		this->inRound = false;
-
 		this->stepToken = false;
+
+		// broadcast fold
+		int msgdata = this->getID();
+		this->broadcast(BroadcastMessage::FOLDED, 1, &msgdata);
+
 		return true;
 	}
 
@@ -336,6 +365,14 @@ bool BotManager::raise(int raiseAmount)
 		this->pot += chipsToMove;
 
 		this->stepToken = false;
+
+		// broadcast raise
+		int* msgdata = new int[2];
+		msgdata[0] = this->getID();
+		msgdata[1] = raiseAmount;
+		this->broadcast(BroadcastMessage::RAISED, 2, msgdata);
+		delete [] msgdata;
+
 		return true;
 	}
 
@@ -360,6 +397,13 @@ bool BotManager::rebuy(int rebuyAmount)
 		this->reservedCredit -= rebuyAmount;
 		this->chips += rebuyAmount;
 
+		// broadcast rebuy
+		int* msgdata = new int[2];
+		msgdata[0] = this->getID();
+		msgdata[1] = rebuyAmount;
+		this->broadcast(BroadcastMessage::REBUYOCCURRED, 2, msgdata);
+		delete [] msgdata;
+
 		return true;
 	}
 
@@ -372,10 +416,12 @@ void BotManager::talk(Comment comment)
 {
 	if (this->talkToken)
 	{
-		int* p = new int;
-		*p = comment;
-		this->broadcast(BroadcastMessage::LISTEN, 1, p);
-		delete p;
+		// broadcast comment
+		int* msgdata = new int[2];
+		msgdata[0] = this->getID();
+		msgdata[1] = comment;
+		this->broadcast(BroadcastMessage::LISTEN, 2, msgdata);
+		delete [] msgdata;
 	}
 }
 
@@ -795,6 +841,10 @@ void BotManager::leave()
 {
 	// TODO idõt mérni !!!
 	this->bot->leave();
+
+	// broadcast left game
+	int msgdata = this->getID();
+	this->broadcast(BroadcastMessage::LEFTGAME, 1, &msgdata);
 }
 
 /** Croupier signals that AI should rebuy or else leave the game.
@@ -802,11 +852,14 @@ void BotManager::leave()
 bool BotManager::rebuyOrLeave()
 {
 	// TODO idõt mérni !!!
-	this->bot->rebuyOrLeave();
-
-	if (this->chips > 0)
+	if (this->canRebuy(1))
 	{
-		return true;
+		this->bot->rebuyOrLeave();
+
+		if (this->chips > 0)
+		{
+			return true;
+		}
 	}
 
 	return false;

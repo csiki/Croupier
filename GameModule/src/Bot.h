@@ -37,6 +37,7 @@ public:
 	virtual void preflop() = 0;
 	virtual void leave() = 0;
 	virtual void raised(int botID, int amount) = 0;
+	virtual void rebuyOccurred(int botID, int amount);
 	virtual void rebuyDeadlineReached() = 0;
 	virtual void rebuyOrLeave() = 0;
 	virtual void river() = 0;

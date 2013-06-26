@@ -77,6 +77,10 @@ void XYTranslator::raised(int botID, int amount)
 {
 }
 
+void XYTranslator::rebuyOccurred(int botID, int amount)
+{
+}
+
 void XYTranslator::rebuyDeadlineReached()
 {
 }
