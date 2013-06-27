@@ -15,6 +15,9 @@ private:
 	KnowledgeDataType *columnTypes;
 	bool updated;
 	bool removed;
+
+	bool isCellExist(int row, int col) const;
+	bool isDataTypeCorrect(int col, KnowledgeDataType kdt) const;
 public:
 	KnowledgeTable(int numOfCols, KnowledgeDataType* colTypes, bool updated = false);
 
