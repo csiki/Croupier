@@ -40,6 +40,10 @@ public:
 	Card() : suit(Suit::NULLSUIT), rank(Rank::NULLRANK) {}
 	Card(int s, int r) : suit((Card::Suit)s), rank((Card::Rank)r) {}
 	int getVal() const; // suit*100 + rank
+	
+	bool operator<(const Card& card) const { return this->rank < card.rank; }
+	bool operator==(const Card& card) const { return this->rank == card.rank; }
+	bool operator>(const Card& card) const { return this->rank > card.rank; }
 
 	static Card getNullCard();
 	static bool isNullCard(Card& card);

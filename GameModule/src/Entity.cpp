@@ -1,8 +1,10 @@
 #include "stdafx.h"
 #include "Entity.h"
 
+/** Returns entity's id.
+*/
 int Entity::getID() const
 {
-	return 0;
+	return this->id;
 }
 

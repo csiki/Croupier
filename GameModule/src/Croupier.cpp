@@ -527,7 +527,7 @@ void Croupier::letsPoker()
 			}
 		}
 
-		// determine winners
+		// determine round winners
 		int numOfWinners = 0;
 		int* winnersIndex;
 		this->determineWinners(numOfWinners, &winnersIndex);

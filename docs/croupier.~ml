@@ -12898,21 +12898,21 @@
 </XPD:OBJ>
 </XPD:OBJ>
 <XPD:OBJ name="Operations[15]" type="UMLOperation" guid="amgKRXsmKEWKQnod8TqcOAAA">
-<XPD:ATTR name="Name" type="string">rebuy</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">rebuyOccurred</XPD:ATTR>
 <XPD:ATTR name="IsAbstract" type="boolean">True</XPD:ATTR>
 <XPD:REF name="Owner">7myJpwlKSUOvg4gFfFXMPgAA</XPD:REF>
 <XPD:ATTR name="#Parameters" type="integer">3</XPD:ATTR>
-<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="fA3FZJNdtkWJ5Ob3wx2PgwAA">
+<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="vJEmfWW5VEGMcaj/jApQcAAA">
 <XPD:ATTR name="DirectionKind" type="UMLParameterDirectionKind">pdkReturn</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">void</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">amgKRXsmKEWKQnod8TqcOAAA</XPD:REF>
 </XPD:OBJ>
-<XPD:OBJ name="Parameters[1]" type="UMLParameter" guid="KOWCccP02kCESeDTBb3hcgAA">
+<XPD:OBJ name="Parameters[1]" type="UMLParameter" guid="F0ASsAdu70Sd4QL7lWxzQgAA">
 <XPD:ATTR name="Name" type="string">botID</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">int</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">amgKRXsmKEWKQnod8TqcOAAA</XPD:REF>
 </XPD:OBJ>
-<XPD:OBJ name="Parameters[2]" type="UMLParameter" guid="XtVYHrrqxEaFV19HnskiEQAA">
+<XPD:OBJ name="Parameters[2]" type="UMLParameter" guid="VMoiY148o0i4GW2uD6lNDQAA">
 <XPD:ATTR name="Name" type="string">rebuyAmount</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">int</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">amgKRXsmKEWKQnod8TqcOAAA</XPD:REF>
