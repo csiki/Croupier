@@ -9,16 +9,28 @@
 class BotInfo
 {
 protected:
-	int numOfCardsInHand;
 	int chips;
 	int pot;
 	bool cardsRevealed;
 	bool dealer;
 	bool inGame;
 	bool inRound;
-	Card **hand;
+	Card *hand[2];
 	Emotion emotion;
 public:
+
+	BotInfo(int chips)
+	{
+		this->chips = chips;
+		this->pot = 0;
+		this->cardsRevealed = false;
+		this->dealer = false;
+		this->inGame = true;
+		this->inRound = false;
+		this->hand[0] = this->hand[1] = 0;
+		this->emotion = Emotion::HIDDEN;
+	}
+
 	int getChips() const;
 	int getPot() const;
 	Emotion getEmotion() const;

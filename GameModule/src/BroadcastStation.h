@@ -12,7 +12,10 @@ class BroadcastStation
 private:
 	std::list<BroadcastMember*> receivers;
 public:
-	void broadcast(BroadcastMember* member, BroadcastMessage msg, int dataSize, const int* data);
+
+	BroadcastStation() {}
+
+	void broadcast(BroadcastMember* sender, BroadcastMessage msg, int dataSize, const int* data);
 	void subsrcibe(BroadcastMember* newMember);
 	void unsubsrcibe(BroadcastMember* member);
 };

@@ -1,89 +1,82 @@
 #include "stdafx.h"
 #include "Table.h"
 
+/** Adds a card to the ones on table (flop, turn, river).
+*/
 void Table::addCard(Card* c)
 {
 	this->cards[++this->numOfCards] = c;
 }
 
+/** Returns the number of cards on table (flop, turn, river).
+*/
 int Table::getNumOfCards() const
 {
 	return this->numOfCards;
 }
 
-Card* Table::rmCard(int cardIndex)
+/** Removes from table (if there's any flop, turn, river).
+*/
+Card* Table::rmCard()
 {
-	//TEST out of range
-	Card* card = cards[cardIndex];
-	for (int i = cardIndex; i < this->numOfCards-1; i++)
+	if (numOfCards > 0)
 	{
-		cards[i] = cards[i+1];
+		--numOfCards;
+		Card* card = this->cards[numOfCards];
+		this->cards[numOfCards] = 0;
 	}
-	--numOfCards;
-	return card;
+
+	return 0;
 }
 
+/** Returns a card from table (flop, turn, river).
+*/
 const Card* Table::getCard(int index) const
 {
-	//TEST out of range
-	return cards[index];
+	if (index >= 0 && index < this->numOfCards)
+	{
+		return this->cards[index];
+	}
+
+	return 0;
 }
 
+/** Returns a reference to a bot by its index (at table).
+*/
 const BotInfo* Table::getBotByIndex(int index) const
 {
-	//TEST out of range
-	return bots[index];
+	if (index >= 0 && index < this->numOfBots)
+	{
+		return bots[index];
+	}
+
+	return 0;
 }
 
+/** Returns the number of bots.
+*/
 int Table::getNumOfBots() const
 {
-	return numOfBots;
+	return this->numOfBots;
 }
 
+/** Returns the amount of pot in game (on table).
+*/
 int Table::getPot() const
 {
 	int potSum = 0;
-	for (int i = 0; i < numOfBots; i++)
+	for (int i = 0; i < this->numOfBots; ++i)
 	{
 		potSum += bots[i]->getPot();
 	}
+
 	return potSum;
 }
 
+/** Sits a bot to the table.
+*/
 void Table::sit(BotInfo* bot)
 {
-	BotInfo** newArray = new BotInfo*[this->numOfBots+1];
-	//copy old array
-	for (int i = 0; i < this->numOfBots; i++)
-	{
-		newArray[i] = bots[i];
-	}
-	//insert new BotInfo*
-	++this->numOfBots;
-	newArray[this->numOfBots-1] = bot;
-	delete[] bots;
-	bots = newArray;
+	// bots already allocated in costructor
+	this->bots[this->numOfBots++] = bot;
 }
-
-void Table::getUp(BotInfo* bot)
-{
-	//TEST bot exits
-	int botIndex = 0;
-	BotInfo** newArray = new BotInfo*[this->numOfBots-1];
-	for (int i = 0; i < botIndex; i++) //copy before
-	{
-		newArray[i] = bots[i];
-	}
-
-	if (botIndex != (numOfBots - 1))
-	{
-		for (int i = botIndex; i < numOfBots-1; i++) //copy after
-		{
-			newArray[i] = bots[i+1];
-		}
-	}
-	--this->numOfBots;
-	delete[] bots;
-	bots = newArray;
-}
-

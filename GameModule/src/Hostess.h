@@ -20,15 +20,35 @@ private:
 	map<int, const BotInfo*> botsByID;
 	bool* botsInRound; // define at constructor
 	bool* botsInGame; // define at constructor
+	int numOfBots;
 	int round;
 	int callAmount;
 	int minRaise;
 	int numberOfRaisesSoFar;
 	int nextBlindShiftDeadlineIndex;
 
-	void fillBotsByID(); // TODO must be called in constructor
+	void fillBotsData();
 	void handleRaise(int raiseAmount);
 public:
+
+	Hostess(const Table* table, const Rulz* rules, BroadcastStation* broadcastStation) :
+		BroadcastMember(-1, broadcastStation), Entity(-1)
+	{
+		this->table = table;
+		this->rules = rules;
+		this->numOfBots = table->getNumOfBots();
+
+		this->botsInGame = new bool[this->numOfBots];
+		this->botsInRound = new bool[this->numOfBots];
+		this->round = 0;
+		this->callAmount = 0;
+		this->minRaise = 0;
+		this->numberOfRaisesSoFar = 0;
+		this->nextBlindShiftDeadlineIndex = 0;
+		
+		this->fillBotsData();
+	}
+
 	void receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data);
 	int getCallAmount() const;
 	int getMinRaise() const;

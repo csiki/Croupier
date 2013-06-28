@@ -55,7 +55,24 @@ private:
 	bool canRoundGoOn() const;
 	int numOfBotsInRound() const;
 public:
-	//Croupier();
+
+	Croupier(BroadcastStation* broadcastStation, Loggable* loggable) :
+		BroadcastMember(0, broadcastStation), Logger(0, loggable), Entity(0)
+	{
+		this->deck = new Deck();
+		this->numberOfBurntCards = 0;
+		this->burnt[0] = 0;
+		this->burnt[1] = 0;
+		this->burnt[2] = 0;
+		this->round = 0;
+		this->currentBotIndex = 0;
+		this->currentBlindIndex = 0;
+		this->currentDealerIndex = 0;
+		this->lastBotRaisedIndex = 0;
+		this->currentBlindIndex = 0;
+		this->nextBlindShiftAtIndex = 0;
+		this->numOfBots = 0;
+	}
 
 	void receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data);
 	void letsPoker();

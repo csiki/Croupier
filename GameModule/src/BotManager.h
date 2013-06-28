@@ -33,10 +33,27 @@ private:
 	Hostess *hostess;
 	const Table *table;
 	const Rulz *rules;
-	
+
 	/// Bot's index at table
 	int nthAtTable;
 public:
+
+	BotManager(Bot* bot, BotKnowledgeHandler* bkHandler, Hostess* hostess, const Table* table,
+		const Rulz* rules, BroadcastStation* broadcastStation, Loggable* loggable,
+		int id, int chips, int reservedCredit, int nthAtTable) :
+		BotCommunicator(chips), BotHandler(chips), BotInfo(chips),
+		BroadcastMember(id, broadcastStation), Logger(id, loggable), Entity(id)
+	{
+		this->bot = bot;
+		this->bkHandler = bkHandler;
+		this->hostess = hostess;
+		this->table = table;
+		this->rules = rules;
+		this->reservedCredit = reservedCredit;
+		this->nthAtTable = nthAtTable;
+		this->numOfRebuys = 0;
+	}
+
 	// broadcast
 	void receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data);
 	// botinfo
@@ -97,7 +114,7 @@ public:
 	bool isEmotionAllowed() const;
 	bool isBotKnowledgeUseAllowed() const;
 	int addKnowledgeTableRow(int tableID);
-	int createKnowledgeTable(int numOfCols, KnowledgeDataType* colTypes);
+	int createKnowledgeTable(int numOfCols, list<KnowledgeDataType> colTypes);
 	KnowledgeDataType getKnowledgeTableDataType(int tableID, int col) const;
 	int getKnowledgeTableNumOfCols(int tableID) const;
 	int getKnowledgeTableNumOfRows(int tableID) const;

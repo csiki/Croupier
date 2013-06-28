@@ -1,11 +1,6 @@
 #include "stdafx.h"
 #include "KnowledgeTable.h"
 
-KnowledgeTable::KnowledgeTable(int numOfCols, KnowledgeDataType* colTypes, bool updated)
-{
-	// TODO
-}
-
 /** Returns if a cell exists in table.
 */
 bool KnowledgeTable::isCellExist(int row, int col) const

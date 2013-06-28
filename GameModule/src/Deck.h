@@ -12,7 +12,20 @@ class Deck
 private:
 	vector<Card*> cards;
 public:
-	Deck();
+
+	/** Fills deck.
+	*/
+	Deck()
+	{
+		for (int i = 1; i <= 4; i++)
+		{
+			for (int j = 2; j <= 14; j++)
+			{
+				this->cards.push_back(new Card(i, j));
+			}
+		}
+	}
+
 	int num() const;
 	Card* pop();
 	void push(Card* c);

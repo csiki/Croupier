@@ -21,6 +21,9 @@ private:
 	const string name;
 	const int lang;
 public:
+
+	Bot(int id, string name, int lang) : id(id), name(name), lang(lang) {}
+
 	int getID() const;
 	int getLang() const;
 	std::string getName() const;

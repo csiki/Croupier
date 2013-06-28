@@ -11,21 +11,32 @@ class Table
 {
 private:
 	int numOfBots;
-	BotInfo ** bots;
+	BotInfo **bots;
 	int numOfCards;
-	Card **cards;
+	Card *cards[5];
 public:
-	// TODO konstruktorba megkapja numOfBots-ot, így le tudja foglalni a helyet nekik, mire leülnek
-	Table(int numOfBots);
+	Table(int numOfBots)
+	{
+		// we increase numofbots, when a bot sits down
+		this->numOfBots = 0;
+		this->numOfCards = 0;
+		this->bots = new BotInfo*[numOfBots];
+
+		// clear bots array
+		for (int i = 0; i < numOfBots; ++i)
+		{
+			this->bots[i] = 0;
+		}
+	}
+
 	void addCard(Card* c);
 	int getNumOfCards() const;
-	Card* rmCard(int cardIndex);
+	Card* rmCard();
 	const Card* getCard(int index) const;
 	const BotInfo* getBotByIndex(int index) const;
 	int getNumOfBots() const;
 	int getPot() const;
 	void sit(BotInfo* bot);
-	void getUp(BotInfo* bot);
 };
 
 #endif  //_TABLE_H

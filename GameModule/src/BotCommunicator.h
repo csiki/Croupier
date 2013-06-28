@@ -14,6 +14,9 @@
 class BotCommunicator : virtual public BotInfo
 {
 public:
+
+	BotCommunicator(int chips) : BotInfo(chips) {}
+
 	// botmanager
 	Card getHand(int cardIndex);
 	void setEmotion(Emotion emotion);
@@ -94,7 +97,7 @@ public:
 
 	virtual KnowledgeDataType getKnowledgeTableDataType(int tableID, int col) = 0;
 	virtual int addKnowledgeTableRow(int tableID) = 0;
-	virtual int createKnowledgeTable(int numOfCols, KnowledgeDataType* colTypes) = 0;
+	virtual int createKnowledgeTable(int numOfCols, list<KnowledgeDataType> colTypes) = 0;
 	virtual int getKnowledgeTableNumOfCols(int tableID) = 0;
 	virtual int getKnowledgeTableNumOfRows(int tableID) = 0;
 	virtual bool removeKnowledgeTable(int tableID) = 0;

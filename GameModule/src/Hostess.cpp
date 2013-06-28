@@ -59,7 +59,7 @@ void Hostess::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, c
 	else if (msg == BroadcastMessage::ROUNDSTARTED)
 	{
 		// update botsInRound
-		for (int i = 0; i < this->table->getNumOfBots(); ++i)
+		for (int i = 0; i < this->numOfBots; ++i)
 		{
 			this->botsInRound[i] = this->botsInGame[i];
 		}
@@ -95,16 +95,22 @@ void Hostess::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, c
 	}
 }
 
-/** Fills botsByID with bot reference and id pairs.
+/** Fills botsByID with bot reference and id pairs, fills botsInGame and botsInRound.
 */
-void Hostess::fillBotsByID()
+void Hostess::fillBotsData()
 {
-	this->botsByID.clear();
-
-	int numOfBots = table->getNumOfBots();
-	for (int i = 0; i < numOfBots; ++i)
+	const BotInfo* tmpBot;
+	
+	for (int i = 0; i < this->numOfBots; ++i)
 	{
-		this->botsByID.insert(std::pair<int, const BotInfo*>(this->table->getBotByIndex(i)->getID(), this->table->getBotByIndex(i)));
+		tmpBot = this->table->getBotByIndex(i);
+		
+		// insert bot into map
+		this->botsByID.insert(std::pair<int, const BotInfo*>(tmpBot->getID(), tmpBot));
+
+		// set botsInGame and botsInRound
+		this->botsInGame[i] = true;
+		this->botsInRound[i] = false;
 	}
 }
 
@@ -199,14 +205,14 @@ const BotInfo* Hostess::getBotByID(int botID) const
 */
 int Hostess::getBotIDByIndex(int index) const
 {
-	return this->table->getBotByIndex(index % this->table->getNumOfBots())->getID();
+	return this->table->getBotByIndex(index % this->numOfBots)->getID();
 }
 
 /** Returns AI's index by id (index: from 0 to n-1 same order at table; n: number of bots).
 */
 int Hostess::getBotIndexByID(int botID) const
 {
-	for (int i = 0; i < this->table->getNumOfBots(); ++i)
+	for (int i = 0; i < this->numOfBots; ++i)
 	{
 		if (botID == this->table->getBotByIndex(i)->getID())
 		{
@@ -235,7 +241,7 @@ int Hostess::getBotIDToTheRight(int fromID, int nth, bool onlyInGame, bool onlyI
 	if (onlyInGame)
 	{
 		isAny = false;
-		for (int i = 0; i < this->table->getNumOfBots(); ++i)
+		for (int i = 0; i < this->numOfBots; ++i)
 		{
 			if (this->botsInGame[i])
 			{
@@ -254,7 +260,7 @@ int Hostess::getBotIDToTheRight(int fromID, int nth, bool onlyInGame, bool onlyI
 	if (onlyInRound)
 	{
 		isAny = false;
-		for (int i = 0; i < this->table->getNumOfBots(); ++i)
+		for (int i = 0; i < this->numOfBots; ++i)
 		{
 			if (this->botsInRound[i])
 			{
@@ -276,8 +282,8 @@ int Hostess::getBotIDToTheRight(int fromID, int nth, bool onlyInGame, bool onlyI
 		int activePlayersPassed = 0;
 		while (activePlayersPassed < nth)
 		{
-			if ( (this->botsInGame[index % this->table->getNumOfBots()] == onlyInGame || !onlyInGame)
-				&& (this->botsInRound[index % this->table->getNumOfBots()] == onlyInRound || !onlyInRound) )
+			if ( (this->botsInGame[index % this->numOfBots] == onlyInGame || !onlyInGame)
+				&& (this->botsInRound[index % this->numOfBots] == onlyInRound || !onlyInRound) )
 			{
 				// false means nothing..
 				++activePlayersPassed;
@@ -290,7 +296,7 @@ int Hostess::getBotIDToTheRight(int fromID, int nth, bool onlyInGame, bool onlyI
 		index = fromIndex - nth;
 	}
 
-	return index % this->table->getNumOfBots();
+	return index % this->numOfBots;
 }
 
 /** Returns the nth. bot to the left at table (the bots after).
@@ -304,7 +310,7 @@ int Hostess::getBotIDToTheLeft(int fromID, int nth, bool onlyInGame, bool onlyIn
 	if (onlyInGame)
 	{
 		isAny = false;
-		for (int i = 0; i < this->table->getNumOfBots(); ++i)
+		for (int i = 0; i < this->numOfBots; ++i)
 		{
 			if (this->botsInGame[i])
 			{
@@ -323,7 +329,7 @@ int Hostess::getBotIDToTheLeft(int fromID, int nth, bool onlyInGame, bool onlyIn
 	if (onlyInRound)
 	{
 		isAny = false;
-		for (int i = 0; i < this->table->getNumOfBots(); ++i)
+		for (int i = 0; i < this->numOfBots; ++i)
 		{
 			if (this->botsInRound[i])
 			{
@@ -345,8 +351,8 @@ int Hostess::getBotIDToTheLeft(int fromID, int nth, bool onlyInGame, bool onlyIn
 		int activePlayersPassed = 0;
 		while (activePlayersPassed < nth)
 		{
-			if ( (this->botsInGame[index % this->table->getNumOfBots()] == onlyInGame || !onlyInGame)
-				&& (this->botsInRound[index % this->table->getNumOfBots()] == onlyInRound || !onlyInRound) )
+			if ( (this->botsInGame[index % this->numOfBots] == onlyInGame || !onlyInGame)
+				&& (this->botsInRound[index % this->numOfBots] == onlyInRound || !onlyInRound) )
 			{
 				// false means nothing..
 				++activePlayersPassed;
@@ -359,7 +365,7 @@ int Hostess::getBotIDToTheLeft(int fromID, int nth, bool onlyInGame, bool onlyIn
 		index = fromIndex + nth;
 	}
 
-	return index % this->table->getNumOfBots();
+	return index % this->numOfBots;
 }
 
 /** Returns the number of bots.
@@ -367,7 +373,7 @@ int Hostess::getBotIDToTheLeft(int fromID, int nth, bool onlyInGame, bool onlyIn
 int Hostess::getNumOfBots(bool onlyInGame, bool onlyInRound) const
 {
 	int num = 0;
-	for (int i = 0; i < this->table->getNumOfBots(); ++i)
+	for (int i = 0; i < this->numOfBots; ++i)
 	{
 		if ( (this->botsInGame[i] == onlyInGame || !onlyInGame)
 			&& (this->botsInRound[i] == onlyInRound || !onlyInRound) )

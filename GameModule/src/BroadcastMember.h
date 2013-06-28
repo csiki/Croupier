@@ -8,7 +8,7 @@ class BroadcastStation; // cross reference
 
 /**	Base class for entities communicating through BroadcastStation (observer pattern).
 */
-class BroadcastMember : public Entity
+class BroadcastMember : virtual public Entity
 {
 private:
 	BroadcastStation *broadcastStation;
@@ -17,6 +17,12 @@ protected:
 	void subscribe();
 	void unsubscribe();
 public:
+
+	BroadcastMember(int id, BroadcastStation* broadcastStation) : Entity(id)
+	{
+		this->broadcastStation = broadcastStation;
+	}
+
 	virtual void receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data) = 0;
 };
 

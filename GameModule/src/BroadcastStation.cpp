@@ -4,13 +4,13 @@
 
 /** Sends a message for all subscribers except the sender.
 */
-void BroadcastStation::broadcast(BroadcastMember* member, BroadcastMessage msg, int dataSize, const int* data)
+void BroadcastStation::broadcast(BroadcastMember* sender, BroadcastMessage msg, int dataSize, const int* data)
 {
-	int senderID = member->getID();
+	int senderID = sender->getID();
 
 	for (list<BroadcastMember*>::iterator it = this->receivers.begin(); it != this->receivers.end(); ++it)
 	{
-		if ((*it)->getID() != senderID)
+		if (*it != sender)
 		{
 			(*it)->receiveBroadcast(senderID, msg, dataSize, data);
 		}
@@ -21,11 +21,9 @@ void BroadcastStation::broadcast(BroadcastMember* member, BroadcastMessage msg, 
 */
 void BroadcastStation::subsrcibe(BroadcastMember* newMember)
 {
-	int newMemberID = newMember->getID();
-
 	for (list<BroadcastMember*>::iterator it = this->receivers.begin(); it != this->receivers.end(); ++it)
 	{
-		if ((*it)->getID() == newMemberID)
+		if (*it == newMember)
 		{
 			return; // already subscribed
 		}
@@ -39,11 +37,9 @@ void BroadcastStation::subsrcibe(BroadcastMember* newMember)
 */
 void BroadcastStation::unsubsrcibe(BroadcastMember* member)
 {
-	int memberID = member->getID();
-
 	for (list<BroadcastMember*>::iterator it = this->receivers.begin(); it != this->receivers.end(); ++it)
 	{
-		if ((*it)->getID() == memberID)
+		if (*it == member)
 		{
 			this->receivers.erase(it); // unsubscribe
 			return;

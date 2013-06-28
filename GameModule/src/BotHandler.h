@@ -11,6 +11,13 @@ protected:
 	bool stepToken;
 	bool talkToken;
 public:
+
+	BotHandler(int chips) : BotInfo(chips)
+	{
+		this->stepToken = false;
+		this->talkToken = false;
+	}
+
 	void addDealerButton();
 	void rmDealerButton();
 	void forceBlind(int blind);

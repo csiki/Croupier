@@ -21,7 +21,9 @@ void GameOwner::saveBotResults()
 
 }
 
+/** Returns state of the game.
+*/
 int GameOwner::getGameState() const
 {
-	return 0;
+	return this->gameState;
 }

@@ -35,9 +35,13 @@ void BotHandler::forceBlind(int blind)
 */
 void BotHandler::receiveCard(Card* c)
 {
-	if (this->numOfCardsInHand < 2)
+	if (this->hand[0] != 0)
 	{
-		this->hand[this->numOfCardsInHand++] = c;
+		this->hand[0] = c;
+	}
+	else if (this->hand[1] != 0)
+	{
+		this->hand[1] = c;
 	}
 }
 
@@ -59,9 +63,9 @@ void BotHandler::revealCards()
 */
 Card* BotHandler::takeHand(int cardIndex)
 {
-	Card* temp = this->hand[cardIndex];
+	Card* tmp = this->hand[cardIndex];
 	this->hand[cardIndex] = 0;
-	return temp;
+	return tmp;
 }
 
 /**	Takes all the pot of the AI, and returns its amount.

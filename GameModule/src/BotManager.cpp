@@ -79,7 +79,7 @@ void BotManager::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize
 			this->bot->turn();
 			break;
 		default: ;
-			// TODO ide vmi logot a rossz mûködésre vagy exception
+			throw "False message!"; // TEST
 	}
 
 	this->talkToken = false;
@@ -631,11 +631,20 @@ int BotManager::addKnowledgeTableRow(int tableID)
 
 /** Creates a knowledge table.
 */
-int BotManager::createKnowledgeTable(int numOfCols, KnowledgeDataType* colTypes)
+int BotManager::createKnowledgeTable(int numOfCols, list<KnowledgeDataType> colTypes)
 {
-	if (this->rules->isBotKnowledgeUseAllowed())
+	if (this->rules->isBotKnowledgeUseAllowed() && numOfCols == colTypes.size())
 	{
-		return this->createKnowledgeTable(numOfCols, colTypes);
+		// create and fill colTypes array
+		KnowledgeDataType* tmpColTypes = new KnowledgeDataType[numOfCols];
+
+		int i = 0;
+		for (list<KnowledgeDataType>::iterator it = colTypes.begin(); it != colTypes.end(); ++it)
+		{
+			tmpColTypes[i++] = *it;
+		}
+
+		return this->bkHandler->createTable(numOfCols, tmpColTypes);
 	}
 
 	return 0;

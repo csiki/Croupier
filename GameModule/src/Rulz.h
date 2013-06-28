@@ -24,6 +24,26 @@ private:
 	int startingChips;
 	BettingSystem bs;
 public:
+
+	Rulz(BettingSystem bs, int numOfBlinds, int* smallBlinds, int* bigBlinds, int* blindShiftDeadlines,
+		int rebuyDeadline, int numOfRebuysAllowed, int startingChips, int maxNumOfRaises,
+		int* allowedBotCalcTime, bool talkAllowed, bool emotionAllowed, bool knowledgeBaseAllowed)
+	{
+		this->bs = bs;
+		this->numOfBlinds = numOfBlinds;
+		this->smallBlinds = smallBlinds;
+		this->bigBlinds = bigBlinds;
+		this->blindShiftDeadlines = blindShiftDeadlines;
+		this->rebuyDeadline = rebuyDeadline;
+		this->numOfRebuysAllowed = numOfRebuysAllowed;
+		this->startingChips = startingChips;
+		this->maxNumOfRaises = maxNumOfRaises;
+		this->allowedBotCalcTime = allowedBotCalcTime;
+		this->talkAllowed = talkAllowed;
+		this->emotionAllowed = emotionAllowed;
+		this->knowledgeBaseAllowed = knowledgeBaseAllowed;
+	}
+
 	int getBigBlind(int index) const;
 	int getSmallBlind(int index) const;
 	int getBlindShiftDeadline(int index) const;

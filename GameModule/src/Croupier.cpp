@@ -56,9 +56,9 @@ void Croupier::collectCards()
 	this->numberOfBurntCards = 0;
 
 	// cards from table
-	for (int i = 0; i < this->table->getNumOfCards(); ++i)
+	while (Card* c = this->table->rmCard())
 	{
-		this->deck->push(this->table->rmCard(i));
+		this->deck->push(c);
 	}
 
 	// hands
@@ -486,13 +486,13 @@ void Croupier::letsPoker()
 
 	while (this->canStartNewRound())
 	{
+		// broadcast round started
+		this->broadcast(BroadcastMessage::ROUNDSTARTED, 1, &this->round);
+
 		// push the dealer button to the next active bot
 		this->bots[this->currentDealerIndex]->rmDealerButton();
 		this->currentDealerIndex = this->nextActiveBot(this->currentDealerIndex);
 		this->bots[this->currentDealerIndex]->addDealerButton();
-
-		// broadcast round started
-		this->broadcast(BroadcastMessage::ROUNDSTARTED, 1, &this->round);
 
 		// broadcast rebuy deadline reach if reached
 		if (this->round == this->rules->getRebuyDeadline())

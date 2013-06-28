@@ -19,7 +19,14 @@ private:
 	bool isCellExist(int row, int col) const;
 	bool isDataTypeCorrect(int col, KnowledgeDataType kdt) const;
 public:
-	KnowledgeTable(int numOfCols, KnowledgeDataType* colTypes, bool updated = false);
+
+	KnowledgeTable(int numOfCols, KnowledgeDataType* colTypes, bool updated = false)
+	{
+		this->updated = false;
+		this->removed = false;
+		this->numOfCols = numOfCols;
+		this->columnTypes = colTypes;
+	}
 
 	int addRow();
 	KnowledgeDataType getColumnType(int col) const;

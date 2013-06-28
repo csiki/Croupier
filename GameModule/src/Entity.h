@@ -8,6 +8,9 @@ class Entity
 private:
 	const int id;
 public:
+
+	Entity(int id) : id(id) {}
+
 	int getID() const;
 };
 

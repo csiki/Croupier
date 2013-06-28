@@ -14,6 +14,9 @@ class Log : public Loggable
 private:
 	list<Event*> events;
 public:
+
+	Log() {}
+
 	void log(Event* e);
 	void getEventsIterators(list<Event*>::const_iterator& begin, list<Event*>::const_iterator& end) const;
 };

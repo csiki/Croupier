@@ -21,6 +21,24 @@ private:
 	Rulz* rulz;
 	int gameState; // 1 - game initialised, 2 - game started, 3 - game ended, 4 - results saved, else 0 (GameOwner just constructed)
 public:
+
+	GameOwner(int numOfBots,
+		const char* logPath, const char* rulzPath,
+		const char* botsDataPath, const char* resultsPath)
+	{
+		this->logPath = logPath;
+		this->rulzPath = rulzPath;
+		this->botsDataPath = botsDataPath;
+		this->resultsPath = resultsPath;
+
+		// not set numOfBots, but allocate space for bots
+		// set numOfBots, when loading bots
+		this->bots = new Bot*[numOfBots];
+		this->botManagers = new BotManager*[numOfBots];
+
+		this->gameState = 0;
+	}
+
 	bool initialiseGame();
 	int startGame();
 	void saveLog();

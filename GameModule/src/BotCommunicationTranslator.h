@@ -21,6 +21,12 @@ protected:
 	virtual void send(int msgSize, const int* msg) = 0;
 	virtual void send(string msg) = 0;
 public:
+	
+	BotCommunicationTranslator(int id, string name, int langID, Process* process) : Bot(id, name, langID)
+	{
+		this->process = process;
+	}
+
 	virtual void allined(int botID, int amount) = 0;
 	virtual void blindsRaised(int newSmallBlind, int newBigBlind) = 0;
 	virtual void called(int botID, int amount) = 0;
