@@ -117,6 +117,8 @@
     <ClInclude Include="..\src\Logger.h" />
     <ClInclude Include="..\src\LogXMLHandler.h" />
     <ClInclude Include="..\src\Process.h" />
+    <ClInclude Include="..\src\pugiconfig.hpp" />
+    <ClInclude Include="..\src\pugixml.hpp" />
     <ClInclude Include="..\src\Rulz.h" />
     <ClInclude Include="..\src\RulzXMLHandler.h" />
     <ClInclude Include="..\src\Severity.h" />
@@ -127,7 +129,6 @@
     <ClInclude Include="..\src\XYTranslator.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\pugixml\pugixml.cpp" />
     <ClCompile Include="..\src\Bot.cpp" />
     <ClCompile Include="..\src\BotCommunicationTranslator.cpp" />
     <ClCompile Include="..\src\BotCommunicator.cpp" />
@@ -153,6 +154,7 @@
     <ClCompile Include="..\src\Logger.cpp" />
     <ClCompile Include="..\src\LogXMLHandler.cpp" />
     <ClCompile Include="..\src\Process.cpp" />
+    <ClCompile Include="..\src\pugixml.cpp" />
     <ClCompile Include="..\src\Rulz.cpp" />
     <ClCompile Include="..\src\RulzXMLHandler.cpp" />
     <ClCompile Include="..\src\stdafx.cpp" />

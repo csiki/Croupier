@@ -28,6 +28,57 @@ public:
 		this->columnTypes = colTypes;
 	}
 
+	~KnowledgeTable()
+	{
+		// deallocate data
+		for (unsigned int i = 0; i < data.size(); ++i)
+		{
+			for (unsigned int j = 0; j < data[i].size(); ++j)
+			{
+				// cast to type
+				switch (this->columnTypes[j])
+				{
+					case KnowledgeDataType::BOOL:
+					{
+						bool* d = (bool*) data[i][j];
+						delete d;
+						break;
+					}
+					case KnowledgeDataType::CHAR:
+					{
+						char* d = (char*) data[i][j];
+						delete d;
+						break;
+					}
+					case KnowledgeDataType::FLOAT:
+					{
+						float* d = (float*) data[i][j];
+						delete d;
+						break;
+					}
+					case KnowledgeDataType::INT:
+					{
+						int* d = (int*) data[i][j];
+						delete d;
+						break;
+					}
+					case KnowledgeDataType::STRING:
+					{
+						string* d = (string*) data[i][j];
+						delete d;
+						break;
+					}
+					default:
+						// error occured
+						delete data[i][j];
+				}
+			}
+		}
+
+		// deallocate column types
+		delete [] this->columnTypes;
+	}
+
 	int addRow();
 	KnowledgeDataType getColumnType(int col) const;
 	int getNumOfCols() const;

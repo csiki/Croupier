@@ -2,6 +2,7 @@
 #define _KNOWLEDGETABLEXMLHANDLER_H
 
 #include "KnowledgeTable.h"
+#include "pugixml.hpp"
 
 /**	Loads and saves AI's permanent data in xml format.
 */

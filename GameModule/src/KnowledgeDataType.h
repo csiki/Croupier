@@ -5,12 +5,12 @@
 */
 enum KnowledgeDataType
 {
-	NONE,
-	BOOL,
-	CHAR,
-	INT,
-	FLOAT,
-	STRING
+	NONE = 0,
+	BOOL = 1,
+	CHAR = 2,
+	INT = 3,
+	FLOAT = 4,
+	STRING = 5
 };
 
 #endif  //_KNOWLEDGEDATATYPE_H

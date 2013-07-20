@@ -13,45 +13,66 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\PugiXML">
+      <UniqueIdentifier>{98418ed3-195d-4980-bec4-80c73157390e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PugiXML">
+      <UniqueIdentifier>{5f46c5c5-060a-43d1-94ad-eaf939fab402}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\BotLoaders">
+      <UniqueIdentifier>{32dc206f-38ae-4dec-a7c5-7dd3bb3c6f27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Broadcast">
+      <UniqueIdentifier>{630247f6-6011-45ca-bcda-060d7734ab03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Translators">
+      <UniqueIdentifier>{a9bf0bc1-d790-4fa0-b81e-c94be4914d89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Log">
+      <UniqueIdentifier>{15995942-906e-4b7c-9905-154ae0c1dda5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\XMLHandlers">
+      <UniqueIdentifier>{443118e1-1c43-4ae6-8a8a-86c501603a10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\BotKnowledge">
+      <UniqueIdentifier>{915e3c57-e1d6-478c-a1cb-7eeaebb0b7d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\BotManager">
+      <UniqueIdentifier>{6c5c1ddf-9d73-4e90-bbea-996f5ac227d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\BotLoaders">
+      <UniqueIdentifier>{a9df5dbf-bc10-4232-9f84-83e9aaa6a803}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Broadcast">
+      <UniqueIdentifier>{c557e89b-f373-4152-87e7-167b505a2cfc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Log">
+      <UniqueIdentifier>{3501d936-9808-4370-8dc0-e3a6a74c5f20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\BotKnowledge">
+      <UniqueIdentifier>{524466a5-3845-4181-9201-29c8833db7cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\BotManager">
+      <UniqueIdentifier>{06ad3062-72a6-493f-b1a2-4d6b21f9d732}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\XMLHandlers">
+      <UniqueIdentifier>{e141ba9a-1b10-4d3d-b46d-639af7797bee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Translators">
+      <UniqueIdentifier>{b8744e36-da24-4c36-92d2-17e31ac0734f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\XYTranslator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\Table.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Severity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\RulzXMLHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Rulz.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Process.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\LogXMLHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Logger.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Loggable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Log.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\KnowledgeTable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\KnowledgeDataType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Hostess.h">
@@ -69,9 +90,6 @@
     <ClInclude Include="..\src\GameModule.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Event.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -81,40 +99,13 @@
     <ClInclude Include="..\src\Croupier.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\CppBotLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\Comment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Card.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\BroadcastStation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\BroadcastMessage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\BroadcastMember.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\BotManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\BotLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\BotKnowledgeHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\BotInfo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\BotHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\BotCommunicator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\BotCommunicationTranslator.h">
@@ -126,20 +117,83 @@
     <ClInclude Include="..\src\Emotion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\KnowledgeTableXMLHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\XYBotLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\BettingSystem.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\pugiconfig.hpp">
+      <Filter>Header Files\PugiXML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\pugixml.hpp">
+      <Filter>Header Files\PugiXML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\CppBotLoader.h">
+      <Filter>Header Files\BotLoaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\BroadcastMember.h">
+      <Filter>Header Files\Broadcast</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\BroadcastMessage.h">
+      <Filter>Header Files\Broadcast</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\BroadcastStation.h">
+      <Filter>Header Files\Broadcast</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\XYBotLoader.h">
+      <Filter>Header Files\BotLoaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\XYTranslator.h">
+      <Filter>Header Files\Translators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Event.h">
+      <Filter>Header Files\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Log.h">
+      <Filter>Header Files\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Loggable.h">
+      <Filter>Header Files\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Logger.h">
+      <Filter>Header Files\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\RulzXMLHandler.h">
+      <Filter>Header Files\XMLHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\KnowledgeTableXMLHandler.h">
+      <Filter>Header Files\XMLHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\LogXMLHandler.h">
+      <Filter>Header Files\XMLHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\BotKnowledgeHandler.h">
+      <Filter>Header Files\BotKnowledge</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\KnowledgeDataType.h">
+      <Filter>Header Files\BotKnowledge</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\KnowledgeTable.h">
+      <Filter>Header Files\BotKnowledge</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\BotHandler.h">
+      <Filter>Header Files\BotManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\BotInfo.h">
+      <Filter>Header Files\BotManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\BotManager.h">
+      <Filter>Header Files\BotManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Severity.h">
+      <Filter>Header Files\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\BotCommunicator.h">
+      <Filter>Header Files\BotManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -147,30 +201,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\BotCommunicationTranslator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\BotCommunicator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\BotHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\BotInfo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\BotKnowledgeHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\BotManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\BroadcastMember.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\BroadcastStation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\CppBotLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Croupier.cpp">
@@ -194,50 +224,74 @@
     <ClCompile Include="..\src\Hostess.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\KnowledgeTable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Log.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Logger.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\LogXMLHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\Process.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Rulz.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\RulzXMLHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\Table.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\XYBotLoader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\XYTranslator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Card.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\pugixml\pugixml.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\KnowledgeTableXMLHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\pugixml.cpp">
+      <Filter>Source Files\PugiXML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\XYBotLoader.cpp">
+      <Filter>Source Files\BotLoaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\CppBotLoader.cpp">
+      <Filter>Source Files\BotLoaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\BroadcastMember.cpp">
+      <Filter>Source Files\Broadcast</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\BroadcastStation.cpp">
+      <Filter>Source Files\Broadcast</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Log.cpp">
+      <Filter>Source Files\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Logger.cpp">
+      <Filter>Source Files\Log</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\Event.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\BotKnowledgeHandler.cpp">
+      <Filter>Source Files\BotKnowledge</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\KnowledgeTable.cpp">
+      <Filter>Source Files\BotKnowledge</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\BotCommunicator.cpp">
+      <Filter>Source Files\BotManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\BotHandler.cpp">
+      <Filter>Source Files\BotManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\BotInfo.cpp">
+      <Filter>Source Files\BotManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\BotManager.cpp">
+      <Filter>Source Files\BotManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\KnowledgeTableXMLHandler.cpp">
+      <Filter>Source Files\XMLHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\LogXMLHandler.cpp">
+      <Filter>Source Files\XMLHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\RulzXMLHandler.cpp">
+      <Filter>Source Files\XMLHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\XYTranslator.cpp">
+      <Filter>Source Files\Translators</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

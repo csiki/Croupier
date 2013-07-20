@@ -87,7 +87,7 @@ bool KnowledgeTable::removeRow(int row)
 */
 bool KnowledgeTable::getData(int& val, int row, int col) const
 {
-	if (this->isCellExist(row, col) && this->isDataTypeCorrect(col, KnowledgeDataType::INT))
+	if (this->isCellExist(row, col) && this->isDataTypeCorrect(static_cast<KnowledgeDataType>(col), KnowledgeDataType::INT))
 	{
 		val = *((int*) this->data[row].at(col));
 		return true;
@@ -100,7 +100,7 @@ bool KnowledgeTable::getData(int& val, int row, int col) const
 */
 bool KnowledgeTable::getData(bool& val, int row, int col) const
 {
-	if (this->isCellExist(row, col) && this->isDataTypeCorrect(col, KnowledgeDataType::BOOL))
+	if (this->isCellExist(row, col) && this->isDataTypeCorrect(static_cast<KnowledgeDataType>(col), KnowledgeDataType::BOOL))
 	{
 		val = *((bool*) this->data[row].at(col));
 		return true;
@@ -113,7 +113,7 @@ bool KnowledgeTable::getData(bool& val, int row, int col) const
 */
 bool KnowledgeTable::getData(char& val, int row, int col) const
 {
-	if (this->isCellExist(row, col) && this->isDataTypeCorrect(col, KnowledgeDataType::CHAR))
+	if (this->isCellExist(row, col) && this->isDataTypeCorrect(static_cast<KnowledgeDataType>(col), KnowledgeDataType::CHAR))
 	{
 		val = *((char*) this->data[row].at(col));
 		return true;
@@ -126,7 +126,7 @@ bool KnowledgeTable::getData(char& val, int row, int col) const
 */
 bool KnowledgeTable::getData(string& val, int row, int col) const
 {
-	if (this->isCellExist(row, col) && this->isDataTypeCorrect(col, KnowledgeDataType::STRING))
+	if (this->isCellExist(row, col) && this->isDataTypeCorrect(static_cast<KnowledgeDataType>(col), KnowledgeDataType::STRING))
 	{
 		val = *((string*) this->data[row].at(col));
 		return true;
@@ -139,10 +139,15 @@ bool KnowledgeTable::getData(string& val, int row, int col) const
 */
 bool KnowledgeTable::getData(float& val, int row, int col) const
 {
-	if (this->isCellExist(row, col) && this->isDataTypeCorrect(col, KnowledgeDataType::FLOAT))
+	if (this->isCellExist(row, col))
 	{
+		
+		if (this->isDataTypeCorrect(static_cast<KnowledgeDataType>(col), KnowledgeDataType::FLOAT))
+		{
+		
 		val = *((float*) this->data[row].at(col));
 		return true;
+		}
 	}
 
 	return false;
@@ -152,7 +157,7 @@ bool KnowledgeTable::getData(float& val, int row, int col) const
 */
 bool KnowledgeTable::setData(int val, int row, int col)
 {
-	if (this->isCellExist(row, col) && this->isDataTypeCorrect(col, KnowledgeDataType::INT))
+	if (this->isCellExist(row, col) && this->isDataTypeCorrect(static_cast<KnowledgeDataType>(col), KnowledgeDataType::INT))
 	{
 		int* p = new int(val);
 		this->data[row][col] = p;
@@ -165,7 +170,7 @@ bool KnowledgeTable::setData(int val, int row, int col)
 */
 bool KnowledgeTable::setData(bool val, int row, int col)
 {
-	if (this->isCellExist(row, col) && this->isDataTypeCorrect(col, KnowledgeDataType::BOOL))
+	if (this->isCellExist(row, col) && this->isDataTypeCorrect(static_cast<KnowledgeDataType>(col), KnowledgeDataType::BOOL))
 	{
 		bool* p = new bool(val);
 		this->data[row][col] = p;
@@ -178,7 +183,7 @@ bool KnowledgeTable::setData(bool val, int row, int col)
 */
 bool KnowledgeTable::setData(char val, int row, int col)
 {
-	if (this->isCellExist(row, col) && this->isDataTypeCorrect(col, KnowledgeDataType::CHAR))
+	if (this->isCellExist(row, col) && this->isDataTypeCorrect(static_cast<KnowledgeDataType>(col), KnowledgeDataType::CHAR))
 	{
 		char* p = new char(val);
 		this->data[row][col] = p;
@@ -191,7 +196,7 @@ bool KnowledgeTable::setData(char val, int row, int col)
 */
 bool KnowledgeTable::setData(string val, int row, int col)
 {
-	if (this->isCellExist(row, col) && this->isDataTypeCorrect(col, KnowledgeDataType::STRING))
+	if (this->isCellExist(row, col) && this->isDataTypeCorrect(static_cast<KnowledgeDataType>(col), KnowledgeDataType::STRING))
 	{
 		string* p = new string(val);
 		this->data[row][col] = p;
@@ -204,7 +209,7 @@ bool KnowledgeTable::setData(string val, int row, int col)
 */
 bool KnowledgeTable::setData(float val, int row, int col)
 {
-	if (this->isCellExist(row, col) && this->isDataTypeCorrect(col, KnowledgeDataType::FLOAT))
+	if (this->isCellExist(row, col) && this->isDataTypeCorrect(static_cast<KnowledgeDataType>(col), KnowledgeDataType::FLOAT))
 	{
 		float* p = new float(val);
 		this->data[row][col] = p;
