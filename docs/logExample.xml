@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<log>
+	<event>
+		<logger>4</logger>
+		<msg>Message here...</msg>
+		<severity>0</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>Message2 here...</msg>
+		<severity>3</severity>
+	</event>
+</log>

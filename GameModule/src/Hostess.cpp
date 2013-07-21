@@ -195,7 +195,7 @@ const BotInfo* Hostess::getBotByID(int botID) const
 	
 	if (it == this->botsByID.cend()) // haven't found anything
 	{
-		return 0;
+		return nullptr;
 	}
 
 	return it->second;

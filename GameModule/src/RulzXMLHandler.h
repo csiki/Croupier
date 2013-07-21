@@ -2,6 +2,7 @@
 #define _RULZXMLHANDLER_H
 
 #include "Rulz.h"
+#include "pugixml.hpp"
 
 /**	Loads and saves game rules in xml format.
 */

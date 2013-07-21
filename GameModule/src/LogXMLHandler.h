@@ -2,6 +2,7 @@
 #define _LOGXMLHANDLER_H
 
 #include "Log.h"
+#include "pugixml.hpp"
 
 /**	Loads and saves logs in xml format.
 */

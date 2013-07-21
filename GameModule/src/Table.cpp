@@ -26,7 +26,7 @@ Card* Table::rmCard()
 		this->cards[numOfCards] = 0;
 	}
 
-	return 0;
+	return nullptr;
 }
 
 /** Returns a card from table (flop, turn, river).
@@ -38,7 +38,7 @@ const Card* Table::getCard(int index) const
 		return this->cards[index];
 	}
 
-	return 0;
+	return nullptr;
 }
 
 /** Returns a reference to a bot by its index (at table).
@@ -50,7 +50,7 @@ const BotInfo* Table::getBotByIndex(int index) const
 		return bots[index];
 	}
 
-	return 0;
+	return nullptr;
 }
 
 /** Returns the number of bots.

@@ -3,10 +3,10 @@
 
 Bot* CppBotLoader::loadBot(int botLang, const char* botFilePath)
 {
-	return 0;
+	return nullptr;
 }
 
 Process* CppBotLoader::initProcess(const char* botFilePath)
 {
-	return 0;
+	return nullptr;
 }

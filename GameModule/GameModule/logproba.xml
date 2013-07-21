@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<log>
+	<event>
+		<logger>0</logger>
+		<msg>elso message</msg>
+		<severity>0</severity>
+	</event>
+	<event>
+		<logger>555</logger>
+		<msg>masodik message</msg>
+		<severity>6</severity>
+	</event>
+</log>

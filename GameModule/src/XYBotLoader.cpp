@@ -3,11 +3,11 @@
 
 Bot* XYBotLoader::loadBot(int botLang, string botFilePath)
 {
-	return 0;
+	return nullptr;
 }
 
 Process* XYBotLoader::initProcess(string botFilePath)
 {
-	return 0;
+	return nullptr;
 }
 

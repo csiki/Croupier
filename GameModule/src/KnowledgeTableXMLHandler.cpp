@@ -3,11 +3,11 @@
 
 /** From an xml file, loads a KnowledgeTable
 */
-KnowledgeTable* KnowledgeTableXMLHandler::loadXML(string xmlpath)
+KnowledgeTable* KnowledgeTableXMLHandler::loadXML(string xmlPath)
 {
-	// check if file exists !
+	// load file, check if file exists
 	pugi::xml_document doc;
-	pugi::xml_parse_result result = doc.load_file(xmlpath.c_str());
+	pugi::xml_parse_result result = doc.load_file(xmlPath.c_str());
 
 	KnowledgeTable* ktable = nullptr;
 	if (result)
@@ -84,7 +84,7 @@ KnowledgeTable* KnowledgeTableXMLHandler::loadXML(string xmlpath)
 	return ktable;
 }
 
-bool KnowledgeTableXMLHandler::saveXML(KnowledgeTable* kt, string xmlpath)
+bool KnowledgeTableXMLHandler::saveXML(KnowledgeTable* kt, string xmlPath)
 {
 	if (kt != nullptr)
 	{
@@ -192,7 +192,7 @@ bool KnowledgeTableXMLHandler::saveXML(KnowledgeTable* kt, string xmlpath)
 		}
 		
 		// save doc
-		return doc.save_file(xmlpath.c_str());
+		return doc.save_file(xmlPath.c_str());
 	}
 
 	return false;

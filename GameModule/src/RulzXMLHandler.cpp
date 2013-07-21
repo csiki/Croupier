@@ -3,11 +3,11 @@
 
 Rulz* RulzXMLHandler::loadXML(string xmlPath)
 {
-	return 0;
+	return nullptr;
 }
 
 bool RulzXMLHandler::saveXML(Rulz* log, string xmlPath)
 {
-	return 0;
+	return false;
 }
 
