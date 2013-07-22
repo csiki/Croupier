@@ -195,6 +195,9 @@
     <ClInclude Include="..\src\BotCommunicator.h">
       <Filter>Header Files\BotManager</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\BotLanguage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Bot.cpp">

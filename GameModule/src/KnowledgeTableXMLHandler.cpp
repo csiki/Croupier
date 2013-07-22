@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "KnowledgeTableXMLHandler.h"
 
-/** From an xml file, loads a KnowledgeTable
+/** From an xml file, loads a KnowledgeTable object.
 */
 KnowledgeTable* KnowledgeTableXMLHandler::loadXML(string xmlPath)
 {
@@ -84,6 +84,8 @@ KnowledgeTable* KnowledgeTableXMLHandler::loadXML(string xmlPath)
 	return ktable;
 }
 
+/** Saves a KnowledgeTable object as an xml file.
+*/
 bool KnowledgeTableXMLHandler::saveXML(KnowledgeTable* kt, string xmlPath)
 {
 	if (kt != nullptr)

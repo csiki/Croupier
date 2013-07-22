@@ -91,6 +91,7 @@
     <ClInclude Include="..\src\BotHandler.h" />
     <ClInclude Include="..\src\BotInfo.h" />
     <ClInclude Include="..\src\BotKnowledgeHandler.h" />
+    <ClInclude Include="..\src\BotLanguage.h" />
     <ClInclude Include="..\src\BotLoader.h" />
     <ClInclude Include="..\src\BotManager.h" />
     <ClInclude Include="..\src\BroadcastMember.h" />

@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<rulz>
+	<talkallowed>0</talkallowed>
+	<emoallowed>1</emoallowed>
+	<knowledgeuseallowed>0</knowledgeuseallowed>
+	<startingchips>1000</startingchips>
+	<maxnumofraises>10</maxnumofraises>
+	<numofrebuysallowed>1</numofrebuysallowed>
+	<rebuydeadline>30</rebuydeadline>
+	<bettingsystem>1</bettingsystem>
+	<blinds>
+		<small>
+			<blind>50</blind>
+			<blind>100</blind>
+			<blind>200</blind>
+		</small>
+		<big>
+			<blind>100</blind>
+			<blind>200</blind>
+			<blind>300</blind>
+		</big>
+		<shiftdeadlines>
+			<dl>15</dl>
+			<dl>30</dl>
+		</shiftdeadlines>
+	</blinds>
+	<botcalctime>
+		// TODO
+	</botcalctime>
+</rulz>

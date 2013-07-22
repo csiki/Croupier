@@ -11948,19 +11948,19 @@
 <XPD:ATTR name="IsAbstract" type="boolean">True</XPD:ATTR>
 <XPD:REF name="Owner">rWw/yI2Zz02CFb553JMpPgAA</XPD:REF>
 <XPD:ATTR name="#Parameters" type="integer">3</XPD:ATTR>
-<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="L/nYVVAiC0WGudcwB+D2FQAA">
+<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="XhiziKvMTUKrvq5XoU0kxQAA">
 <XPD:ATTR name="DirectionKind" type="UMLParameterDirectionKind">pdkReturn</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">int</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">uMkMf4Zn1kCkVkvwp7hhugAA</XPD:REF>
 </XPD:OBJ>
-<XPD:OBJ name="Parameters[1]" type="UMLParameter" guid="k8H5WGD8OUSeTxXWZO/X4wAA">
+<XPD:OBJ name="Parameters[1]" type="UMLParameter" guid="J66HHuaXYES9lqFAvWAKTAAA">
 <XPD:ATTR name="Name" type="string">numOfCols</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">int</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">uMkMf4Zn1kCkVkvwp7hhugAA</XPD:REF>
 </XPD:OBJ>
-<XPD:OBJ name="Parameters[2]" type="UMLParameter" guid="mwKPSdFt6kmOxL5+U5vcfQAA">
+<XPD:OBJ name="Parameters[2]" type="UMLParameter" guid="RA0fafJBgEyxFMABDTvTOAAA">
 <XPD:ATTR name="Name" type="string">colTypes</XPD:ATTR>
-<XPD:ATTR name="TypeExpression" type="string">KnowledgeDataType*</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">list&lt;KnowledgeDataType&gt;</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">uMkMf4Zn1kCkVkvwp7hhugAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>

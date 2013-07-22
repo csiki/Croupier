@@ -5,9 +5,9 @@
 */
 enum BettingSystem
 {
-	NOLIMIT,
-	FIXLIMIT,
-	POTLIMIT
+	NOLIMIT = 0,
+	FIXLIMIT = 1,
+	POTLIMIT = 2
 };
 
 #endif  //_BETTING_SYSTEM_H

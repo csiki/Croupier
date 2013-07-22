@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "LogXMLHandler.h"
 
+/** Loads a Log object from an xml file.
+*/
 Log* LogXMLHandler::loadXML(string xmlPath)
 {
 	// load file, check if file exists
@@ -31,6 +33,8 @@ Log* LogXMLHandler::loadXML(string xmlPath)
 	return log;
 }
 
+/** Saves a Log object as an xml file.
+*/
 bool LogXMLHandler::saveXML(Log* log, string xmlPath)
 {
 	if (log != nullptr)
