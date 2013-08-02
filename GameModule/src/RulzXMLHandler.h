@@ -3,6 +3,7 @@
 
 #include "Rulz.h"
 #include "pugixml.hpp"
+#include "BotLanguage.h"
 
 /**	Loads and saves game rules in xml format.
 */

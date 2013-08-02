@@ -26,6 +26,7 @@
 		</shiftdeadlines>
 	</blinds>
 	<botcalctime>
-		// TODO
+		<time lang="0">500</time>
+		<time lang="1">1000</time>
 	</botcalctime>
 </rulz>

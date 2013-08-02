@@ -20,7 +20,7 @@ int Rulz::getBlindShiftDeadline(int index) const
 	// numOfBlindShifts + 1 == numOfBlinds
 	if (index >= 0 && index < this->numOfBlinds - 1)
 	{
-		return this->bigBlinds[index];
+		return this->blindShiftDeadlines[index];
 	}
 
 	return false;

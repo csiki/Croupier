@@ -3,8 +3,6 @@
 
 #include "BettingSystem.h"
 
-// TODO attribútumok constansnak ?
-
 /**	Contains all the rules of a game.
 */
 class Rulz
@@ -23,6 +21,7 @@ private:
 	int *allowedBotCalcTime;
 	int startingChips;
 	BettingSystem bs;
+
 public:
 
 	Rulz(BettingSystem bs, int numOfBlinds, int* smallBlinds, int* bigBlinds, int* blindShiftDeadlines,

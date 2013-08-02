@@ -12,10 +12,10 @@ Log* LogXMLHandler::loadXML(string xmlPath)
 	Log* log = nullptr;
 	if (result)
 	{
+		// file loaded successfully
 		// create log object
 		log = new Log();
 
-		// file loaded successfully
 		pugi::xpath_node logNode = doc.select_single_node("/log");
 
 		// load events
