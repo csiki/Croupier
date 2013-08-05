@@ -69,7 +69,7 @@ void XYTranslator::preflop()
 {
 }
 
-void XYTranslator::quit()
+void XYTranslator::leave()
 {
 }
 

@@ -9,19 +9,59 @@
 // TODO át kell írni a analízis doksiba, hogy a getTable...() parancsok egyike sem tölt be új táblát,
 // a játék elején betöltjük a botok által requestelt összes táblát
 
+// TODO neki a feladata h a knowledge tableöket mentse és töltse
+
 /**	Class for handling AIs' permanent knowledge.
 */
 class BotKnowledgeHandler
 {
 private:
 	const int userID;
+	string relPath;
 	map<int, KnowledgeTable*> loadedTables;
 
 	KnowledgeTable* loadTable(int tableID);
 	void saveTable(int tableID, KnowledgeTable* table);
+	void removeTableFile(int tableID);
 	bool isTableLoaded(int tableID) const;
 public:
-	// konstruktorba töltjük be a táblákat ! konstruktor paraméterei legalább: userID, numofRequestedTable:int, requestedTables: int*
+
+	BotKnowledgeHandler(int userID, int numOfRequestedTable, int* requestedTables) : userID(userID)
+	{
+		relPath = _BOT_KNOWLEDGE_RELATIVE_PATH_;
+		relPath += this->userID;
+		relPath += "/";
+
+		// load tables
+		for (int i = 0; i < numOfRequestedTable; ++i)
+		{
+			KnowledgeTable* kt = this->loadTable(requestedTables[i]);
+
+			if (kt != nullptr)
+			{
+				this->loadedTables.insert( pair<int, KnowledgeTable*>(requestedTables[i], kt) );
+			}
+		}
+	}
+
+	virtual ~BotKnowledgeHandler()
+	{
+		// save tables
+		for (map<int, KnowledgeTable*>::iterator it = this->loadedTables.begin(); it != this->loadedTables.end(); ++it)
+		{
+			if (it->second->isRemoved())
+			{
+				this->removeTable(it->first);
+			}
+			else if (it->second->isUpdated())
+			{
+				this->saveTable(it->first, it->second);
+			}
+
+			delete it->second;
+		}
+	}
+
 	int addTableRow(int tableID);
 	int createTable(int numOfCols, KnowledgeDataType* colTypes);
 	KnowledgeDataType getTableColumnType(int tableID, int col) const;

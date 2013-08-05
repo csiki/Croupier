@@ -23,7 +23,7 @@ Card* Table::rmCard()
 	{
 		--numOfCards;
 		Card* card = this->cards[numOfCards];
-		this->cards[numOfCards] = 0;
+		this->cards[numOfCards] = nullptr;
 	}
 
 	return nullptr;

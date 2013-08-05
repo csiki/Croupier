@@ -29,8 +29,10 @@ private:
 
 	void fillBotsData();
 	void handleRaise(int raiseAmount);
-public:
 
+public:
+	/** Create a Hostess instance with id -1.
+	*/
 	Hostess(const Table* table, const Rulz* rules, BroadcastStation* broadcastStation) :
 		BroadcastMember(-1, broadcastStation), Entity(-1)
 	{
@@ -47,6 +49,12 @@ public:
 		this->nextBlindShiftDeadlineIndex = 0;
 		
 		this->fillBotsData();
+	}
+
+	virtual ~Hostess()
+	{
+		delete [] this->botsInGame;
+		delete [] this->botsInRound;
 	}
 
 	void receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data);

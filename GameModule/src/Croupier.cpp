@@ -2,13 +2,6 @@
 #include "Croupier.h"
 #include "BroadcastMessage.h"
 
-/** Method for creating Croupier, seting its attibrutes to default.
-*/
-/*Croupier::Croupier()
-{
-	// TODO
-}*/
-
 /** Inherited method to handle incoming broadcast messages.
 */
 void Croupier::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data)
@@ -50,7 +43,7 @@ void Croupier::collectCards()
 	// burnt cards
 	for (int i = 0; i < this->numberOfBurntCards; ++i)
 	{
-		this->deck->push(this->burnt[i]);
+		this->deck.push(this->burnt[i]);
 		this->burnt[i] = 0;
 	}
 	this->numberOfBurntCards = 0;
@@ -58,7 +51,7 @@ void Croupier::collectCards()
 	// cards from table
 	while (Card* c = this->table->rmCard())
 	{
-		this->deck->push(c);
+		this->deck.push(c);
 	}
 
 	// hands
@@ -67,8 +60,8 @@ void Croupier::collectCards()
 		if (this->bots[i]->isInGame())
 		{
 			// if a bot is in game, then it must have cards
-			this->deck->push(this->bots[i]->takeHand(0));
-			this->deck->push(this->bots[i]->takeHand(1));
+			this->deck.push(this->bots[i]->takeHand(0));
+			this->deck.push(this->bots[i]->takeHand(1));
 		}
 	}
 }
@@ -101,7 +94,7 @@ void Croupier::dealing()
 	{
 		if (this->bots[i]->isInRound())
 		{
-			this->bots[i]->receiveCard(this->deck->pop());
+			this->bots[i]->receiveCard(this->deck.pop());
 		}
 	}
 
@@ -109,7 +102,7 @@ void Croupier::dealing()
 	{
 		if (this->bots[i]->isInRound())
 		{
-			this->bots[i]->receiveCard(this->deck->pop());
+			this->bots[i]->receiveCard(this->deck.pop());
 		}
 	}
 }
@@ -166,12 +159,12 @@ void Croupier::preflop()
 void Croupier::flop()
 {
 	// burn
-	this->burn(this->deck->pop());
+	this->burn(this->deck.pop());
 
 	// put 3 cards on table
-	this->table->addCard(this->deck->pop());
-	this->table->addCard(this->deck->pop());
-	this->table->addCard(this->deck->pop());
+	this->table->addCard(this->deck.pop());
+	this->table->addCard(this->deck.pop());
+	this->table->addCard(this->deck.pop());
 
 	// broadcast
 	this->broadcast(BroadcastMessage::FLOP, 0, 0);
@@ -186,10 +179,10 @@ void Croupier::flop()
 void Croupier::turn()
 {
 	// burn
-	this->burn(this->deck->pop());
+	this->burn(this->deck.pop());
 
 	// put a card on table
-	this->table->addCard(this->deck->pop());
+	this->table->addCard(this->deck.pop());
 
 	// broadcast
 	this->broadcast(BroadcastMessage::TURN, 0, 0);
@@ -204,10 +197,10 @@ void Croupier::turn()
 void Croupier::river()
 {
 	// burn
-	this->burn(this->deck->pop());
+	this->burn(this->deck.pop());
 
 	// put a card on table
-	this->table->addCard(this->deck->pop());
+	this->table->addCard(this->deck.pop());
 
 	// broadcast
 	this->broadcast(BroadcastMessage::RIVER, 0, 0);
@@ -554,12 +547,12 @@ void Croupier::letsPoker()
 			}
 		}
 
-		// send quit() to those bots, who still has 0 chips
+		// send leave() to those bots, who still has 0 chips
 		for (int i = 0; i < this->numOfBots; ++i)
 		{
 			if (this->bots[i]->getChips() == 0)
 			{
-				this->bots[i]->quit();
+				this->bots[i]->leave();
 			}
 		}
 
@@ -626,7 +619,7 @@ void Croupier::kickBot(int botID)
 {
 	int botIndex = this->findBotIndexByID(botID);
 	
-	this->bots[botIndex]->quit();
+	this->bots[botIndex]->leave();
 	this->kicksAtRound[botIndex] = this->round;
 }
 

@@ -10,8 +10,6 @@
 // TODO : bufferoverflow ellen védelmet !!!
 // rajzolni ábrát ami a játékmenet szerint milyen helyzetekben hívódnak meg a függvények (pl. flop() után step() stb.)
 
-// TODO quit engedélyezése csak round endednél!
-
 /**	Base class for AIs.
 */
 class Bot
@@ -23,6 +21,7 @@ private:
 public:
 
 	Bot(int id, string name, int lang) : id(id), name(name), lang(lang) {}
+	virtual ~Bot() {}
 
 	int getID() const;
 	int getLang() const;

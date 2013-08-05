@@ -23,7 +23,6 @@ private:
 	BettingSystem bs;
 
 public:
-
 	Rulz(BettingSystem bs, int numOfBlinds, int* smallBlinds, int* bigBlinds, int* blindShiftDeadlines,
 		int rebuyDeadline, int numOfRebuysAllowed, int startingChips, int maxNumOfRaises,
 		int* allowedBotCalcTime, bool talkAllowed, bool emotionAllowed, bool knowledgeBaseAllowed)
@@ -41,6 +40,14 @@ public:
 		this->talkAllowed = talkAllowed;
 		this->emotionAllowed = emotionAllowed;
 		this->knowledgeBaseAllowed = knowledgeBaseAllowed;
+	}
+
+	virtual ~Rulz()
+	{
+		delete [] this->smallBlinds;
+		delete [] this->bigBlinds;
+		delete [] this->blindShiftDeadlines;
+		delete [] this->allowedBotCalcTime;
 	}
 
 	int getBigBlind(int index) const;

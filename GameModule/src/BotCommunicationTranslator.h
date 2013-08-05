@@ -27,6 +27,11 @@ public:
 		this->process = process;
 	}
 
+	virtual ~BotCommunicationTranslator()
+	{
+		delete this->process;
+	}
+
 	virtual void allined(int botID, int amount) = 0;
 	virtual void blindsRaised(int newSmallBlind, int newBigBlind) = 0;
 	virtual void called(int botID, int amount) = 0;
@@ -37,7 +42,7 @@ public:
 	virtual void leftGame(int botID) = 0;
 	virtual void listen(int botID, Comment comment) = 0;
 	virtual void preflop() = 0;
-	virtual void quit() = 0;
+	virtual void leave() = 0;
 	virtual void raised(int botID, int amount) = 0;
 	virtual void rebuyOccurred(int botID, int amount);
 	virtual void rebuyDeadlineReached() = 0;

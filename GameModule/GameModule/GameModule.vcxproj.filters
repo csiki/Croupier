@@ -198,6 +198,12 @@
     <ClInclude Include="..\src\BotLanguage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\BotDataXMLHandler.h">
+      <Filter>Header Files\XMLHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\BotData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Bot.cpp">
@@ -295,6 +301,12 @@
     </ClCompile>
     <ClCompile Include="..\src\XYTranslator.cpp">
       <Filter>Source Files\Translators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\BotDataXMLHandler.cpp">
+      <Filter>Source Files\XMLHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\BotData.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

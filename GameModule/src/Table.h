@@ -13,7 +13,8 @@ private:
 	int numOfBots;
 	BotInfo **bots;
 	int numOfCards;
-	Card *cards[5];
+	Card* cards[5];
+
 public:
 	Table(int numOfBots)
 	{
@@ -27,7 +28,15 @@ public:
 		{
 			this->bots[i] = 0;
 		}
+
+		// clear cards array
+		for (int i = 0; i < 5; ++i)
+		{
+			this->cards[i] = nullptr;
+		}
 	}
+
+	virtual ~Table() {}
 
 	void addCard(Card* c);
 	int getNumOfCards() const;

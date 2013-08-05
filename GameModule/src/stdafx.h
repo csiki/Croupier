@@ -18,11 +18,13 @@
 #include <list>
 #include <functional>
 #include <ctime>
+#include <sstream>
 
 using namespace std;
 
 namespace
 {
 	const char _BOT_KNOWLEDGE_RELATIVE_PATH_[] = ""; // must end with "/" if any
-	const int _BOT_KNOWLEDGE_RELATIVE_PATH_LENGTH_ = sizeof(_BOT_KNOWLEDGE_RELATIVE_PATH_);
+	const char _BOT_DATA_RELATIVE_PATH_[] = ""; // must end with "/" if any
+	const char _BOT_AI_RELATIVE_PATH_[] = ""; // must end with "/" if any
 }

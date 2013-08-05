@@ -5,9 +5,7 @@
 */
 KnowledgeTable* BotKnowledgeHandler::loadTable(int tableID)
 {
-	string path = _BOT_KNOWLEDGE_RELATIVE_PATH_;
-	path += this->userID;
-	path += "/";
+	string path = this->relPath;
 	path += tableID;
 	path += ".xml";
 
@@ -18,13 +16,22 @@ KnowledgeTable* BotKnowledgeHandler::loadTable(int tableID)
 */
 void BotKnowledgeHandler::saveTable(int tableID, KnowledgeTable* table)
 {
-	string path = _BOT_KNOWLEDGE_RELATIVE_PATH_;
-	path += this->userID;
-	path += "/";
+	string path = this->relPath;
 	path += tableID;
 	path += ".xml";
 
 	KnowledgeTableXMLHandler::saveXML(table, path);
+}
+
+/** Removes the file containing table data.
+*/
+void BotKnowledgeHandler::removeTableFile(int tableID)
+{
+	string path = this->relPath;
+	path += tableID;
+	path += ".xml";
+
+	remove(path.c_str());
 }
 
 /** Returns if a knowledge table is loaded.

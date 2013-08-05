@@ -18,7 +18,7 @@
 class Croupier : public Logger, public BroadcastMember
 {
 private:
-	Deck* deck;
+	Deck deck;
 	Card* burnt[3];
 	int numberOfBurntCards;
 	int round;
@@ -56,14 +56,15 @@ private:
 	int numOfBotsInRound() const;
 public:
 
+	/** Method to create Croupier, setting its attibrutes to default.
+	*/
 	Croupier(BroadcastStation* broadcastStation, Loggable* loggable) :
 		BroadcastMember(0, broadcastStation), Logger(0, loggable), Entity(0)
 	{
-		this->deck = new Deck();
 		this->numberOfBurntCards = 0;
-		this->burnt[0] = 0;
-		this->burnt[1] = 0;
-		this->burnt[2] = 0;
+		this->burnt[0] = nullptr;
+		this->burnt[1] = nullptr;
+		this->burnt[2] = nullptr;
 		this->round = 0;
 		this->currentBotIndex = 0;
 		this->currentBlindIndex = 0;

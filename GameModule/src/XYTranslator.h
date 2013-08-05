@@ -30,7 +30,7 @@ public:
 	void leftGame(int botID);
 	void listen(int botID, Comment comment);
 	void preflop();
-	void quit();
+	void leave();
 	void raised(int botID, int amount);
 	void rebuyOccurred(int botID, int amount);
 	void rebuyDeadlineReached();

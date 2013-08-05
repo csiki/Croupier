@@ -36,6 +36,7 @@ private:
 
 	/// Bot's index at table
 	int nthAtTable;
+
 public:
 
 	BotManager(Bot* bot, BotKnowledgeHandler* bkHandler, Hostess* hostess, const Table* table,
@@ -53,6 +54,8 @@ public:
 		this->nthAtTable = nthAtTable;
 		this->numOfRebuys = 0;
 	}
+
+	virtual ~BotManager() {}
 
 	// broadcast
 	void receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data);

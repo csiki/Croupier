@@ -24,6 +24,7 @@ bool KnowledgeTable::isDataTypeCorrect(int col, KnowledgeDataType kdt) const
 */
 int KnowledgeTable::addRow()
 {
+	this->updated = true;
 	vector<void*> row(this->numOfCols);
 	this->data.push_back(row);
 	
@@ -63,6 +64,13 @@ bool KnowledgeTable::isRemoved() const
 	return this->removed;
 }
 
+/** Returns if a table is updated (data changed) by the bot, during the game.
+*/
+bool KnowledgeTable::isUpdated() const
+{
+	return this->updated;
+}
+
 /** Sets the removed flag (doesn't remove it).
 */
 void KnowledgeTable::remove()
@@ -74,6 +82,7 @@ void KnowledgeTable::remove()
 */
 bool KnowledgeTable::removeRow(int row)
 {
+	this->updated = true;
 	if (this->isCellExist(row, 0))
 	{
 		this->data.erase(this->data.begin() + row);
@@ -157,6 +166,7 @@ bool KnowledgeTable::getData(float& val, int row, int col) const
 */
 bool KnowledgeTable::setData(int val, int row, int col)
 {
+	this->updated = true;
 	if (this->isCellExist(row, col) && this->isDataTypeCorrect(static_cast<KnowledgeDataType>(col), KnowledgeDataType::INT))
 	{
 		int* p = new int(val);
@@ -170,6 +180,7 @@ bool KnowledgeTable::setData(int val, int row, int col)
 */
 bool KnowledgeTable::setData(bool val, int row, int col)
 {
+	this->updated = true;
 	if (this->isCellExist(row, col) && this->isDataTypeCorrect(static_cast<KnowledgeDataType>(col), KnowledgeDataType::BOOL))
 	{
 		bool* p = new bool(val);
@@ -183,6 +194,7 @@ bool KnowledgeTable::setData(bool val, int row, int col)
 */
 bool KnowledgeTable::setData(char val, int row, int col)
 {
+	this->updated = true;
 	if (this->isCellExist(row, col) && this->isDataTypeCorrect(static_cast<KnowledgeDataType>(col), KnowledgeDataType::CHAR))
 	{
 		char* p = new char(val);
@@ -196,6 +208,7 @@ bool KnowledgeTable::setData(char val, int row, int col)
 */
 bool KnowledgeTable::setData(string val, int row, int col)
 {
+	this->updated = true;
 	if (this->isCellExist(row, col) && this->isDataTypeCorrect(static_cast<KnowledgeDataType>(col), KnowledgeDataType::STRING))
 	{
 		string* p = new string(val);
@@ -209,6 +222,7 @@ bool KnowledgeTable::setData(string val, int row, int col)
 */
 bool KnowledgeTable::setData(float val, int row, int col)
 {
+	this->updated = true;
 	if (this->isCellExist(row, col) && this->isDataTypeCorrect(static_cast<KnowledgeDataType>(col), KnowledgeDataType::FLOAT))
 	{
 		float* p = new float(val);

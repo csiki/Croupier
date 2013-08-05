@@ -18,8 +18,8 @@ private:
 
 	bool isCellExist(int row, int col) const;
 	bool isDataTypeCorrect(int col, KnowledgeDataType kdt) const;
-public:
 
+public:
 	KnowledgeTable(int numOfCols, KnowledgeDataType* colTypes, bool updated = false)
 	{
 		this->updated = false;
@@ -28,7 +28,7 @@ public:
 		this->columnTypes = colTypes;
 	}
 
-	~KnowledgeTable()
+	virtual ~KnowledgeTable()
 	{
 		// deallocate data
 		for (unsigned int i = 0; i < data.size(); ++i)
@@ -83,6 +83,7 @@ public:
 	KnowledgeDataType getColumnType(int col) const;
 	int getNumOfCols() const;
 	int getNumOfRows() const;
+	bool isUpdated() const;
 	bool isRemoved() const;
 	void remove();
 	bool removeRow(int row);

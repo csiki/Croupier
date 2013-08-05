@@ -16,6 +16,15 @@ private:
 public:
 
 	Log() {}
+	
+	virtual ~Log()
+	{
+		// delete events
+		for (list<Event*>::iterator it = events.begin(); it != events.end(); ++it)
+		{
+			delete *it;
+		}
+	}
 
 	void log(Event* e);
 	void getEventsIterators(list<Event*>::const_iterator& begin, list<Event*>::const_iterator& end) const;

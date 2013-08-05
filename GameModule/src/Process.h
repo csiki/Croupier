@@ -8,6 +8,14 @@
 class Process
 {
 public:
+	Process()
+	{
+	}
+
+	virtual ~Process()
+	{
+	}
+
 	void start();
 	std::string readOutput();
 	void writeInput(const std::string msg);

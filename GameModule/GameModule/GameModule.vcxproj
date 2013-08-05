@@ -88,6 +88,8 @@
     <ClInclude Include="..\src\Bot.h" />
     <ClInclude Include="..\src\BotCommunicationTranslator.h" />
     <ClInclude Include="..\src\BotCommunicator.h" />
+    <ClInclude Include="..\src\BotData.h" />
+    <ClInclude Include="..\src\BotDataXMLHandler.h" />
     <ClInclude Include="..\src\BotHandler.h" />
     <ClInclude Include="..\src\BotInfo.h" />
     <ClInclude Include="..\src\BotKnowledgeHandler.h" />
@@ -133,6 +135,8 @@
     <ClCompile Include="..\src\Bot.cpp" />
     <ClCompile Include="..\src\BotCommunicationTranslator.cpp" />
     <ClCompile Include="..\src\BotCommunicator.cpp" />
+    <ClCompile Include="..\src\BotData.cpp" />
+    <ClCompile Include="..\src\BotDataXMLHandler.cpp" />
     <ClCompile Include="..\src\BotHandler.cpp" />
     <ClCompile Include="..\src\BotInfo.cpp" />
     <ClCompile Include="..\src\BotKnowledgeHandler.cpp" />

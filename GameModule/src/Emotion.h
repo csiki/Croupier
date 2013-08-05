@@ -7,7 +7,15 @@
 */
 enum Emotion
 {
-	HIDDEN
+	HIDDEN,
+	HAPPY,
+	SAD,
+	UPSET,
+	PATIENT,
+	IMPATIENT,
+	EXCITED,
+	UNCERTAIN,
+	RELAXED
 };
 
 #endif  //_EMOTION_H
