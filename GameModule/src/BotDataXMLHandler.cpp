@@ -15,7 +15,7 @@ BotData* BotDataXMLHandler::loadXML(string xmlPath)
 		// collect data from xml
 		pugi::xpath_node botNode = doc.select_single_node("/bot");
 
-		int id, numOfKnowledgeTables, numOfFiles;
+		int id, credit, numOfKnowledgeTables, numOfFiles;
 		BotLanguage lang;
 		int *knowledgeTables;
 		string *files;
@@ -23,6 +23,7 @@ BotData* BotDataXMLHandler::loadXML(string xmlPath)
 		// load single instance data
 		id = botNode.node().child("id").text().as_int();
 		lang = static_cast<BotLanguage>( botNode.node().child("lang").text().as_int() );
+		credit = botNode.node().child("credit").text().as_int();
 		
 		// load knowledge tables
 		list<int> tempList;
@@ -57,7 +58,7 @@ BotData* BotDataXMLHandler::loadXML(string xmlPath)
 			files[i++] = *it;
 		}
 
-		botData = new BotData(id, lang,
+		botData = new BotData(id, credit, lang,
 			numOfKnowledgeTables, knowledgeTables,
 			numOfFiles, files);
 	}

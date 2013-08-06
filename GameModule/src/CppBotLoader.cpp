@@ -1,12 +1,12 @@
 #include "stdafx.h"
 #include "CppBotLoader.h"
 
-Bot* CppBotLoader::loadBot(int botLang, const char* botFilePath)
+Bot* CppBotLoader::loadBot(BotData* botData)
 {
 	return nullptr;
 }
 
-Process* CppBotLoader::initProcess(const char* botFilePath)
+Process* CppBotLoader::initProcess()
 {
 	return nullptr;
 }

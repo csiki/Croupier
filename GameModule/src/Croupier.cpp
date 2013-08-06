@@ -590,27 +590,11 @@ int Croupier::getBotIDByIndex(int botIndex) const
 	return this->bots[botIndex]->getID();
 }
 
-/** Stores bot handlers.
+/** Stores a bot handler at the given index.
 */
-void Croupier::provideBotHandlers(int numOfBots, BotHandler** bhs)
+void Croupier::provideBotHandler(int index, BotHandler* bh)
 {
-	this->numOfBots = numOfBots;
-	this->bots = bhs;
-	this->kicksAtRound = new int[numOfBots];
-}
-
-/** Stores a reference of the table
-*/
-void Croupier::provideTable(Table* table)
-{
-	this->table = table;
-}
-
-/** Stores the given rules.
-*/
-void Croupier::provideRulz(const Rulz* rules)
-{
-	this->rules = rules;
+	this->bots[index] = bh;
 }
 
 /** Kicks a bot (inGame := false).

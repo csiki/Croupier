@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+
 <bot>
 	<id>431</id>
 	<lang>0</lang>
@@ -8,6 +9,8 @@
 		<tableid>3</tableid>
 	</knowledgetables>
 	<files>
-		<file>ultrabot.cpp</file>
+		<file>
+		ultrabot.cpp
+		</file>
 	</files>
 </bot>

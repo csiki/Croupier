@@ -6,7 +6,7 @@
 KnowledgeTable* BotKnowledgeHandler::loadTable(int tableID)
 {
 	string path = this->relPath;
-	path += tableID;
+	path += to_string(tableID);
 	path += ".xml";
 
 	return KnowledgeTableXMLHandler::loadXML(path);
@@ -17,7 +17,7 @@ KnowledgeTable* BotKnowledgeHandler::loadTable(int tableID)
 void BotKnowledgeHandler::saveTable(int tableID, KnowledgeTable* table)
 {
 	string path = this->relPath;
-	path += tableID;
+	path += to_string(tableID);
 	path += ".xml";
 
 	KnowledgeTableXMLHandler::saveXML(table, path);
@@ -28,7 +28,7 @@ void BotKnowledgeHandler::saveTable(int tableID, KnowledgeTable* table)
 void BotKnowledgeHandler::removeTableFile(int tableID)
 {
 	string path = this->relPath;
-	path += tableID;
+	path += to_string(tableID);
 	path += ".xml";
 
 	remove(path.c_str());

@@ -9,16 +9,17 @@ class BotData
 {
 public:
 	const int id;
+	const int credit;
 	const BotLanguage lang;
 	const int numOfKnowledgeTables;
 	const int* knowledgeTables;
 	const int numOfFiles;
 	const string* files;
 
-	BotData(int id, BotLanguage lang,
+	BotData(int id, int credit, BotLanguage lang,
 		int numOfKnowledgeTables, int* knowledgeTables,
 		int numOfFiles, string* files)
-		: id(id), lang(lang),
+		: id(id), credit(credit), lang(lang),
 		numOfKnowledgeTables(numOfKnowledgeTables), knowledgeTables(knowledgeTables),
 		numOfFiles(numOfFiles), files(files)
 	{}

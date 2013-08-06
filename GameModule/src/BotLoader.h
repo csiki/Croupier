@@ -3,15 +3,21 @@
 
 #include "Bot.h"
 #include "Process.h"
+#include "BotData.h"
 
 /**	Base class for AI loader classes (factory pattern).
 */
 class BotLoader
 {
 protected:
-	virtual Process* initProcess(const char* botFilePath) = 0;
+	/** Initialise a process (if needed) for the bot to run on.
+	*/
+	virtual Process* initProcess() = 0;
+
 public:
-	virtual Bot* loadBot(int botLang, const char* botFilePath) = 0;
+	/** Loads a bot.
+	*/
+	virtual Bot* loadBot(BotData* botData) = 0;
 };
 
 #endif  //_BOTLOADER_H

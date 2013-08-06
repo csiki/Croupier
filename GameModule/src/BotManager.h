@@ -41,9 +41,9 @@ public:
 
 	BotManager(Bot* bot, BotKnowledgeHandler* bkHandler, Hostess* hostess, const Table* table,
 		const Rulz* rules, BroadcastStation* broadcastStation, Loggable* loggable,
-		int id, int chips, int reservedCredit, int nthAtTable) :
+		int playerID, int chips, int reservedCredit, int nthAtTable) :
 		BotCommunicator(chips), BotHandler(chips), BotInfo(chips),
-		BroadcastMember(id, broadcastStation), Logger(id, loggable), Entity(id)
+		BroadcastMember(playerID, broadcastStation), Logger(playerID, loggable), Entity(playerID)
 	{
 		this->bot = bot;
 		this->bkHandler = bkHandler;
@@ -55,7 +55,10 @@ public:
 		this->numOfRebuys = 0;
 	}
 
-	virtual ~BotManager() {}
+	virtual ~BotManager()
+	{
+		delete this->bkHandler;
+	}
 
 	// broadcast
 	void receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data);
@@ -111,7 +114,7 @@ public:
 	int getSmallBlind(int blindIndex) const;
 	long getAllowedBotCalcTime(int langID) const;
 	int getStartingChips() const;
-	int genNumOfBlinds() const;
+	int getNumOfBlinds() const;
 	int getNumOfRebuysAllowed() const;
 	bool isTalkAllowed() const;
 	bool isEmotionAllowed() const;

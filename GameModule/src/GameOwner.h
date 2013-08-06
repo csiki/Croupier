@@ -3,10 +3,14 @@
 
 #include "Bot.h"
 #include "Log.h"
-#include "BotManager.h"
 #include "LogXMLHandler.h"
 #include "RulzXMLHandler.h"
 #include "Croupier.h"
+#include "BotDataXMLHandler.h"
+#include "BotData.h"
+#include "BotLoader.h"
+#include "CppBotLoader.h"
+#include "BotManager.h"
 
 /**	Initialises the participants of the game; runs it; saves the results.
 */
@@ -17,7 +21,7 @@ private:
 	const char* rulzPath;
 	const char* resultsPath;
 	int numOfBots;
-	int* botsID;
+	int* playersID;
 	Croupier* croupier;
 	Hostess* hostess;
 	BroadcastStation* broadcastStation;
@@ -28,23 +32,27 @@ private:
 	Table* table;
 	int gameState; // 1 - game initialised, 2 - game started, 3 - game ended, 4 - results saved, 5 - fatal error, else 0 (GameOwner just constructed)
 	string errorMsg;
+	map<BotLanguage, BotLoader*> botLoaders;
 
+	void errorOccured(string msg);
+	void fillBotLoaders();
 public:
-	GameOwner(int numOfBots,
+	GameOwner(int numOfBots, int* playersID,
 		const char* logPath, const char* rulzPath,
 		const char* resultsPath)
 	{
+		// set attributes
+		this->playersID = playersID;
 		this->logPath = logPath;
 		this->rulzPath = rulzPath;
 		this->resultsPath = resultsPath;
 		this->numOfBots = numOfBots;
-
-		// don't set numOfBots, but allocate space for bots
-		// set numOfBots, when loading bots
 		this->bots = new Bot*[numOfBots];
 		this->botManagers = new BotManager*[numOfBots];
-
 		this->gameState = 0;
+
+		// fill botloader
+		this->fillBotLoaders();
 	}
 
 	virtual ~GameOwner()

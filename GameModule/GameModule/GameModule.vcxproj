@@ -128,7 +128,6 @@
     <ClInclude Include="..\src\stdafx.h" />
     <ClInclude Include="..\src\Table.h" />
     <ClInclude Include="..\src\targetver.h" />
-    <ClInclude Include="..\src\XYBotLoader.h" />
     <ClInclude Include="..\src\XYTranslator.h" />
   </ItemGroup>
   <ItemGroup>
@@ -164,7 +163,6 @@
     <ClCompile Include="..\src\RulzXMLHandler.cpp" />
     <ClCompile Include="..\src\stdafx.cpp" />
     <ClCompile Include="..\src\Table.cpp" />
-    <ClCompile Include="..\src\XYBotLoader.cpp" />
     <ClCompile Include="..\src\XYTranslator.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

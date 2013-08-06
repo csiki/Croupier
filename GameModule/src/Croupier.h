@@ -54,13 +54,15 @@ private:
 	bool canStartNewRound() const;
 	bool canRoundGoOn() const;
 	int numOfBotsInRound() const;
-public:
 
+public:
 	/** Method to create Croupier, setting its attibrutes to default.
 	*/
-	Croupier(BroadcastStation* broadcastStation, Loggable* loggable) :
+	Croupier(int numOfBots, BroadcastStation* broadcastStation, Loggable* loggable, const Rulz* rules, Table* table) :
 		BroadcastMember(0, broadcastStation), Logger(0, loggable), Entity(0)
 	{
+		this->rules = rules;
+		this->table = table;
 		this->numberOfBurntCards = 0;
 		this->burnt[0] = nullptr;
 		this->burnt[1] = nullptr;
@@ -72,16 +74,21 @@ public:
 		this->lastBotRaisedIndex = 0;
 		this->currentBlindIndex = 0;
 		this->nextBlindShiftAtIndex = 0;
-		this->numOfBots = 0;
+		this->numOfBots = numOfBots;
+		this->bots = new BotHandler*[numOfBots];
+		this->kicksAtRound = new int[numOfBots];
+	}
+
+	virtual ~Croupier()
+	{
+		delete [] this->bots;
 	}
 
 	void receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data);
 	void letsPoker();
 	int getKickAtRound(int botIndex) const;
 	int getBotIDByIndex(int botIndex) const;
-	void provideBotHandlers(int numOfBots, BotHandler** bhs);
-	void provideTable(Table* table);
-	void provideRulz(const Rulz* rules);
+	void provideBotHandler(int index, BotHandler* bh);
 };
 
 #endif  //_CROUPIER_H

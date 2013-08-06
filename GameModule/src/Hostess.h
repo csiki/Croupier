@@ -8,7 +8,6 @@
 #include "BotInfo.h"
 
 // TODO playerek azért fizethetnek, hogy a hostess egyes algoritmusait kihasználhatják (használatonként/havonta)
-// !TODO legyen numOfBots változója, és ne a tablejét kérje le mindig
 
 /**	Helper for AIs.
 */
@@ -27,7 +26,6 @@ private:
 	int numberOfRaisesSoFar;
 	int nextBlindShiftDeadlineIndex;
 
-	void fillBotsData();
 	void handleRaise(int raiseAmount);
 
 public:
@@ -47,8 +45,6 @@ public:
 		this->minRaise = 0;
 		this->numberOfRaisesSoFar = 0;
 		this->nextBlindShiftDeadlineIndex = 0;
-		
-		this->fillBotsData();
 	}
 
 	virtual ~Hostess()
@@ -57,6 +53,7 @@ public:
 		delete [] this->botsInRound;
 	}
 
+	void fillBotsData();
 	void receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data);
 	int getCallAmount() const;
 	int getMinRaise() const;

@@ -3,7 +3,7 @@
 
 /**	Returns one of AI's card in hand.
 */
-Card BotCommunicator::getHand(int cardIndex)
+Card BotCommunicator::getHand(int cardIndex) const
 {
 	return Card::getNullCard();
 }

@@ -13128,22 +13128,17 @@
 </XPD:OBJ>
 </XPD:OBJ>
 <XPD:OBJ name="Operations[3]" type="UMLOperation" guid="lapN016ouUqsd2lzulkzyQAA">
-<XPD:ATTR name="Name" type="string">provideBotHandlers</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">provideBotHandler</XPD:ATTR>
 <XPD:REF name="Owner">nhUA69+mKUmp7w6prQ1VUgAA</XPD:REF>
-<XPD:ATTR name="#Parameters" type="integer">3</XPD:ATTR>
-<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="VgvM1xgkDUWmTIlsFMc9DgAA">
+<XPD:ATTR name="#Parameters" type="integer">2</XPD:ATTR>
+<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="7kPbv+jtjkSEDXnm5b5XfQAA">
 <XPD:ATTR name="DirectionKind" type="UMLParameterDirectionKind">pdkReturn</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">void</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">lapN016ouUqsd2lzulkzyQAA</XPD:REF>
 </XPD:OBJ>
-<XPD:OBJ name="Parameters[1]" type="UMLParameter" guid="NzkWu46vG0KAvIn9+uUGSAAA">
-<XPD:ATTR name="Name" type="string">numOfBots</XPD:ATTR>
-<XPD:ATTR name="TypeExpression" type="string">int</XPD:ATTR>
-<XPD:REF name="BehavioralFeature">lapN016ouUqsd2lzulkzyQAA</XPD:REF>
-</XPD:OBJ>
-<XPD:OBJ name="Parameters[2]" type="UMLParameter" guid="776ibuM060igIWZdthWoUgAA">
-<XPD:ATTR name="Name" type="string">bhs</XPD:ATTR>
-<XPD:ATTR name="TypeExpression" type="string">BotHandler**</XPD:ATTR>
+<XPD:OBJ name="Parameters[1]" type="UMLParameter" guid="lxSE3V6KVESL4jOR+I6/rQAA">
+<XPD:ATTR name="Name" type="string">bh</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">BotHandler*</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">lapN016ouUqsd2lzulkzyQAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
@@ -34701,14 +34696,14 @@
 <XPD:ATTR name="IsAbstract" type="boolean">True</XPD:ATTR>
 <XPD:REF name="Owner">OhOSgxfnHkWejLjEr7D01wAA</XPD:REF>
 <XPD:ATTR name="#Parameters" type="integer">2</XPD:ATTR>
-<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="WBELii88uUeXNktghU1vfwAA">
+<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="UFMc/hIr4EqD9GgYZiSvfgAA">
 <XPD:ATTR name="DirectionKind" type="UMLParameterDirectionKind">pdkReturn</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">Bot*</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">zJuLeB9SBkKArZBa3ju+MAAA</XPD:REF>
 </XPD:OBJ>
-<XPD:OBJ name="Parameters[1]" type="UMLParameter" guid="lVCzeKekR0qXT2BhzUnbXAAA">
-<XPD:ATTR name="Name" type="string">botFilePath</XPD:ATTR>
-<XPD:ATTR name="TypeExpression" type="string">string</XPD:ATTR>
+<XPD:OBJ name="Parameters[1]" type="UMLParameter" guid="I3EULgkuykqipqXBsZdNlwAA">
+<XPD:ATTR name="Name" type="string">botData</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">BotData*</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">zJuLeB9SBkKArZBa3ju+MAAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>

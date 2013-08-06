@@ -584,7 +584,7 @@ int BotManager::getStartingChips() const
 
 /** Returns number of blind shifts / or the number of blinds.
 */
-int BotManager::genNumOfBlinds() const
+int BotManager::getNumOfBlinds() const
 {
 	return this->rules->getNumOfBlinds();
 }

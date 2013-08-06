@@ -8,9 +8,9 @@
 class CppBotLoader : public BotLoader
 {
 protected:
-	Process* initProcess(const char* botFilePath);
+	Process* initProcess();
 public:
-	Bot* loadBot(int botLang, const char* botFilePath);
+	Bot* loadBot(BotData* botData);
 };
 
 #endif  //_CPPBOTLOADER_H

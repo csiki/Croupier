@@ -144,9 +144,6 @@
     <ClInclude Include="..\src\BroadcastStation.h">
       <Filter>Header Files\Broadcast</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\XYBotLoader.h">
-      <Filter>Header Files\BotLoaders</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\XYTranslator.h">
       <Filter>Header Files\Translators</Filter>
     </ClInclude>
@@ -250,9 +247,6 @@
     </ClCompile>
     <ClCompile Include="..\src\pugixml.cpp">
       <Filter>Source Files\PugiXML</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\XYBotLoader.cpp">
-      <Filter>Source Files\BotLoaders</Filter>
     </ClCompile>
     <ClCompile Include="..\src\CppBotLoader.cpp">
       <Filter>Source Files\BotLoaders</Filter>

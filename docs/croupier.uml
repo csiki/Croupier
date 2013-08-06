@@ -13086,7 +13086,7 @@
 <XPD:REF name="Generalizations[0]">Yr1lV8UZqUiIFxJa/aNw/gAA</XPD:REF>
 <XPD:REF name="Generalizations[1]">q7dTy6nJzkyH1ia1N1WmkQAA</XPD:REF>
 <XPD:REF name="Generalizations[2]">er1YgR4zOka1ThFWWjIspwAA</XPD:REF>
-<XPD:ATTR name="#Operations" type="integer">25</XPD:ATTR>
+<XPD:ATTR name="#Operations" type="integer">24</XPD:ATTR>
 <XPD:OBJ name="Operations[0]" type="UMLOperation" guid="/QvKbj5wFE+EiBy2kAL6EgAA">
 <XPD:ATTR name="Name" type="string">letsPoker</XPD:ATTR>
 <XPD:REF name="Owner">nhUA69+mKUmp7w6prQ1VUgAA</XPD:REF>
@@ -13128,41 +13128,21 @@
 </XPD:OBJ>
 </XPD:OBJ>
 <XPD:OBJ name="Operations[3]" type="UMLOperation" guid="lapN016ouUqsd2lzulkzyQAA">
-<XPD:ATTR name="Name" type="string">provideBotHandlers</XPD:ATTR>
-<XPD:REF name="Owner">nhUA69+mKUmp7w6prQ1VUgAA</XPD:REF>
-<XPD:ATTR name="#Parameters" type="integer">3</XPD:ATTR>
-<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="VgvM1xgkDUWmTIlsFMc9DgAA">
-<XPD:ATTR name="DirectionKind" type="UMLParameterDirectionKind">pdkReturn</XPD:ATTR>
-<XPD:ATTR name="TypeExpression" type="string">void</XPD:ATTR>
-<XPD:REF name="BehavioralFeature">lapN016ouUqsd2lzulkzyQAA</XPD:REF>
-</XPD:OBJ>
-<XPD:OBJ name="Parameters[1]" type="UMLParameter" guid="NzkWu46vG0KAvIn9+uUGSAAA">
-<XPD:ATTR name="Name" type="string">numOfBots</XPD:ATTR>
-<XPD:ATTR name="TypeExpression" type="string">int</XPD:ATTR>
-<XPD:REF name="BehavioralFeature">lapN016ouUqsd2lzulkzyQAA</XPD:REF>
-</XPD:OBJ>
-<XPD:OBJ name="Parameters[2]" type="UMLParameter" guid="776ibuM060igIWZdthWoUgAA">
-<XPD:ATTR name="Name" type="string">bhs</XPD:ATTR>
-<XPD:ATTR name="TypeExpression" type="string">BotHandler**</XPD:ATTR>
-<XPD:REF name="BehavioralFeature">lapN016ouUqsd2lzulkzyQAA</XPD:REF>
-</XPD:OBJ>
-</XPD:OBJ>
-<XPD:OBJ name="Operations[4]" type="UMLOperation" guid="4p84NGlwoUOTSzYvCyvWSQAA">
-<XPD:ATTR name="Name" type="string">provideTable</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">provideBotHandler</XPD:ATTR>
 <XPD:REF name="Owner">nhUA69+mKUmp7w6prQ1VUgAA</XPD:REF>
 <XPD:ATTR name="#Parameters" type="integer">2</XPD:ATTR>
-<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="Xodou1W6wE+mk7qCWQ0CeAAA">
+<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="7kPbv+jtjkSEDXnm5b5XfQAA">
 <XPD:ATTR name="DirectionKind" type="UMLParameterDirectionKind">pdkReturn</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">void</XPD:ATTR>
-<XPD:REF name="BehavioralFeature">4p84NGlwoUOTSzYvCyvWSQAA</XPD:REF>
+<XPD:REF name="BehavioralFeature">lapN016ouUqsd2lzulkzyQAA</XPD:REF>
 </XPD:OBJ>
-<XPD:OBJ name="Parameters[1]" type="UMLParameter" guid="/VASYEWpmkaVFj00xtnYLgAA">
-<XPD:ATTR name="Name" type="string">table</XPD:ATTR>
-<XPD:ATTR name="TypeExpression" type="string">Table*</XPD:ATTR>
-<XPD:REF name="BehavioralFeature">4p84NGlwoUOTSzYvCyvWSQAA</XPD:REF>
+<XPD:OBJ name="Parameters[1]" type="UMLParameter" guid="lxSE3V6KVESL4jOR+I6/rQAA">
+<XPD:ATTR name="Name" type="string">bh</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">BotHandler*</XPD:ATTR>
+<XPD:REF name="BehavioralFeature">lapN016ouUqsd2lzulkzyQAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
-<XPD:OBJ name="Operations[5]" type="UMLOperation" guid="155NM2XlG0WAYRPwVk+N/AAA">
+<XPD:OBJ name="Operations[4]" type="UMLOperation" guid="155NM2XlG0WAYRPwVk+N/AAA">
 <XPD:ATTR name="Name" type="string">botComparatorByPot</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:REF name="Owner">nhUA69+mKUmp7w6prQ1VUgAA</XPD:REF>
@@ -13183,7 +13163,7 @@
 <XPD:REF name="BehavioralFeature">155NM2XlG0WAYRPwVk+N/AAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
-<XPD:OBJ name="Operations[6]" type="UMLOperation" guid="mHVbXZjAfEuFpx87jPpP1QAA">
+<XPD:OBJ name="Operations[5]" type="UMLOperation" guid="mHVbXZjAfEuFpx87jPpP1QAA">
 <XPD:ATTR name="Name" type="string">burn</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:REF name="Owner">nhUA69+mKUmp7w6prQ1VUgAA</XPD:REF>
@@ -13199,7 +13179,7 @@
 <XPD:REF name="BehavioralFeature">mHVbXZjAfEuFpx87jPpP1QAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
-<XPD:OBJ name="Operations[7]" type="UMLOperation" guid="BwyztXly80Sc7BsOSBg0RgAA">
+<XPD:OBJ name="Operations[6]" type="UMLOperation" guid="BwyztXly80Sc7BsOSBg0RgAA">
 <XPD:ATTR name="Name" type="string">collectCards</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:REF name="Owner">nhUA69+mKUmp7w6prQ1VUgAA</XPD:REF>
@@ -13212,7 +13192,7 @@
 <XPD:ATTR name="#CallActions" type="integer">1</XPD:ATTR>
 <XPD:REF name="CallActions[0]">bUQSO17YOUyyyJaWabf3rAAA</XPD:REF>
 </XPD:OBJ>
-<XPD:OBJ name="Operations[8]" type="UMLOperation" guid="fdm5iB+4fkacWZu0b7IF1AAA">
+<XPD:OBJ name="Operations[7]" type="UMLOperation" guid="fdm5iB+4fkacWZu0b7IF1AAA">
 <XPD:ATTR name="Name" type="string">betRound</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:REF name="Owner">nhUA69+mKUmp7w6prQ1VUgAA</XPD:REF>
@@ -13228,7 +13208,7 @@
 <XPD:REF name="BehavioralFeature">fdm5iB+4fkacWZu0b7IF1AAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
-<XPD:OBJ name="Operations[9]" type="UMLOperation" guid="Cu/BjaGCT0y/rxGsFle3LgAA">
+<XPD:OBJ name="Operations[8]" type="UMLOperation" guid="Cu/BjaGCT0y/rxGsFle3LgAA">
 <XPD:ATTR name="Name" type="string">dealing</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:REF name="Owner">nhUA69+mKUmp7w6prQ1VUgAA</XPD:REF>
@@ -13239,7 +13219,7 @@
 <XPD:REF name="BehavioralFeature">Cu/BjaGCT0y/rxGsFle3LgAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
-<XPD:OBJ name="Operations[10]" type="UMLOperation" guid="MPtu6lltJ0mfl6/6K1VJLgAA">
+<XPD:OBJ name="Operations[9]" type="UMLOperation" guid="MPtu6lltJ0mfl6/6K1VJLgAA">
 <XPD:ATTR name="Name" type="string">nextActiveBot</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:REF name="Owner">nhUA69+mKUmp7w6prQ1VUgAA</XPD:REF>
@@ -13256,7 +13236,7 @@
 <XPD:REF name="BehavioralFeature">MPtu6lltJ0mfl6/6K1VJLgAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
-<XPD:OBJ name="Operations[11]" type="UMLOperation" guid="4nx6bNJNREaI9TCm04RlRwAA">
+<XPD:OBJ name="Operations[10]" type="UMLOperation" guid="4nx6bNJNREaI9TCm04RlRwAA">
 <XPD:ATTR name="Name" type="string">preflop</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:REF name="Owner">nhUA69+mKUmp7w6prQ1VUgAA</XPD:REF>
@@ -13267,7 +13247,7 @@
 <XPD:REF name="BehavioralFeature">4nx6bNJNREaI9TCm04RlRwAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
-<XPD:OBJ name="Operations[12]" type="UMLOperation" guid="iJLvec8x0Eqt1fDXlKbFMwAA">
+<XPD:OBJ name="Operations[11]" type="UMLOperation" guid="iJLvec8x0Eqt1fDXlKbFMwAA">
 <XPD:ATTR name="Name" type="string">flop</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:REF name="Owner">nhUA69+mKUmp7w6prQ1VUgAA</XPD:REF>
@@ -13278,7 +13258,7 @@
 <XPD:REF name="BehavioralFeature">iJLvec8x0Eqt1fDXlKbFMwAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
-<XPD:OBJ name="Operations[13]" type="UMLOperation" guid="2fKcN1/7NkWVw0zKqqCpPwAA">
+<XPD:OBJ name="Operations[12]" type="UMLOperation" guid="2fKcN1/7NkWVw0zKqqCpPwAA">
 <XPD:ATTR name="Name" type="string">turn</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:REF name="Owner">nhUA69+mKUmp7w6prQ1VUgAA</XPD:REF>
@@ -13289,7 +13269,7 @@
 <XPD:REF name="BehavioralFeature">2fKcN1/7NkWVw0zKqqCpPwAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
-<XPD:OBJ name="Operations[14]" type="UMLOperation" guid="CSxTUIrGN0OvvxwBnvITRQAA">
+<XPD:OBJ name="Operations[13]" type="UMLOperation" guid="CSxTUIrGN0OvvxwBnvITRQAA">
 <XPD:ATTR name="Name" type="string">river</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:REF name="Owner">nhUA69+mKUmp7w6prQ1VUgAA</XPD:REF>
@@ -13300,7 +13280,7 @@
 <XPD:REF name="BehavioralFeature">CSxTUIrGN0OvvxwBnvITRQAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
-<XPD:OBJ name="Operations[15]" type="UMLOperation" guid="DtiGOep0DU2o2lFFjWFnfwAA">
+<XPD:OBJ name="Operations[14]" type="UMLOperation" guid="DtiGOep0DU2o2lFFjWFnfwAA">
 <XPD:ATTR name="Name" type="string">showdown</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:REF name="Owner">nhUA69+mKUmp7w6prQ1VUgAA</XPD:REF>
@@ -13311,7 +13291,7 @@
 <XPD:REF name="BehavioralFeature">DtiGOep0DU2o2lFFjWFnfwAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
-<XPD:OBJ name="Operations[16]" type="UMLOperation" guid="Kdxs9B2dd0+8y/YoUgZXLQAA">
+<XPD:OBJ name="Operations[15]" type="UMLOperation" guid="Kdxs9B2dd0+8y/YoUgZXLQAA">
 <XPD:ATTR name="Name" type="string">handOutPot</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:REF name="Owner">nhUA69+mKUmp7w6prQ1VUgAA</XPD:REF>
@@ -13327,7 +13307,7 @@
 <XPD:REF name="BehavioralFeature">Kdxs9B2dd0+8y/YoUgZXLQAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
-<XPD:OBJ name="Operations[17]" type="UMLOperation" guid="RsSfJHW3kE+2JdGza3UXXwAA">
+<XPD:OBJ name="Operations[16]" type="UMLOperation" guid="RsSfJHW3kE+2JdGza3UXXwAA">
 <XPD:ATTR name="Name" type="string">handOutPot</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:REF name="Owner">nhUA69+mKUmp7w6prQ1VUgAA</XPD:REF>
@@ -13348,7 +13328,7 @@
 <XPD:REF name="BehavioralFeature">RsSfJHW3kE+2JdGza3UXXwAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
-<XPD:OBJ name="Operations[18]" type="UMLOperation" guid="NReDsDeIhkSTsFEPtC7elAAA">
+<XPD:OBJ name="Operations[17]" type="UMLOperation" guid="NReDsDeIhkSTsFEPtC7elAAA">
 <XPD:ATTR name="Name" type="string">refreshBlinds</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:REF name="Owner">nhUA69+mKUmp7w6prQ1VUgAA</XPD:REF>
@@ -13359,7 +13339,7 @@
 <XPD:REF name="BehavioralFeature">NReDsDeIhkSTsFEPtC7elAAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
-<XPD:OBJ name="Operations[19]" type="UMLOperation" guid="t/mERIwm6Eugf88UPqnyygAA">
+<XPD:OBJ name="Operations[18]" type="UMLOperation" guid="t/mERIwm6Eugf88UPqnyygAA">
 <XPD:ATTR name="Name" type="string">determineWinners</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:REF name="Owner">nhUA69+mKUmp7w6prQ1VUgAA</XPD:REF>
@@ -13380,7 +13360,7 @@
 <XPD:REF name="BehavioralFeature">t/mERIwm6Eugf88UPqnyygAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
-<XPD:OBJ name="Operations[20]" type="UMLOperation" guid="IkNs8cyOrkasrWkM1i4svgAA">
+<XPD:OBJ name="Operations[19]" type="UMLOperation" guid="IkNs8cyOrkasrWkM1i4svgAA">
 <XPD:ATTR name="Name" type="string">kickBot</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:REF name="Owner">nhUA69+mKUmp7w6prQ1VUgAA</XPD:REF>
@@ -13396,7 +13376,7 @@
 <XPD:REF name="BehavioralFeature">IkNs8cyOrkasrWkM1i4svgAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
-<XPD:OBJ name="Operations[21]" type="UMLOperation" guid="fMHTxDvfiUeXLw3g7RdtvAAA">
+<XPD:OBJ name="Operations[20]" type="UMLOperation" guid="fMHTxDvfiUeXLw3g7RdtvAAA">
 <XPD:ATTR name="Name" type="string">findBotIndexByID</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:REF name="Owner">nhUA69+mKUmp7w6prQ1VUgAA</XPD:REF>
@@ -13412,7 +13392,7 @@
 <XPD:REF name="BehavioralFeature">fMHTxDvfiUeXLw3g7RdtvAAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
-<XPD:OBJ name="Operations[22]" type="UMLOperation" guid="vs5g36n+UECQRqi6/xm+/gAA">
+<XPD:OBJ name="Operations[21]" type="UMLOperation" guid="vs5g36n+UECQRqi6/xm+/gAA">
 <XPD:ATTR name="Name" type="string">canStartNewRound</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:REF name="Owner">nhUA69+mKUmp7w6prQ1VUgAA</XPD:REF>
@@ -13423,7 +13403,7 @@
 <XPD:REF name="BehavioralFeature">vs5g36n+UECQRqi6/xm+/gAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
-<XPD:OBJ name="Operations[23]" type="UMLOperation" guid="2fqlFKyeLUyRhaLG/A2egAAA">
+<XPD:OBJ name="Operations[22]" type="UMLOperation" guid="2fqlFKyeLUyRhaLG/A2egAAA">
 <XPD:ATTR name="Name" type="string">canRoundGoOn</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:REF name="Owner">nhUA69+mKUmp7w6prQ1VUgAA</XPD:REF>
@@ -13434,7 +13414,7 @@
 <XPD:REF name="BehavioralFeature">2fqlFKyeLUyRhaLG/A2egAAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
-<XPD:OBJ name="Operations[24]" type="UMLOperation" guid="lcbLV2mFaU+PLCRMgPM/DQAA">
+<XPD:OBJ name="Operations[23]" type="UMLOperation" guid="lcbLV2mFaU+PLCRMgPM/DQAA">
 <XPD:ATTR name="Name" type="string">numOfBotsInRound</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:REF name="Owner">nhUA69+mKUmp7w6prQ1VUgAA</XPD:REF>

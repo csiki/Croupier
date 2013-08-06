@@ -5,11 +5,7 @@
 #include "KnowledgeDataType.h"
 #include "KnowledgeTableXMLHandler.h"
 #include "../pugixml/pugixml.hpp"
-
-// TODO át kell írni a analízis doksiba, hogy a getTable...() parancsok egyike sem tölt be új táblát,
-// a játék elején betöltjük a botok által requestelt összes táblát
-
-// TODO neki a feladata h a knowledge tableöket mentse és töltse
+#include "BotData.h"
 
 /**	Class for handling AIs' permanent knowledge.
 */
@@ -26,20 +22,21 @@ private:
 	bool isTableLoaded(int tableID) const;
 public:
 
-	BotKnowledgeHandler(int userID, int numOfRequestedTable, int* requestedTables) : userID(userID)
+	BotKnowledgeHandler(BotData* botData) : userID(botData->id)
 	{
-		relPath = _BOT_KNOWLEDGE_RELATIVE_PATH_;
-		relPath += this->userID;
-		relPath += "/";
+		// set relPath
+		this->relPath = _BOT_KNOWLEDGE_RELATIVE_PATH_;
+		this->relPath += to_string(this->userID);
+		this->relPath += "/";
 
 		// load tables
-		for (int i = 0; i < numOfRequestedTable; ++i)
+		for (int i = 0; i < botData->numOfKnowledgeTables; ++i)
 		{
-			KnowledgeTable* kt = this->loadTable(requestedTables[i]);
+			KnowledgeTable* kt = this->loadTable(botData->knowledgeTables[i]);
 
 			if (kt != nullptr)
 			{
-				this->loadedTables.insert( pair<int, KnowledgeTable*>(requestedTables[i], kt) );
+				this->loadedTables.insert( pair<int, KnowledgeTable*>(botData->knowledgeTables[i], kt) );
 			}
 		}
 	}
