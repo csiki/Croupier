@@ -24,6 +24,9 @@ void GameOwner::fillBotLoaders()
 */
 bool GameOwner::initialiseGame()
 {
+	// fill botloaders map
+	this->fillBotLoaders();
+
 	// create independent components
 	this->log = new Log();
 	this->rulz = RulzXMLHandler::loadXML(this->rulzPath);
@@ -84,10 +87,19 @@ bool GameOwner::initialiseGame()
 
 		// add BotHandler to croupier
 		this->croupier->provideBotHandler(i, this->botManagers[i]);
+
+		// delete bot data (not needed anymore)
+		delete botData;
 	}
 
 	// fill hostess' bot data (from table)
 	this->hostess->fillBotsData();
+
+	// delete bot loaders (not needed anyomore)
+	for (map<BotLanguage, BotLoader*>::iterator it = this->botLoaders.begin(); it != this->botLoaders.end(); ++it)
+	{
+		delete it->second;
+	}
 
 	return true;
 }

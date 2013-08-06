@@ -50,9 +50,6 @@ public:
 		this->bots = new Bot*[numOfBots];
 		this->botManagers = new BotManager*[numOfBots];
 		this->gameState = 0;
-
-		// fill botloader
-		this->fillBotLoaders();
 	}
 
 	virtual ~GameOwner()
@@ -71,11 +68,16 @@ public:
 		delete [] this->botManagers;
 		delete [] this->bots;
 
-		// delete log
-		delete this->log;
+		// delete bot loaders (already deleted in initialiser)
 
-		// delete rulz
+		// delete others
+		delete this->croupier;
+		delete this->log;
 		delete this->rulz;
+		delete this->table;
+		delete this->broadcastStation;
+		delete this->hostess;
+		delete [] this->playersID;
 	}
 
 	bool initialiseGame();
