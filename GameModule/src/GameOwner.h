@@ -52,7 +52,6 @@ public:
 		// delete path strings
 		delete this->logPath;
 		delete this->rulzPath;
-		delete this->botsDataPath;
 		delete this->resultsPath;
 
 		// delete botmanagers and bots

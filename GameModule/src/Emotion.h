@@ -15,7 +15,8 @@ enum Emotion
 	IMPATIENT,
 	EXCITED,
 	UNCERTAIN,
-	RELAXED
+	RELAXED,
+	EMBARASSED
 };
 
 #endif  //_EMOTION_H

@@ -23,7 +23,7 @@ Log* LogXMLHandler::loadXML(string xmlPath)
 		{
 			int loggerID = eventNode.child("logger").text().as_int();
 			const char* msg = eventNode.child("msg").text().as_string();
-			Severity severity = (Severity) eventNode.child("severity").text().as_int();
+			Severity severity = static_cast<Severity>( eventNode.child("severity").text().as_int() );
 
 			Event* event = new Event(severity, loggerID, msg);
 			log->log(event);

@@ -29,7 +29,7 @@ Rulz* RulzXMLHandler::loadXML(string xmlPath)
 		maxNumOfRaises = rulzNode.node().child("maxnumofraises").text().as_int();
 		numOfRebuysAllowed = rulzNode.node().child("numofrebuysallowed").text().as_int();
 		rebuyDeadline = rulzNode.node().child("rebuydeadline").text().as_int();
-		bs = (BettingSystem) rulzNode.node().child("bettingsystem").text().as_int();
+		bs = static_cast<BettingSystem>( rulzNode.node().child("bettingsystem").text().as_int() );
 
 		// arrays of data
 		pugi::xpath_node blindsNode = doc.select_single_node("/rulz/blinds");

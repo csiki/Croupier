@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "KnowledgeTableXMLHandler.h"
 
-/** From an xml file, loads a KnowledgeTable object.
+/** From an xml file, loads a KnowledgeTable instance.
 */
 KnowledgeTable* KnowledgeTableXMLHandler::loadXML(string xmlPath)
 {
@@ -19,7 +19,7 @@ KnowledgeTable* KnowledgeTableXMLHandler::loadXML(string xmlPath)
 		
 		for (pugi::xml_node colType = columnTypes.node().child("coltype"); colType; colType = colType.next_sibling("coltype"))
 		{
-			KnowledgeDataType ctype = (KnowledgeDataType) colType.text().as_int();
+			KnowledgeDataType ctype = static_cast<KnowledgeDataType>( colType.text().as_int() );
 			ctypes.push_back(ctype);
 		}
 
@@ -84,7 +84,7 @@ KnowledgeTable* KnowledgeTableXMLHandler::loadXML(string xmlPath)
 	return ktable;
 }
 
-/** Saves a KnowledgeTable object as an xml file.
+/** Saves a KnowledgeTable instance as an xml file.
 */
 bool KnowledgeTableXMLHandler::saveXML(KnowledgeTable* kt, string xmlPath)
 {
