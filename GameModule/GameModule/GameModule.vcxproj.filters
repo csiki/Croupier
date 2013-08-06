@@ -201,6 +201,42 @@
     <ClInclude Include="..\src\BotData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\CBotLoader.h">
+      <Filter>Header Files\BotLoaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\CSharpBotLoader.h">
+      <Filter>Header Files\BotLoaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\JavaBotLoader.h">
+      <Filter>Header Files\BotLoaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\PascalBotLoader.h">
+      <Filter>Header Files\BotLoaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\PrologBotLoader.h">
+      <Filter>Header Files\BotLoaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\CommonLispBotLoader.h">
+      <Filter>Header Files\BotLoaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\SchemeBotLoader.h">
+      <Filter>Header Files\BotLoaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\PythonBotLoader.h">
+      <Filter>Header Files\BotLoaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\PerlBotLoader.h">
+      <Filter>Header Files\BotLoaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\LuaBotLoader.h">
+      <Filter>Header Files\BotLoaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\RubyBotLoader.h">
+      <Filter>Header Files\BotLoaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\PhpBotLoader.h">
+      <Filter>Header Files\BotLoaders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Bot.cpp">
@@ -301,6 +337,42 @@
     </ClCompile>
     <ClCompile Include="..\src\BotData.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\CBotLoader.cpp">
+      <Filter>Source Files\BotLoaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\CSharpBotLoader.cpp">
+      <Filter>Source Files\BotLoaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\JavaBotLoader.cpp">
+      <Filter>Source Files\BotLoaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\PascalBotLoader.cpp">
+      <Filter>Source Files\BotLoaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\PrologBotLoader.cpp">
+      <Filter>Source Files\BotLoaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\CommonLispBotLoader.cpp">
+      <Filter>Source Files\BotLoaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\SchemeBotLoader.cpp">
+      <Filter>Source Files\BotLoaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\PythonBotLoader.cpp">
+      <Filter>Source Files\BotLoaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\PerlBotLoader.cpp">
+      <Filter>Source Files\BotLoaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\LuaBotLoader.cpp">
+      <Filter>Source Files\BotLoaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\RubyBotLoader.cpp">
+      <Filter>Source Files\BotLoaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\PhpBotLoader.cpp">
+      <Filter>Source Files\BotLoaders</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
