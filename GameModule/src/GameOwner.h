@@ -81,7 +81,7 @@ public:
 	}
 
 	bool initialiseGame();
-	int startGame();
+	bool startGame();
 	void saveResults();
 	int getGameState() const;
 	string getErrorMsg() const;

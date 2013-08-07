@@ -13,9 +13,24 @@ class Log : public Loggable
 {
 private:
 	list<Event*> events;
-public:
+	map<Severity, int> severityFequency;
 
-	Log() {}
+public:
+	Log()
+	{
+		// fill severity frequency (with 0s)
+		for (int sevInt = Severity::FATAL; ; ++sevInt)
+		{
+			this->severityFequency.insert(
+				pair<Severity, int>(
+					static_cast<Severity>(sevInt), 0));
+
+			if (sevInt == Severity::DEBUG)
+			{
+				break;
+			}
+		}
+	}
 	
 	virtual ~Log()
 	{
@@ -28,6 +43,7 @@ public:
 
 	void log(Event* e);
 	void getEventsIterators(list<Event*>::const_iterator& begin, list<Event*>::const_iterator& end) const;
+	int getSeverityFrequency(Severity sev) const;
 };
 
 #endif  //_LOG_H

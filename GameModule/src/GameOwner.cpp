@@ -104,17 +104,31 @@ bool GameOwner::initialiseGame()
 	return true;
 }
 
-/** Trigger the croupier mainly, to start the game.
+/** Trigger the component(s), to start the game.
+ *	@return if the game was valid or not (if there was not any events with fatal or error severity).
 */
-int GameOwner::startGame()
+bool GameOwner::startGame()
 {
-	return 0;
+	this->croupier->letsPoker();
+
+	if (this->log->getSeverityFrequency(Severity::FATAL) > 0
+		|| this->log->getSeverityFrequency(Severity::ERROR) > 0)
+	{
+		this->errorOccured("Event with FATAL or ERROR severity occured during the game!");
+		return false;
+	}
+
+	return true;
 }
 
 /** Save the results of the game.
 */
 void GameOwner::saveResults()
 {
+	// TODO
+	// save bot credits and the round when they fell out
+	// save log
+	// save bot knowledge tables (BotKnowledgeHandler destructor)
 }
 
 /** Returns state of the game.

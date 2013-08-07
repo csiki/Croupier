@@ -9,9 +9,18 @@ void Log::getEventsIterators(list<Event*>::const_iterator& begin, list<Event*>::
 	end = events.cend();
 }
 
+/** Gets the number of events with the given severity.
+*/
+int Log::getSeverityFrequency(Severity sev) const
+{
+	return this->severityFequency.at(sev);
+}
+
 /** Push an event to the log.
 */
 void Log::log(Event* e)
 {
+	++this->severityFequency.at(e->severity); // increase frequency
 	events.push_back(e);
 }
+
