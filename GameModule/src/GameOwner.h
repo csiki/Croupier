@@ -77,9 +77,9 @@ public:
 		delete [] this->playersID;
 	}
 
-	bool initialiseGame();
-	bool startGame();
-	void saveResults();
+	bool initialiseGame(); // UNIT
+	bool startGame(); // UNIT
+	void saveResults(); // UNIT
 	int getGameState() const;
 	string getErrorMsg() const;
 };

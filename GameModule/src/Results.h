@@ -32,10 +32,10 @@ public:
 		delete [] this->kicksAtRound;
 	}
 
-	void addResult(int id, int credit, int kickAtRound);
+	void addResult(int id, int credit, int kickAtRound); // UNIT
 	int getNumOfPlayers() const;
 	int getID(int index) const;
-	int getCredit(int index) const;
+	int getCredit(int index) const; // UNIT
 	int getKickAtRound(int index) const;
 };
 

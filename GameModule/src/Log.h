@@ -42,7 +42,7 @@ public:
 	}
 
 	void log(Event* e);
-	void getEventsIterators(list<Event*>::const_iterator& begin, list<Event*>::const_iterator& end) const;
+	void getEventsIterators(list<Event*>::const_iterator& begin, list<Event*>::const_iterator& end) const; // UNIT
 	int getSeverityFrequency(Severity sev) const;
 };
 

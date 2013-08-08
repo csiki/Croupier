@@ -38,14 +38,14 @@ public:
 
 	virtual ~Table() {}
 
-	void addCard(Card* c);
+	void addCard(Card* c); // UNIT
 	int getNumOfCards() const;
-	Card* rmCard();
-	const Card* getCard(int index) const;
+	Card* rmCard(); // UNIT
+	const Card* getCard(int index) const; // UNIT
 	const BotInfo* getBotByIndex(int index) const;
 	int getNumOfBots() const;
 	int getPot() const;
-	void sit(BotInfo* bot);
+	void sit(BotInfo* bot); // UNIT
 };
 
 #endif  //_TABLE_H

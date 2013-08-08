@@ -15,7 +15,7 @@ public:
 
 	BroadcastStation() {}
 
-	void broadcast(BroadcastMember* sender, BroadcastMessage msg, int dataSize, const int* data);
+	void broadcast(BroadcastMember* sender, BroadcastMessage msg, int dataSize, const int* data); // UNIT
 	void subsrcibe(BroadcastMember* newMember);
 	void unsubsrcibe(BroadcastMember* member);
 };

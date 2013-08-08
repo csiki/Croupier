@@ -82,20 +82,20 @@ public:
 	bool isBotInGame(int botID) const;
 	bool isBotInRound(bool botID) const;
 	Card lookAtBotHand(int botID, int cardIndex) const;
-	bool allin();
-	bool call();
+	bool allin(); // UNIT
+	bool call(); // UNIT
 	bool canTalk() const;
 	bool canStep() const;
-	bool canAllin() const;
+	bool canAllin() const; // UNIT
 	bool canCall() const;
 	bool canCheck() const;
 	bool canFold() const;
-	bool canRaise(int raiseAmount) const;
-	bool check();
-	bool fold();
-	bool raise(int raiseAmount);
-	bool canRebuy(int rebuyAmount) const;
-	bool rebuy(int rebuyAmount);
+	bool canRaise(int raiseAmount) const; // UNIT
+	bool check(); // UNIT
+	bool fold(); // UNIT
+	bool raise(int raiseAmount); // UNIT
+	bool canRebuy(int rebuyAmount) const; // UNIT
+	bool rebuy(int rebuyAmount); // UNIT
 	void talk(Comment comment);
 	void quit();
 	int getNumOfBots(bool onlyInGame = false, bool onlyInRound = false) const;

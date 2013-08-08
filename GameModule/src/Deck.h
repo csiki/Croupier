@@ -37,9 +37,9 @@ public:
 	}
 
 	int num() const;
-	Card* pop();
-	void push(Card* c);
-	void shuffle();
+	Card* pop(); // UNIT
+	void push(Card* c); // UNIT
+	void shuffle(); // UNIT
 };
 
 #endif  //_DECK_H

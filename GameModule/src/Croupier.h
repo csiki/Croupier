@@ -33,25 +33,25 @@ private:
 	Table* table;
 	HandEvaluator handEvaluator;
 
-	bool botComparatorByPot(int botIndex1, int botIndex2);
-	int nextActiveBot(int from = -1) const; // default: -1 ~ currentBotIndex
+	bool botComparatorByPot(int botIndex1, int botIndex2); // UNIT
+	int nextActiveBot(int from = -1) const; // default: -1 ~ currentBotIndex // UNIT
 	void burn(Card* c);
-	void collectCards();
-	void betRound();
-	void dealing();
-	void preflop();
-	void flop();
-	void turn();
-	void river();
-	void showdown();
-	void handOutPot(int winnerIndex);
-	void handOutPot(int numOfWinners, int* winnersIndex);
-	void refreshBlinds();
-	void determineWinners(int& numOfWinners, int** winnersIndex);
-	void kickBot(int botID);
+	void collectCards(); // UNIT
+	void betRound(); // UNIT
+	void dealing(); // UNIT
+	void preflop(); // UNIT
+	void flop(); // UNIT
+	void turn(); // UNIT
+	void river(); // UNIT
+	void showdown(); // UNIT
+	void handOutPot(int winnerIndex); // UNIT
+	void handOutPot(int numOfWinners, int* winnersIndex); // UNIT
+	void refreshBlinds(); // UNIT
+	void determineWinners(int& numOfWinners, int** winnersIndex); // UNIT
+	void kickBot(int botID); // UNIT
 	int findBotIndexByID(int botID) const;
-	bool canStartNewRound() const;
-	bool canRoundGoOn() const;
+	bool canStartNewRound() const; // UNIT
+	bool canRoundGoOn() const; // UNIT
 	int numOfBotsInRound() const;
 
 public:
@@ -83,7 +83,7 @@ public:
 	}
 
 	void receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data);
-	void letsPoker();
+	void letsPoker(); // UNIT
 	void provideBotHandler(int index, BotHandler* bh);
 };
 

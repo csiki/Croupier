@@ -16,10 +16,10 @@ public:
 	{
 	}
 
-	void start();
-	std::string readOutput();
-	void writeInput(const std::string msg);
-	void exit();
+	void start(); // UNIT
+	std::string readOutput(); // UNIT
+	void writeInput(const std::string msg); // UNIT
+	void exit(); // UNIT
 };
 
 #endif  //_PROCESS_H
