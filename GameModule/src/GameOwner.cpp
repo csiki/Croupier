@@ -125,9 +125,22 @@ bool GameOwner::startGame()
 */
 void GameOwner::saveResults()
 {
-	// TODO
 	// save bot credits and the round when they fell out
+	Results* results = new Results(this->numOfBots);
+	
+	for (int i = 0; i < this->numOfBots; ++i)
+	{
+		results->addResult(
+			this->botManagers[i]->getID(),
+			this->botManagers[i]->getReservedCredit() + this->botManagers[i]->getChips(),
+			this->botManagers[i]->getKickedAtRound());
+	}
+
+	ResultsXMLHandler::saveXML(results, this->resultsPath);
+
 	// save log
+	LogXMLHandler::saveXML(this->log, this->logPath);
+
 	// save bot knowledge tables (BotKnowledgeHandler destructor)
 }
 

@@ -11,15 +11,17 @@
 #include "BotLoader.h"
 #include "CppBotLoader.h"
 #include "BotManager.h"
+#include "Results.h"
+#include "ResultsXMLHandler.h"
 
 /**	Initialises the participants of the game; runs it; saves the results.
 */
 class GameOwner
 {
 private:
-	const char* logPath;
-	const char* rulzPath;
-	const char* resultsPath;
+	string logPath;
+	string rulzPath;
+	string resultsPath;
 	int numOfBots;
 	int* playersID;
 	Croupier* croupier;
@@ -54,11 +56,6 @@ public:
 
 	virtual ~GameOwner()
 	{
-		// delete path strings
-		delete this->logPath;
-		delete this->rulzPath;
-		delete this->resultsPath;
-
 		// delete botmanagers and bots
 		for (int i = 0; i < this->numOfBots; ++i)
 		{

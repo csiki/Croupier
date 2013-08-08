@@ -145,7 +145,7 @@ bool RulzXMLHandler::saveXML(Rulz* rules, string xmlPath)
 		for ( int l = BotLanguage::CPP; ; ++l )
 		{
 			pugi::xml_node timeNode = botCalcNode.append_child("time");
-			timeNode.text().set(rules->getAllowedBotCalcTime(l));
+			timeNode.text().set(rules->getAllowedBotCalcTime(static_cast<BotLanguage>(l)));
 			timeNode.append_attribute("lang").set_value(l);
 
 			if (l == BotLanguage::PHP)

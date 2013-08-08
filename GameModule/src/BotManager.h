@@ -16,8 +16,7 @@
 #include "BroadcastMessage.h"
 #include "Comment.h"
 
-// Warning: botID == entityID only when the bot is created and used by the same user.
-
+// Warning: botID != entityID
 // TODO idõlimit programozási nyelv alapján minden egyes hívásra
 // TODO memórialimit, foglalás módjának meghatározása
 
@@ -28,6 +27,7 @@ class BotManager : public BotCommunicator, public BotHandler, public Logger, pub
 private:
 	int numOfRebuys;
 	int reservedCredit;
+	int kickedAtRound;
 	BotKnowledgeHandler *bkHandler;
 	Bot *bot;
 	Hostess *hostess;
@@ -53,6 +53,7 @@ public:
 		this->reservedCredit = reservedCredit;
 		this->nthAtTable = nthAtTable;
 		this->numOfRebuys = 0;
+		this->kickedAtRound = 0;
 	}
 
 	virtual ~BotManager()
@@ -62,10 +63,12 @@ public:
 
 	// broadcast
 	void receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data);
+
 	// botinfo
 	int getID() const;
 	std::string getName() const;
-	int getLang() const;
+	BotLanguage getLang() const;
+
 	// botcommunicator
 	int getReservedCredit() const;
 	int getNumOfRebuys() const;
@@ -94,6 +97,7 @@ public:
 	bool canRebuy(int rebuyAmount) const;
 	bool rebuy(int rebuyAmount);
 	void talk(Comment comment);
+	void quit();
 	int getNumOfBots(bool onlyInGame = false, bool onlyInRound = false) const;
 	int getBotIDByIndex(int index) const;
 	int getBotIndexByID(int botID) const;
@@ -112,7 +116,7 @@ public:
 	int getBigBlind(int blindIndex) const;
 	int getRebuyDeadline() const;
 	int getSmallBlind(int blindIndex) const;
-	long getAllowedBotCalcTime(int langID) const;
+	int getAllowedBotCalcTime() const;
 	int getStartingChips() const;
 	int getNumOfBlinds() const;
 	int getNumOfRebuysAllowed() const;
@@ -139,10 +143,14 @@ public:
 	bool setKnowledgeTableData(char val, int tableID, int row, int col);
 	bool setKnowledgeTableData(std::string val, int tableID, int row, int col);
 	bool setKnowledgeTableData(float val, int tableID, int row, int col);
+
 	// bothandler
 	void step();
 	void leave();
 	bool rebuyOrLeave();
+
+	// own
+	int getKickedAtRound() const;
 };
 
 #endif  //_BOTMANAGER_H

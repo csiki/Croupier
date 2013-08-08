@@ -53,14 +53,9 @@ bool LogXMLHandler::saveXML(Log* log, string xmlPath)
 			pugi::xml_node eventNode = logNode.append_child("event");
 
 			// add nodes to event
-			pugi::xml_node loggerNode = eventNode.append_child("logger");
-			pugi::xml_node msgNode = eventNode.append_child("msg");
-			pugi::xml_node sevNode = eventNode.append_child("severity");
-
-			// fill nodes
-			loggerNode.text().set( (*it)->loggerID );
-			msgNode.text().set( (*it)->msg.c_str() );
-			sevNode.text().set( (*it)->severity );
+			eventNode.append_child("logger").text().set( (*it)->loggerID );
+			eventNode.append_child("msg").text().set( (*it)->msg.c_str() );
+			eventNode.append_child("severity").text().set( (*it)->severity );
 		}
 		
 		// save xml

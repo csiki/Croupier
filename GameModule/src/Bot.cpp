@@ -10,7 +10,7 @@ int Bot::getID() const
 
 /** Returns the programming language the AI is written in.
 */
-int Bot::getLang() const
+BotLanguage Bot::getLang() const
 {
 	return this->lang;
 }

@@ -31,7 +31,7 @@ public:
 	virtual bool rebuyOrLeave() = 0;
 	virtual int getID() const = 0;
 	virtual std::string getName() const = 0;
-	virtual int getLang() const = 0;
+	virtual BotLanguage getLang() const = 0;
 };
 
 #endif  //_BOTHANDLER_H

@@ -22,7 +22,7 @@ protected:
 	virtual void send(string msg) = 0;
 public:
 	
-	BotCommunicationTranslator(int id, string name, int langID, Process* process) : Bot(id, name, langID)
+	BotCommunicationTranslator(int id, string name, BotLanguage lang, Process* process) : Bot(id, name, lang)
 	{
 		this->process = process;
 	}

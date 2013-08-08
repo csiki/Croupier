@@ -75,9 +75,9 @@ bool Rulz::isBotKnowledgeUseAllowed() const
 
 /** Returns allowed bot calculation time in milisecs for the given language.
 */
-int Rulz::getAllowedBotCalcTime(int langID) const
+int Rulz::getAllowedBotCalcTime(BotLanguage lang) const
 {
-	return this->allowedBotCalcTime[langID];
+	return this->allowedBotCalcTime.at(lang);
 }
 
 /** Returns the amount of chips all the bots started playing 1-by-1.

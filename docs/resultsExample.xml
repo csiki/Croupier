@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<results>
+	<player>
+		<id>321</id>
+		<credit>2000</credit>
+		<kickatround>24</kickatround>
+	</player>
+	<player>
+		<id>531</id>
+		<credit>0</credit>
+		<kickatround>23</kickatround>
+	</player>
+</results>

@@ -132,6 +132,8 @@
     <ClInclude Include="..\src\pugiconfig.hpp" />
     <ClInclude Include="..\src\pugixml.hpp" />
     <ClInclude Include="..\src\PythonBotLoader.h" />
+    <ClInclude Include="..\src\Results.h" />
+    <ClInclude Include="..\src\ResultsXMLHandler.h" />
     <ClInclude Include="..\src\RubyBotLoader.h" />
     <ClInclude Include="..\src\Rulz.h" />
     <ClInclude Include="..\src\RulzXMLHandler.h" />
@@ -181,6 +183,8 @@
     <ClCompile Include="..\src\PrologBotLoader.cpp" />
     <ClCompile Include="..\src\pugixml.cpp" />
     <ClCompile Include="..\src\PythonBotLoader.cpp" />
+    <ClCompile Include="..\src\Results.cpp" />
+    <ClCompile Include="..\src\ResultsXMLHandler.cpp" />
     <ClCompile Include="..\src\RubyBotLoader.cpp" />
     <ClCompile Include="..\src\Rulz.cpp" />
     <ClCompile Include="..\src\RulzXMLHandler.cpp" />

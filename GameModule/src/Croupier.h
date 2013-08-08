@@ -29,7 +29,6 @@ private:
 	int nextBlindShiftAtIndex;
 	int numOfBots;
 	BotHandler** bots;
-	int* kicksAtRound;
 	const Rulz* rules;
 	Table* table;
 	HandEvaluator handEvaluator;
@@ -76,7 +75,6 @@ public:
 		this->nextBlindShiftAtIndex = 0;
 		this->numOfBots = numOfBots;
 		this->bots = new BotHandler*[numOfBots];
-		this->kicksAtRound = new int[numOfBots];
 	}
 
 	virtual ~Croupier()
@@ -86,8 +84,6 @@ public:
 
 	void receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data);
 	void letsPoker();
-	int getKickAtRound(int botIndex) const;
-	int getBotIDByIndex(int botIndex) const;
 	void provideBotHandler(int index, BotHandler* bh);
 };
 

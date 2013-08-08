@@ -17,14 +17,14 @@ class Bot
 private:
 	const int id;
 	const string name;
-	const int lang;
+	const BotLanguage lang;
 public:
 
-	Bot(int id, string name, int lang) : id(id), name(name), lang(lang) {}
+	Bot(int id, string name, BotLanguage lang) : id(id), name(name), lang(lang) {}
 	virtual ~Bot() {}
 
 	int getID() const;
-	int getLang() const;
+	BotLanguage getLang() const;
 	std::string getName() const;
 	
 	virtual void allined(int botID, int amount) = 0;

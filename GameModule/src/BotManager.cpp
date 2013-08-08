@@ -87,11 +87,11 @@ void BotManager::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize
 }
 
 // botinfo
-/** Returns id of the managed AI.
+/** Returns id of the player.
 */
 int BotManager::getID() const
 {
-	return this->bot->getID();
+	return this->Entity::getID();
 }
 
 /** Returns name of the managed AI.
@@ -103,7 +103,7 @@ std::string BotManager::getName() const
 
 /** Returns language of the managed AI.
 */
-int BotManager::getLang() const
+BotLanguage BotManager::getLang() const
 {
 	return this->bot->getLang();
 }
@@ -425,6 +425,20 @@ void BotManager::talk(Comment comment)
 	}
 }
 
+/** Bot signals to leave the game.
+ *	Bot::leave() won't be called this way; bot instantly and permanently gets out of the game.
+*/
+void BotManager::quit()
+{
+	this->inGame = false;
+	this->inRound = false;
+	this->kickedAtRound = this->hostess->getCurrentRound();
+
+	// broadcast left game
+	int msgdata = this->getID();
+	this->broadcast(BroadcastMessage::LEFTGAME, 1, &msgdata);
+}
+
 /** Returns the number of AIs.
 */
 int BotManager::getNumOfBots(bool onlyInGame, bool onlyInRound) const
@@ -570,9 +584,9 @@ int BotManager::getSmallBlind(int blindIndex) const
 
 /** Returns allowed time for AI calculation with specific language (0 = cpp etc.).
 */
-long BotManager::getAllowedBotCalcTime(int langID) const
+int BotManager::getAllowedBotCalcTime() const
 {
-	return this->rules->getAllowedBotCalcTime(langID);
+	return this->rules->getAllowedBotCalcTime(this->bot->getLang());
 }
 
 /** Returns the amount of chips with all the bot starts.
@@ -848,6 +862,10 @@ void BotManager::step()
 */
 void BotManager::leave()
 {
+	this->inGame = false;
+	this->inRound = false;
+	this->kickedAtRound = this->hostess->getCurrentRound();
+
 	// TODO idõt mérni !!!
 	this->bot->leave();
 
@@ -872,4 +890,12 @@ bool BotManager::rebuyOrLeave()
 	}
 
 	return false;
+}
+
+// own
+/** Returns the number of round when the bot left (or kicked out of) the game.
+*/
+int BotManager::getKickedAtRound() const
+{
+	return this->kickedAtRound;
 }

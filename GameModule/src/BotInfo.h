@@ -3,6 +3,7 @@
 
 #include "Card.h"
 #include "Emotion.h"
+#include "BotLanguage.h"
 
 /**	Interface for AIs to other AIs.
 */
@@ -42,7 +43,7 @@ public:
 
 	virtual int getID() const = 0;
 	virtual std::string getName() const = 0;
-	virtual int getLang() const = 0;
+	virtual BotLanguage getLang() const = 0;
 };
 
 #endif  //_BOTINFO_H

@@ -25,7 +25,7 @@ public:
 	// bot
 	virtual int getID() const = 0;
 	virtual std::string getName() const = 0;
-	virtual int getLang() const = 0;
+	virtual BotLanguage getLang() const = 0;
 	// other bot
 	virtual Emotion getBotEmotion(int botID) const = 0;
 	virtual std::string getBotName(int botID) const = 0;
@@ -53,6 +53,7 @@ public:
 	virtual bool canRebuy(int rebuyAmount) const = 0;
 	virtual bool rebuy(int rebuyAmount) = 0;
 	virtual void talk(Comment comment) = 0;
+	virtual void quit() = 0;
 	// hostess
 	virtual int getNumOfBots(bool onlyInGame = false, bool onlyInRound = false) const = 0;
 	virtual int getBotIDByIndex(int index) const = 0;
@@ -74,7 +75,7 @@ public:
 	virtual int getBigBlind(int blindIndex) const = 0;
 	virtual int getRebuyDeadline() const = 0;
 	virtual int getSmallBlind(int blindIndex) const = 0;
-	virtual long getAllowedBotCalcTime(int langID) const = 0;
+	virtual int getAllowedBotCalcTime() const = 0;
 	virtual int getStartingChips() const = 0;
 	virtual int getNumOfBlinds() const = 0;
 	virtual int getNumOfRebuysAllowed() const = 0;

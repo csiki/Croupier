@@ -2,6 +2,7 @@
 #define _RULZ_H
 
 #include "BettingSystem.h"
+#include "BotLanguage.h"
 
 /**	Contains all the rules of a game.
 */
@@ -18,7 +19,7 @@ private:
 	bool emotionAllowed;
 	bool knowledgeBaseAllowed;
 	int maxNumOfRaises;
-	int *allowedBotCalcTime;
+	map<BotLanguage, int> allowedBotCalcTime;
 	int startingChips;
 	BettingSystem bs;
 
@@ -36,10 +37,19 @@ public:
 		this->numOfRebuysAllowed = numOfRebuysAllowed;
 		this->startingChips = startingChips;
 		this->maxNumOfRaises = maxNumOfRaises;
-		this->allowedBotCalcTime = allowedBotCalcTime;
 		this->talkAllowed = talkAllowed;
 		this->emotionAllowed = emotionAllowed;
 		this->knowledgeBaseAllowed = knowledgeBaseAllowed;
+
+		// fill allowedBotCalcTime
+		for (int lang = BotLanguage::CPP; ; ++lang)
+		{
+			this->allowedBotCalcTime.insert(pair<BotLanguage, int>( static_cast<BotLanguage>(lang), allowedBotCalcTime[lang] ));
+			if (lang == BotLanguage::PHP)
+			{
+				break;
+			}
+		}
 	}
 
 	virtual ~Rulz()
@@ -47,7 +57,6 @@ public:
 		delete [] this->smallBlinds;
 		delete [] this->bigBlinds;
 		delete [] this->blindShiftDeadlines;
-		delete [] this->allowedBotCalcTime;
 	}
 
 	int getBigBlind(int index) const;
@@ -59,7 +68,7 @@ public:
 	bool isTalkAllowed() const;
 	bool isEmotionAllowed() const;
 	bool isBotKnowledgeUseAllowed() const;
-	int getAllowedBotCalcTime(int langID) const;
+	int getAllowedBotCalcTime(BotLanguage lang) const;
 	int getStartingChips() const;
 	BettingSystem getBettingSystem() const;
 	int getMaxNumOfRaises() const;

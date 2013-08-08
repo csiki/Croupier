@@ -576,20 +576,6 @@ void Croupier::letsPoker()
 	this->broadcast(BroadcastMessage::GAMEWINNER, 1, &winnerIndex);
 }
 
-/** Returns the round when a specified bot is kicked or left the game.
-*/
-int Croupier::getKickAtRound(int botIndex) const
-{
-	return this->kicksAtRound[botIndex];
-}
-
-/** Returns bot id by indexing in croupiers array.
-*/
-int Croupier::getBotIDByIndex(int botIndex) const
-{
-	return this->bots[botIndex]->getID();
-}
-
 /** Stores a bot handler at the given index.
 */
 void Croupier::provideBotHandler(int index, BotHandler* bh)
@@ -604,7 +590,6 @@ void Croupier::kickBot(int botID)
 	int botIndex = this->findBotIndexByID(botID);
 	
 	this->bots[botIndex]->leave();
-	this->kicksAtRound[botIndex] = this->round;
 }
 
 /** Returns if a new round can be started (or the game ended).
