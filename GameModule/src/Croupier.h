@@ -10,9 +10,6 @@
 #include "HandEvaluator.h"
 #include "BroadcastMessage.h"
 
-// TODO free shit everywhere !
-// TODO "UNIT" tagot mindenhova ahol unit test szükséges - bonyolultabb algóknál, objektum együttmûködõseknél
-
 /**	Directs the game, and the bots; deals cards.
 */
 class Croupier : public Logger, public BroadcastMember
@@ -33,8 +30,8 @@ private:
 	Table* table;
 	HandEvaluator handEvaluator;
 
-	bool botComparatorByPot(int botIndex1, int botIndex2); // UNIT
-	int nextActiveBot(int from = -1) const; // default: -1 ~ currentBotIndex // UNIT
+	bool botComparatorByPot(int botIndex1, int botIndex2); // UNIT done
+	int nextActiveBot(int from = -1) const; // default: -1 ~ currentBotIndex // UNIT done
 	void burn(Card* c);
 	void collectCards(); // UNIT
 	void betRound(); // UNIT
@@ -75,6 +72,9 @@ public:
 		this->nextBlindShiftAtIndex = 0;
 		this->numOfBots = numOfBots;
 		this->bots = new BotHandler*[numOfBots];
+
+		// subscribe to BroadcastStation
+		this->subscribe();
 	}
 
 	virtual ~Croupier()

@@ -396,6 +396,7 @@ bool BotManager::rebuy(int rebuyAmount)
 	{
 		this->reservedCredit -= rebuyAmount;
 		this->chips += rebuyAmount;
+		++this->numOfRebuys;
 
 		// broadcast rebuy
 		int* msgdata = new int[2];
@@ -631,6 +632,13 @@ bool BotManager::isBotKnowledgeUseAllowed() const
 	return this->rules->isBotKnowledgeUseAllowed();
 }
 
+/** Returns if the table with the given id is loaded.
+*/
+bool BotManager::isTableLoaded(int tableID) const
+{
+	return this->bkHandler->isTableLoaded(tableID);
+}
+
 /** Adds a row to the specified table.
 */
 int BotManager::addKnowledgeTableRow(int tableID)
@@ -772,6 +780,13 @@ bool BotManager::setKnowledgeTableData(char val, int tableID, int row, int col)
 	return false;
 }
 
+/** Sets data at specific cell in a knowledge table (const char* ~ std::string).
+*/
+bool BotManager::setKnowledgeTableData(const char* val, int tableID, int row, int col)
+{
+	return this->setKnowledgeTableData(std::string(val), tableID, row, col);
+}
+
 /** Sets data at specific cell in a knowledge table (std::string).
 */
 bool BotManager::setKnowledgeTableData(std::string val, int tableID, int row, int col)
@@ -849,6 +864,8 @@ bool BotManager::removeKnowledgeTableRow(int tableID, int row)
 */
 void BotManager::step()
 {
+	this->stepToken = true;
+
 	// TODO idõt mérni !!!
 	this->bot->step();
 

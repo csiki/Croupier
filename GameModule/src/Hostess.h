@@ -45,6 +45,9 @@ public:
 		this->minRaise = 0;
 		this->numberOfRaisesSoFar = 0;
 		this->nextBlindShiftDeadlineIndex = 0;
+
+		// subscribe to BroadcastStation
+		this->subscribe();
 	}
 
 	virtual ~Hostess()

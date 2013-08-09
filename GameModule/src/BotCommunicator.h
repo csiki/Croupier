@@ -93,6 +93,7 @@ public:
 	virtual bool setKnowledgeTableData(int val, int tableID, int row, int col) = 0;
 	virtual bool setKnowledgeTableData(bool val, int tableID, int row, int col) = 0;
 	virtual bool setKnowledgeTableData(char val, int tableID, int row, int col) = 0;
+	virtual bool setKnowledgeTableData(const char* val, int tableID, int row, int col) = 0;
 	virtual bool setKnowledgeTableData(std::string val, int tableID, int row, int col) = 0;
 	virtual bool setKnowledgeTableData(float val, int tableID, int row, int col) = 0;
 
@@ -103,6 +104,7 @@ public:
 	virtual int getKnowledgeTableNumOfRows(int tableID) const = 0;
 	virtual bool removeKnowledgeTable(int tableID) = 0;
 	virtual bool removeKnowledgeTableRow(int tableID, int row) = 0;
+	virtual bool isTableLoaded(int tableID) const = 0;
 };
 
 #endif  //_BOTCOMMUNICATOR_H

@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <rulz>
-	<talkallowed>false</talkallowed>
+	<talkallowed>true</talkallowed>
 	<emoallowed>true</emoallowed>
-	<knowledgeuseallowed>false</knowledgeuseallowed>
+	<knowledgeuseallowed>true</knowledgeuseallowed>
 	<startingchips>1000</startingchips>
-	<maxnumofraises>10</maxnumofraises>
+	<maxnumofraises>4</maxnumofraises>
 	<numofrebuysallowed>1</numofrebuysallowed>
-	<rebuydeadline>30</rebuydeadline>
+	<rebuydeadline>15</rebuydeadline>
 	<bettingsystem>1</bettingsystem>
 	<blinds>
 		<small>
@@ -20,8 +20,8 @@
 			<blind>300</blind>
 		</big>
 		<shiftdeadlines>
-			<dl>15</dl>
-			<dl>30</dl>
+			<dl>2</dl>
+			<dl>5</dl>
 		</shiftdeadlines>
 	</blinds>
 	<botcalctime>

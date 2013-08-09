@@ -54,6 +54,9 @@ public:
 		this->nthAtTable = nthAtTable;
 		this->numOfRebuys = 0;
 		this->kickedAtRound = 0;
+		
+		// subscribe to BroadcastStation
+		this->subscribe();
 	}
 
 	virtual ~BotManager()
@@ -82,20 +85,20 @@ public:
 	bool isBotInGame(int botID) const;
 	bool isBotInRound(bool botID) const;
 	Card lookAtBotHand(int botID, int cardIndex) const;
-	bool allin(); // UNIT
-	bool call(); // UNIT
+	bool allin(); // UNIT done
+	bool call(); // UNIT done
 	bool canTalk() const;
 	bool canStep() const;
-	bool canAllin() const; // UNIT
+	bool canAllin() const; // UNIT done
 	bool canCall() const;
 	bool canCheck() const;
 	bool canFold() const;
-	bool canRaise(int raiseAmount) const; // UNIT
-	bool check(); // UNIT
-	bool fold(); // UNIT
-	bool raise(int raiseAmount); // UNIT
-	bool canRebuy(int rebuyAmount) const; // UNIT
-	bool rebuy(int rebuyAmount); // UNIT
+	bool canRaise(int raiseAmount) const; // UNIT done
+	bool check(); // UNIT done
+	bool fold(); // UNIT done
+	bool raise(int raiseAmount); // UNIT doone
+	bool canRebuy(int rebuyAmount) const; // UNIT done
+	bool rebuy(int rebuyAmount); // UNIT done
 	void talk(Comment comment);
 	void quit();
 	int getNumOfBots(bool onlyInGame = false, bool onlyInRound = false) const;
@@ -131,6 +134,7 @@ public:
 	bool removeKnowledgeTable(int tableID);
 	bool removeKnowledgeTableRow(int tableID, int row);
 	int getMaxNumOfRaises() const;
+	bool isTableLoaded(int tableID) const;
 
 	bool getKnowledgeTableData(int& val, int tableID, int row, int col) const;
 	bool getKnowledgeTableData(bool& val, int tableID, int row, int col) const;
@@ -141,6 +145,7 @@ public:
 	bool setKnowledgeTableData(int val, int tableID, int row, int col);
 	bool setKnowledgeTableData(bool val, int tableID, int row, int col);
 	bool setKnowledgeTableData(char val, int tableID, int row, int col);
+	bool setKnowledgeTableData(const char* val, int tableID, int row, int col);
 	bool setKnowledgeTableData(std::string val, int tableID, int row, int col);
 	bool setKnowledgeTableData(float val, int tableID, int row, int col);
 

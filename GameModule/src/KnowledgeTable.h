@@ -79,23 +79,23 @@ public:
 		delete [] this->columnTypes;
 	}
 
-	int addRow(); // UNIT
+	int addRow(); // UNIT done
 	KnowledgeDataType getColumnType(int col) const;
 	int getNumOfCols() const;
 	int getNumOfRows() const;
 	bool isUpdated() const;
 	bool isRemoved() const;
 	void remove();
-	bool removeRow(int row); // UNIT
+	bool removeRow(int row); // UNIT done
 
 	bool getData(int& val, int row, int col) const;
-	bool getData(bool& val, int row, int col) const; // UNIT
+	bool getData(bool& val, int row, int col) const; // UNIT done
 	bool getData(char& val, int row, int col) const;
 	bool getData(string& val, int row, int col) const;
 	bool getData(float& val, int row, int col) const;
 
 	bool setData(int val, int row, int col);
-	bool setData(bool val, int row, int col); // UNIT
+	bool setData(bool val, int row, int col); // UNIT done
 	bool setData(char val, int row, int col);
 	bool setData(string val, int row, int col);
 	bool setData(float val, int row, int col);

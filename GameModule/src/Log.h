@@ -7,6 +7,8 @@
 
 using namespace std;
 
+// TODO log message-eket kitalálni és logolást megcsinálni (croupier, botmanager, stb.)
+
 /**	List of events.
 */
 class Log : public Loggable
@@ -42,7 +44,7 @@ public:
 	}
 
 	void log(Event* e);
-	void getEventsIterators(list<Event*>::const_iterator& begin, list<Event*>::const_iterator& end) const; // UNIT
+	void getEventsIterators(list<Event*>::const_iterator& begin, list<Event*>::const_iterator& end) const; // UNIT done
 	int getSeverityFrequency(Severity sev) const;
 };
 

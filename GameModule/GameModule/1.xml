@@ -3,11 +3,8 @@
 <bot>
 	<id>431</id>
 	<lang>0</lang>
-	<knowledgetables>
-		<tableid>0</tableid>
-		<tableid>2</tableid>
-		<tableid>3</tableid>
-	</knowledgetables>
+	<knowledgetables />
+	<credit>2000</credit>
 	<files>
 		<file>
 		ultrabot.cpp

@@ -52,6 +52,7 @@ public:
 		this->bots = new Bot*[numOfBots];
 		this->botManagers = new BotManager*[numOfBots];
 		this->gameState = 0;
+		this->errorMsg = "";
 	}
 
 	virtual ~GameOwner()
@@ -82,6 +83,7 @@ public:
 	void saveResults(); // UNIT
 	int getGameState() const;
 	string getErrorMsg() const;
+	void test();
 };
 
 #endif  //_GAMEOWNER_H

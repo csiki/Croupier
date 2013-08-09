@@ -19,7 +19,6 @@ private:
 	KnowledgeTable* loadTable(int tableID);
 	void saveTable(int tableID, KnowledgeTable* table);
 	void removeTableFile(int tableID);
-	bool isTableLoaded(int tableID) const;
 public:
 
 	BotKnowledgeHandler(BotData* botData) : userID(botData->id) // UNIT
@@ -59,22 +58,23 @@ public:
 		}
 	}
 
+	bool isTableLoaded(int tableID) const;
 	int addTableRow(int tableID);
-	int createTable(int numOfCols, KnowledgeDataType* colTypes); // UNIT
+	int createTable(int numOfCols, KnowledgeDataType* colTypes); // UNIT done
 	KnowledgeDataType getTableColumnType(int tableID, int col) const;
 	int getTableNumOfCols(int tableID) const;
 	int getTableNumOfRows(int tableID) const;
-	bool removeTable(int tableID); // UNIT
-	bool removeTableRow(int tableID, int row); // UNIT
+	bool removeTable(int tableID); // UNIT done
+	bool removeTableRow(int tableID, int row); // UNIT done
 	
 	bool getTableData(int& val, int tableID, int row, int col) const;
-	bool getTableData(bool& val, int tableID, int row, int col) const; // UNIT
+	bool getTableData(bool& val, int tableID, int row, int col) const; // UNIT done
 	bool getTableData(char& val, int tableID, int row, int col) const;
 	bool getTableData(float& val, int tableID, int row, int col) const;
 	bool getTableData(string& val, int tableID, int row, int col) const;
 
 	bool setTableData(int val, int tableID, int row, int col);
-	bool setTableData(bool val, int tableID, int row, int col); // UNIT
+	bool setTableData(bool val, int tableID, int row, int col); // UNIT done
 	bool setTableData(char val, int tableID, int row, int col);
 	bool setTableData(float val, int tableID, int row, int col);
 	bool setTableData(string val, int tableID, int row, int col);

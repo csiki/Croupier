@@ -243,6 +243,9 @@
     <ClInclude Include="..\src\Results.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\TestBot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Bot.cpp">

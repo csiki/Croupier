@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "GameOwner.h"
+#include "TestBot.h"
 
 /** Saves the error message.
 */
@@ -59,15 +60,16 @@ bool GameOwner::initialiseGame()
 			return false;
 		}
 
-		// load bot
-		this->bots[i] = this->botLoaders.at(botData->lang)->loadBot(botData);
+		// load bot TODO
+		/*this->bots[i] = this->botLoaders.at(botData->lang)->loadBot(botData);
 		if (this->bots[i] == nullptr)
 		{
 			string msg = "Cannot load Bot instance from BotData! Bot id: ";
 			msg += to_string(botData->id);
 			this->errorOccured(msg);
 			return false;
-		}
+		}*/
+		this->bots[i] = new TestBot(30, "jaja", BotLanguage::CPP);
 
 		// create bot knowledge handler (if neccessery)
 		BotKnowledgeHandler* bkHandler = nullptr;
@@ -78,9 +80,9 @@ bool GameOwner::initialiseGame()
 
 		// load bot manager
 		this->botManagers[i] = new BotManager(
-			this->bots[i], bkHandler, hostess, table,
-			rulz, broadcastStation, log, this->playersID[i],
-			rulz->getStartingChips(), botData->credit - rulz->getStartingChips(), i);
+			this->bots[i], bkHandler, this->hostess, this->table,
+			this->rulz, this->broadcastStation, log, this->playersID[i],
+			this->rulz->getStartingChips(), botData->credit - this->rulz->getStartingChips(), i);
 
 		// sit bot to table
 		this->table->sit(this->botManagers[i]);
@@ -156,4 +158,31 @@ int GameOwner::getGameState() const
 string GameOwner::getErrorMsg() const
 {
 	return this->errorMsg;
+}
+
+/** For testing.
+*/
+void GameOwner::test()
+{
+	this->initialiseGame();
+
+	cout << this->errorMsg;
+	cout << this->botManagers[0]->getChips() << "-" << this->botManagers[0]->getPot() << endl;
+	this->botManagers[0]->step();
+	cout << this->botManagers[0]->canStep() << endl;
+	this->botManagers[0]->fold();
+	cout << this->botManagers[0]->getChips() << "-" << this->botManagers[0]->getPot() << endl;
+
+	cout << "callamount: " << this->botManagers[1]->getCallAmount() << endl;
+
+	this->botManagers[1]->step();
+	//this->botManagers[1]->call();
+	cout << this->botManagers[1]->getChips() << "-" << this->botManagers[1]->getPot() << endl;
+	this->botManagers[1]->step();
+	cout << this->botManagers[1]->canRebuy(300) << endl;
+	this->botManagers[1]->rebuy(300);
+	this->botManagers[1]->rebuy(100);
+	cout << this->botManagers[1]->getChips() << "-" << this->botManagers[1]->getReservedCredit() << endl;
+
+
 }
