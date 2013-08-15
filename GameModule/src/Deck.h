@@ -2,6 +2,7 @@
 #define _DECK_H
 
 #include "Card.h"
+#include <time.h>
 
 /**	Deck of cards.
 */
@@ -37,9 +38,9 @@ public:
 	}
 
 	int num() const;
-	Card* pop(); // UNIT
-	void push(Card* c); // UNIT
-	void shuffle(); // UNIT
+	Card* pop(); // UNIT done
+	void push(Card* c); // UNIT done
+	void shuffle(); // UNIT done
 };
 
 #endif  //_DECK_H

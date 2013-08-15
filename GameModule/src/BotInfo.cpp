@@ -54,9 +54,9 @@ bool BotInfo::isInRound() const
 */
 Card BotInfo::lookAtHand(int cardIndex) const
 {
-	if (this->cardsRevealed && cardIndex < 2 && cardIndex >= 0)
+	if (this->cardsRevealed && cardIndex < 2 && cardIndex >= 0 && this->hand[cardIndex] != nullptr)
 	{
-		return *this->hand[cardIndex];
+		return *(this->hand[cardIndex]);
 	}
 
 	return Card::getNullCard();

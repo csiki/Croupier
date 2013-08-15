@@ -19,6 +19,7 @@
 #include <functional>
 #include <ctime>
 #include <sstream>
+#include <stdlib.h>
 
 using namespace std;
 

@@ -5,7 +5,7 @@
 */
 enum HandRank
 {
-	None = 0, // probably not playing (!inRound)
+	None = 0, // default
 	HighCard = 1,
 	Pair = 2,
 	TwoPair = 3,

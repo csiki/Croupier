@@ -105,6 +105,7 @@ public:
 
 	void step()
 	{
+		cout << "step" << endl;
 	}
 
 	void turn()

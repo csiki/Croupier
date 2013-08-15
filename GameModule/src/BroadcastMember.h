@@ -12,7 +12,7 @@ class BroadcastMember : virtual public Entity
 {
 private:
 	BroadcastStation *broadcastStation;
-protected:
+public: // TODO protected
 	void broadcast(BroadcastMessage msg, int dataSize, const int* data);
 	void subscribe();
 	void unsubscribe();

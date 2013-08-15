@@ -9,12 +9,12 @@
 class HandEvaluator
 {
 private:
-	HandRank evalFiveCards(const Card** cards);
+	static HandRank evalFiveCards(const Card** cards); // done
 
 public:
-	HandRank evalHand(const Card** cards, const Card** bestHand); // UNIT
-	int handComparator(HandRank rank, const Card** bestHand1, const Card** bestHand2); // UNIT
-	static int cardComparatorByRank(const Card* c1, const Card* c2); // UNIT
+	static HandRank evalHand(const Card** cards, const Card** bestHand); // UNIT done
+	static int handComparator(HandRank rank, const Card** bestHand1, const Card** bestHand2); // UNIT done
+	static bool cardComparatorByRank(const Card* c1, const Card* c2); // UNIT done
 };
 
 #endif  //_HANDEVALUATOR_H

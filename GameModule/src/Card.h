@@ -45,6 +45,8 @@ public:
 	bool operator==(const Card& card) const { return this->rank == card.rank; }
 	bool operator>(const Card& card) const { return this->rank > card.rank; }
 
+	string toString() const;
+
 	static Card getNullCard();
 	static bool isNullCard(Card& card);
 };

@@ -44,16 +44,16 @@ void Croupier::collectCards()
 	for (int i = 0; i < this->numberOfBurntCards; ++i)
 	{
 		this->deck.push(this->burnt[i]);
-		this->burnt[i] = 0;
+		this->burnt[i] = nullptr;
 	}
 	this->numberOfBurntCards = 0;
-
+	
 	// cards from table
 	while (Card* c = this->table->rmCard())
 	{
 		this->deck.push(c);
 	}
-
+	
 	// hands
 	for (int i = 0; i < this->numOfBots; ++i)
 	{
@@ -90,6 +90,10 @@ void Croupier::betRound()
 */
 void Croupier::dealing()
 {
+	// shuffle deck
+	this->deck.shuffle();
+
+	// first card
 	for (int i = 0; i < this->numOfBots; ++i)
 	{
 		if (this->bots[i]->isInRound())
@@ -98,7 +102,8 @@ void Croupier::dealing()
 		}
 	}
 
-	for (int i = 0; i < this->numOfBots; ++i) // twice
+	// second card
+	for (int i = 0; i < this->numOfBots; ++i)
 	{
 		if (this->bots[i]->isInRound())
 		{
@@ -394,7 +399,7 @@ void Croupier::determineWinners(int& numOfWinners, int** winnersIndex)
 			tmpHand[5] = &this->bots[i]->lookAtHand(0);
 			tmpHand[6] = &this->bots[i]->lookAtHand(1);
 
-			tmpRank = this->handEvaluator.evalHand(tmpHand, tmpBestHand);
+			tmpRank = HandEvaluator::evalHand(tmpHand, tmpBestHand);
 
 			if (winnerRank < tmpRank) // higher rank found
 			{
@@ -414,7 +419,7 @@ void Croupier::determineWinners(int& numOfWinners, int** winnersIndex)
 			{
 				// hand found with same HandRank
 				// compare bestHands to see which is higher
-				comparison = this->handEvaluator.handComparator(
+				comparison = HandEvaluator::handComparator(
 					winnerRank, winnerBestHand, tmpBestHand);
 
 				if (comparison == -1) // winnerBestHand < tmpBestHand

@@ -43,40 +43,41 @@ HandRank HandEvaluator::evalFiveCards(const Card** cards)
 
 	// sort decreasing the histogram
 	std::sort(histogram, histogram + 5, std::greater<int>());
-
+	
 	// check if FourOfAKind, FullHouses, ThreeOfAKind, TwoPair, Pair
+	HandRank histoRank = HandRank::HighCard;
 	if (histogram[0] == 4)
 	{
 		// like 4,1,0,0,0
-		return HandRank::FourOfAKind;
+		histoRank = HandRank::FourOfAKind;
 	}
 	else if (histogram[0] == 3 && histogram[1] == 2)
 	{
 		// like 3,2,0,0,0
-		return HandRank::FullHouses;
+		histoRank = HandRank::FullHouses;
 	}
 	else if (histogram[0] == 3) // && histogram[1] == 1)
 	{
 		// like 3,1,1,0,0
-		return HandRank::ThreeOfAKind;
+		histoRank = HandRank::ThreeOfAKind;
 	}
 	else if (histogram[0] == 2 && histogram[1] == 2)
 	{
 		// like 2,2,1,0,0
-		return HandRank::TwoPair;
+		histoRank = HandRank::TwoPair;
 	}
 	else if (histogram[0] == 2) // && histogram[1] == 1)
 	{
 		// like 2,1,1,1,0
-		return HandRank::Pair;
+		histoRank = HandRank::Pair;
 	}
-
+	
 	// check for flush
 	bool isFlush = true;
 	for (int i = 1; i < 5; ++i)
 	{
-		// all cards must have equal rank
-		if (cards[0]->rank != cards[i]->rank)
+		// all cards must have equal suit
+		if (cards[0]->suit != cards[i]->suit)
 		{
 			isFlush = false;
 			break;
@@ -107,33 +108,49 @@ HandRank HandEvaluator::evalFiveCards(const Card** cards)
 	}
 
 	// if the difference is 4, it's a straight(flush)
+	HandRank straightRank = HandRank::HighCard;
 	if ( (highrank - lowrank) == 4 )
 	{
 		if (isFlush)
 		{
-			return HandRank::StraightFlush;
+			straightRank = HandRank::StraightFlush;
+			
+			// if the highest card is ACE it is a royal flush
+			if (highrank == Card::Rank::ACE)
+			{
+				straightRank = HandRank::RoyalFlush;
+			}
 		}
-
-		return HandRank::Straight;
+		else
+		{
+			straightRank = HandRank::Straight;
+		}
+	}
+	else if (isFlush)
+	{
+		straightRank = HandRank::Flush;
 	}
 
-	return HandRank::HighCard;
+	// see if straight or histo rank is higher
+	// and return with the higher
+	if (straightRank < histoRank)
+	{
+		return histoRank;
+	}
+	
+	return straightRank;
 }
 
 /** Compares two cards by their rank.
 */
-int HandEvaluator::cardComparatorByRank(const Card* c1, const Card* c2)
+bool HandEvaluator::cardComparatorByRank(const Card* c1, const Card* c2)
 {
 	if (c2->rank < c1->rank)
 	{
-		return 1;
+		return true;
 	}
-	else if (c1->rank < c2->rank)
-	{
-		return -1;
-	}
-
-	return 0;
+	
+	return false;
 }
 
 /** Determine the best combination of 5 cards from 7, and returns with its highest rank.
@@ -165,8 +182,8 @@ HandRank HandEvaluator::evalHand(const Card** cards, const Card** bestHand)
 			}
 
 			// rank tmpHand
-			tmpRank = this->evalFiveCards(tmpHand);
-
+			tmpRank = HandEvaluator::evalFiveCards(tmpHand);
+			
 			if (bestRank < tmpRank) // if higher rank found
 			{
 				bestRank = tmpRank;
@@ -180,7 +197,7 @@ HandRank HandEvaluator::evalHand(const Card** cards, const Card** bestHand)
 			else if (bestRank == tmpRank) // equally high rank found
 			{
 				// compare them to make sure which is better
-				if (this->handComparator(bestRank, bestHand, tmpHand) == -1) // bestHand < tmpHand
+				if (HandEvaluator::handComparator(bestRank, bestHand, tmpHand) == -1) // bestHand < tmpHand
 				{
 					// fill bestHand with tmpHand
 					for (int i = 0; i < 5; ++i)
@@ -201,8 +218,8 @@ int HandEvaluator::handComparator(HandRank rank, const Card** bestHand1, const C
 {
 	// sort both bestHands cards by rank
 	// easier to compare when you know where is the highest/lowest cards
-	std::sort(bestHand1, bestHand1+5, cardComparatorByRank);
-	std::sort(bestHand2, bestHand2+5, cardComparatorByRank);
+	std::sort(bestHand1, bestHand1+5, HandEvaluator::cardComparatorByRank); // paraa
+	std::sort(bestHand2, bestHand2+5, HandEvaluator::cardComparatorByRank);
 
 	// we compare the cards differently according to rank
 	if (rank == HandRank::Straight || rank == HandRank::StraightFlush) // straight
@@ -366,7 +383,7 @@ int HandEvaluator::handComparator(HandRank rank, const Card** bestHand1, const C
 		{
 			return 1;
 		}
-		else if (kicker2rank < kicker1rank)
+		else if (kicker1rank < kicker2rank)
 		{
 			return -1;
 		}
@@ -400,11 +417,11 @@ int HandEvaluator::handComparator(HandRank rank, const Card** bestHand1, const C
 		}
 
 		// compare three1rank and three2rank
-		if (three1rank < three2rank)
+		if (three2rank < three1rank)
 		{
 			return 1;
 		}
-		else if (three2rank < three1rank)
+		else if (three1rank < three2rank)
 		{
 			return -1;
 		}

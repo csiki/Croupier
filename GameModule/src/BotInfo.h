@@ -28,7 +28,7 @@ public:
 		this->dealer = false;
 		this->inGame = true;
 		this->inRound = false;
-		this->hand[0] = this->hand[1] = 0;
+		this->hand[0] = this->hand[1] = nullptr;
 		this->emotion = Emotion::HIDDEN;
 	}
 

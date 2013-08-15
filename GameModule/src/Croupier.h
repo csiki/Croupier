@@ -28,14 +28,13 @@ private:
 	BotHandler** bots;
 	const Rulz* rules;
 	Table* table;
-	HandEvaluator handEvaluator;
-
+public: // TODO
 	bool botComparatorByPot(int botIndex1, int botIndex2); // UNIT done
 	int nextActiveBot(int from = -1) const; // default: -1 ~ currentBotIndex // UNIT done
 	void burn(Card* c);
-	void collectCards(); // UNIT
-	void betRound(); // UNIT
-	void dealing(); // UNIT
+	void collectCards(); // UNIT done
+	void betRound(); // UNIT done
+	void dealing(); // UNIT done
 	void preflop(); // UNIT
 	void flop(); // UNIT
 	void turn(); // UNIT

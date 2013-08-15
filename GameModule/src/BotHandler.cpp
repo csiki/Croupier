@@ -35,11 +35,11 @@ void BotHandler::forceBlind(int blind)
 */
 void BotHandler::receiveCard(Card* c)
 {
-	if (this->hand[0] != 0)
+	if (this->hand[0] == nullptr)
 	{
 		this->hand[0] = c;
 	}
-	else if (this->hand[1] != 0)
+	else if (this->hand[1] == nullptr)
 	{
 		this->hand[1] = c;
 	}
@@ -64,7 +64,7 @@ void BotHandler::revealCards()
 Card* BotHandler::takeHand(int cardIndex)
 {
 	Card* tmp = this->hand[cardIndex];
-	this->hand[cardIndex] = 0;
+	this->hand[cardIndex] = nullptr;
 	return tmp;
 }
 

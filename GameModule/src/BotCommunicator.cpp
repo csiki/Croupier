@@ -5,6 +5,11 @@
 */
 Card BotCommunicator::getHand(int cardIndex) const
 {
+	if (cardIndex >= 0 && cardIndex < 2 && this->hand[cardIndex] != nullptr)
+	{
+		return *this->hand[cardIndex];
+	}
+
 	return Card::getNullCard();
 }
 

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "GameOwner.h"
 #include "TestBot.h"
+#include "Card.h"
 
 /** Saves the error message.
 */
@@ -167,22 +168,57 @@ void GameOwner::test()
 	this->initialiseGame();
 
 	cout << this->errorMsg;
-	cout << this->botManagers[0]->getChips() << "-" << this->botManagers[0]->getPot() << endl;
-	this->botManagers[0]->step();
-	cout << this->botManagers[0]->canStep() << endl;
-	this->botManagers[0]->fold();
-	cout << this->botManagers[0]->getChips() << "-" << this->botManagers[0]->getPot() << endl;
+	
+	this->botManagers[0]->addDealerButton();
+	
+	int d = 1;
+	this->croupier->broadcast(BroadcastMessage::ROUNDSTARTED, 1, &d);
+	
+	const Card** bestHand1 = new const Card*[5];
+	const Card** bestHand2 = new const Card*[5];
+	const Card** cards1 = new const Card*[7];
+	const Card** cards2 = new const Card*[7];
 
-	cout << "callamount: " << this->botManagers[1]->getCallAmount() << endl;
+	// table
+	Card** tablecards = new Card*[5];
+	tablecards[0] = new Card(Card::Suit::CLUBS, Card::Rank::QUEEN);
+	tablecards[1] = new Card(Card::Suit::DIAMONDS, Card::Rank::QUEEN);
+	tablecards[2] = new Card(Card::Suit::DIAMONDS, Card::Rank::KING);
+	tablecards[3] = new Card(Card::Suit::CLUBS, Card::Rank::THREE);
+	tablecards[4] = new Card(Card::Suit::DIAMONDS, Card::Rank::DEUCE);
 
-	this->botManagers[1]->step();
-	//this->botManagers[1]->call();
-	cout << this->botManagers[1]->getChips() << "-" << this->botManagers[1]->getPot() << endl;
-	this->botManagers[1]->step();
-	cout << this->botManagers[1]->canRebuy(300) << endl;
-	this->botManagers[1]->rebuy(300);
-	this->botManagers[1]->rebuy(100);
-	cout << this->botManagers[1]->getChips() << "-" << this->botManagers[1]->getReservedCredit() << endl;
+	for (int i = 0; i < 5; ++i)
+	{
+		cards1[i] = tablecards[i];
+		cards2[i] = tablecards[i];
+	}
+
+	cards1[5] = new const Card(Card::Suit::HEARTS, Card::Rank::QUEEN);
+	cards1[6] = new const Card(Card::Suit::SPADES, Card::Rank::DEUCE);
+
+	cards2[5] = new const Card(Card::Suit::SPADES, Card::Rank::QUEEN);
+	cards2[6] = new const Card(Card::Suit::HEARTS, Card::Rank::THREE);
+	
+	cout << "best1" << endl;
+	cout << HandEvaluator::evalHand(cards1, bestHand1) << endl;
+	for (int i = 0; i < 5; ++i)
+	{
+		cout << bestHand1[i]->toString() << endl;
+	}
+
+	cout << "best2" << endl;
+	cout << HandEvaluator::evalHand(cards2, bestHand2) << endl;
+	for (int i = 0; i < 5; ++i)
+	{
+		cout << bestHand2[i]->toString() << endl;
+	}
+
+	cout << "comp 1-2: " << HandEvaluator::handComparator(HandRank::FullHouses, bestHand1, bestHand2) << endl;
 
 
+	delete [] bestHand1;
+	delete [] bestHand2;
+	delete [] cards1;
+	delete [] cards2;
+	delete [] tablecards;
 }
