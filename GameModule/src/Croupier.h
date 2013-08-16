@@ -14,7 +14,7 @@
 */
 class Croupier : public Logger, public BroadcastMember
 {
-private:
+public: // TODO
 	Deck deck;
 	Card* burnt[3];
 	int numberOfBurntCards;
@@ -31,18 +31,18 @@ private:
 public: // TODO
 	bool botComparatorByPot(int botIndex1, int botIndex2); // UNIT done
 	int nextActiveBot(int from = -1) const; // default: -1 ~ currentBotIndex // UNIT done
-	void burn(Card* c);
+	void burn(Card* c); // UNIT done
 	void collectCards(); // UNIT done
 	void betRound(); // UNIT done
 	void dealing(); // UNIT done
-	void preflop(); // UNIT
-	void flop(); // UNIT
-	void turn(); // UNIT
-	void river(); // UNIT
-	void showdown(); // UNIT
-	void handOutPot(int winnerIndex); // UNIT
-	void handOutPot(int numOfWinners, int* winnersIndex); // UNIT
-	void refreshBlinds(); // UNIT
+	void preflop(); // UNIT done
+	void flop(); // UNIT done
+	void turn(); // UNIT done
+	void river(); // UNIT done
+	void showdown(); // UNIT done
+	void handOutPot(int winnerIndex); // UNIT done
+	void handOutPot(int numOfWinners, int* winnersIndex); // UNIT done for 2 playas
+	void refreshBlinds(); // UNIT done
 	void determineWinners(int& numOfWinners, int** winnersIndex); // UNIT
 	void kickBot(int botID); // UNIT
 	int findBotIndexByID(int botID) const;

@@ -5,7 +5,7 @@
 */
 void Table::addCard(Card* c)
 {
-	this->cards[++this->numOfCards] = c;
+	this->cards[this->numOfCards++] = c;
 }
 
 /** Returns the number of cards on table (flop, turn, river).
@@ -24,6 +24,8 @@ Card* Table::rmCard()
 		--numOfCards;
 		Card* card = this->cards[numOfCards];
 		this->cards[numOfCards] = nullptr;
+
+		return card;
 	}
 
 	return nullptr;

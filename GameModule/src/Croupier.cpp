@@ -49,7 +49,8 @@ void Croupier::collectCards()
 	this->numberOfBurntCards = 0;
 	
 	// cards from table
-	while (Card* c = this->table->rmCard())
+	Card* c;
+	while ( (c = this->table->rmCard()) != nullptr )
 	{
 		this->deck.push(c);
 	}
@@ -219,8 +220,6 @@ void Croupier::river()
 */
 void Croupier::showdown()
 {
-	// TODO ? bots should have the possibility to muck (fold before showing cards)
-	
 	// reveal cards
 	for (int i = 0; i < this->numOfBots; ++i)
 	{

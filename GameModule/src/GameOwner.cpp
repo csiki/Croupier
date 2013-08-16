@@ -165,60 +165,53 @@ string GameOwner::getErrorMsg() const
 */
 void GameOwner::test()
 {
-	this->initialiseGame();
-
-	cout << this->errorMsg;
-	
-	this->botManagers[0]->addDealerButton();
-	
-	int d = 1;
-	this->croupier->broadcast(BroadcastMessage::ROUNDSTARTED, 1, &d);
-	
-	const Card** bestHand1 = new const Card*[5];
-	const Card** bestHand2 = new const Card*[5];
-	const Card** cards1 = new const Card*[7];
-	const Card** cards2 = new const Card*[7];
-
-	// table
-	Card** tablecards = new Card*[5];
-	tablecards[0] = new Card(Card::Suit::CLUBS, Card::Rank::QUEEN);
-	tablecards[1] = new Card(Card::Suit::DIAMONDS, Card::Rank::QUEEN);
-	tablecards[2] = new Card(Card::Suit::DIAMONDS, Card::Rank::KING);
-	tablecards[3] = new Card(Card::Suit::CLUBS, Card::Rank::THREE);
-	tablecards[4] = new Card(Card::Suit::DIAMONDS, Card::Rank::DEUCE);
-
-	for (int i = 0; i < 5; ++i)
+	try
 	{
-		cards1[i] = tablecards[i];
-		cards2[i] = tablecards[i];
-	}
+		this->initialiseGame();
 
-	cards1[5] = new const Card(Card::Suit::HEARTS, Card::Rank::QUEEN);
-	cards1[6] = new const Card(Card::Suit::SPADES, Card::Rank::DEUCE);
-
-	cards2[5] = new const Card(Card::Suit::SPADES, Card::Rank::QUEEN);
-	cards2[6] = new const Card(Card::Suit::HEARTS, Card::Rank::THREE);
+		cout << this->errorMsg;
 	
-	cout << "best1" << endl;
-	cout << HandEvaluator::evalHand(cards1, bestHand1) << endl;
-	for (int i = 0; i < 5; ++i)
-	{
-		cout << bestHand1[i]->toString() << endl;
+		this->botManagers[0]->addDealerButton();
+	
+		int d = 1;
+		this->croupier->broadcast(BroadcastMessage::ROUNDSTARTED, 1, &d);
+		this->croupier->round = 1;
+
+		this->botManagers[0]->forceBlind(600);
+		this->botManagers[1]->forceBlind(600);
+
+		this->botManagers[0]->receiveCard(new Card(Card::Suit::DIAMONDS, Card::Rank::ACE));
+		this->botManagers[0]->receiveCard(new Card(Card::Suit::CLUBS, Card::Rank::ACE));
+
+		this->botManagers[1]->receiveCard(new Card(Card::Suit::DIAMONDS, Card::Rank::FIVE));
+		this->botManagers[1]->receiveCard(new Card(Card::Suit::SPADES, Card::Rank::FOUR));
+
+		this->table->addCard(new Card(Card::Suit::DIAMONDS, Card::Rank::SIX));
+		this->table->addCard(new Card(Card::Suit::HEARTS, Card::Rank::ACE));
+		this->table->addCard(new Card(Card::Suit::SPADES, Card::Rank::ACE));
+		this->table->addCard(new Card(Card::Suit::HEARTS, Card::Rank::DEUCE));
+		this->table->addCard(new Card(Card::Suit::HEARTS, Card::Rank::THREE));
+
+		cout << "bot1: " << this->botManagers[0]->getPot() << " - " << this->botManagers[0]->getChips() << endl;
+		cout << "bot2: " << this->botManagers[1]->getPot() << " - " << this->botManagers[1]->getChips() << endl;
+
+		int num;
+		int* winners;
+		this->croupier->determineWinners(num, &winners);
+
+		cout << num << endl;
+
+		cout << "bot1: " << this->botManagers[0]->getPot() << " - " << this->botManagers[0]->getChips() << endl;
+		cout << "bot2: " << this->botManagers[1]->getPot() << " - " << this->botManagers[1]->getChips() << endl;
+
+		this->croupier->handOutPot(num, winners);
+
+		cout << "bot1: " << this->botManagers[0]->getPot() << " - " << this->botManagers[0]->getChips() << endl;
+		cout << "bot2: " << this->botManagers[1]->getPot() << " - " << this->botManagers[1]->getChips() << endl;
+		// TODO para van determinewinnerssel
 	}
-
-	cout << "best2" << endl;
-	cout << HandEvaluator::evalHand(cards2, bestHand2) << endl;
-	for (int i = 0; i < 5; ++i)
+	catch (const char* msg)
 	{
-		cout << bestHand2[i]->toString() << endl;
+		cout << "Exception: " << msg << endl;
 	}
-
-	cout << "comp 1-2: " << HandEvaluator::handComparator(HandRank::FullHouses, bestHand1, bestHand2) << endl;
-
-
-	delete [] bestHand1;
-	delete [] bestHand2;
-	delete [] cards1;
-	delete [] cards2;
-	delete [] tablecards;
 }
