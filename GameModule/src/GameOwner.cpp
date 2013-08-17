@@ -41,7 +41,7 @@ bool GameOwner::initialiseGame()
 
 	this->broadcastStation = new BroadcastStation;
 	this->table = new Table(this->numOfBots);
-	this->hostess = new Hostess(this->table, this->rulz, this->broadcastStation);
+	this->hostess = new Hostess(this->numOfBots, this->table, this->rulz, this->broadcastStation);
 	this->croupier = new Croupier(this->numOfBots, this->broadcastStation, this->log, this->rulz, this->table);
 
 	// load bots
@@ -176,8 +176,14 @@ void GameOwner::test()
 		int d = 1;
 		this->croupier->broadcast(BroadcastMessage::ROUNDSTARTED, 1, &d);
 		this->croupier->round = 1;
+		this->croupier->refreshBlinds();
 
 		this->botManagers[0]->forceBlind(600);
+
+		cout << "call amount: " << this->hostess->getCallAmount() << endl;
+		cout << "min raise: " << this->hostess->getMinRaise() << endl;
+		cout << "ahh: " << this->hostess->getBotIDToTheLeft(3, 1, false, false) << endl;
+
 		this->botManagers[1]->forceBlind(600);
 
 		this->botManagers[0]->receiveCard(new Card(Card::Suit::DIAMONDS, Card::Rank::ACE));
@@ -211,7 +217,6 @@ void GameOwner::test()
 
 		cout << "bot1: " << this->botManagers[0]->getPot() << " - " << this->botManagers[0]->getChips() << endl;
 		cout << "bot2: " << this->botManagers[1]->getPot() << " - " << this->botManagers[1]->getChips() << endl;
-		// TODO para van determinewinnerssel
 	}
 	catch (const char* msg)
 	{

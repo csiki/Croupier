@@ -8,10 +8,11 @@ int main(int argc, char* argv[])
 {
 	//GameOwner gameowner(2, 1, 2, "testlog.xml,)
 	
-	int* playersID = new int[2];
+	int* playersID = new int[3];
 	playersID[0] = 1;
 	playersID[1] = 2;
-	GameOwner* go = new GameOwner(2, playersID, "testlog.xml", "testrules.xml", "testresults.xml");
+	playersID[2] = 3;
+	GameOwner* go = new GameOwner(3, playersID, "testlog.xml", "testrules.xml", "testresults.xml");
 
 	go->test();
 

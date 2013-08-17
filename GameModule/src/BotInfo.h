@@ -4,14 +4,18 @@
 #include "Card.h"
 #include "Emotion.h"
 #include "BotLanguage.h"
+#include "Logger.h"
+#include "BroadcastMember.h"
+#include "BroadcastStation.h"
 
 /**	Interface for AIs to other AIs.
 */
-class BotInfo
+class BotInfo : public Logger, public BroadcastMember
 {
 protected:
 	int chips;
 	int pot;
+	int numOfRaises;
 	bool cardsRevealed;
 	bool dealer;
 	bool inGame;
@@ -20,7 +24,8 @@ protected:
 	Emotion emotion;
 public:
 
-	BotInfo(int chips)
+	BotInfo(int playerID, BroadcastStation* broadcastStation, Loggable* loggable, int chips) :
+		Entity(playerID), BroadcastMember(playerID, broadcastStation), Logger(playerID, loggable)
 	{
 		this->chips = chips;
 		this->pot = 0;
@@ -41,7 +46,7 @@ public:
 	bool isInRound() const;
 	Card lookAtHand(int cardIndex) const;
 
-	virtual int getID() const = 0;
+	virtual int getBotID() const = 0;
 	virtual std::string getName() const = 0;
 	virtual BotLanguage getLang() const = 0;
 };

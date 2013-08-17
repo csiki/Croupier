@@ -26,7 +26,7 @@ public:
 		// clear bots array
 		for (int i = 0; i < numOfBots; ++i)
 		{
-			this->bots[i] = 0;
+			this->bots[i] = nullptr;
 		}
 
 		// clear cards array
@@ -38,10 +38,10 @@ public:
 
 	virtual ~Table() {}
 
-	void addCard(Card* c); // UNIT
+	void addCard(Card* c); // UNIT done
 	int getNumOfCards() const;
 	Card* rmCard(); // UNIT
-	const Card* getCard(int index) const; // UNIT
+	const Card* getCard(int index) const; // UNIT done
 	const BotInfo* getBotByIndex(int index) const;
 	int getNumOfBots() const;
 	int getPot() const;

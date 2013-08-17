@@ -29,6 +29,16 @@ void BotHandler::forceBlind(int blind)
 		this->pot = blind;
 		this->chips -= blind;
 	}
+
+	// broadcast the pot put in as raise
+	int* msgdata = new int[2];
+	msgdata[0] = this->getID();
+	msgdata[1] = this->pot; // = raise amount
+	this->broadcast(BroadcastMessage::RAISED, 2, msgdata);
+	delete [] msgdata;
+
+	// increase number of raises
+	++this->numOfRaises;
 }
 
 /**	Adds a card to the AI's hand.

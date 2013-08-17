@@ -22,7 +22,7 @@
 
 /**	Class for managing AIs' communication and validating moves.
 */
-class BotManager : public BotCommunicator, public BotHandler, public Logger, public BroadcastMember
+class BotManager : public BotCommunicator, public BotHandler
 {
 private:
 	int numOfRebuys;
@@ -42,8 +42,10 @@ public:
 	BotManager(Bot* bot, BotKnowledgeHandler* bkHandler, Hostess* hostess, const Table* table,
 		const Rulz* rules, BroadcastStation* broadcastStation, Loggable* loggable,
 		int playerID, int chips, int reservedCredit, int nthAtTable) :
-		BotCommunicator(chips), BotHandler(chips), BotInfo(chips),
-		BroadcastMember(playerID, broadcastStation), Logger(playerID, loggable), Entity(playerID)
+			Entity(playerID),
+			BotCommunicator(playerID, broadcastStation, loggable, chips),
+			BotHandler(playerID, broadcastStation, loggable, chips),
+			BotInfo(playerID, broadcastStation, loggable, chips)
 	{
 		this->bot = bot;
 		this->bkHandler = bkHandler;
@@ -54,6 +56,7 @@ public:
 		this->nthAtTable = nthAtTable;
 		this->numOfRebuys = 0;
 		this->kickedAtRound = 0;
+		this->numOfRaises = 0;
 		
 		// subscribe to BroadcastStation
 		this->subscribe();
@@ -68,7 +71,7 @@ public:
 	void receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data);
 
 	// botinfo
-	int getID() const;
+	int getBotID() const;
 	std::string getName() const;
 	BotLanguage getLang() const;
 

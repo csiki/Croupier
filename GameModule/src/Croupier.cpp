@@ -398,8 +398,6 @@ void Croupier::determineWinners(int& numOfWinners, int** winnersIndex)
 			tmpHand[5] = &this->bots[i]->lookAtHand(0);
 			tmpHand[6] = &this->bots[i]->lookAtHand(1);
 
-			cout << tmpHand[5]->toString() << "|" << endl;
-
 			tmpRank = HandEvaluator::evalHand(tmpHand, tmpBestHand);
 
 			if (winnerRank < tmpRank) // higher rank found
@@ -485,6 +483,9 @@ void Croupier::letsPoker()
 
 	while (this->canStartNewRound())
 	{
+		// refresh blinds (if needed)
+		this->refreshBlinds();
+
 		// broadcast round started
 		this->broadcast(BroadcastMessage::ROUNDSTARTED, 1, &this->round);
 

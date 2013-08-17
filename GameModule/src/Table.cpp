@@ -79,6 +79,5 @@ int Table::getPot() const
 */
 void Table::sit(BotInfo* bot)
 {
-	// bots array already allocated in costructor
 	this->bots[this->numOfBots++] = bot;
 }

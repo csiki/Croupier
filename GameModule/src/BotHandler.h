@@ -12,7 +12,8 @@ protected:
 	bool talkToken;
 public:
 
-	BotHandler(int chips) : BotInfo(chips)
+	BotHandler(int playerID, BroadcastStation* broadcastStation, Loggable* loggable, int chips) : 
+		BotInfo(playerID, broadcastStation, loggable, chips), Entity(playerID)
 	{
 		this->stepToken = false;
 		this->talkToken = false;
@@ -29,7 +30,7 @@ public:
 	virtual void step() = 0;
 	virtual void leave() = 0;
 	virtual bool rebuyOrLeave() = 0;
-	virtual int getID() const = 0;
+	virtual int getBotID() const = 0;
 	virtual std::string getName() const = 0;
 	virtual BotLanguage getLang() const = 0;
 };

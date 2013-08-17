@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<bot>
+	<id>433</id>
+	<lang>0</lang>
+	<knowledgetables>
+		<tableid>0</tableid>
+	</knowledgetables>
+	<credit>2500</credit>
+	<files>
+		<file>
+		ultrabot3.cpp
+		</file>
+	</files>
+</bot>

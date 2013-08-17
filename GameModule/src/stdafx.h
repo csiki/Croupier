@@ -29,3 +29,15 @@ namespace
 	const char _BOT_DATA_RELATIVE_PATH_[] = ""; // must end with "/" if any
 	const char _BOT_AI_RELATIVE_PATH_[] = ""; // must end with "/" if any
 }
+
+static int mod (int number, int modulo)
+{
+	int ret = number % modulo;
+	
+	if (ret < 0)
+	{
+		ret += modulo;
+	}
+
+	return ret;
+}

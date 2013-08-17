@@ -89,9 +89,9 @@ void BotManager::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize
 // botinfo
 /** Returns id of the player.
 */
-int BotManager::getID() const
+int BotManager::getBotID() const
 {
-	return this->Entity::getID();
+	return this->bot->getID();
 }
 
 /** Returns name of the managed AI.
@@ -257,7 +257,7 @@ bool BotManager::canRaise(int raiseAmount) const
 	BettingSystem bs = this->rules->getBettingSystem();
 
 	return this->stepToken
-		&& this->hostess->getNumberOfRaisesLeft() > 0
+		&& this->rules->getMaxNumOfRaises() - this->numOfRaises > 0
 		&& this->chips >= callAmountOfPlayer + raiseAmount
 		&& (
 			(bs == BettingSystem::NOLIMIT && raiseAmount >= minRaise) // raise >= bigblind (minRaise)
@@ -373,6 +373,9 @@ bool BotManager::raise(int raiseAmount)
 		this->broadcast(BroadcastMessage::RAISED, 2, msgdata);
 		delete [] msgdata;
 
+		// increase number of raises
+		++this->numOfRaises;
+
 		return true;
 	}
 
@@ -475,7 +478,7 @@ int BotManager::getBotIDToTheLeft(int nth, bool onlyInGame, bool onlyInRound) co
 	return this->hostess->getBotIDToTheLeft(this->nthAtTable, nth, onlyInGame, onlyInRound);
 }
 
-/** Returns the amount of pot that should be put in by the player if it calls.
+/** Returns the amount of pot that should be put in by the player if it would call.
 */
 int BotManager::getCallAmount() const
 {

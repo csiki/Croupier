@@ -58,14 +58,20 @@ void Hostess::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, c
 	}
 	else if (msg == BroadcastMessage::ROUNDSTARTED)
 	{
+		// update round
+		this->round = data[0];
+
+		// update call amount
+		this->callAmount = 0;
+
+		// update / initialise min raise
+		this->minRaise = this->getBigBlindAtRound(this->round);
+
 		// update botsInRound
 		for (int i = 0; i < this->numOfBots; ++i)
 		{
 			this->botsInRound[i] = this->botsInGame[i];
 		}
-
-		this->round = data[0];
-		this->callAmount = 0;
 	}
 	else if (msg == BroadcastMessage::TURN)
 	{
@@ -205,7 +211,7 @@ const BotInfo* Hostess::getBotByID(int botID) const
 */
 int Hostess::getBotIDByIndex(int index) const
 {
-	return this->table->getBotByIndex(index % this->numOfBots)->getID();
+	return this->table->getBotByIndex(mod(index, this->numOfBots))->getID();
 }
 
 /** Returns AI's index by id (index: from 0 to n-1 same order at table; n: number of bots).
@@ -275,28 +281,29 @@ int Hostess::getBotIDToTheRight(int fromID, int nth, bool onlyInGame, bool onlyI
 		}
 	}
 
+	// find the bot
 	int index;
 	if (onlyInGame || onlyInRound)
 	{
-		index = fromIndex - 1;
+		index = fromIndex + 1;
 		int activePlayersPassed = 0;
 		while (activePlayersPassed < nth)
 		{
-			if ( (this->botsInGame[index % this->numOfBots] == onlyInGame || !onlyInGame)
-				&& (this->botsInRound[index % this->numOfBots] == onlyInRound || !onlyInRound) )
+			if ( (this->botsInGame[mod(index, this->numOfBots)] == onlyInGame || !onlyInGame)
+				&& (this->botsInRound[mod(index, this->numOfBots)] == onlyInRound || !onlyInRound) )
 			{
-				// false means nothing..
 				++activePlayersPassed;
-				--index;
 			}
+
+			++index;
 		}
 	}
 	else
 	{
-		index = fromIndex - nth;
+		index = fromIndex + nth;
 	}
 
-	return index % this->numOfBots;
+	return this->table->getBotByIndex(mod(index, this->numOfBots))->getID();
 }
 
 /** Returns the nth. bot to the left at table (the bots after).
@@ -344,28 +351,29 @@ int Hostess::getBotIDToTheLeft(int fromID, int nth, bool onlyInGame, bool onlyIn
 		}
 	}
 
+	// find the bot
 	int index;
 	if (onlyInGame || onlyInRound)
 	{
-		index = fromIndex + 1;
+		index = fromIndex - 1;
 		int activePlayersPassed = 0;
 		while (activePlayersPassed < nth)
 		{
-			if ( (this->botsInGame[index % this->numOfBots] == onlyInGame || !onlyInGame)
-				&& (this->botsInRound[index % this->numOfBots] == onlyInRound || !onlyInRound) )
+			if ( (this->botsInGame[mod(index, this->numOfBots)] == onlyInGame || !onlyInGame)
+				&& (this->botsInRound[mod(index, this->numOfBots)] == onlyInRound || !onlyInRound) )
 			{
-				// false means nothing..
 				++activePlayersPassed;
-				++index;
 			}
+
+			--index;
 		}
 	}
 	else
 	{
-		index = fromIndex + nth;
+		index = fromIndex - nth;
 	}
 
-	return index % this->numOfBots;
+	return this->table->getBotByIndex(mod(index, this->numOfBots))->getID();
 }
 
 /** Returns the number of bots.
@@ -383,16 +391,4 @@ int Hostess::getNumOfBots(bool onlyInGame, bool onlyInRound) const
 	}
 
 	return num;
-}
-
-/** Returns the number of raises left in a round that is possible.
-*/
-int Hostess::getNumberOfRaisesLeft() const
-{
-	if (this->rules->getMaxNumOfRaises() > 0) // zero means no limit for number of raises
-	{
-		return this->rules->getMaxNumOfRaises() - this->numberOfRaisesSoFar;
-	}
-
-	return 1; // 1 is enough to let a player raise if there's no limit
 }

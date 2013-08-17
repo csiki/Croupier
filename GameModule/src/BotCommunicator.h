@@ -15,7 +15,9 @@ class BotCommunicator : virtual public BotInfo
 {
 public:
 
-	BotCommunicator(int chips) : BotInfo(chips) {}
+	BotCommunicator(int playerID, BroadcastStation* broadcastStation, Loggable* loggable, int chips) :
+		BotInfo(playerID, broadcastStation, loggable, chips), Entity(playerID)
+	{}
 
 	// botmanager
 	Card getHand(int cardIndex) const;
@@ -23,7 +25,7 @@ public:
 	virtual int getReservedCredit() const = 0;
 	virtual int getNumOfRebuys() const = 0;
 	// bot
-	virtual int getID() const = 0;
+	virtual int getBotID() const = 0;
 	virtual std::string getName() const = 0;
 	virtual BotLanguage getLang() const = 0;
 	// other bot
