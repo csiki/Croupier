@@ -195,11 +195,14 @@ void GameOwner::test()
 		cout << "bot1: " << this->botManagers[0]->getPot() << " - " << this->botManagers[0]->getChips() << endl;
 		cout << "bot2: " << this->botManagers[1]->getPot() << " - " << this->botManagers[1]->getChips() << endl;
 
+		this->botManagers[0]->revealCards();
+		this->botManagers[1]->revealCards();
+
 		int num;
 		int* winners;
 		this->croupier->determineWinners(num, &winners);
 
-		cout << num << endl;
+		cout << "num of winners: " << num << endl;
 
 		cout << "bot1: " << this->botManagers[0]->getPot() << " - " << this->botManagers[0]->getChips() << endl;
 		cout << "bot2: " << this->botManagers[1]->getPot() << " - " << this->botManagers[1]->getChips() << endl;

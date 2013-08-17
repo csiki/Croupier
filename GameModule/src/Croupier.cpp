@@ -361,7 +361,7 @@ void Croupier::determineWinners(int& numOfWinners, int** winnersIndex)
 		}
 	}
 
-	// if only one bot stayed, all others folded (showdown have not happened)
+	// if only one bot stayed, all others folded
 	if (numOfBotsInRound == 1)
 	{
 		numOfWinners = 1;
@@ -397,6 +397,8 @@ void Croupier::determineWinners(int& numOfWinners, int** winnersIndex)
 			// tmpHand array last 2 elements are the ones in the actual player's hand
 			tmpHand[5] = &this->bots[i]->lookAtHand(0);
 			tmpHand[6] = &this->bots[i]->lookAtHand(1);
+
+			cout << tmpHand[5]->toString() << "|" << endl;
 
 			tmpRank = HandEvaluator::evalHand(tmpHand, tmpBestHand);
 
@@ -610,28 +612,14 @@ bool Croupier::canStartNewRound() const
 		}
 	}
 
-	if (numOfBotsInGame < 2)
-	{
-		return false;
-	}
-
-	// [here more checks can made]
-
-	return true;
+	return numOfBotsInGame >= 2;
 }
 
 /** Returns if the round can go on (or ended for example because of one inRound player left).
 */
 bool Croupier::canRoundGoOn() const
 {
-	if (this->numOfBotsInRound() < 2)
-	{
-		return false;
-	}
-
-	// [here more checks can made]
-
-	return true;
+	return this->numOfBotsInRound() >= 2;
 }
 
 /** Returns the number of bots in round (have not folded).

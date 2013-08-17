@@ -41,13 +41,13 @@ public: // TODO
 	void river(); // UNIT done
 	void showdown(); // UNIT done
 	void handOutPot(int winnerIndex); // UNIT done
-	void handOutPot(int numOfWinners, int* winnersIndex); // UNIT done for 2 playas
+	void handOutPot(int numOfWinners, int* winnersIndex); // UNIT done for 2 playas only
 	void refreshBlinds(); // UNIT done
-	void determineWinners(int& numOfWinners, int** winnersIndex); // UNIT
-	void kickBot(int botID); // UNIT
+	void determineWinners(int& numOfWinners, int** winnersIndex); // UNIT done for 2 players only
+	void kickBot(int botID);
 	int findBotIndexByID(int botID) const;
-	bool canStartNewRound() const; // UNIT
-	bool canRoundGoOn() const; // UNIT
+	bool canStartNewRound() const;
+	bool canRoundGoOn() const;
 	int numOfBotsInRound() const;
 
 public:
@@ -82,7 +82,7 @@ public:
 	}
 
 	void receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data);
-	void letsPoker(); // UNIT
+	void letsPoker();
 	void provideBotHandler(int index, BotHandler* bh);
 };
 
