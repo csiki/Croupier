@@ -40,12 +40,12 @@ public:
 
 	void addCard(Card* c); // UNIT done
 	int getNumOfCards() const;
-	Card* rmCard(); // UNIT
+	Card* rmCard();
 	const Card* getCard(int index) const; // UNIT done
 	const BotInfo* getBotByIndex(int index) const;
 	int getNumOfBots() const;
 	int getPot() const;
-	void sit(BotInfo* bot); // UNIT
+	void sit(BotInfo* bot);
 };
 
 #endif  //_TABLE_H

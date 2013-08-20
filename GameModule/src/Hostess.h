@@ -26,7 +26,7 @@ private:
 	int numberOfRaisesSoFar;
 	int nextBlindShiftDeadlineIndex;
 
-	void handleRaise(int raiseAmount); // UNIT
+	void handleRaise(int raiseAmount); // UNIT done
 
 public:
 	/** Create a Hostess instance with id -1.
