@@ -5,7 +5,7 @@
 
 /** Sends the message (event) to the log.
 */
-void Logger::log(Severity severity, std::string msg)
+void Logger::log(Severity severity, std::string msg) const
 {
 	time_t timer = time(0);
 

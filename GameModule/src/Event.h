@@ -4,6 +4,7 @@
 #include "Severity.h"
 
 /**	One unit of a log.
+ *	Message formula: <action> [<parameter1>,<parameter2>,...]
 */
 class Event
 {

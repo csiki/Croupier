@@ -14,7 +14,7 @@
 */
 class Croupier : public Logger, public BroadcastMember
 {
-public: // TODO
+public: // TODO private
 	Deck deck;
 	Card* burnt[3];
 	int numberOfBurntCards;
@@ -28,23 +28,23 @@ public: // TODO
 	BotHandler** bots;
 	const Rulz* rules;
 	Table* table;
-public: // TODO
+public: // TODO private
 	bool botComparatorByPot(int botIndex1, int botIndex2); // UNIT done
 	int nextActiveBot(int from = -1) const; // default: -1 ~ currentBotIndex // UNIT done
-	void burn(Card* c); // UNIT done
-	void collectCards(); // UNIT done
-	void betRound(); // UNIT done
-	void dealing(); // UNIT done
-	void preflop(); // UNIT done
-	void flop(); // UNIT done
-	void turn(); // UNIT done
-	void river(); // UNIT done
-	void showdown(); // UNIT done
-	void handOutPot(int winnerIndex); // UNIT done
-	void handOutPot(int numOfWinners, int* winnersIndex); // UNIT done for 2 playas only
-	void refreshBlinds(); // UNIT done
-	void determineWinners(int& numOfWinners, int** winnersIndex); // UNIT done for 2 players only
-	void kickBot(int botID);
+	void burn(Card* c); // UNIT done 
+	void collectCards(); // UNIT done 
+	void betRound(); // UNIT done 
+	void dealing(); // UNIT done 
+	void preflop(); // UNIT done 
+	void flop(); // UNIT done 
+	void turn(); // UNIT done 
+	void river(); // UNIT done 
+	void showdown(); // UNIT done 
+	void handOutPot(int winnerIndex); // UNIT done 
+	void handOutPot(int numOfWinners, int* winnersIndex); // UNIT done for 2 playas only 
+	void refreshBlinds(); // UNIT done 
+	void determineWinners(int& numOfWinners, int** winnersIndex); // UNIT done for 2 players only 
+	void kickBot(int botID); 
 	int findBotIndexByID(int botID) const;
 	bool canStartNewRound() const;
 	bool canRoundGoOn() const;

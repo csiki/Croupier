@@ -14,7 +14,7 @@ class Logger : virtual public Entity
 private:
 	Loggable *loggable;
 protected:
-	void log(Severity severity, std::string msg);
+	void log(Severity severity, std::string msg) const;
 public:
 
 	Logger(int id, Loggable* loggable) : Entity(id)

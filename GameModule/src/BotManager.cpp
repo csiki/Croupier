@@ -113,6 +113,9 @@ BotLanguage BotManager::getLang() const
 */
 int BotManager::getReservedCredit() const
 {
+	// log
+	this->log(Severity::VERBOSE, "getReservedCredit");
+
 	return this->reservedCredit;
 }
 
@@ -120,6 +123,9 @@ int BotManager::getReservedCredit() const
 */
 int BotManager::getNumOfRebuys() const
 {
+	// log
+	this->log(Severity::VERBOSE, "getNumOfRebuys");
+
 	return this->numOfRebuys;
 }
 
@@ -127,6 +133,11 @@ int BotManager::getNumOfRebuys() const
 */
 std::string BotManager::getBotName(int botID) const
 {
+	// log
+	string msg = "getBotName ";
+	msg += to_string(botID);
+	this->log(Severity::VERBOSE, msg);
+
 	return this->hostess->getBotByID(botID)->getName();
 }
 
@@ -134,6 +145,11 @@ std::string BotManager::getBotName(int botID) const
 */
 bool BotManager::isBotDealer(int botID) const
 {
+	// log
+	string msg = "isBotDealer ";
+	msg += to_string(botID);
+	this->log(Severity::VERBOSE, msg);
+
 	return this->hostess->getBotByID(botID)->isDealer();
 }
 
@@ -141,6 +157,11 @@ bool BotManager::isBotDealer(int botID) const
 */
 int BotManager::getBotChips(int botID) const
 {
+	// log
+	string msg = "getBotChips ";
+	msg += to_string(botID);
+	this->log(Severity::VERBOSE, msg);
+
 	return this->hostess->getBotByID(botID)->getChips();
 }
 
@@ -148,6 +169,11 @@ int BotManager::getBotChips(int botID) const
 */
 int BotManager::getBotPot(int botID) const
 {
+	// log
+	string msg = "getBotPot ";
+	msg += to_string(botID);
+	this->log(Severity::VERBOSE, msg);
+
 	return this->hostess->getBotByID(botID)->getPot();
 }
 
@@ -155,6 +181,11 @@ int BotManager::getBotPot(int botID) const
 */
 Emotion BotManager::getBotEmotion(int botID) const
 {
+	// log
+	string msg = "getBotEmotion ";
+	msg += to_string(botID);
+	this->log(Severity::VERBOSE, msg);
+
 	return this->hostess->getBotByID(botID)->getEmotion();
 }
 
@@ -162,6 +193,11 @@ Emotion BotManager::getBotEmotion(int botID) const
 */
 bool BotManager::isBotHandRevealed(int botID) const
 {
+	// log
+	string msg = "isBotHandRevealed ";
+	msg += to_string(botID);
+	this->log(Severity::VERBOSE, msg);
+
 	return this->hostess->getBotByID(botID)->isHandRevealed();
 }
 
@@ -169,6 +205,11 @@ bool BotManager::isBotHandRevealed(int botID) const
 */
 int BotManager::getBotLang(int botID) const
 {
+	// log
+	string msg = "getBotLang ";
+	msg += to_string(botID);
+	this->log(Severity::VERBOSE, msg);
+
 	return this->hostess->getBotByID(botID)->getLang();
 }
 
@@ -176,6 +217,11 @@ int BotManager::getBotLang(int botID) const
 */
 bool BotManager::isBotInGame(int botID) const
 {
+	// log
+	string msg = "isBotInGame ";
+	msg += to_string(botID);
+	this->log(Severity::VERBOSE, msg);
+
 	return this->hostess->getBotByID(botID)->isInGame();
 }
 
@@ -183,6 +229,11 @@ bool BotManager::isBotInGame(int botID) const
 */
 bool BotManager::isBotInRound(bool botID) const
 {
+	// log
+	string msg = "isBotInRound ";
+	msg += to_string(botID);
+	this->log(Severity::VERBOSE, msg);
+
 	return this->hostess->getBotByID(botID)->isInRound();
 }
 
@@ -190,6 +241,11 @@ bool BotManager::isBotInRound(bool botID) const
 */
 Card BotManager::lookAtBotHand(int botID, int cardIndex) const
 {
+	// log
+	string msg = "lookAtBotHand ";
+	msg += to_string(botID);
+	this->log(Severity::VERBOSE, msg);
+
 	return this->hostess->getBotByID(botID)->lookAtHand(cardIndex);
 }
 
@@ -197,6 +253,9 @@ Card BotManager::lookAtBotHand(int botID, int cardIndex) const
 */
 bool BotManager::canTalk() const
 {
+	// log
+	this->log(Severity::VERBOSE, "canTalk");
+
 	return this->talkToken;
 }
 
@@ -204,6 +263,9 @@ bool BotManager::canTalk() const
 */
 bool BotManager::canStep() const
 {
+	// log
+	this->log(Severity::VERBOSE, "canStep");
+
 	return this->stepToken;
 }
 
@@ -211,6 +273,9 @@ bool BotManager::canStep() const
 */
 bool BotManager::canAllin() const
 {
+	// log
+	this->log(Severity::VERBOSE, "canAllin");
+
 	BettingSystem bs = this->rules->getBettingSystem();
 	int callAmountOfPlayer = this->hostess->getCallAmount() - this->pot;
 
@@ -227,6 +292,9 @@ bool BotManager::canAllin() const
 */
 bool BotManager::canCall() const
 {
+	// log
+	this->log(Severity::VERBOSE, "canCall");
+
 	int callAmountOfPlayer = this->hostess->getCallAmount() - this->pot;
 
 	return this->stepToken
@@ -238,6 +306,9 @@ bool BotManager::canCall() const
 */
 bool BotManager::canCheck() const
 {
+	// log
+	this->log(Severity::VERBOSE, "canCheck");
+
 	return this->stepToken && (this->hostess->getCallAmount() - this->pot) == 0;
 }
 
@@ -245,6 +316,9 @@ bool BotManager::canCheck() const
 */
 bool BotManager::canFold() const
 {
+	// log
+	this->log(Severity::VERBOSE, "canFold");
+
 	return this->stepToken;
 }
 
@@ -252,6 +326,11 @@ bool BotManager::canFold() const
 */
 bool BotManager::canRaise(int raiseAmount) const
 {
+	// log
+	string msg = "canRaise ";
+	msg += to_string(raiseAmount);
+	this->log(Severity::VERBOSE, msg);
+
 	int minRaise = this->hostess->getMinRaise();
 	int callAmountOfPlayer = this->hostess->getCallAmount() - this->pot;
 	BettingSystem bs = this->rules->getBettingSystem();
@@ -271,6 +350,9 @@ bool BotManager::canRaise(int raiseAmount) const
 */
 bool BotManager::allin()
 {
+	// log
+	this->log(Severity::INFORMATION, "allin");
+
 	if (this->canAllin())
 	{
 		int allinAmount = this->chips;
@@ -296,6 +378,9 @@ bool BotManager::allin()
 */
 bool BotManager::call() 
 {
+	// log
+	this->log(Severity::INFORMATION, "call");
+
 	if (this->canCall())
 	{
 		int callAmount = this->hostess->getCallAmount() - this->pot;
@@ -321,6 +406,9 @@ bool BotManager::call()
 */
 bool BotManager::check()
 {
+	// log
+	this->log(Severity::INFORMATION, "check");
+
 	if (this->canCheck())
 	{
 		this->stepToken = false;
@@ -339,6 +427,9 @@ bool BotManager::check()
 */
 bool BotManager::fold()
 {
+	// log
+	this->log(Severity::INFORMATION, "fold");
+
 	if (this->canFold())
 	{
 		this->inRound = false;
@@ -358,6 +449,11 @@ bool BotManager::fold()
 */
 bool BotManager::raise(int raiseAmount)
 {
+	// log
+	string msg = "raise ";
+	msg += to_string(raiseAmount);
+	this->log(Severity::INFORMATION, msg);
+
 	if (this->canRaise(raiseAmount))
 	{
 		int chipsToMove = (this->hostess->getCallAmount() - this->pot) + raiseAmount;
@@ -386,6 +482,11 @@ bool BotManager::raise(int raiseAmount)
 */
 bool BotManager::canRebuy(int rebuyAmount) const
 {
+	// log
+	string msg = "canRebuy ";
+	msg += to_string(rebuyAmount);
+	this->log(Severity::VERBOSE, msg);
+
 	return this->numOfRebuys < this->rules->getNumOfRebuysAllowed()
 		&& this->hostess->getCurrentRound() <= this->rules->getRebuyDeadline()
 		&& rebuyAmount <= this->reservedCredit;
@@ -395,6 +496,11 @@ bool BotManager::canRebuy(int rebuyAmount) const
 */
 bool BotManager::rebuy(int rebuyAmount)
 {
+	// log
+	string msg = "rebuy ";
+	msg += to_string(rebuyAmount);
+	this->log(Severity::INFORMATION, msg);
+
 	if (this->canRebuy(rebuyAmount))
 	{
 		this->reservedCredit -= rebuyAmount;
@@ -418,6 +524,11 @@ bool BotManager::rebuy(int rebuyAmount)
 */
 void BotManager::talk(Comment comment)
 {
+	// log
+	string msg = "talk ";
+	msg += to_string(comment);
+	this->log(Severity::INFORMATION, msg);
+
 	if (this->talkToken)
 	{
 		// broadcast comment
@@ -434,6 +545,9 @@ void BotManager::talk(Comment comment)
 */
 void BotManager::quit()
 {
+	// log
+	this->log(Severity::INFORMATION, "quit");
+
 	this->inGame = false;
 	this->inRound = false;
 	this->kickedAtRound = this->hostess->getCurrentRound();
@@ -447,6 +561,13 @@ void BotManager::quit()
 */
 int BotManager::getNumOfBots(bool onlyInGame, bool onlyInRound) const
 {
+	// log
+	string msg = "getNumOfBots ";
+	msg += to_string(onlyInGame);
+	msg += ',';
+	msg += to_string(onlyInRound);
+	this->log(Severity::VERBOSE, msg);
+
 	return this->hostess->getNumOfBots(onlyInGame, onlyInRound);
 }
 
@@ -454,6 +575,11 @@ int BotManager::getNumOfBots(bool onlyInGame, bool onlyInRound) const
 */
 int BotManager::getBotIDByIndex(int index) const
 {
+	// log
+	string msg = "getBotIDByIndex ";
+	msg += to_string(index);
+	this->log(Severity::VERBOSE, msg);
+
 	return this->table->getBotByIndex(index)->getID();
 }
 
@@ -461,6 +587,11 @@ int BotManager::getBotIDByIndex(int index) const
 */
 int BotManager::getBotIndexByID(int botID) const
 {
+	// log
+	string msg = "getBotIndexByID ";
+	msg += to_string(botID);
+	this->log(Severity::VERBOSE, msg);
+
 	return this->hostess->getBotIDByIndex(botID);
 }
 
@@ -468,6 +599,15 @@ int BotManager::getBotIndexByID(int botID) const
 */
 int BotManager::getBotIDToTheRight(int nth, bool onlyInGame, bool onlyInRound) const
 {
+	// log
+	string msg = "getBotIDToTheRight ";
+	msg += to_string(nth);
+	msg += ',';
+	msg += to_string(onlyInGame);
+	msg += ',';
+	msg += to_string(onlyInRound);
+	this->log(Severity::VERBOSE, msg);
+
 	return this->hostess->getBotIDToTheRight(this->nthAtTable, nth, onlyInGame, onlyInRound);
 }
 
@@ -475,6 +615,15 @@ int BotManager::getBotIDToTheRight(int nth, bool onlyInGame, bool onlyInRound) c
 */
 int BotManager::getBotIDToTheLeft(int nth, bool onlyInGame, bool onlyInRound) const
 {
+	// log
+	string msg = "getBotIDToTheLeft ";
+	msg += to_string(nth);
+	msg += ',';
+	msg += to_string(onlyInGame);
+	msg += ',';
+	msg += to_string(onlyInRound);
+	this->log(Severity::VERBOSE, msg);
+
 	return this->hostess->getBotIDToTheLeft(this->nthAtTable, nth, onlyInGame, onlyInRound);
 }
 
@@ -482,6 +631,9 @@ int BotManager::getBotIDToTheLeft(int nth, bool onlyInGame, bool onlyInRound) co
 */
 int BotManager::getCallAmount() const
 {
+	// log
+	this->log(Severity::VERBOSE, "getCallAmount");
+
 	return this->hostess->getCallAmount() - this->pot;
 }
 
@@ -489,6 +641,9 @@ int BotManager::getCallAmount() const
 */
 int BotManager::getMinRaise() const
 {
+	// log
+	this->log(Severity::VERBOSE, "getMinRaise");
+
 	return this->hostess->getMinRaise();
 }
 
@@ -501,6 +656,11 @@ int BotManager::getBigBlindAtRound(int round) const
 		round = this->hostess->getCurrentRound();
 	}
 
+	// log
+	string msg = "getBigBlindAtRound ";
+	msg += to_string(round);
+	this->log(Severity::VERBOSE, msg);
+
 	return this->hostess->getBigBlindAtRound(round);
 }
 
@@ -508,6 +668,11 @@ int BotManager::getBigBlindAtRound(int round) const
 */
 int BotManager::getBlindShiftDeadline(int shiftDeadlineIndex) const
 {
+	// log
+	string msg = "getBlindShiftDeadline ";
+	msg += to_string(shiftDeadlineIndex);
+	this->log(Severity::VERBOSE, msg);
+
 	return this->rules->getBlindShiftDeadline(shiftDeadlineIndex);
 }
 
@@ -515,6 +680,9 @@ int BotManager::getBlindShiftDeadline(int shiftDeadlineIndex) const
 */
 int BotManager::getNextBlindShiftDeadline() const
 {
+	// log
+	this->log(Severity::VERBOSE, "getNextBlindShiftDeadline");
+
 	return this->hostess->getNextBlindShiftDeadline();
 }
 
@@ -527,6 +695,11 @@ int BotManager::getSmallBlindAtRound(int round) const
 		round = this->hostess->getCurrentRound();
 	}
 
+	// log
+	string msg = "getSmallBlindAtRound ";
+	msg += to_string(round);
+	this->log(Severity::VERBOSE, msg);
+
 	return this->hostess->getSmallBlindAtRound(round);
 }
 
@@ -534,6 +707,9 @@ int BotManager::getSmallBlindAtRound(int round) const
 */
 int BotManager::getCurrentRound() const
 {
+	// log
+	this->log(Severity::VERBOSE, "getCurrentRound");
+
 	return this->hostess->getCurrentRound();
 }
 
@@ -541,6 +717,9 @@ int BotManager::getCurrentRound() const
 */
 int BotManager::getTableNumOfCards() const
 {
+	// log
+	this->log(Severity::VERBOSE, "getCurrentRound");
+
 	return this->table->getNumOfCards();
 }
 
@@ -548,6 +727,11 @@ int BotManager::getTableNumOfCards() const
 */
 Card BotManager::getTableCard(int cardIndex) const
 {
+	// log
+	string msg = "getTableCard ";
+	msg += to_string(cardIndex);
+	this->log(Severity::VERBOSE, msg);
+
 	return *this->table->getCard(cardIndex);
 }
 
@@ -555,6 +739,9 @@ Card BotManager::getTableCard(int cardIndex) const
 */
 int BotManager::getPotSum() const
 {
+	// log
+	this->log(Severity::VERBOSE, "getPotSum");
+
 	return this->table->getPot();
 }
 
@@ -562,6 +749,11 @@ int BotManager::getPotSum() const
 */
 int BotManager::getBigBlind(int blindIndex) const
 {
+	// log
+	string msg = "getBigBlind ";
+	msg += to_string(blindIndex);
+	this->log(Severity::VERBOSE, msg);
+
 	return this->rules->getBigBlind(blindIndex);
 }
 
@@ -569,6 +761,9 @@ int BotManager::getBigBlind(int blindIndex) const
 */
 int BotManager::getRebuyDeadline() const
 {
+	// log
+	this->log(Severity::VERBOSE, "getRebuyDeadline");
+
 	return this->rules->getRebuyDeadline();
 }
 
@@ -576,6 +771,9 @@ int BotManager::getRebuyDeadline() const
 */
 int BotManager::getMaxNumOfRaises() const
 {
+	// log
+	this->log(Severity::VERBOSE, "getMaxNumOfRaises");
+
 	return this->rules->getMaxNumOfRaises();
 }
 
@@ -583,6 +781,11 @@ int BotManager::getMaxNumOfRaises() const
 */
 int BotManager::getSmallBlind(int blindIndex) const
 {
+	// log
+	string msg = "getSmallBlind ";
+	msg += to_string(blindIndex);
+	this->log(Severity::VERBOSE, msg);
+
 	return this->rules->getSmallBlind(blindIndex);
 }
 
@@ -590,6 +793,9 @@ int BotManager::getSmallBlind(int blindIndex) const
 */
 int BotManager::getAllowedBotCalcTime() const
 {
+	// log
+	this->log(Severity::VERBOSE, "getAllowedBotCalcTime");
+
 	return this->rules->getAllowedBotCalcTime(this->bot->getLang());
 }
 
@@ -597,6 +803,9 @@ int BotManager::getAllowedBotCalcTime() const
 */
 int BotManager::getStartingChips() const
 {
+	// log
+	this->log(Severity::VERBOSE, "getStartingChips");
+
 	return this->rules->getStartingChips();
 }
 
@@ -604,6 +813,9 @@ int BotManager::getStartingChips() const
 */
 int BotManager::getNumOfBlinds() const
 {
+	// log
+	this->log(Severity::VERBOSE, "getNumOfBlinds");
+
 	return this->rules->getNumOfBlinds();
 }
 
@@ -611,6 +823,9 @@ int BotManager::getNumOfBlinds() const
 */
 int BotManager::getNumOfRebuysAllowed() const
 {
+	// log
+	this->log(Severity::VERBOSE, "getNumOfRebuysAllowed");
+
 	return this->rules->getNumOfRebuysAllowed();
 }
 
@@ -618,6 +833,9 @@ int BotManager::getNumOfRebuysAllowed() const
 */
 bool BotManager::isTalkAllowed() const
 {
+	// log
+	this->log(Severity::VERBOSE, "isTalkAllowed");
+
 	return this->rules->isTalkAllowed();
 }
 
@@ -625,6 +843,9 @@ bool BotManager::isTalkAllowed() const
 */
 bool BotManager::isEmotionAllowed() const
 {
+	// log
+	this->log(Severity::VERBOSE, "isEmotionAllowed");
+
 	return this->rules->isEmotionAllowed();
 }
 
@@ -632,6 +853,9 @@ bool BotManager::isEmotionAllowed() const
 */
 bool BotManager::isBotKnowledgeUseAllowed() const
 {
+	// log
+	this->log(Severity::VERBOSE, "isBotKnowledgeUseAllowed");
+
 	return this->rules->isBotKnowledgeUseAllowed();
 }
 
@@ -639,6 +863,9 @@ bool BotManager::isBotKnowledgeUseAllowed() const
 */
 bool BotManager::isTableLoaded(int tableID) const
 {
+	// log
+	this->log(Severity::VERBOSE, "isTableLoaded");
+
 	return this->bkHandler->isTableLoaded(tableID);
 }
 
@@ -646,6 +873,11 @@ bool BotManager::isTableLoaded(int tableID) const
 */
 int BotManager::addKnowledgeTableRow(int tableID)
 {
+	// log
+	string msg = "addKnowledgeTableRow ";
+	msg += to_string(tableID);
+	this->log(Severity::VERBOSE, msg);
+
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
 		return this->bkHandler->addTableRow(tableID);
@@ -658,6 +890,16 @@ int BotManager::addKnowledgeTableRow(int tableID)
 */
 int BotManager::createKnowledgeTable(int numOfCols, list<KnowledgeDataType> colTypes)
 {
+	// log
+	string msg = "createKnowledgeTable ";
+	msg += to_string(numOfCols);
+	for (list<KnowledgeDataType>::iterator it = colTypes.begin(); it != colTypes.end(); ++it)
+	{
+		msg += ',';
+		msg += to_string(*it);
+	}
+	this->log(Severity::VERBOSE, msg);
+
 	if (this->rules->isBotKnowledgeUseAllowed() && numOfCols == colTypes.size())
 	{
 		// create and fill colTypes array
@@ -679,6 +921,13 @@ int BotManager::createKnowledgeTable(int numOfCols, list<KnowledgeDataType> colT
 */
 KnowledgeDataType BotManager::getKnowledgeTableDataType(int tableID, int col) const
 {
+	// log
+	string msg = "getKnowledgeTableDataType ";
+	msg += to_string(tableID);
+	msg += ',';
+	msg += to_string(col);
+	this->log(Severity::VERBOSE, msg);
+
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
 		return this->bkHandler->getTableColumnType(tableID, col);
@@ -691,6 +940,15 @@ KnowledgeDataType BotManager::getKnowledgeTableDataType(int tableID, int col) co
 */
 bool BotManager::getKnowledgeTableData(int& val, int tableID, int row, int col) const
 {
+	// log
+	string msg = "getKnowledgeTableData(int) ";
+	msg += to_string(tableID);
+	msg += ',';
+	msg += to_string(row);
+	msg += ',';
+	msg += to_string(col);
+	this->log(Severity::VERBOSE, msg);
+
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
 		return this->bkHandler->getTableData(val, tableID, row, col);
@@ -703,6 +961,15 @@ bool BotManager::getKnowledgeTableData(int& val, int tableID, int row, int col) 
 */
 bool BotManager::getKnowledgeTableData(bool& val, int tableID, int row, int col) const
 {
+	// log
+	string msg = "getKnowledgeTableData(bool) ";
+	msg += to_string(tableID);
+	msg += ',';
+	msg += to_string(row);
+	msg += ',';
+	msg += to_string(col);
+	this->log(Severity::VERBOSE, msg);
+
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
 		return this->bkHandler->getTableData(val, tableID, row, col);
@@ -715,6 +982,15 @@ bool BotManager::getKnowledgeTableData(bool& val, int tableID, int row, int col)
 */
 bool BotManager::getKnowledgeTableData(char& val, int tableID, int row, int col) const
 {
+	// log
+	string msg = "getKnowledgeTableData(char) ";
+	msg += to_string(tableID);
+	msg += ',';
+	msg += to_string(row);
+	msg += ',';
+	msg += to_string(col);
+	this->log(Severity::VERBOSE, msg);
+
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
 		return this->bkHandler->getTableData(val, tableID, row, col);
@@ -727,6 +1003,15 @@ bool BotManager::getKnowledgeTableData(char& val, int tableID, int row, int col)
 */
 bool BotManager::getKnowledgeTableData(std::string& val, int tableID, int row, int col) const
 {
+	// log
+	string msg = "getKnowledgeTableData(string) ";
+	msg += to_string(tableID);
+	msg += ',';
+	msg += to_string(row);
+	msg += ',';
+	msg += to_string(col);
+	this->log(Severity::VERBOSE, msg);
+
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
 		return this->bkHandler->getTableData(val, tableID, row, col);
@@ -739,6 +1024,15 @@ bool BotManager::getKnowledgeTableData(std::string& val, int tableID, int row, i
 */
 bool BotManager::getKnowledgeTableData(float& val, int tableID, int row, int col) const
 {
+	// log
+	string msg = "getKnowledgeTableData(float) ";
+	msg += to_string(tableID);
+	msg += ',';
+	msg += to_string(row);
+	msg += ',';
+	msg += to_string(col);
+	this->log(Severity::VERBOSE, msg);
+
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
 		return this->bkHandler->getTableData(val, tableID, row, col);
@@ -751,6 +1045,17 @@ bool BotManager::getKnowledgeTableData(float& val, int tableID, int row, int col
 */
 bool BotManager::setKnowledgeTableData(int val, int tableID, int row, int col)
 {
+	// log
+	string msg = "setKnowledgeTableData(int) ";
+	msg += to_string(tableID);
+	msg += ',';
+	msg += to_string(row);
+	msg += ',';
+	msg += to_string(col);
+	msg += ',';
+	msg += to_string(val);
+	this->log(Severity::VERBOSE, msg);
+
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
 		return this->bkHandler->setTableData(val, tableID, row, col);
@@ -763,6 +1068,17 @@ bool BotManager::setKnowledgeTableData(int val, int tableID, int row, int col)
 */
 bool BotManager::setKnowledgeTableData(bool val, int tableID, int row, int col)
 {
+	// log
+	string msg = "setKnowledgeTableData(bool) ";
+	msg += to_string(tableID);
+	msg += ',';
+	msg += to_string(row);
+	msg += ',';
+	msg += to_string(col);
+	msg += ',';
+	msg += to_string(val);
+	this->log(Severity::VERBOSE, msg);
+
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
 		return this->bkHandler->setTableData(val, tableID, row, col);
@@ -775,6 +1091,17 @@ bool BotManager::setKnowledgeTableData(bool val, int tableID, int row, int col)
 */
 bool BotManager::setKnowledgeTableData(char val, int tableID, int row, int col)
 {
+	// log
+	string msg = "setKnowledgeTableData(char) ";
+	msg += to_string(tableID);
+	msg += ',';
+	msg += to_string(row);
+	msg += ',';
+	msg += to_string(col);
+	msg += ',';
+	msg += val;
+	this->log(Severity::VERBOSE, msg);
+
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
 		return this->bkHandler->setTableData(val, tableID, row, col);
@@ -787,6 +1114,17 @@ bool BotManager::setKnowledgeTableData(char val, int tableID, int row, int col)
 */
 bool BotManager::setKnowledgeTableData(const char* val, int tableID, int row, int col)
 {
+	// log
+	string msg = "setKnowledgeTableData(str) ";
+	msg += to_string(tableID);
+	msg += ',';
+	msg += to_string(row);
+	msg += ',';
+	msg += to_string(col);
+	msg += ',';
+	msg += val;
+	this->log(Severity::VERBOSE, msg);
+
 	return this->setKnowledgeTableData(std::string(val), tableID, row, col);
 }
 
@@ -794,6 +1132,17 @@ bool BotManager::setKnowledgeTableData(const char* val, int tableID, int row, in
 */
 bool BotManager::setKnowledgeTableData(std::string val, int tableID, int row, int col)
 {
+	// log
+	string msg = "setKnowledgeTableData(str) ";
+	msg += to_string(tableID);
+	msg += ',';
+	msg += to_string(row);
+	msg += ',';
+	msg += to_string(col);
+	msg += ',';
+	msg += val;
+	this->log(Severity::VERBOSE, msg);
+
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
 		return this->bkHandler->setTableData(val, tableID, row, col);
@@ -806,6 +1155,17 @@ bool BotManager::setKnowledgeTableData(std::string val, int tableID, int row, in
 */
 bool BotManager::setKnowledgeTableData(float val, int tableID, int row, int col)
 {
+	// log
+	string msg = "setKnowledgeTableData(float) ";
+	msg += to_string(tableID);
+	msg += ',';
+	msg += to_string(row);
+	msg += ',';
+	msg += to_string(col);
+	msg += ',';
+	msg += to_string(val);
+	this->log(Severity::VERBOSE, msg);
+
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
 		return this->bkHandler->setTableData(val, tableID, row, col);
@@ -818,6 +1178,11 @@ bool BotManager::setKnowledgeTableData(float val, int tableID, int row, int col)
 */
 int BotManager::getKnowledgeTableNumOfCols(int tableID) const
 {
+	// log
+	string msg = "getKnowledgeTableNumOfCols ";
+	msg += to_string(tableID);
+	this->log(Severity::VERBOSE, msg);
+
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
 		return this->bkHandler->getTableNumOfCols(tableID);
@@ -830,6 +1195,11 @@ int BotManager::getKnowledgeTableNumOfCols(int tableID) const
 */
 int BotManager::getKnowledgeTableNumOfRows(int tableID) const
 {
+	// log
+	string msg = "getKnowledgeTableNumOfRows ";
+	msg += to_string(tableID);
+	this->log(Severity::VERBOSE, msg);
+
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
 		return this->bkHandler->getTableNumOfRows(tableID);
@@ -842,6 +1212,11 @@ int BotManager::getKnowledgeTableNumOfRows(int tableID) const
 */
 bool BotManager::removeKnowledgeTable(int tableID)
 {
+	// log
+	string msg = "removeKnowledgeTable ";
+	msg += to_string(tableID);
+	this->log(Severity::VERBOSE, msg);
+
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
 		return this->bkHandler->removeTable(tableID);
@@ -854,6 +1229,13 @@ bool BotManager::removeKnowledgeTable(int tableID)
 */
 bool BotManager::removeKnowledgeTableRow(int tableID, int row)
 {
+	// log
+	string msg = "removeKnowledgeTableRow ";
+	msg += to_string(tableID);
+	msg += ',';
+	msg += to_string(row);
+	this->log(Severity::VERBOSE, msg);
+
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
 		return this->bkHandler->removeTableRow(tableID, row);

@@ -28,9 +28,14 @@ bool Croupier::botComparatorByPot(int botIndex1, int botIndex2)
 */
 void Croupier::burn(Card* c)
 {
+	// log
+	string msg = "burn ";
+	msg += c->toString();
+	this->log(Severity::NOTIFICATION, msg);
+
 	if (numberOfBurntCards >= 3)
 	{
-		throw "Too much card to burn!"; // TEST nem jöhet létre, csak tesztelésnek van itt
+		throw "Too much card to burn!"; // TEST
 	}
 
 	this->burnt[this->numberOfBurntCards++] = c;
@@ -40,6 +45,9 @@ void Croupier::burn(Card* c)
 */
 void Croupier::collectCards()
 {
+	// log
+	this->log(Severity::NOTIFICATION, "collectCards");
+
 	// burnt cards
 	for (int i = 0; i < this->numberOfBurntCards; ++i)
 	{
@@ -71,6 +79,9 @@ void Croupier::collectCards()
 */
 void Croupier::betRound()
 {
+	// log
+	this->log(Severity::NOTIFICATION, "betRound");
+
 	this->lastBotRaisedIndex = this->currentBotIndex; // if noone raises the bet round ends before currentBotIndex
 	// further lastBotRaisedIndex is set by receiveBroadcast/RAISED
 
@@ -91,6 +102,9 @@ void Croupier::betRound()
 */
 void Croupier::dealing()
 {
+	// log
+	this->log(Severity::NOTIFICATION, "dealing");
+
 	// shuffle deck
 	this->deck.shuffle();
 
@@ -140,6 +154,9 @@ int Croupier::nextActiveBot(int from) const
 */
 void Croupier::preflop()
 {
+	// log
+	this->log(Severity::NOTIFICATION, "preflop");
+
 	// force blinds
 	int botIndex = this->currentDealerIndex; // dealer
 	
@@ -164,6 +181,9 @@ void Croupier::preflop()
 */
 void Croupier::flop()
 {
+	// log
+	this->log(Severity::NOTIFICATION, "flop");
+
 	// burn
 	this->burn(this->deck.pop());
 
@@ -184,6 +204,9 @@ void Croupier::flop()
 */
 void Croupier::turn()
 {
+	// log
+	this->log(Severity::NOTIFICATION, "turn");
+
 	// burn
 	this->burn(this->deck.pop());
 
@@ -202,6 +225,9 @@ void Croupier::turn()
 */
 void Croupier::river()
 {
+	// log
+	this->log(Severity::NOTIFICATION, "river");
+
 	// burn
 	this->burn(this->deck.pop());
 
@@ -220,6 +246,9 @@ void Croupier::river()
 */
 void Croupier::showdown()
 {
+	// log
+	this->log(Severity::NOTIFICATION, "showdown");
+
 	// reveal cards
 	for (int i = 0; i < this->numOfBots; ++i)
 	{
@@ -237,6 +266,11 @@ void Croupier::showdown()
 */
 void Croupier::handOutPot(int winnerIndex)
 {
+	// log
+	string msg = "handOutPot 1,"; // 1 is the number of winners
+	msg += to_string(winnerIndex);
+	this->log(Severity::NOTIFICATION, msg);
+
 	BotHandler* winner = this->bots[winnerIndex];
 	int winnersPot = winner->getPot();
 
@@ -254,7 +288,15 @@ void Croupier::handOutPot(int winnerIndex)
 */
 void Croupier::handOutPot(int numOfWinners, int* winnersIndex)
 {
-	// TODO check if it works entirely properly !!!
+	// log
+	string msg = "handOutPot ";
+	msg += to_string(numOfWinners);
+	for (int i = 0; i < numOfWinners; ++i)
+	{
+		msg += ',';
+		msg += to_string(winnersIndex[i]);
+	}
+	this->log(Severity::NOTIFICATION, msg);
 
 	// fill winners to easily find out if a given index represents a winning or losing bot
 	bool* areWinners = new bool[this->numOfBots];
@@ -335,6 +377,13 @@ void Croupier::refreshBlinds()
 			// -1 because (blindsNum == blindShiftNum + 1), and -1 because increasing index
 			++this->nextBlindShiftAtIndex;
 		}
+
+		// log
+		string msg = "refreshBlinds "; // 1 is the number of winners
+		msg += to_string(this->rules->getSmallBlind(this->currentBlindIndex));
+		msg += ',';
+		msg += to_string(this->rules->getBigBlind(this->currentBlindIndex));
+		this->log(Severity::NOTIFICATION, msg);
 
 		// broadcast blind raise
 		int* msgdata = new int[2];
@@ -450,6 +499,16 @@ void Croupier::determineWinners(int& numOfWinners, int** winnersIndex)
 		(*winnersIndex)[i++] = *it;
 	}
 
+	// log
+	string msg = "determineWinners ";
+	msg += to_string(numOfWinners);
+	for (int i = 0; i < numOfWinners; ++i)
+	{
+		msg += ',';
+		msg += to_string((*winnersIndex)[i]);
+	}
+	this->log(Severity::NOTIFICATION, msg);
+
 	// free shit
 	delete winners;
 	delete [] tmpHand;
@@ -479,6 +538,9 @@ int Croupier::findBotIndexByID(int botID) const
 */
 void Croupier::letsPoker()
 {
+	// log
+	this->log(Severity::NOTIFICATION, "letsPoker");
+
 	this->round = 1; // the very first round, not 0
 
 	while (this->canStartNewRound())
@@ -486,17 +548,35 @@ void Croupier::letsPoker()
 		// refresh blinds (if needed)
 		this->refreshBlinds();
 
+		// log round started
+		string msg = "roundStarted ";
+		msg += to_string(this->round);
+		this->log(Severity::NOTIFICATION, msg);
+
 		// broadcast round started
 		this->broadcast(BroadcastMessage::ROUNDSTARTED, 1, &this->round);
 
 		// push the dealer button to the next active bot
 		this->bots[this->currentDealerIndex]->rmDealerButton();
+
+		// log dealer button remove
+		msg = "rmDealerButton ";
+		msg += to_string(this->bots[this->currentDealerIndex]->getID());
+		this->log(Severity::NOTIFICATION, msg);
+
+		// add dealer button
 		this->currentDealerIndex = this->nextActiveBot(this->currentDealerIndex);
 		this->bots[this->currentDealerIndex]->addDealerButton();
 
-		// broadcast rebuy deadline reach if reached
+		// log dealer button add
+		msg = "addDealerButton ";
+		msg += to_string(this->bots[this->currentDealerIndex]->getID());
+		this->log(Severity::NOTIFICATION, msg);
+
+		// log and broadcast rebuy deadline reach if reached
 		if (this->round == this->rules->getRebuyDeadline())
 		{
+			this->log(Severity::NOTIFICATION, "rebuyDeadlineReached");
 			this->broadcast(BroadcastMessage::REBUYDEADLINEREACHED, 0, 0);
 		}
 
@@ -549,6 +629,11 @@ void Croupier::letsPoker()
 			{
 				if (this->bots[i]->getChips() == 0)
 				{
+					// log sending rebuyOrLeave
+					msg = "rebuyOrLeave ";
+					msg += to_string(this->bots[i]->getID());
+					this->log(Severity::NOTIFICATION, msg);
+
 					this->bots[i]->rebuyOrLeave();
 				}
 			}
@@ -559,11 +644,17 @@ void Croupier::letsPoker()
 		{
 			if (this->bots[i]->getChips() == 0)
 			{
+				// log sending leave
+				msg = "leave ";
+				msg += to_string(this->bots[i]->getID());
+				this->log(Severity::NOTIFICATION, msg);
+
 				this->bots[i]->leave();
 			}
 		}
 
-		// broadcast end of round
+		// log and broadcast end of round
+		this->log(Severity::NOTIFICATION, "roundEnded");
 		this->broadcast(BroadcastMessage::ROUNDENDED, 0, 0);
 
 		++this->round;
@@ -580,7 +671,12 @@ void Croupier::letsPoker()
 		}
 	}
 
-	this->broadcast(BroadcastMessage::GAMEWINNER, 1, &winnerIndex);
+	// log and broadcast game winner
+	int winnerID = this->bots[winnerIndex]->getID();
+	string msg = "gameWinner ";
+	msg += to_string(winnerID);
+	this->log(Severity::NOTIFICATION, msg);
+	this->broadcast(BroadcastMessage::GAMEWINNER, 1, &winnerID);
 }
 
 /** Stores a bot handler at the given index.
@@ -594,8 +690,12 @@ void Croupier::provideBotHandler(int index, BotHandler* bh)
 */
 void Croupier::kickBot(int botID)
 {
+	// log
+	string msg = "kickBot ";
+	msg += to_string(botID);
+	this->log(Severity::NOTIFICATION, msg);
+
 	int botIndex = this->findBotIndexByID(botID);
-	
 	this->bots[botIndex]->leave();
 }
 

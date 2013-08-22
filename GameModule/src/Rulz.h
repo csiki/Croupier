@@ -4,6 +4,8 @@
 #include "BettingSystem.h"
 #include "BotLanguage.h"
 
+// TODO maxnumofraises kivenni és az egészet a bettingsystemre bízni (potlimitnél 4, többinél akármennyi emelés lehet, asszem..)
+
 /**	Contains all the rules of a game.
 */
 class Rulz
