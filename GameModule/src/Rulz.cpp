@@ -100,10 +100,3 @@ BettingSystem Rulz::getBettingSystem() const
 {
 	return this->bs;
 }
-
-/** Returns maximum number of raises allowed during a bet round.
-*/
-int Rulz::getMaxNumOfRaises() const
-{
-	return this->maxNumOfRaises;
-}

@@ -7,8 +7,6 @@
 
 using namespace std;
 
-// TODO log message-eket kitalálni és logolást megcsinálni (croupier, botmanager, stb.)
-
 /**	List of events.
 */
 class Log : public Loggable

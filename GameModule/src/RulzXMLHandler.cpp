@@ -16,7 +16,7 @@ Rulz* RulzXMLHandler::loadXML(string xmlPath)
 		pugi::xpath_node rulzNode = doc.select_single_node("/rulz");
 
 		bool talkAllowed, emoAllowed, knowledgeUseAllowed;
-		int startingChips, maxNumOfRaises, numOfRebuysAllowed, rebuyDeadline;
+		int startingChips, numOfRebuysAllowed, rebuyDeadline;
 		BettingSystem bs;
 		int *smallBlinds, *bigBlinds, *shiftDeadlines, *botCalcTimes;
 		int numOfBlinds;
@@ -26,7 +26,6 @@ Rulz* RulzXMLHandler::loadXML(string xmlPath)
 		emoAllowed = rulzNode.node().child("emoallowed").text().as_bool();
 		knowledgeUseAllowed = rulzNode.node().child("knowledgeuseallowed").text().as_bool();
 		startingChips = rulzNode.node().child("startingchips").text().as_int();
-		maxNumOfRaises = rulzNode.node().child("maxnumofraises").text().as_int();
 		numOfRebuysAllowed = rulzNode.node().child("numofrebuysallowed").text().as_int();
 		rebuyDeadline = rulzNode.node().child("rebuydeadline").text().as_int();
 		bs = static_cast<BettingSystem>( rulzNode.node().child("bettingsystem").text().as_int() );
@@ -97,7 +96,7 @@ Rulz* RulzXMLHandler::loadXML(string xmlPath)
 
 		// create rulz
 		rulz = new Rulz(bs, numOfBlinds, smallBlinds, bigBlinds, shiftDeadlines,
-			rebuyDeadline, numOfRebuysAllowed, startingChips, maxNumOfRaises, botCalcTimes,
+			rebuyDeadline, numOfRebuysAllowed, startingChips, botCalcTimes,
 			talkAllowed, emoAllowed, knowledgeUseAllowed);
 	}
 
@@ -118,7 +117,6 @@ bool RulzXMLHandler::saveXML(Rulz* rules, string xmlPath)
 		rulzNode.append_child("emoallowed").text().set(rules->isEmotionAllowed());
 		rulzNode.append_child("knowledgeuseallowed").text().set(rules->isBotKnowledgeUseAllowed());
 		rulzNode.append_child("startingchips").text().set(rules->getStartingChips());
-		rulzNode.append_child("maxnumofraises").text().set(rules->getMaxNumOfRaises());
 		rulzNode.append_child("numofrebuysallowed").text().set(rules->getNumOfRebuysAllowed());
 		rulzNode.append_child("rebuydeadline").text().set(rules->getRebuyDeadline());
 		rulzNode.append_child("bettingsystem").text().set(rules->getBettingSystem());

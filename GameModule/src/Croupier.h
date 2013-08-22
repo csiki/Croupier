@@ -14,7 +14,7 @@
 */
 class Croupier : public Logger, public BroadcastMember
 {
-public: // TODO private
+private:
 	Deck deck;
 	Card* burnt[3];
 	int numberOfBurntCards;
@@ -28,7 +28,7 @@ public: // TODO private
 	BotHandler** bots;
 	const Rulz* rules;
 	Table* table;
-public: // TODO private
+
 	bool botComparatorByPot(int botIndex1, int botIndex2); // UNIT done
 	int nextActiveBot(int from = -1) const; // default: -1 ~ currentBotIndex // UNIT done
 	void burn(Card* c); // UNIT done 

@@ -336,7 +336,7 @@ bool BotManager::canRaise(int raiseAmount) const
 	BettingSystem bs = this->rules->getBettingSystem();
 
 	return this->stepToken
-		&& this->rules->getMaxNumOfRaises() - this->numOfRaises > 0
+		&& (this->rules->getBettingSystem() != BettingSystem::FIXLIMIT || (this->rules->getBettingSystem() == BettingSystem::FIXLIMIT && this->numOfRaises < 4))
 		&& this->chips >= callAmountOfPlayer + raiseAmount
 		&& (
 			(bs == BettingSystem::NOLIMIT && raiseAmount >= minRaise) // raise >= bigblind (minRaise)
@@ -765,16 +765,6 @@ int BotManager::getRebuyDeadline() const
 	this->log(Severity::VERBOSE, "getRebuyDeadline");
 
 	return this->rules->getRebuyDeadline();
-}
-
-/** Returns max number of raises in a round.
-*/
-int BotManager::getMaxNumOfRaises() const
-{
-	// log
-	this->log(Severity::VERBOSE, "getMaxNumOfRaises");
-
-	return this->rules->getMaxNumOfRaises();
 }
 
 /** Returns small blind.

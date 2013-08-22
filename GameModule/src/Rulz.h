@@ -4,8 +4,6 @@
 #include "BettingSystem.h"
 #include "BotLanguage.h"
 
-// TODO maxnumofraises kivenni és az egészet a bettingsystemre bízni (potlimitnél 4, többinél akármennyi emelés lehet, asszem..)
-
 /**	Contains all the rules of a game.
 */
 class Rulz
@@ -20,14 +18,13 @@ private:
 	bool talkAllowed;
 	bool emotionAllowed;
 	bool knowledgeBaseAllowed;
-	int maxNumOfRaises;
 	map<BotLanguage, int> allowedBotCalcTime;
 	int startingChips;
 	BettingSystem bs;
 
 public:
 	Rulz(BettingSystem bs, int numOfBlinds, int* smallBlinds, int* bigBlinds, int* blindShiftDeadlines,
-		int rebuyDeadline, int numOfRebuysAllowed, int startingChips, int maxNumOfRaises,
+		int rebuyDeadline, int numOfRebuysAllowed, int startingChips,
 		int* allowedBotCalcTime, bool talkAllowed, bool emotionAllowed, bool knowledgeBaseAllowed)
 	{
 		this->bs = bs;
@@ -38,7 +35,6 @@ public:
 		this->rebuyDeadline = rebuyDeadline;
 		this->numOfRebuysAllowed = numOfRebuysAllowed;
 		this->startingChips = startingChips;
-		this->maxNumOfRaises = maxNumOfRaises;
 		this->talkAllowed = talkAllowed;
 		this->emotionAllowed = emotionAllowed;
 		this->knowledgeBaseAllowed = knowledgeBaseAllowed;
@@ -73,7 +69,6 @@ public:
 	int getAllowedBotCalcTime(BotLanguage lang) const;
 	int getStartingChips() const;
 	BettingSystem getBettingSystem() const;
-	int getMaxNumOfRaises() const;
 };
 
 #endif  //_RULZ_H

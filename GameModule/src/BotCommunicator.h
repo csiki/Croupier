@@ -84,7 +84,6 @@ public:
 	virtual bool isTalkAllowed() const = 0;
 	virtual bool isEmotionAllowed() const = 0;
 	virtual bool isBotKnowledgeUseAllowed() const = 0;
-	virtual int getMaxNumOfRaises() const = 0;
 	// knowledge handler
 	virtual bool getKnowledgeTableData(int& val, int tableID, int row, int col) const = 0;
 	virtual bool getKnowledgeTableData(bool& val, int tableID, int row, int col) const = 0;

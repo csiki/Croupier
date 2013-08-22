@@ -16,7 +16,7 @@
 #include "BroadcastMessage.h"
 #include "Comment.h"
 
-// Warning: botID != entityID
+// Warning: botID != entityID (playerID)
 // TODO idõlimit programozási nyelv alapján minden egyes hívásra
 // TODO memórialimit, foglalás módjának meghatározása
 
@@ -130,13 +130,12 @@ public:
 	bool isEmotionAllowed() const; 
 	bool isBotKnowledgeUseAllowed() const; 
 	int addKnowledgeTableRow(int tableID); 
-	int createKnowledgeTable(int numOfCols, list<KnowledgeDataType> colTypes);  INNENTÕL...
+	int createKnowledgeTable(int numOfCols, list<KnowledgeDataType> colTypes);
 	KnowledgeDataType getKnowledgeTableDataType(int tableID, int col) const;
 	int getKnowledgeTableNumOfCols(int tableID) const;
 	int getKnowledgeTableNumOfRows(int tableID) const;
 	bool removeKnowledgeTable(int tableID);
 	bool removeKnowledgeTableRow(int tableID, int row);
-	int getMaxNumOfRaises() const;
 	bool isTableLoaded(int tableID) const;
 
 	bool getKnowledgeTableData(int& val, int tableID, int row, int col) const;

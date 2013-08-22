@@ -7,8 +7,6 @@
 #include "BroadcastMessage.h"
 #include "BotInfo.h"
 
-// TODO playerek azért fizethetnek, hogy a hostess egyes algoritmusait kihasználhatják (használatonként/havonta)
-
 /**	Helper for AIs.
 */
 class Hostess : public BroadcastMember

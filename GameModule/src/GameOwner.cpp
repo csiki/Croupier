@@ -19,7 +19,7 @@ void GameOwner::fillBotLoaders()
 	this->botLoaders.insert(
 		pair<BotLanguage, BotLoader*>( BotLanguage::CPP, new CppBotLoader() ));
 	
-	// [TODO] FILL WITH FURTHER LOADERS HERE !
+	// FILL WITH FURTHER LOADERS HERE !
 }
 
 /** Construct all the components of a game.
@@ -165,7 +165,7 @@ string GameOwner::getErrorMsg() const
 */
 void GameOwner::test()
 {
-	try
+	/*try
 	{
 		this->initialiseGame();
 
@@ -221,5 +221,5 @@ void GameOwner::test()
 	catch (const char* msg)
 	{
 		cout << "Exception: " << msg << endl;
-	}
+	}*/
 }
