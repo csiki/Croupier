@@ -353,8 +353,11 @@ bool BotManager::allin()
 	// log
 	this->log(Severity::INFORMATION, "allin");
 
+	this->disableLog(); // not to log canAllin()
 	if (this->canAllin())
 	{
+		this->enableLog(); // log further
+
 		int allinAmount = this->chips;
 		this->pot += this->chips;
 		this->chips = 0;
@@ -381,8 +384,11 @@ bool BotManager::call()
 	// log
 	this->log(Severity::INFORMATION, "call");
 
+	this->disableLog(); // not to log canCall()
 	if (this->canCall())
 	{
+		this->enableLog(); // log further
+
 		int callAmount = this->hostess->getCallAmount() - this->pot;
 		this->chips -= callAmount;
 		this->pot += callAmount;
@@ -409,8 +415,11 @@ bool BotManager::check()
 	// log
 	this->log(Severity::INFORMATION, "check");
 
+	this->disableLog(); // not to log canCheck()
 	if (this->canCheck())
 	{
+		this->enableLog(); // log further
+
 		this->stepToken = false;
 
 		// broadcast check
@@ -430,8 +439,11 @@ bool BotManager::fold()
 	// log
 	this->log(Severity::INFORMATION, "fold");
 
+	this->disableLog(); // not to log canFold()
 	if (this->canFold())
 	{
+		this->enableLog(); // log further
+
 		this->inRound = false;
 		this->stepToken = false;
 
@@ -454,8 +466,11 @@ bool BotManager::raise(int raiseAmount)
 	msg += to_string(raiseAmount);
 	this->log(Severity::INFORMATION, msg);
 
+	this->disableLog(); // not to log canRaise()
 	if (this->canRaise(raiseAmount))
 	{
+		this->enableLog(); // log further
+
 		int chipsToMove = (this->hostess->getCallAmount() - this->pot) + raiseAmount;
 		this->chips -= chipsToMove;
 		this->pot += chipsToMove;
@@ -501,8 +516,11 @@ bool BotManager::rebuy(int rebuyAmount)
 	msg += to_string(rebuyAmount);
 	this->log(Severity::INFORMATION, msg);
 
+	this->disableLog(); // not to log canRebuy()
 	if (this->canRebuy(rebuyAmount))
 	{
+		this->enableLog(); // log further
+
 		this->reservedCredit -= rebuyAmount;
 		this->chips += rebuyAmount;
 		++this->numOfRebuys;

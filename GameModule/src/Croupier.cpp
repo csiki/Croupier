@@ -621,6 +621,9 @@ void Croupier::letsPoker()
 			this->handOutPot(numOfWinners, winnersIndex);
 		}
 
+		// collect cards
+		this->collectCards();
+
 		// send rebuyOrLeave() to bots out of chips (if rebuy is possible)
 		// botmanager runs canRebuy() before forward the message to bot
 		if (this->rules->getNumOfRebuysAllowed() > 0)

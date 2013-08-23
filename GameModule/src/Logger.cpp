@@ -7,7 +7,22 @@
 */
 void Logger::log(Severity severity, std::string msg) const
 {
-	time_t timer = time(0);
+	if (this->logEnabled)
+	{
+		loggable->log(new Event(severity, getID(), msg));
+	}
+}
 
-	loggable->log(new Event(severity, getID(), msg));
+/** Enables logging.
+*/
+void Logger::enableLog()
+{
+	this->logEnabled = true;
+}
+
+/** Disables the possibility of logging.
+*/
+void Logger::disableLog()
+{
+	this->logEnabled = false;
 }

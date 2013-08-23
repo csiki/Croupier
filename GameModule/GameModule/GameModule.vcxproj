@@ -143,6 +143,8 @@
     <ClInclude Include="..\src\Table.h" />
     <ClInclude Include="..\src\targetver.h" />
     <ClInclude Include="..\src\TestBot.h" />
+    <ClInclude Include="..\src\TestBotAgressive.h" />
+    <ClInclude Include="..\src\TestBotShy.h" />
     <ClInclude Include="..\src\XYTranslator.h" />
   </ItemGroup>
   <ItemGroup>

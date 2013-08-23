@@ -17,6 +17,8 @@ public:
 		severity(severity), loggerID(loggerID), msg(msg)
 	{}
 	
+	string toString() const;
+
 };
 
 #endif  //_EVENT_H

@@ -43,7 +43,5 @@ void Deck::shuffle()
 		throw "The deck is not complete.";
 	}
 
-	srand((unsigned int)time(0));
-
 	std::random_shuffle(cards.begin(), cards.end()); // using inner Fisher–Yates shuffle algorithm
 }

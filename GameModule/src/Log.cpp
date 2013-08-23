@@ -21,6 +21,8 @@ int Log::getSeverityFrequency(Severity sev) const
 void Log::log(Event* e)
 {
 	++this->severityFequency.at(e->severity); // increase frequency
+
+	cout << e->toString() << endl; // TODO
 	events.push_back(e);
 }
 

@@ -113,4 +113,4 @@ public:
 	}
 };
 
-#endif
+#endif // _TESTBOT_H

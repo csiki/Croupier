@@ -26,6 +26,9 @@ void GameOwner::fillBotLoaders()
 */
 bool GameOwner::initialiseGame()
 {
+	// set random seed
+	srand((unsigned int)time(0));
+
 	// fill botloaders map
 	this->fillBotLoaders();
 

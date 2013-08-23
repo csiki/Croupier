@@ -14,8 +14,15 @@ int main(int argc, char* argv[])
 	playersID[2] = 3;
 	GameOwner* go = new GameOwner(3, playersID, "testlog.xml", "testrules.xml", "testresults.xml");
 
-	go->test();
+	go->initialiseGame();
 
+	try {
+		go->startGame();
+	}
+	catch (const char* e)
+	{
+		cout << e << endl;
+	}
 	return 0;
 }
 
