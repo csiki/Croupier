@@ -42,6 +42,8 @@ void BotManager::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize
 		case PREFLOP:
 			this->bot->preflop();
 			break;
+		case QUIT:
+			this->bot->leftGame(data[0]);
 		case RAISED:
 			this->bot->raised(data[0], data[1]);
 			break;
@@ -572,7 +574,7 @@ void BotManager::quit()
 
 	// broadcast left game
 	int msgdata = this->getID();
-	this->broadcast(BroadcastMessage::LEFTGAME, 1, &msgdata);
+	this->broadcast(BroadcastMessage::QUIT, 1, &msgdata);
 }
 
 /** Returns the number of AIs.

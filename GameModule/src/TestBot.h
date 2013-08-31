@@ -105,7 +105,20 @@ public:
 
 	void step()
 	{
-		cout << "step" << endl;
+		cout << "step testbot" << endl;
+
+		if (this->communicator->getCallAmount() < this->communicator->getChips() && this->communicator->getCallAmount() > 0)
+		{
+			this->communicator->call();
+		}
+		else if (this->communicator->getCallAmount() == 0)
+		{
+			this->communicator->check();
+		}
+		else
+		{
+			this->communicator->fold();
+		}
 	}
 
 	void turn()

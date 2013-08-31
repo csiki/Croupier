@@ -249,10 +249,10 @@
     <ClInclude Include="..\src\TestBot.h">
       <Filter>Header Files\TestBots</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\TestBotAgressive.h">
+    <ClInclude Include="..\src\TestBotShy.h">
       <Filter>Header Files\TestBots</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\TestBotShy.h">
+    <ClInclude Include="..\src\TestBotAggressive.h">
       <Filter>Header Files\TestBots</Filter>
     </ClInclude>
   </ItemGroup>

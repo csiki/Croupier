@@ -105,7 +105,21 @@ public:
 
 	void step()
 	{
-		cout << "step" << endl;
+		if (this->communicator->canCheck())
+		{
+			this->communicator->check();
+		}
+		else if (this->communicator->getCallAmount() > 1.5 * this->communicator->getBigBlindAtRound())
+		{
+			this->communicator->fold();
+		}
+		else
+		{
+			if (!this->communicator->call())
+			{
+				this->communicator->allin();
+			}
+		}
 	}
 
 	void turn()

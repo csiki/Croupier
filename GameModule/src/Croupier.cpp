@@ -8,9 +8,6 @@ void Croupier::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, 
 {
 	switch (msg)
 	{
-		case LEFTGAME:
-			this->kickBot(data[0]); // if a bot decides to leave, kick it
-			break;
 		case RAISED:
 			this->lastBotRaisedIndex = this->findBotIndexByID(data[0]); // for betting rounds
 			break;

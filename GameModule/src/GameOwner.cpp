@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "GameOwner.h"
 #include "TestBot.h"
+#include "TestBotAggressive.h"
+#include "TestBotShy.h"
 #include "Card.h"
 
 /** Saves the error message.
@@ -73,7 +75,14 @@ bool GameOwner::initialiseGame()
 			this->errorOccured(msg);
 			return false;
 		}*/
-		this->bots[i] = new TestBot(30, "jaja", BotLanguage::CPP);
+
+		// TEST
+		if (i == 0)
+			this->bots[i] = new TestBot(10, "testbot", BotLanguage::CPP);
+		else if (i == 1)
+			this->bots[i] = new TestBotAggressive(20, "aggressivebot", BotLanguage::CPP);
+		else
+			this->bots[i] = new TestBotShy(30, "shybot", BotLanguage::CPP);
 
 		// create bot knowledge handler (if neccessery)
 		BotKnowledgeHandler* bkHandler = nullptr;
@@ -87,6 +96,9 @@ bool GameOwner::initialiseGame()
 			this->bots[i], bkHandler, this->hostess, this->table,
 			this->rulz, this->broadcastStation, log, this->playersID[i],
 			this->rulz->getStartingChips(), botData->credit - this->rulz->getStartingChips(), i);
+
+		// connect bot to communicator
+		this->bots[i]->setCommunicator(this->botManagers[i]);
 
 		// sit bot to table
 		this->table->sit(this->botManagers[i]);

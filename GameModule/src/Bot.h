@@ -18,14 +18,19 @@ private:
 	const int id;
 	const string name;
 	const BotLanguage lang;
-public:
 
-	Bot(int id, string name, BotLanguage lang) : id(id), name(name), lang(lang) {}
+protected:
+	BotCommunicator* communicator;
+
+public:
+	Bot(int id, string name, BotLanguage lang)
+		: id(id), name(name), lang(lang) {}
 	virtual ~Bot() {}
 
 	int getID() const;
 	BotLanguage getLang() const;
 	std::string getName() const;
+	void setCommunicator(BotCommunicator* communicator);
 	
 	virtual void allined(int botID, int amount) = 0;
 	virtual void blindsRaised(int newSmallBlind, int newBigBlind) = 0;

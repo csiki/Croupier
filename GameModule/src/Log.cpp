@@ -22,7 +22,11 @@ void Log::log(Event* e)
 {
 	++this->severityFequency.at(e->severity); // increase frequency
 
-	cout << e->toString() << endl; // TODO
+	if (e->severity <= Severity::INFORMATION)
+	{
+		cout << e->toString() << endl; // TEST
+	}
+
 	events.push_back(e);
 }
 

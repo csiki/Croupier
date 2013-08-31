@@ -21,3 +21,10 @@ string Bot::getName() const
 {
 	return this->name;
 }
+
+/** Sets the communicator reference.
+*/
+void Bot::setCommunicator(BotCommunicator* communicator)
+{
+	this->communicator = communicator;
+}
