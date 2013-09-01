@@ -105,6 +105,8 @@ public:
 
 	void step()
 	{
+		cout << "step shybot" << endl;
+
 		if (this->communicator->canCheck())
 		{
 			this->communicator->check();

@@ -45,6 +45,11 @@ void BotHandler::forceBlind(int blind)
 */
 void BotHandler::receiveCard(Card* c)
 {
+	// log
+	string msg = "receiveCard ";
+	msg += c->toString();
+	this->log(Severity::VERBOSE, msg);
+
 	if (this->hand[0] == nullptr)
 	{
 		this->hand[0] = c;
@@ -67,6 +72,13 @@ void BotHandler::receiveChips(int chipsAmount)
 void BotHandler::revealCards()
 {
 	this->cardsRevealed = true;
+
+	// log cards (as information)
+	string msg = "revealCards ";
+	msg += this->lookAtHand(0).toString();
+	msg += ",";
+	msg += this->lookAtHand(1).toString();
+	this->log(Severity::INFORMATION, msg);
 }
 
 /**	Removes a card from AI's hand.

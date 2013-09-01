@@ -7,6 +7,8 @@
 #include "BroadcastMessage.h"
 #include "BotInfo.h"
 
+// TODO olyan függvény ami visszaadja a lehetõ legnagyobb HandRank-ot a kéz és asztal eddigi állaga alapján
+
 /**	Helper for AIs.
 */
 class Hostess : public BroadcastMember
