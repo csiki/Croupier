@@ -876,7 +876,24 @@ bool BotManager::isTableLoaded(int tableID) const
 	// log
 	this->log(Severity::VERBOSE, "isTableLoaded");
 
-	return this->bkHandler->isTableLoaded(tableID);
+	if (this->rules->isBotKnowledgeUseAllowed())
+	{
+		return this->bkHandler->isTableLoaded(tableID);
+	}
+
+	return false;
+}
+
+/** Returns the highest rank of the bot's two cards combined with the cards on table.
+*/
+HandRank BotManager::getHandRank() const
+{
+	if (this->hand[0] != nullptr) // has cards
+	{
+		return this->hostess->getBotHandRank(this->hand[0], this->hand[1]);
+	}
+
+	return HandRank::None;
 }
 
 /** Adds a row to the specified table.

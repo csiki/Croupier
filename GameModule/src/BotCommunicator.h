@@ -8,6 +8,7 @@
 #include "KnowledgeTable.h"
 #include "Table.h"
 #include "Emotion.h"
+#include "HandRank.h"
 
 /**	Communication interface for AIs.
 */
@@ -69,6 +70,7 @@ public:
 	virtual int getNextBlindShiftDeadline() const = 0;
 	virtual int getSmallBlindAtRound(int round = -1) const = 0; // -1 means current round
 	virtual int getCurrentRound() const = 0;
+	virtual HandRank getHandRank() const = 0;
 	// table
 	virtual int getTableNumOfCards() const = 0;
 	virtual Card getTableCard(int cardIndex) const = 0;

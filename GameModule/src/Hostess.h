@@ -6,8 +6,8 @@
 #include "Rulz.h"
 #include "BroadcastMessage.h"
 #include "BotInfo.h"
-
-// TODO olyan függvény ami visszaadja a lehetõ legnagyobb HandRank-ot a kéz és asztal eddigi állaga alapján
+#include "HandRank.h"
+#include "HandEvaluator.h"
 
 /**	Helper for AIs.
 */
@@ -70,6 +70,8 @@ public:
 	int getBotIndexByID(int botID) const;
 	int getNumOfBots(bool onlyInGame, bool onlyInRound) const;
 	int getCurrentRound() const;
+	HandRank getBotHandRank(Card* botCard1, Card* botCard2) const;
+
 };
 
 #endif  //_HOSTESS_H

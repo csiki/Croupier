@@ -137,6 +137,7 @@ public:
 	bool removeKnowledgeTable(int tableID);
 	bool removeKnowledgeTableRow(int tableID, int row);
 	bool isTableLoaded(int tableID) const;
+	HandRank getHandRank() const;
 
 	bool getKnowledgeTableData(int& val, int tableID, int row, int col) const;
 	bool getKnowledgeTableData(bool& val, int tableID, int row, int col) const;

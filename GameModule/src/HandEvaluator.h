@@ -9,7 +9,7 @@
 class HandEvaluator
 {
 private:
-	static HandRank evalFiveCards(const Card** cards); // done
+	static HandRank evalFiveCards(const Card** cards);
 
 public:
 	static HandRank evalHand(const Card** cards, const Card** bestHand); // UNIT done

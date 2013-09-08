@@ -13,31 +13,35 @@ HandRank HandEvaluator::evalFiveCards(const Card** cards)
 	
 	for (int c = 0; c < 5; ++c)
 	{
-		/*
-			i. element of the histogram is represents
-			the number of cards with the same rank as
-			the card at i. position in cards array,
-			if it's the first occurence of the card
-			in cards.
-		*/
-
-		// from 0 to c we check if there's already a card with the same rank
-		alreadyFound = false;
-		for (int i = 0; i < c; ++i)
+		if (cards[c]->rank == Card::Rank::NULLRANK) // if nullrank, don't increase histogram
 		{
-			if (cards[i]->rank == cards[c]->rank)
+			/*
+				i. element of the histogram is represents
+				the number of cards with the same rank as
+				the card at i. position in cards array,
+				if it's the first occurence of the card
+				in cards.
+			*/
+
+			// from 0 to c we check if there's already a card with the same rank
+			alreadyFound = false;
+			for (int i = 0; i < c; ++i)
 			{
-				// if found one we increase that one
-				++histogram[i];
-				alreadyFound = true;
-				break;
+				if (cards[i]->rank == cards[c]->rank)
+				{
+					// if found one we increase that one
+					++histogram[i];
+					alreadyFound = true;
+					break;
+				}
 			}
-		}
 
-		if (!alreadyFound)
-		{
-			// if there's no card found with the same rank before
-			++histogram[c];
+			if (!alreadyFound)
+			{
+				// if there's no card found with the same rank before
+				++histogram[c];
+				// TODO !!! ide is NULLshit
+			}
 		}
 	}
 
@@ -77,7 +81,7 @@ HandRank HandEvaluator::evalFiveCards(const Card** cards)
 	for (int i = 1; i < 5; ++i)
 	{
 		// all cards must have equal suit
-		if (cards[0]->suit != cards[i]->suit)
+		if (cards[0]->suit != cards[i]->suit || cards[i]->suit == Card::Suit::NULLSUIT)
 		{
 			isFlush = false;
 			break;
@@ -101,7 +105,7 @@ HandRank HandEvaluator::evalFiveCards(const Card** cards)
 			highrank = cards[i]->rank;
 		}
 		
-		if (cards[i]->rank < lowrank)
+		if (cards[i]->rank < lowrank && cards[i]->rank == Card::Rank::NULLRANK) // nullcard can't be the lowest card
 		{
 			lowrank = cards[i]->rank;
 		}
@@ -155,7 +159,7 @@ bool HandEvaluator::cardComparatorByRank(const Card* c1, const Card* c2)
 
 /** Determine the best combination of 5 cards from 7, and returns with its highest rank.
  *	@param cards 7 cards, 2 in bot's hand, 5 from table
- *	@param bestHand already allocated for the best combination of 5 cards of cards
+ *	@param bestHand ALREADY ALLOCATED for the best combination of 5 cards of cards
  *	@return rank of bestHand
 */
 HandRank HandEvaluator::evalHand(const Card** cards, const Card** bestHand)
