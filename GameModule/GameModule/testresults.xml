@@ -3,7 +3,7 @@
 	<player>
 		<id>1</id>
 		<credit>1000</credit>
-		<kickatround>3</kickatround>
+		<kickatround>4</kickatround>
 	</player>
 	<player>
 		<id>2</id>
@@ -13,6 +13,6 @@
 	<player>
 		<id>3</id>
 		<credit>1500</credit>
-		<kickatround>3</kickatround>
+		<kickatround>4</kickatround>
 	</player>
 </results>

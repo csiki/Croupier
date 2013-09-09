@@ -6,8 +6,7 @@
 
 int main(int argc, char* argv[])
 {
-	//GameOwner gameowner(2, 1, 2, "testlog.xml,)
-	
+
 	int* playersID = new int[3];
 	playersID[0] = 1;
 	playersID[1] = 2;
@@ -16,16 +15,18 @@ int main(int argc, char* argv[])
 
 	go->initialiseGame();
 
-	try {
+	try
+	{
 		go->startGame();
 	}
 	catch (const char* e)
 	{
-		cout << e << endl;
+		cout << "Exception: " << e << endl;
 	}
 
 	go->saveResults();
 
 	return 0;
+
 }
 
