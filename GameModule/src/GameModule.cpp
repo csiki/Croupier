@@ -23,6 +23,9 @@ int main(int argc, char* argv[])
 	{
 		cout << e << endl;
 	}
+
+	go->saveResults();
+
 	return 0;
 }
 

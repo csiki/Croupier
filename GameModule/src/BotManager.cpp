@@ -888,6 +888,9 @@ bool BotManager::isTableLoaded(int tableID) const
 */
 HandRank BotManager::getHandRank() const
 {
+	// log
+	this->log(Severity::VERBOSE, "getHandRank");
+
 	if (this->hand[0] != nullptr) // has cards
 	{
 		return this->hostess->getBotHandRank(this->hand[0], this->hand[1]);

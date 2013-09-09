@@ -107,6 +107,8 @@ public:
 	{
 		cout << "step shybot" << endl;
 
+		cout << "handrank: " << this->communicator->getHandRank() << endl;
+
 		if (this->communicator->canCheck())
 		{
 			this->communicator->check();

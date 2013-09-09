@@ -13,7 +13,7 @@ HandRank HandEvaluator::evalFiveCards(const Card** cards)
 	
 	for (int c = 0; c < 5; ++c)
 	{
-		if (cards[c]->rank == Card::Rank::NULLRANK) // if nullrank, don't increase histogram
+		if (cards[c]->rank != Card::Rank::NULLRANK) // if nullrank, don't increase histogram
 		{
 			/*
 				i. element of the histogram is represents
@@ -40,7 +40,6 @@ HandRank HandEvaluator::evalFiveCards(const Card** cards)
 			{
 				// if there's no card found with the same rank before
 				++histogram[c];
-				// TODO !!! ide is NULLshit
 			}
 		}
 	}

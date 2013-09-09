@@ -178,16 +178,25 @@ void Croupier::preflop()
 */
 void Croupier::flop()
 {
-	// log
-	this->log(Severity::NOTIFICATION, "flop");
-
 	// burn
 	this->burn(this->deck.pop());
 
 	// put 3 cards on table
-	this->table->addCard(this->deck.pop());
-	this->table->addCard(this->deck.pop());
-	this->table->addCard(this->deck.pop());
+	Card* c1 = this->deck.pop();
+	Card* c2 = this->deck.pop();
+	Card* c3 = this->deck.pop();
+	this->table->addCard(c1);
+	this->table->addCard(c2);
+	this->table->addCard(c3);
+
+	// log
+	string msg = "flop ";
+	msg += c1->toString();
+	msg += ',';
+	msg += c2->toString();
+	msg += ',';
+	msg += c3->toString();
+	this->log(Severity::NOTIFICATION, msg);
 
 	// broadcast
 	this->broadcast(BroadcastMessage::FLOP, 0, 0);
@@ -201,14 +210,17 @@ void Croupier::flop()
 */
 void Croupier::turn()
 {
-	// log
-	this->log(Severity::NOTIFICATION, "turn");
-
 	// burn
 	this->burn(this->deck.pop());
 
 	// put a card on table
-	this->table->addCard(this->deck.pop());
+	Card* c = this->deck.pop();
+	this->table->addCard(c);
+
+	// log
+	string msg = "turn ";
+	msg += c->toString();
+	this->log(Severity::NOTIFICATION, msg);
 
 	// broadcast
 	this->broadcast(BroadcastMessage::TURN, 0, 0);
@@ -222,14 +234,17 @@ void Croupier::turn()
 */
 void Croupier::river()
 {
-	// log
-	this->log(Severity::NOTIFICATION, "river");
-
 	// burn
 	this->burn(this->deck.pop());
 
 	// put a card on table
-	this->table->addCard(this->deck.pop());
+	Card* c = this->deck.pop();
+	this->table->addCard(c);
+
+	// log
+	string msg = "river ";
+	msg += c->toString();
+	this->log(Severity::NOTIFICATION, msg);
 
 	// broadcast
 	this->broadcast(BroadcastMessage::RIVER, 0, 0);
