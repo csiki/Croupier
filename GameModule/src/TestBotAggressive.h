@@ -8,7 +8,8 @@
 class TestBotAggressive : public Bot
 {
 public:
-	TestBotAggressive(int id, string name, BotLanguage lang) : Bot(id, name, lang) {}
+	TestBotAggressive(BotCommunicator* communicator, int id, string name, BotLanguage lang)
+		: Bot(communicator, id, name, lang) {}
 
 	void allined(int botID, int amount)
 	{

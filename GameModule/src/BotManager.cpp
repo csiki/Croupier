@@ -391,6 +391,7 @@ bool BotManager::call()
 	{
 		this->enableLog(); // log further
 
+		
 		int callAmount = this->hostess->getCallAmount() - this->pot;
 		this->chips -= callAmount;
 		this->pot += callAmount;
@@ -416,7 +417,7 @@ bool BotManager::check()
 {
 	// log
 	this->log(Severity::INFORMATION, "check");
-
+	
 	this->disableLog(); // not to log canCheck()
 	if (this->canCheck())
 	{
@@ -1281,8 +1282,16 @@ void BotManager::step()
 {
 	this->stepToken = true;
 
-	// TODO idõt mérni !!!
-	this->bot->step();
+	Bot* tmp = this->bot;
+	std::atomic<bool> done(false);
+	this->runIn = std::thread([&done, tmp] () {
+		tmp->step();
+		done = true;
+	});
+
+	//while (!done) {}
+	this->runIn.join();
+	//this->measureTime(done); // TODO concurenceproblem
 
 	if (this->stepToken)
 	{
@@ -1330,4 +1339,38 @@ bool BotManager::rebuyOrLeave()
 int BotManager::getKickedAtRound() const
 {
 	return this->kickedAtRound;
+}
+
+/** Sets the bot to monitor.
+*/
+void BotManager::monitor(Bot* bot)
+{
+	this->bot = bot;
+}
+
+/** Measure the time between the call and the done becoming true.
+ *  @throws string error message of too much time spent with the id of the player
+*/
+void BotManager::measureTime(std::atomic<bool>& done)
+{
+	std::clock_t begin = clock();
+	std::clock_t now = begin;
+	std::chrono::milliseconds sleepDuration(50);
+	double allowedTime = double(this->rules->getAllowedBotCalcTime(this->bot->getLang()));
+	
+	while (!done && (double(now - begin) / CLOCKS_PER_MILLISEC) < allowedTime)
+	{
+		// run untill done and till the allowed time not elapsed
+		std::this_thread::sleep_for(sleepDuration);
+		now = clock();
+	}
+
+	if (!done)
+	{
+		string msg = "Allowed bot calculation time exceeded! Player ID: ";
+		msg += this->getID();
+		msg += "; Bot ID: ";
+		msg += this->bot->getID();
+		throw msg.c_str(); // TODO exception type for all exceptions !!!4
+	}
 }

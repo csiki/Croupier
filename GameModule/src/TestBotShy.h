@@ -8,7 +8,8 @@
 class TestBotShy : public Bot
 {
 public:
-	TestBotShy(int id, string name, BotLanguage lang) : Bot(id, name, lang) {}
+	TestBotShy(BotCommunicator* communicator, int id, string name, BotLanguage lang)
+		: Bot(communicator, id, name, lang) {}
 
 	void allined(int botID, int amount)
 	{
@@ -106,8 +107,6 @@ public:
 	void step()
 	{
 		cout << "step shybot" << endl;
-
-		cout << "handrank: " << this->communicator->getHandRank() << endl;
 
 		if (this->communicator->canCheck())
 		{

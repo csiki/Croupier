@@ -20,6 +20,10 @@
 #include <ctime>
 #include <sstream>
 #include <stdlib.h>
+#include <thread>
+#include <atomic>
+#include <ctime>
+#include <chrono>
 
 using namespace std;
 
@@ -28,6 +32,7 @@ namespace
 	const char _BOT_KNOWLEDGE_RELATIVE_PATH_[] = ""; // must end with "/" if any
 	const char _BOT_DATA_RELATIVE_PATH_[] = ""; // must end with "/" if any
 	const char _BOT_AI_RELATIVE_PATH_[] = ""; // must end with "/" if any
+	const double CLOCKS_PER_MILLISEC = double(CLOCKS_PER_SEC) / 1000.0;
 }
 
 static int mod (int number, int modulo)

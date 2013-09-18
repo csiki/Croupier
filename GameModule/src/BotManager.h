@@ -33,13 +33,13 @@ private:
 	Hostess *hostess;
 	const Table *table;
 	const Rulz *rules;
+	std::thread runIn; // TODO not needed
 
 	/// Bot's index at table
 	int nthAtTable;
 
 public:
-
-	BotManager(Bot* bot, BotKnowledgeHandler* bkHandler, Hostess* hostess, const Table* table,
+	BotManager(BotKnowledgeHandler* bkHandler, Hostess* hostess, const Table* table,
 		const Rulz* rules, BroadcastStation* broadcastStation, Loggable* loggable,
 		int playerID, int chips, int reservedCredit, int nthAtTable) :
 			Entity(playerID),
@@ -47,7 +47,6 @@ public:
 			BotHandler(playerID, broadcastStation, loggable, chips),
 			BotInfo(playerID, broadcastStation, loggable, chips)
 	{
-		this->bot = bot;
 		this->bkHandler = bkHandler;
 		this->hostess = hostess;
 		this->table = table;
@@ -159,6 +158,8 @@ public:
 
 	// own
 	int getKickedAtRound() const;
+	void monitor(Bot* bot);
+	void measureTime(std::atomic<bool>& done); // throws exception if not done in time
 };
 
 #endif  //_BOTMANAGER_H

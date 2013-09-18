@@ -66,6 +66,19 @@ bool GameOwner::initialiseGame()
 			return false;
 		}
 
+		// create bot knowledge handler (if neccessery)
+		BotKnowledgeHandler* bkHandler = nullptr;
+		if (rulz->isBotKnowledgeUseAllowed())
+		{
+			bkHandler = new BotKnowledgeHandler(botData);
+		}
+
+		// load bot manager
+		this->botManagers[i] = new BotManager(
+			bkHandler, this->hostess, this->table,
+			this->rulz, this->broadcastStation, log, this->playersID[i],
+			this->rulz->getStartingChips(), botData->credit - this->rulz->getStartingChips(), i);
+
 		// load bot TODO
 		/*this->bots[i] = this->botLoaders.at(botData->lang)->loadBot(botData);
 		if (this->bots[i] == nullptr)
@@ -78,27 +91,14 @@ bool GameOwner::initialiseGame()
 
 		// TEST
 		if (i == 0)
-			this->bots[i] = new TestBot(10, "testbot", BotLanguage::CPP);
+			this->bots[i] = new TestBot(this->botManagers[i], 10, "testbot", BotLanguage::CPP);
 		else if (i == 1)
-			this->bots[i] = new TestBotAggressive(20, "aggressivebot", BotLanguage::CPP);
+			this->bots[i] = new TestBotAggressive(this->botManagers[i], 20, "aggressivebot", BotLanguage::CPP);
 		else
-			this->bots[i] = new TestBotShy(30, "shybot", BotLanguage::CPP);
-
-		// create bot knowledge handler (if neccessery)
-		BotKnowledgeHandler* bkHandler = nullptr;
-		if (rulz->isBotKnowledgeUseAllowed())
-		{
-			bkHandler = new BotKnowledgeHandler(botData);
-		}
-
-		// load bot manager
-		this->botManagers[i] = new BotManager(
-			this->bots[i], bkHandler, this->hostess, this->table,
-			this->rulz, this->broadcastStation, log, this->playersID[i],
-			this->rulz->getStartingChips(), botData->credit - this->rulz->getStartingChips(), i);
+			this->bots[i] = new TestBotShy(this->botManagers[i], 30, "shybot", BotLanguage::CPP);
 
 		// connect bot to communicator
-		this->bots[i]->setCommunicator(this->botManagers[i]);
+		this->botManagers[i]->monitor(this->bots[i]);
 
 		// sit bot to table
 		this->table->sit(this->botManagers[i]);
@@ -143,6 +143,10 @@ bool GameOwner::startGame()
 */
 void GameOwner::saveResults()
 {
+	// save bot knowledge tables (BotKnowledgeHandler destructor done it)
+	// save log
+	LogXMLHandler::saveXML(this->log, this->logPath);
+
 	// save bot credits and the round when they fell out
 	Results* results = new Results(this->numOfBots);
 	
@@ -155,11 +159,6 @@ void GameOwner::saveResults()
 	}
 
 	ResultsXMLHandler::saveXML(results, this->resultsPath);
-
-	// save log
-	LogXMLHandler::saveXML(this->log, this->logPath);
-
-	// save bot knowledge tables (BotKnowledgeHandler destructor)
 }
 
 /** Returns state of the game.
