@@ -102,3 +102,11 @@ string Card::toString() const
 
 	return res;
 }
+
+Card Card::getCardByVal(int val)
+{
+	Rank r = static_cast<Rank>(val % 100);
+	Suit s = static_cast<Suit>((val - r) / 100);
+
+	return Card(s, r);
+}

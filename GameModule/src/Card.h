@@ -49,6 +49,7 @@ public:
 
 	static Card getNullCard();
 	static bool isNullCard(Card& card);
+	static Card getCardByVal(int val);
 };
 
 #endif  //_CARD_H

@@ -12,11 +12,6 @@ int Deck::num() const
 */
 Card* Deck::pop()
 {
-	if (cards.size() == 0)
-	{
-		throw "The deck is empty."; // TEST
-	}
-
 	Card* c = cards.back();
 	cards.pop_back();
 	return c;
@@ -26,11 +21,6 @@ Card* Deck::pop()
 */
 void Deck::push(Card* c)
 {
-	if (cards.size() == 52)
-	{
-		throw "The deck is full."; // TEST
-	}
-
 	cards.push_back(c);
 }
 
@@ -38,10 +28,5 @@ void Deck::push(Card* c)
 */
 void Deck::shuffle()
 {
-	if (cards.size() != 52)
-	{
-		throw "The deck is not complete.";
-	}
-
 	std::random_shuffle(cards.begin(), cards.end()); // using inner Fisher–Yates shuffle algorithm
 }

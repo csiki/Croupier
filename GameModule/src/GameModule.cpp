@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
 	{
 		go->startGame();
 	}
-	catch (const char* e)
+	catch (string e)
 	{
 		cout << "Exception: " << e << endl;
 	}

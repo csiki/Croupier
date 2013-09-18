@@ -15,6 +15,7 @@
 #include "KnowledgeDataType.h"
 #include "BroadcastMessage.h"
 #include "Comment.h"
+//#include <boost\thread.hpp>
 
 // Warning: botID != entityID (playerID)
 // TODO idõlimit programozási nyelv alapján minden egyes hívásra
@@ -33,7 +34,6 @@ private:
 	Hostess *hostess;
 	const Table *table;
 	const Rulz *rules;
-	std::thread runIn; // TODO not needed
 
 	/// Bot's index at table
 	int nthAtTable;

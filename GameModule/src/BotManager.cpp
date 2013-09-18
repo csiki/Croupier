@@ -81,7 +81,7 @@ void BotManager::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize
 			this->bot->turn();
 			break;
 		default: ;
-			throw "False message!"; // TEST
+			// do nothing
 	}
 
 	this->talkToken = false;
@@ -1282,20 +1282,18 @@ void BotManager::step()
 {
 	this->stepToken = true;
 
-	Bot* tmp = this->bot;
-	std::atomic<bool> done(false);
-	this->runIn = std::thread([&done, tmp] () {
-		tmp->step();
-		done = true;
-	});
-
-	//while (!done) {}
-	this->runIn.join();
+	this->bot->step();
+	// TODO boost threading to be able to interrupt
 	//this->measureTime(done); // TODO concurenceproblem
 
-	if (this->stepToken)
+	if (this->stepToken) // no step taken
 	{
-		this->fold(); // default move if no made
+		// log
+		string msg = "noStepTaken ";
+		msg += to_string(this->getID());
+		this->log(Severity::WARNING, msg);
+
+		this->fold(); // default move
 	}
 }
 
@@ -1357,20 +1355,20 @@ void BotManager::measureTime(std::atomic<bool>& done)
 	std::clock_t now = begin;
 	std::chrono::milliseconds sleepDuration(50);
 	double allowedTime = double(this->rules->getAllowedBotCalcTime(this->bot->getLang()));
-	
+
 	while (!done && (double(now - begin) / CLOCKS_PER_MILLISEC) < allowedTime)
 	{
 		// run untill done and till the allowed time not elapsed
 		std::this_thread::sleep_for(sleepDuration);
 		now = clock();
 	}
-
+	
 	if (!done)
 	{
 		string msg = "Allowed bot calculation time exceeded! Player ID: ";
-		msg += this->getID();
+		msg += to_string(this->getID());
 		msg += "; Bot ID: ";
-		msg += this->bot->getID();
-		throw msg.c_str(); // TODO exception type for all exceptions !!!4
+		msg += to_string(this->bot->getID());
+		throw msg; // TODO exception type for all exceptions !!!4
 	}
 }

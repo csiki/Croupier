@@ -30,11 +30,6 @@ void Croupier::burn(Card* c)
 	msg += c->toString();
 	this->log(Severity::NOTIFICATION, msg);
 
-	if (numberOfBurntCards >= 3)
-	{
-		throw "Too much card to burn!"; // TEST
-	}
-
 	this->burnt[this->numberOfBurntCards++] = c;
 }
 
@@ -137,11 +132,6 @@ int Croupier::nextActiveBot(int from) const
 	while (!this->bots[(from + offset) % this->numOfBots]->isInRound())
 	{
 		++offset; // iterate through bots till we found an active
-
-		if (offset > numOfBots)
-		{
-			throw "No active bots found!"; // TEST törölni késõbb
-		}
 	}
 
 	return (from + offset) % this->numOfBots;
@@ -539,8 +529,6 @@ int Croupier::findBotIndexByID(int botID) const
 			return i;
 		}
 	}
-
-	throw "No bot found"; // TEST
 
 	return -1;
 }
