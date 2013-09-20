@@ -255,6 +255,9 @@
     <ClInclude Include="..\src\TestBotAggressive.h">
       <Filter>Header Files\TestBots</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\TimerBotProxy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Bot.cpp">
@@ -396,6 +399,9 @@
       <Filter>Source Files\XMLHandlers</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Results.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\TimerBotProxy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1282,19 +1282,20 @@ void BotManager::step()
 {
 	this->stepToken = true;
 
+	// call step (calls a wrapper, possibly TimerBotProxy)
 	this->bot->step();
-	// TODO boost threading to be able to interrupt
-	//this->measureTime(done); // TODO concurenceproblem
 
 	if (this->stepToken) // no step taken
 	{
 		// log
-		string msg = "noStepTaken ";
-		msg += to_string(this->getID());
+		string msg = "noStepTaken";
 		this->log(Severity::WARNING, msg);
 
-		this->fold(); // default move
+		// default move
+		this->fold();
 	}
+
+	this->stepToken = false;
 }
 
 /** Croupier signals that AI should quit permanently.
@@ -1339,36 +1340,10 @@ int BotManager::getKickedAtRound() const
 	return this->kickedAtRound;
 }
 
-/** Sets the bot to monitor.
+/** Sets the bot to monitor and wrap in a timer proxy.
+ *	Only once can be could, else memory leak occurs!
 */
 void BotManager::monitor(Bot* bot)
 {
-	this->bot = bot;
-}
-
-/** Measure the time between the call and the done becoming true.
- *  @throws string error message of too much time spent with the id of the player
-*/
-void BotManager::measureTime(std::atomic<bool>& done)
-{
-	std::clock_t begin = clock();
-	std::clock_t now = begin;
-	std::chrono::milliseconds sleepDuration(50);
-	double allowedTime = double(this->rules->getAllowedBotCalcTime(this->bot->getLang()));
-
-	while (!done && (double(now - begin) / CLOCKS_PER_MILLISEC) < allowedTime)
-	{
-		// run untill done and till the allowed time not elapsed
-		std::this_thread::sleep_for(sleepDuration);
-		now = clock();
-	}
-	
-	if (!done)
-	{
-		string msg = "Allowed bot calculation time exceeded! Player ID: ";
-		msg += to_string(this->getID());
-		msg += "; Bot ID: ";
-		msg += to_string(this->bot->getID());
-		throw msg; // TODO exception type for all exceptions !!!4
-	}
+	this->bot = new TimerBotProxy(bot, this->rules->getAllowedBotCalcTime(bot->getLang()));
 }

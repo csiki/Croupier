@@ -26,7 +26,7 @@ Results* ResultsXMLHandler::loadXML(string xmlPath)
 
 		// create Results instance and add player results
 		results = new Results(idTemp.size());
-		for (int i = 0; i < idTemp.size(); ++i)
+		for (unsigned int i = 0; i < idTemp.size(); ++i)
 		{
 			results->addResult(idTemp.at(i), creditTemp.at(i), kickAtRoundTemp.at(i));
 		}

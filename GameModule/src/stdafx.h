@@ -24,6 +24,8 @@
 #include <atomic>
 #include <ctime>
 #include <chrono>
+#include <boost\thread.hpp>
+#include <boost\atomic.hpp>
 
 using namespace std;
 

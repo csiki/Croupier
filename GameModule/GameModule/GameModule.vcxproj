@@ -48,16 +48,18 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <BrowseInformation>true</BrowseInformation>
+      <AdditionalIncludeDirectories>c:\boost_1_54_0\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\boost_1_54_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
@@ -145,6 +147,7 @@
     <ClInclude Include="..\src\TestBot.h" />
     <ClInclude Include="..\src\TestBotAggressive.h" />
     <ClInclude Include="..\src\TestBotShy.h" />
+    <ClInclude Include="..\src\TimerBotProxy.h" />
     <ClInclude Include="..\src\XYTranslator.h" />
   </ItemGroup>
   <ItemGroup>
@@ -194,6 +197,7 @@
     <ClCompile Include="..\src\SchemeBotLoader.cpp" />
     <ClCompile Include="..\src\stdafx.cpp" />
     <ClCompile Include="..\src\Table.cpp" />
+    <ClCompile Include="..\src\TimerBotProxy.cpp" />
     <ClCompile Include="..\src\XYTranslator.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

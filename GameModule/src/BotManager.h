@@ -15,7 +15,7 @@
 #include "KnowledgeDataType.h"
 #include "BroadcastMessage.h"
 #include "Comment.h"
-//#include <boost\thread.hpp>
+#include "TimerBotProxy.h"
 
 // Warning: botID != entityID (playerID)
 // TODO idõlimit programozási nyelv alapján minden egyes hívásra
@@ -56,6 +56,7 @@ public:
 		this->numOfRebuys = 0;
 		this->kickedAtRound = 0;
 		this->numOfRaises = 0;
+		this->bot = nullptr;
 		
 		// subscribe to BroadcastStation
 		this->subscribe();
@@ -159,7 +160,6 @@ public:
 	// own
 	int getKickedAtRound() const;
 	void monitor(Bot* bot);
-	void measureTime(std::atomic<bool>& done); // throws exception if not done in time
 };
 
 #endif  //_BOTMANAGER_H
