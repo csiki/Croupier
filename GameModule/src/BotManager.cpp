@@ -6,7 +6,6 @@
 */
 void BotManager::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data)
 {
-	// TODO idõ mérése !
 	int *dataCopy;
 	this->talkToken = true; // bot can comment when receiving a message
 
@@ -1306,7 +1305,6 @@ void BotManager::leave()
 	this->inRound = false;
 	this->kickedAtRound = this->hostess->getCurrentRound();
 
-	// TODO idõt mérni !!!
 	this->bot->leave();
 
 	// broadcast left game
@@ -1318,7 +1316,6 @@ void BotManager::leave()
 */
 bool BotManager::rebuyOrLeave()
 {
-	// TODO idõt mérni !!!
 	if (this->canRebuy(1))
 	{
 		this->bot->rebuyOrLeave();
