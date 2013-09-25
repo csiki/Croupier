@@ -2,13 +2,14 @@ body{
     background-color: #e5f4ff;
 }
 
-#topmenu {
+#header {
     background-color: black;
     font-size: 1.1em;
     padding: 7px 30px;
+    color: white;
 }
 
-#topmenu ul{
+#header ul{
     list-style-type:none;
     margin:0;
     padding:0;
@@ -17,16 +18,25 @@ body{
     bottom: auto;
 }
 
-#topmenu li{
+#header li{
     display: inline;
     margin: 0px 30px;
 }
 
-#topmenu a{
+#header a{
     color: white;
     text-decoration: none;
 }
 
 #main{
     padding: 20px 0px;
+}
+
+#topmenu{
+    display: inline-block;
+}
+
+#lang{
+    display: inline-block;
+    float:right;
 }

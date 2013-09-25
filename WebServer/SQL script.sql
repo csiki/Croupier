@@ -1,3 +1,4 @@
-CREATE DATABASE `croupierweb` DEFAULT CHARACTER SET utf8 COLLATE utf8_hungarian_ci
-CREATE TABLE `croupierweb`.`accounts` (`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY, `username` VARCHAR(30) NOT NULL, `email` VARCHAR(50) NOT NULL, `password` VARCHAR(128) NOT NULL, `salt` VARCHAR(128) NOT NULL) ENGINE = InnoDB
-CREATE TABLE `croupierweb`.`login_attempts` (`user_id` INT(11) NOT NULL, `time` VARCHAR(30) NOT NULL) ENGINE = InnoDB
+CREATE DATABASE `croupierweb` DEFAULT CHARACTER SET utf8 COLLATE utf8;
+CREATE TABLE `croupierweb`.`accounts` (`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY, `username` VARCHAR(30) NOT NULL, `email` VARCHAR(50) NOT NULL, `password` VARCHAR(128) NOT NULL, `salt` VARCHAR(128) NOT NULL) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+CREATE TABLE `croupierweb`.`login_attempts` (`user_id` INT(11) NOT NULL, `time` VARCHAR(30) NOT NULL) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+CREATE TABLE `croupierweb`.`strings` (`id` int( 11 ) NOT NULL AUTO_INCREMENT ,`identifier` varchar( 30 ) NOT NULL ,`language` varchar( 5 ) NOT NULL ,`text` varchar( 30 ) NOT NULL ,PRIMARY KEY ( `id` ) ) ENGINE = InnoDB DEFAULT CHARSET = utf8;

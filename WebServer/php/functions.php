@@ -1,22 +1,20 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: Levys
- * Date: 2013.09.24.
- * Time: 19:57
- * To change this template use File | Settings | File Templates.
- */
 function sec_session_start() {
     $session_name = 'crouper_s'; // Set a custom session name
     $secure = false; // Set to true if using https.
     $httponly = true; // This stops javascript being able to access the session id.
-
     ini_set('session.use_only_cookies', 1); // Forces sessions to only use cookies.
-    $cookieParams = session_get_cookie_params(); // Gets current cookies params.
+    $cookieParams = session_get_cookie_params();
     session_set_cookie_params($cookieParams["lifetime"], $cookieParams["path"], $cookieParams["domain"], $secure, $httponly);
     session_name($session_name); // Sets the session name to the one set above.
     session_start(); // Start the php session
+    $lang = "en";
+    if(isset($_SESSION["lang"]))
+    {
+        $lang = $_SESSION["lang"];
+    }
     session_regenerate_id(); // regenerated the session, delete the old one.
+    $_SESSION["lang"] = $lang;
 }
 
 function login($email, $password, $mysqli) {
@@ -25,6 +23,10 @@ function login($email, $password, $mysqli) {
         $stmt->bind_param('s', $email); // Bind "$email" to parameter.
         $stmt->execute(); // Execute the prepared query.
         $stmt->store_result();
+        $user_id = NULL;
+        $username = NULL;
+        $db_password = NULL;
+        $salt = NULL;
         $stmt->bind_result($user_id, $username, $db_password, $salt); // get variables from result.
         $stmt->fetch();
         //print("user:" . $username . "<br/> pass: " . $password . "<br/> dbpass: " . $db_password . "<br/>salt: ".$salt);
@@ -61,7 +63,6 @@ function login($email, $password, $mysqli) {
     }
 }
 function checkbrute($user_id, $mysqli) {
-    return false;
     $now = time();
     $valid_attempts = $now - (2 * 60 * 60);
 
@@ -89,6 +90,7 @@ function login_check($mysqli) {
             $stmt->execute();
             $stmt->store_result();
             if($stmt->num_rows == 1) {
+                $password = NULL;
                 $stmt->bind_result($password);
                 $stmt->fetch();
                 $login_check = hash('sha512', $password.$user_browser);
@@ -106,4 +108,29 @@ function login_check($mysqli) {
     } else {
         return false;
     }
+}
+
+function initTranslate($language, $mysqli)
+{
+    global $tr;
+    if ($stmt = $mysqli->prepare("SELECT identifier, text FROM strings WHERE language = ?")) {
+        $stmt->bind_param('s', $language);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        //$identifier = NULL;
+        //$text = NULL;
+        //$stmt->bind_result($identifier, $text);
+        $arr = $result->fetch_all(MYSQLI_ASSOC);
+        foreach ($arr as $row) {
+            $tr[$row["identifier"]] = $row["text"];
+        }
+        $stmt->close();
+    }
+}
+
+function isValidLang($lang)
+{
+    if($lang == "en" || $lang == "hu")
+        return true;
+    return fal;
 }

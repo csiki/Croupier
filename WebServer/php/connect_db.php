@@ -12,3 +12,7 @@ define("PASSWORD", ""); // The database password.
 define("DATABASE", "croupierweb"); // The database name.
 
 $mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
+if ($mysqli->connect_errno) {
+    die("Failed to connect to MySQL: " . $mysqli->connect_error);
+}
+$mysqli->set_charset("utf8");

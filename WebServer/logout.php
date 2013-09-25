@@ -6,7 +6,7 @@
  * Time: 20:00
  * To change this template use File | Settings | File Templates.
  */
-include 'functions.php';
+include 'php/functions.php';
 sec_session_start();
 // Unset all session values
 $_SESSION = array();

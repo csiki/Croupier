@@ -1,42 +1,37 @@
 <?php
-include "functions.php";
-include "connect_db.php";
-sec_session_start();
-$loggedin = false;
-if(login_check($mysqli) == true)
-    $loggedin = true;
+include "php/include.php";
 if($loggedin) header('Location: summary.php');
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Croupier poker AI</title>
+    <title><?php print($tr["WEBPAGENAME"]); ?></title>
+    <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="style/main.css">
-    <script type="text/javascript" src="sha512.js"></script>
-    <script type="text/javascript">
-        function sendForm(form, password)
-        {
-            var p = document.createElement("input");
-            form.appendChild(p);
-            p.name = "p";
-            p.type = "hidden"
-            var shaObj = new jsSHA(password.value, "TEXT");
-            p.value = shaObj.getHash("SHA-512", "HEX");
-            password.value = "";
-            form.submit();
-        }
-    </script>
+    <script type="text/javascript" src="scripts/sha512.js"></script>
+    <script type="text/javascript" src="scripts/main.js"></script>
 </head>
 <body>
-<div id="topmenu">
+<div id="header">
+    <div id="topmenu">
     <ul>
-        <li><a href="./">Main</a></li>
-        <li><a href="login.php">Login</a></li>;
+        <li><a href="./"><?php print($tr["MAIN"]); ?></a></li>
+        <?php if ($loggedin) { ?>
+            <li><a href="summary.php"><?php print($tr["SUMMARY"]); ?></a></li>
+            <li><a href="logout.php"><?php print($tr["LOGOUT"]); ?></a></li>
+        <?php } else { ?>
+            <li><a href="login.php"><?php print($tr["LOGIN"]); ?></a></li>
+        <?php } ?>
     </ul>
+        </div>
+    <div id="lang">
+        <a href="setlang.php?lang=en">EN</a> |
+        <a href="setlang.php?lang=hu">HU</a>
+    </div>
 </div>
 <div id="main">
     <h2>Register</h2>
-    <form action="process_register.php" method="post" name="login_form">
+    <form action="php/process_register.php" method="post" name="login_form">
         Name: <input type="text" name="name">
         <br />
         <br />
