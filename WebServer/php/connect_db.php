@@ -13,6 +13,11 @@ define("DATABASE", "croupierweb"); // The database name.
 
 $mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
 if ($mysqli->connect_errno) {
-    die("Failed to connect to MySQL: " . $mysqli->connect_error);
+    dieDb($mysqli);
 }
 $mysqli->set_charset("utf8");
+
+function dieDb($mysqli)
+{
+    die("Failed to connect to MySQL: " . $mysqli->connect_error);
+}

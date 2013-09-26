@@ -1,6 +1,10 @@
 <?php
 include "php/include.php";
-if($loggedin) header('Location: summary.php');
+if($loggedin)
+{
+    header('Location: summary.php');
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -12,26 +16,14 @@ if($loggedin) header('Location: summary.php');
     <script type="text/javascript" src="scripts/main.js"></script>
 </head>
 <body>
-<div id="header">
-    <div id="topmenu">
-    <ul>
-        <li><a href="./"><?php print($tr["MAIN"]); ?></a></li>
-        <?php if ($loggedin) { ?>
-            <li><a href="summary.php"><?php print($tr["SUMMARY"]); ?></a></li>
-            <li><a href="logout.php"><?php print($tr["LOGOUT"]); ?></a></li>
-        <?php } else { ?>
-            <li><a href="login.php"><?php print($tr["LOGIN"]); ?></a></li>
-        <?php } ?>
-    </ul>
-        </div>
-    <div id="lang">
-        <a href="setlang.php?lang=en">EN</a> |
-        <a href="setlang.php?lang=hu">HU</a>
-    </div>
-</div>
+<?php include "php/header.php"; ?>
 <div id="main">
-    <h2>Register</h2>
-    <form action="php/process_register.php" method="post" name="login_form">
+    <h2><?php print($tr["REGISTER"]); ?></h2>
+    <?php
+    if(isset($_GET["success"]) && $_GET["success"] == 1)
+        echo $tr["REG_THANKS"];
+        else
+    echo '<form action="php/process_register.php" method="post" name="login_form">
         Name: <input type="text" name="name">
         <br />
         <br />
@@ -42,7 +34,8 @@ if($loggedin) header('Location: summary.php');
         <br />
         <br />
         <input type="submit" value="Register" onclick="sendForm(this.form, this.form.pass);">
-    </form>
+    </form>';
+    ?>
 </div>
 <div id="footer"></div>
 </body>

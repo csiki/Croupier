@@ -11,5 +11,5 @@ $tr = NULL;
 include "php/connect_db.php";
 include "php/functions.php";
 sec_session_start();
-initTranslate($_SESSION["lang"], $mysqli);
+initTranslate($mysqli);
 $loggedin = login_check($mysqli);

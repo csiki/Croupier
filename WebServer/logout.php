@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: Levys
- * Date: 2013.09.24.
- * Time: 20:00
- * To change this template use File | Settings | File Templates.
- */
 include 'php/functions.php';
 sec_session_start();
 // Unset all session values

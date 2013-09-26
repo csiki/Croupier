@@ -1,6 +1,9 @@
 <?php
 include "php/include.php";
-if($loggedin) header('Location: summary.php');
+if($loggedin){
+    header('Location: summary.php');
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -12,18 +15,7 @@ if($loggedin) header('Location: summary.php');
     <script type="text/javascript" src="scripts/main.js"></script>
 </head>
 <body>
-<div id="header">
-    <div id="topmenu">
-    <ul>
-        <li><a href="./"><?php print($tr["MAIN"]); ?></a></li>
-        <li><a href="login.php"><?php print($tr["LOGIN"]); ?></a></li>
-    </ul>
-        </div>
-    <div id="lang">
-        <a href="setlang.php?lang=en">EN</a> |
-        <a href="setlang.php?lang=hu">HU</a>
-    </div>
-</div>
+<?php include "php/header.php"; ?>
 <div id="main">
     <h2><?php print($tr["LOGIN"]); ?></h2>
     <form action="php/process_login.php" method="post" name="login_form">

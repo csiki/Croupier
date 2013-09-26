@@ -11,5 +11,5 @@ if(isset($_POST['email'], $_POST['p'])) {
         header('Location: ../login.php?error=1');
     }
 } else {
-    echo 'Invalid Request';
+    die('Invalid Request');
 }
