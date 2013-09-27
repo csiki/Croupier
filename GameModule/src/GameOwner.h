@@ -10,6 +10,7 @@
 #include "BotData.h"
 #include "BotLoader.h"
 #include "CppBotLoader.h"
+#include "AliveBotLoader.h"
 #include "BotManager.h"
 #include "Results.h"
 #include "ResultsXMLHandler.h"

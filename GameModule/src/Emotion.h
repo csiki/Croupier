@@ -17,7 +17,8 @@ enum Emotion
 	EMBARASSED,
 	POKERFACE,
 	NERVOUS,
-	DRUNKEN
+	DRUNKEN,
+	HIGH
 };
 
 #endif  //_EMOTION_H

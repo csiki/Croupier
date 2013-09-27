@@ -258,6 +258,12 @@
     <ClInclude Include="..\src\TimerBotProxy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\AliveBotLoader.h">
+      <Filter>Header Files\BotLoaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\AliveBot.h">
+      <Filter>Header Files\TestBots</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Bot.cpp">
@@ -403,6 +409,9 @@
     </ClCompile>
     <ClCompile Include="..\src\TimerBotProxy.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AliveBotLoader.cpp">
+      <Filter>Source Files\BotLoaders</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

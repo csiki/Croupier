@@ -17,7 +17,8 @@ enum BotLanguage
 	PERL = 9,
 	LUA = 10,
 	RUBY = 11,
-	PHP = 12
+	PHP = 12,
+	ALIVE = 13
 };
 
 #endif //_BOTLANGUAGE_H

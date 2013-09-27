@@ -21,6 +21,10 @@ void GameOwner::fillBotLoaders()
 	this->botLoaders.insert(
 		pair<BotLanguage, BotLoader*>( BotLanguage::CPP, new CppBotLoader() ));
 	
+	// ALIVE
+	this->botLoaders.insert(
+		pair<BotLanguage, BotLoader*>( BotLanguage::ALIVE, new AliveBotLoader() ));
+
 	// FILL WITH FURTHER LOADERS HERE !
 }
 

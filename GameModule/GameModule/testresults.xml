@@ -8,11 +8,11 @@
 	<player>
 		<id>2</id>
 		<credit>500</credit>
-		<kickatround>3</kickatround>
+		<kickatround>6</kickatround>
 	</player>
 	<player>
 		<id>3</id>
 		<credit>1500</credit>
-		<kickatround>3</kickatround>
+		<kickatround>6</kickatround>
 	</player>
 </results>

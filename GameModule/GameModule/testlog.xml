@@ -32,32 +32,32 @@
 	</event>
 	<event>
 		<logger>1</logger>
-		<msg>receiveCard TEN of SPADES</msg>
+		<msg>receiveCard KING of DIAMONDS</msg>
 		<severity>5</severity>
 	</event>
 	<event>
 		<logger>2</logger>
-		<msg>receiveCard SIX of HEARTS</msg>
+		<msg>receiveCard FOUR of CLUBS</msg>
 		<severity>5</severity>
 	</event>
 	<event>
 		<logger>3</logger>
-		<msg>receiveCard KING of CLUBS</msg>
+		<msg>receiveCard FIVE of SPADES</msg>
 		<severity>5</severity>
 	</event>
 	<event>
 		<logger>1</logger>
-		<msg>receiveCard SEVEN of CLUBS</msg>
+		<msg>receiveCard EIGHT of CLUBS</msg>
 		<severity>5</severity>
 	</event>
 	<event>
 		<logger>2</logger>
-		<msg>receiveCard THREE of HEARTS</msg>
+		<msg>receiveCard QUEEN of DIAMONDS</msg>
 		<severity>5</severity>
 	</event>
 	<event>
 		<logger>3</logger>
-		<msg>receiveCard DEUCE of HEARTS</msg>
+		<msg>receiveCard NINE of CLUBS</msg>
 		<severity>5</severity>
 	</event>
 	<event>
@@ -122,107 +122,12 @@
 	</event>
 	<event>
 		<logger>0</logger>
-		<msg>burn NINE of SPADES</msg>
+		<msg>burn FOUR of HEARTS</msg>
 		<severity>3</severity>
 	</event>
 	<event>
 		<logger>0</logger>
-		<msg>flop SEVEN of DIAMONDS,ACE of HEARTS,FIVE of DIAMONDS</msg>
-		<severity>3</severity>
-	</event>
-	<event>
-		<logger>0</logger>
-		<msg>betRound</msg>
-		<severity>3</severity>
-	</event>
-	<event>
-		<logger>3</logger>
-		<msg>canCheck</msg>
-		<severity>5</severity>
-	</event>
-	<event>
-		<logger>3</logger>
-		<msg>check</msg>
-		<severity>4</severity>
-	</event>
-	<event>
-		<logger>1</logger>
-		<msg>getCallAmount</msg>
-		<severity>5</severity>
-	</event>
-	<event>
-		<logger>1</logger>
-		<msg>getCallAmount</msg>
-		<severity>5</severity>
-	</event>
-	<event>
-		<logger>1</logger>
-		<msg>getCallAmount</msg>
-		<severity>5</severity>
-	</event>
-	<event>
-		<logger>1</logger>
-		<msg>check</msg>
-		<severity>4</severity>
-	</event>
-	<event>
-		<logger>2</logger>
-		<msg>getCallAmount</msg>
-		<severity>5</severity>
-	</event>
-	<event>
-		<logger>2</logger>
-		<msg>getBigBlindAtRound 1</msg>
-		<severity>5</severity>
-	</event>
-	<event>
-		<logger>2</logger>
-		<msg>raise 100</msg>
-		<severity>4</severity>
-	</event>
-	<event>
-		<logger>3</logger>
-		<msg>canCheck</msg>
-		<severity>5</severity>
-	</event>
-	<event>
-		<logger>3</logger>
-		<msg>getCallAmount</msg>
-		<severity>5</severity>
-	</event>
-	<event>
-		<logger>3</logger>
-		<msg>getBigBlindAtRound 1</msg>
-		<severity>5</severity>
-	</event>
-	<event>
-		<logger>3</logger>
-		<msg>call</msg>
-		<severity>4</severity>
-	</event>
-	<event>
-		<logger>1</logger>
-		<msg>getCallAmount</msg>
-		<severity>5</severity>
-	</event>
-	<event>
-		<logger>1</logger>
-		<msg>getCallAmount</msg>
-		<severity>5</severity>
-	</event>
-	<event>
-		<logger>1</logger>
-		<msg>call</msg>
-		<severity>4</severity>
-	</event>
-	<event>
-		<logger>0</logger>
-		<msg>burn DEUCE of SPADES</msg>
-		<severity>3</severity>
-	</event>
-	<event>
-		<logger>0</logger>
-		<msg>turn THREE of SPADES</msg>
+		<msg>flop THREE of SPADES,QUEEN of SPADES,ACE of SPADES</msg>
 		<severity>3</severity>
 	</event>
 	<event>
@@ -312,12 +217,107 @@
 	</event>
 	<event>
 		<logger>0</logger>
-		<msg>burn TEN of HEARTS</msg>
+		<msg>burn ACE of HEARTS</msg>
 		<severity>3</severity>
 	</event>
 	<event>
 		<logger>0</logger>
-		<msg>river ACE of DIAMONDS</msg>
+		<msg>turn SIX of SPADES</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>betRound</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>canCheck</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>check</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>check</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>2</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>2</logger>
+		<msg>getBigBlindAtRound 1</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>2</logger>
+		<msg>raise 100</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>canCheck</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>getBigBlindAtRound 1</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>call</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>call</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>burn JACK of SPADES</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>river QUEEN of CLUBS</msg>
 		<severity>3</severity>
 	</event>
 	<event>
@@ -412,27 +412,27 @@
 	</event>
 	<event>
 		<logger>1</logger>
-		<msg>revealCards TEN of SPADES,SEVEN of CLUBS</msg>
+		<msg>revealCards KING of DIAMONDS,EIGHT of CLUBS</msg>
 		<severity>4</severity>
 	</event>
 	<event>
 		<logger>2</logger>
-		<msg>revealCards SIX of HEARTS,THREE of HEARTS</msg>
+		<msg>revealCards FOUR of CLUBS,QUEEN of DIAMONDS</msg>
 		<severity>4</severity>
 	</event>
 	<event>
 		<logger>3</logger>
-		<msg>revealCards KING of CLUBS,DEUCE of HEARTS</msg>
+		<msg>revealCards FIVE of SPADES,NINE of CLUBS</msg>
 		<severity>4</severity>
 	</event>
 	<event>
 		<logger>0</logger>
-		<msg>determineWinners 1,0</msg>
+		<msg>determineWinners 1,2</msg>
 		<severity>3</severity>
 	</event>
 	<event>
 		<logger>0</logger>
-		<msg>handOutPot 1,0</msg>
+		<msg>handOutPot 1,2</msg>
 		<severity>3</severity>
 	</event>
 	<event>
@@ -477,32 +477,32 @@
 	</event>
 	<event>
 		<logger>1</logger>
-		<msg>receiveCard QUEEN of DIAMONDS</msg>
+		<msg>receiveCard FOUR of DIAMONDS</msg>
 		<severity>5</severity>
 	</event>
 	<event>
 		<logger>2</logger>
-		<msg>receiveCard KING of SPADES</msg>
+		<msg>receiveCard QUEEN of CLUBS</msg>
 		<severity>5</severity>
 	</event>
 	<event>
 		<logger>3</logger>
+		<msg>receiveCard FOUR of CLUBS</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
 		<msg>receiveCard ACE of CLUBS</msg>
 		<severity>5</severity>
 	</event>
 	<event>
-		<logger>1</logger>
-		<msg>receiveCard DEUCE of CLUBS</msg>
-		<severity>5</severity>
-	</event>
-	<event>
 		<logger>2</logger>
-		<msg>receiveCard THREE of CLUBS</msg>
+		<msg>receiveCard DEUCE of SPADES</msg>
 		<severity>5</severity>
 	</event>
 	<event>
 		<logger>3</logger>
-		<msg>receiveCard SIX of CLUBS</msg>
+		<msg>receiveCard THREE of HEARTS</msg>
 		<severity>5</severity>
 	</event>
 	<event>
@@ -607,12 +607,12 @@
 	</event>
 	<event>
 		<logger>0</logger>
-		<msg>burn KING of HEARTS</msg>
+		<msg>burn JACK of CLUBS</msg>
 		<severity>3</severity>
 	</event>
 	<event>
 		<logger>0</logger>
-		<msg>flop FOUR of HEARTS,SEVEN of HEARTS,FOUR of DIAMONDS</msg>
+		<msg>flop SIX of HEARTS,KING of SPADES,FIVE of SPADES</msg>
 		<severity>3</severity>
 	</event>
 	<event>
@@ -667,12 +667,12 @@
 	</event>
 	<event>
 		<logger>0</logger>
-		<msg>burn EIGHT of DIAMONDS</msg>
+		<msg>burn NINE of CLUBS</msg>
 		<severity>3</severity>
 	</event>
 	<event>
 		<logger>0</logger>
-		<msg>turn DEUCE of HEARTS</msg>
+		<msg>turn QUEEN of DIAMONDS</msg>
 		<severity>3</severity>
 	</event>
 	<event>
@@ -737,12 +737,12 @@
 	</event>
 	<event>
 		<logger>0</logger>
-		<msg>burn THREE of SPADES</msg>
+		<msg>burn DEUCE of DIAMONDS</msg>
 		<severity>3</severity>
 	</event>
 	<event>
 		<logger>0</logger>
-		<msg>river DEUCE of DIAMONDS</msg>
+		<msg>river KING of HEARTS</msg>
 		<severity>3</severity>
 	</event>
 	<event>
@@ -787,12 +787,12 @@
 	</event>
 	<event>
 		<logger>1</logger>
-		<msg>revealCards QUEEN of DIAMONDS,DEUCE of CLUBS</msg>
+		<msg>revealCards FOUR of DIAMONDS,ACE of CLUBS</msg>
 		<severity>4</severity>
 	</event>
 	<event>
 		<logger>3</logger>
-		<msg>revealCards ACE of CLUBS,SIX of CLUBS</msg>
+		<msg>revealCards FOUR of CLUBS,THREE of HEARTS</msg>
 		<severity>4</severity>
 	</event>
 	<event>
@@ -842,32 +842,32 @@
 	</event>
 	<event>
 		<logger>1</logger>
-		<msg>receiveCard DEUCE of DIAMONDS</msg>
+		<msg>receiveCard FOUR of DIAMONDS</msg>
 		<severity>5</severity>
 	</event>
 	<event>
 		<logger>2</logger>
-		<msg>receiveCard FIVE of DIAMONDS</msg>
+		<msg>receiveCard ACE of CLUBS</msg>
 		<severity>5</severity>
 	</event>
 	<event>
 		<logger>3</logger>
-		<msg>receiveCard SIX of CLUBS</msg>
+		<msg>receiveCard FIVE of CLUBS</msg>
 		<severity>5</severity>
 	</event>
 	<event>
 		<logger>1</logger>
-		<msg>receiveCard TEN of HEARTS</msg>
+		<msg>receiveCard FOUR of SPADES</msg>
 		<severity>5</severity>
 	</event>
 	<event>
 		<logger>2</logger>
-		<msg>receiveCard KING of DIAMONDS</msg>
+		<msg>receiveCard TEN of HEARTS</msg>
 		<severity>5</severity>
 	</event>
 	<event>
 		<logger>3</logger>
-		<msg>receiveCard ACE of DIAMONDS</msg>
+		<msg>receiveCard SIX of DIAMONDS</msg>
 		<severity>5</severity>
 	</event>
 	<event>
@@ -928,6 +928,876 @@
 	<event>
 		<logger>3</logger>
 		<msg>getBigBlindAtRound 3</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>call</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>burn NINE of CLUBS</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>flop NINE of SPADES,SIX of CLUBS,EIGHT of CLUBS</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>betRound</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>canCheck</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>check</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>check</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>burn KING of SPADES</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>turn SEVEN of CLUBS</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>betRound</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>canCheck</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>check</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>check</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>burn ACE of DIAMONDS</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>river EIGHT of HEARTS</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>betRound</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>canCheck</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>check</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>check</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>showdown</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>revealCards FOUR of DIAMONDS,FOUR of SPADES</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>revealCards FIVE of CLUBS,SIX of DIAMONDS</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>determineWinners 1,0</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>handOutPot 1,0</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>collectCards</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>rebuyOrLeave 2</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>2</logger>
+		<msg>canRebuy 1</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>leave 2</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>roundEnded</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>roundStarted 4</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>rmDealerButton 1</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>addDealerButton 3</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>preflop</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>dealing</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>receiveCard ACE of SPADES</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>receiveCard ACE of CLUBS</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>receiveCard FIVE of HEARTS</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>receiveCard QUEEN of CLUBS</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>betRound</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>call</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>canCheck</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>getBigBlindAtRound 4</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>call</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>burn NINE of HEARTS</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>flop JACK of CLUBS,DEUCE of CLUBS,KING of HEARTS</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>betRound</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>check</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>canCheck</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>check</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>burn ACE of DIAMONDS</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>turn DEUCE of DIAMONDS</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>betRound</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>check</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>canCheck</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>check</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>burn FOUR of HEARTS</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>river THREE of SPADES</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>betRound</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>check</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>canCheck</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>check</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>showdown</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>revealCards ACE of SPADES,FIVE of HEARTS</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>revealCards ACE of CLUBS,QUEEN of CLUBS</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>determineWinners 1,0</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>handOutPot 1,0</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>collectCards</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>rebuyOrLeave 2</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>2</logger>
+		<msg>canRebuy 1</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>leave 2</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>roundEnded</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>refreshBlinds 200,300</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>roundStarted 5</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>rmDealerButton 3</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>addDealerButton 1</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>preflop</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>dealing</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>receiveCard FIVE of DIAMONDS</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>receiveCard FOUR of CLUBS</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>receiveCard DEUCE of HEARTS</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>receiveCard JACK of HEARTS</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>betRound</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>canCheck</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>getBigBlindAtRound 5</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>call</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>call</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>burn DEUCE of CLUBS</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>flop NINE of SPADES,NINE of HEARTS,FOUR of HEARTS</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>betRound</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>canCheck</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>check</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>check</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>burn KING of SPADES</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>turn FIVE of CLUBS</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>betRound</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>canCheck</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>check</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>check</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>burn FIVE of HEARTS</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>river EIGHT of DIAMONDS</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>betRound</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>canCheck</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>check</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>check</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>showdown</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>revealCards FIVE of DIAMONDS,DEUCE of HEARTS</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>revealCards FOUR of CLUBS,JACK of HEARTS</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>determineWinners 1,0</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>handOutPot 1,0</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>collectCards</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>rebuyOrLeave 2</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>2</logger>
+		<msg>canRebuy 1</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>leave 2</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>roundEnded</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>roundStarted 6</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>rmDealerButton 1</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>addDealerButton 3</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>preflop</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>dealing</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>receiveCard ACE of DIAMONDS</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>receiveCard THREE of CLUBS</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>receiveCard SEVEN of DIAMONDS</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>receiveCard NINE of HEARTS</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>betRound</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>call</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>canCheck</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>getBigBlindAtRound 6</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>call</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>burn THREE of DIAMONDS</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>flop THREE of HEARTS,JACK of HEARTS,FOUR of SPADES</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>0</logger>
+		<msg>betRound</msg>
+		<severity>3</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>1</logger>
+		<msg>check</msg>
+		<severity>4</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>canCheck</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>getCallAmount</msg>
+		<severity>5</severity>
+	</event>
+	<event>
+		<logger>3</logger>
+		<msg>getBigBlindAtRound 6</msg>
 		<severity>5</severity>
 	</event>
 	<event>

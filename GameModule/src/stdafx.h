@@ -37,7 +37,7 @@ namespace
 	const double CLOCKS_PER_MILLISEC = double(CLOCKS_PER_SEC) / 1000.0;
 }
 
-static int mod (int number, int modulo)
+inline static int mod(int number, int modulo)
 {
 	int ret = number % modulo;
 	

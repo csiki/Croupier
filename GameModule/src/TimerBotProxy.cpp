@@ -6,9 +6,10 @@
 */
 bool TimerBotProxy::isInTime(boost::thread& runIn)
 {
+	// TODO idõtullépés log
 	std::clock_t begin = clock();
 	std::clock_t now = begin;
-	boost::chrono::milliseconds sleepDuration(20);
+	boost::chrono::milliseconds sleepDuration(10);
 	bool doneInTime = false;
 	
 	while ((double(now - begin) / CLOCKS_PER_MILLISEC) < this->allowedCalcTime)

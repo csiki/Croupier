@@ -10,7 +10,7 @@ class BotDataXMLHandler
 {
 public:
 	static BotData* loadXML(string xmlpath);
-	static bool saveXML(BotData* botData, string xmlpath);
+	static bool saveXML(BotData* botData, string xmlpath); // TODO ide plusz botnevet!!
 };
 
 #endif // _BOTDATAXMLHANDLER_H
