@@ -1,10 +1,10 @@
 #include "stdafx.h"
 #include "Event.h"
 
-string Event::toString() const
+std::string Event::toString() const
 {
 	// formula: <severity> #<logger-id> <msg>
-	string result;
+	std::string result;
 
 	// severity
 	switch(this->severity)
@@ -36,7 +36,7 @@ string Event::toString() const
 	}
 
 	// logger id
-	result += to_string(this->loggerID);
+	result += std::to_string(this->loggerID);
 	result += " ";
 
 	// msg

@@ -29,9 +29,9 @@ int Card::getVal() const
 }
 
 
-string Card::toString() const
+std::string Card::toString() const
 {
-	string res;
+	std::string res;
 
 	// rank
 	switch (this->rank)

@@ -3,14 +3,12 @@
 
 #include "KnowledgeDataType.h"
 
-using namespace std;
-
 /**	Table for containing AIs' own permanent knowledge.
 */
 class KnowledgeTable
 {
 private:
-	vector<vector<void*> > data;
+	std::vector<std::vector<void*> > data;
 	int numOfCols;
 	KnowledgeDataType *columnTypes;
 	bool updated;
@@ -64,7 +62,7 @@ public:
 					}
 					case KnowledgeDataType::STRING:
 					{
-						string* d = (string*) data[i][j];
+						std::string* d = (std::string*) data[i][j];
 						delete d;
 						break;
 					}
@@ -91,13 +89,13 @@ public:
 	bool getData(int& val, int row, int col) const;
 	bool getData(bool& val, int row, int col) const; // UNIT done
 	bool getData(char& val, int row, int col) const;
-	bool getData(string& val, int row, int col) const;
+	bool getData(std::string& val, int row, int col) const;
 	bool getData(float& val, int row, int col) const;
 
 	bool setData(int val, int row, int col);
 	bool setData(bool val, int row, int col); // UNIT done
 	bool setData(char val, int row, int col);
-	bool setData(string val, int row, int col);
+	bool setData(std::string val, int row, int col);
 	bool setData(float val, int row, int col);
 };
 

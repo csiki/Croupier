@@ -18,7 +18,7 @@ private:
 	bool talkAllowed;
 	bool emotionAllowed;
 	bool knowledgeBaseAllowed;
-	map<BotLanguage, int> allowedBotCalcTime;
+	std::map<BotLanguage, int> allowedBotCalcTime;
 	int startingChips;
 	BettingSystem bs;
 
@@ -42,7 +42,7 @@ public:
 		// fill allowedBotCalcTime
 		for (int lang = BotLanguage::CPP; ; ++lang)
 		{
-			this->allowedBotCalcTime.insert(pair<BotLanguage, int>( static_cast<BotLanguage>(lang), allowedBotCalcTime[lang] ));
+			this->allowedBotCalcTime.insert(std::pair<BotLanguage, int>( static_cast<BotLanguage>(lang), allowedBotCalcTime[lang] ));
 			if (lang == BotLanguage::PHP)
 			{
 				break;

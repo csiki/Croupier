@@ -35,7 +35,7 @@ bool TimerBotProxy::isInTime(boost::thread& runIn)
 	return doneInTime;
 }
 
-void TimerBotProxy::handleTimeout(string inMethod)
+void TimerBotProxy::handleTimeout(std::string inMethod)
 {
 	throw BotTimeExceededException(inMethod);
 }

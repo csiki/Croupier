@@ -5,8 +5,8 @@
 */
 KnowledgeTable* BotKnowledgeHandler::loadTable(int tableID)
 {
-	string path = this->relPath;
-	path += to_string(tableID);
+	std::string path = this->relPath;
+	path += std::to_string(tableID);
 	path += ".xml";
 
 	return KnowledgeTableXMLHandler::loadXML(path);
@@ -16,8 +16,8 @@ KnowledgeTable* BotKnowledgeHandler::loadTable(int tableID)
 */
 void BotKnowledgeHandler::saveTable(int tableID, KnowledgeTable* table)
 {
-	string path = this->relPath;
-	path += to_string(tableID);
+	std::string path = this->relPath;
+	path += std::to_string(tableID);
 	path += ".xml";
 
 	KnowledgeTableXMLHandler::saveXML(table, path);
@@ -27,8 +27,8 @@ void BotKnowledgeHandler::saveTable(int tableID, KnowledgeTable* table)
 */
 void BotKnowledgeHandler::removeTableFile(int tableID)
 {
-	string path = this->relPath;
-	path += to_string(tableID);
+	std::string path = this->relPath;
+	path += std::to_string(tableID);
 	path += ".xml";
 
 	remove(path.c_str());
@@ -38,7 +38,7 @@ void BotKnowledgeHandler::removeTableFile(int tableID)
 */
 bool BotKnowledgeHandler::isTableLoaded(int tableID) const
 {
-	map<int, KnowledgeTable*>::const_iterator it = this->loadedTables.find(tableID);
+	std::map<int, KnowledgeTable*>::const_iterator it = this->loadedTables.find(tableID);
 	
 	if (it != this->loadedTables.end() && !it->second->isRemoved())
 	{
@@ -67,7 +67,7 @@ int BotKnowledgeHandler::createTable(int numOfCols, KnowledgeDataType* colTypes)
 {
 	int desiredID = 1;
 
-	for (map<int, KnowledgeTable*>::iterator it = this->loadedTables.begin(); it != this->loadedTables.end(); ++it)
+	for (std::map<int, KnowledgeTable*>::iterator it = this->loadedTables.begin(); it != this->loadedTables.end(); ++it)
 	{
 		if (it->first > desiredID)
 		{
@@ -79,7 +79,7 @@ int BotKnowledgeHandler::createTable(int numOfCols, KnowledgeDataType* colTypes)
 
 	KnowledgeTable* kt = new KnowledgeTable(numOfCols, colTypes, true); // updated=true (brand new table, should be updated)
 
-	this->loadedTables.insert(pair<int, KnowledgeTable*>(desiredID, kt));
+	this->loadedTables.insert(std::pair<int, KnowledgeTable*>(desiredID, kt));
 
 	return desiredID;
 }

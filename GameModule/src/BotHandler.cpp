@@ -46,7 +46,7 @@ void BotHandler::forceBlind(int blind)
 void BotHandler::receiveCard(Card* c)
 {
 	// log
-	string msg = "receiveCard ";
+	std::string msg = "receiveCard ";
 	msg += c->toString();
 	this->log(Severity::VERBOSE, msg);
 
@@ -74,7 +74,7 @@ void BotHandler::revealCards()
 	this->cardsRevealed = true;
 
 	// log cards (as information)
-	string msg = "revealCards ";
+	std::string msg = "revealCards ";
 	msg += this->lookAtHand(0).toString();
 	msg += ",";
 	msg += this->lookAtHand(1).toString();

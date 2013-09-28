@@ -25,7 +25,7 @@ void XYTranslator::send(int msgSize, const int* msg)
 {
 }
 
-void XYTranslator::send(string msg)
+void XYTranslator::send(std::string msg)
 {
 }
 

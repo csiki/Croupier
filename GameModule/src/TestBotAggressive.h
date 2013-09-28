@@ -8,7 +8,7 @@
 class TestBotAggressive : public Bot
 {
 public:
-	TestBotAggressive(BotCommunicator* communicator, int id, string name, BotLanguage lang)
+	TestBotAggressive(BotCommunicator* communicator, int id, std::string name, BotLanguage lang)
 		: Bot(communicator, id, name, lang) {}
 
 	void allined(int botID, int amount)
@@ -106,7 +106,7 @@ public:
 
 	void step()
 	{
-		cout << "step aggressivebot" << endl;
+		std::cout << "step aggressivebot" << std::endl;
 		//while(1) {} // TEST
 		if (this->communicator->getCallAmount() == 0)
 		{

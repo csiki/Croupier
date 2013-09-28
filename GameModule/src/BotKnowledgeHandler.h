@@ -13,8 +13,8 @@ class BotKnowledgeHandler
 {
 private:
 	const int userID;
-	string relPath;
-	map<int, KnowledgeTable*> loadedTables;
+	std::string relPath;
+	std::map<int, KnowledgeTable*> loadedTables;
 
 	KnowledgeTable* loadTable(int tableID);
 	void saveTable(int tableID, KnowledgeTable* table);
@@ -25,7 +25,7 @@ public:
 	{
 		// set relPath
 		this->relPath = _BOT_KNOWLEDGE_RELATIVE_PATH_;
-		this->relPath += to_string(this->userID);
+		this->relPath += std::to_string(this->userID);
 		this->relPath += "/";
 
 		// load tables
@@ -35,7 +35,7 @@ public:
 
 			if (kt != nullptr)
 			{
-				this->loadedTables.insert( pair<int, KnowledgeTable*>(botData->knowledgeTables[i], kt) );
+				this->loadedTables.insert( std::pair<int, KnowledgeTable*>(botData->knowledgeTables[i], kt) );
 			}
 		}
 	}
@@ -43,7 +43,7 @@ public:
 	virtual ~BotKnowledgeHandler()
 	{
 		// save tables
-		for (map<int, KnowledgeTable*>::iterator it = this->loadedTables.begin(); it != this->loadedTables.end(); ++it)
+		for (std::map<int, KnowledgeTable*>::iterator it = this->loadedTables.begin(); it != this->loadedTables.end(); ++it)
 		{
 			if (it->second->isRemoved())
 			{
@@ -71,13 +71,13 @@ public:
 	bool getTableData(bool& val, int tableID, int row, int col) const; // UNIT done
 	bool getTableData(char& val, int tableID, int row, int col) const;
 	bool getTableData(float& val, int tableID, int row, int col) const;
-	bool getTableData(string& val, int tableID, int row, int col) const;
+	bool getTableData(std::string& val, int tableID, int row, int col) const;
 
 	bool setTableData(int val, int tableID, int row, int col);
 	bool setTableData(bool val, int tableID, int row, int col); // UNIT done
 	bool setTableData(char val, int tableID, int row, int col);
 	bool setTableData(float val, int tableID, int row, int col);
-	bool setTableData(string val, int tableID, int row, int col);
+	bool setTableData(std::string val, int tableID, int row, int col);
 };
 
 #endif  //_BOTKNOWLEDGEHANDLER_H

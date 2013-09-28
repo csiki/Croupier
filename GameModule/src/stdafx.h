@@ -28,8 +28,6 @@
 #include <boost\thread.hpp>
 #include <boost\atomic.hpp>
 
-using namespace std;
-
 namespace
 {
 	const char _BOT_KNOWLEDGE_RELATIVE_PATH_[] = ""; // must end with "/" if any

@@ -9,8 +9,8 @@
 class ResultsXMLHandler
 {
 public:
-	static Results* loadXML(string xmlPath); // UNIT done
-	static bool saveXML(Results* results, string xmlPath); // UNIT done
+	static Results* loadXML(std::string xmlPath); // UNIT done
+	static bool saveXML(Results* results, std::string xmlPath); // UNIT done
 };
 
 #endif  //_RESULTSXMLHANDLER_H

@@ -3,7 +3,7 @@
 
 /** From an xml file, loads a BotData instance.
 */
-BotData* BotDataXMLHandler::loadXML(string xmlPath)
+BotData* BotDataXMLHandler::loadXML(std::string xmlPath)
 {
 	// load file, check if file exists
 	pugi::xml_document doc;
@@ -18,8 +18,8 @@ BotData* BotDataXMLHandler::loadXML(string xmlPath)
 		int id, credit, numOfKnowledgeTables, numOfFiles;
 		BotLanguage lang;
 		int *knowledgeTables;
-		string *files;
-		string name;
+		std::string *files;
+		std::string name;
 
 		// load single instance data
 		id = botNode.node().child("id").text().as_int();
@@ -28,7 +28,7 @@ BotData* BotDataXMLHandler::loadXML(string xmlPath)
 		credit = botNode.node().child("credit").text().as_int();
 		
 		// load knowledge tables
-		list<int> tempList;
+		std::list<int> tempList;
 		pugi::xml_node ktNode = botNode.node().child("knowledgetables");
 		for (pugi::xml_node tableIDNode = ktNode.child("tableid"); tableIDNode; tableIDNode = tableIDNode.next_sibling("tableid"))
 		{
@@ -38,13 +38,13 @@ BotData* BotDataXMLHandler::loadXML(string xmlPath)
 
 		knowledgeTables = new int[numOfKnowledgeTables];
 		int i = 0;
-		for (list<int>::iterator it = tempList.begin(); it != tempList.end(); ++it)
+		for (std::list<int>::iterator it = tempList.begin(); it != tempList.end(); ++it)
 		{
 			knowledgeTables[i++] = *it;
 		}
 
 		// load file names
-		list<string> tempListStr;
+		std::list<std::string> tempListStr;
 		pugi::xml_node filesNode = botNode.node().child("files");
 
 		for (pugi::xml_node fileNode = filesNode.child("file"); fileNode; fileNode = fileNode.next_sibling("file"))
@@ -53,9 +53,9 @@ BotData* BotDataXMLHandler::loadXML(string xmlPath)
 		}
 		numOfFiles = tempListStr.size();
 
-		files = new string[numOfFiles];
+		files = new std::string[numOfFiles];
 		i = 0;
-		for (list<string>::iterator it = tempListStr.begin(); it != tempListStr.end(); ++it)
+		for (std::list<std::string>::iterator it = tempListStr.begin(); it != tempListStr.end(); ++it)
 		{
 			files[i++] = *it;
 		}
@@ -70,7 +70,7 @@ BotData* BotDataXMLHandler::loadXML(string xmlPath)
 
 /** Saves a BotData instance as an xml file.
 */
-bool BotDataXMLHandler::saveXML(BotData* botData, string xmlPath)
+bool BotDataXMLHandler::saveXML(BotData* botData, std::string xmlPath)
 {
 	if (botData != nullptr)
 	{

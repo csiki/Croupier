@@ -10,8 +10,8 @@
 class RulzXMLHandler
 {
 public:
-	static Rulz* loadXML(string xmlPath);
-	static bool saveXML(Rulz* rules, string xmlPath);
+	static Rulz* loadXML(std::string xmlPath);
+	static bool saveXML(Rulz* rules, std::string xmlPath);
 };
 
 #endif  //_RULZXMLHANDLER_H

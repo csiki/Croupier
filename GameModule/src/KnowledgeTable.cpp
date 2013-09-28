@@ -25,7 +25,7 @@ bool KnowledgeTable::isDataTypeCorrect(int col, KnowledgeDataType kdt) const
 int KnowledgeTable::addRow()
 {
 	this->updated = true;
-	vector<void*> row(this->numOfCols);
+	std::vector<void*> row(this->numOfCols);
 	this->data.push_back(row);
 	
 	return this->data.size() - 1;
@@ -133,11 +133,11 @@ bool KnowledgeTable::getData(char& val, int row, int col) const
 
 /** Gets data from table at given row and col (string).
 */
-bool KnowledgeTable::getData(string& val, int row, int col) const
+bool KnowledgeTable::getData(std::string& val, int row, int col) const
 {
 	if (this->isCellExist(row, col) && this->isDataTypeCorrect(static_cast<KnowledgeDataType>(col), KnowledgeDataType::STRING))
 	{
-		val = *((string*) this->data[row].at(col));
+		val = *((std::string*) this->data[row].at(col));
 		return true;
 	}
 
@@ -207,12 +207,12 @@ bool KnowledgeTable::setData(char val, int row, int col)
 
 /** Sets data int table at given row and col (string).
 */
-bool KnowledgeTable::setData(string val, int row, int col)
+bool KnowledgeTable::setData(std::string val, int row, int col)
 {
 	if (this->isCellExist(row, col) && this->isDataTypeCorrect(static_cast<KnowledgeDataType>(col), KnowledgeDataType::STRING))
 	{
 		this->updated = true;
-		string* p = new string(val);
+		std::string* p = new std::string(val);
 		this->data[row][col] = p;
 
 		return true;

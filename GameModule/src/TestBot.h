@@ -8,7 +8,7 @@
 class TestBot : public Bot
 {
 public:
-	TestBot(BotCommunicator* communicator, int id, string name, BotLanguage lang)
+	TestBot(BotCommunicator* communicator, int id, std::string name, BotLanguage lang)
 		: Bot(communicator, id, name, lang) {}
 
 	void allined(int botID, int amount)
@@ -106,7 +106,7 @@ public:
 
 	void step()
 	{
-		cout << "step testbot" << endl;
+		std::cout << "step testbot" << std::endl;
 
 		if (this->communicator->getCallAmount() < this->communicator->getChips() && this->communicator->getCallAmount() > 0)
 		{

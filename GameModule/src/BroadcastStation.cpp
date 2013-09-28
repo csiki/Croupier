@@ -8,7 +8,7 @@ void BroadcastStation::broadcast(BroadcastMember* sender, BroadcastMessage msg, 
 {
 	int senderID = sender->getID();
 
-	for (list<BroadcastMember*>::iterator it = this->receivers.begin(); it != this->receivers.end(); ++it)
+	for (std::list<BroadcastMember*>::iterator it = this->receivers.begin(); it != this->receivers.end(); ++it)
 	{
 		if (*it != sender)
 		{
@@ -21,7 +21,7 @@ void BroadcastStation::broadcast(BroadcastMember* sender, BroadcastMessage msg, 
 */
 void BroadcastStation::subsrcibe(BroadcastMember* newMember)
 {
-	for (list<BroadcastMember*>::iterator it = this->receivers.begin(); it != this->receivers.end(); ++it)
+	for (std::list<BroadcastMember*>::iterator it = this->receivers.begin(); it != this->receivers.end(); ++it)
 	{
 		if (*it == newMember)
 		{
@@ -37,7 +37,7 @@ void BroadcastStation::subsrcibe(BroadcastMember* newMember)
 */
 void BroadcastStation::unsubsrcibe(BroadcastMember* member)
 {
-	for (list<BroadcastMember*>::iterator it = this->receivers.begin(); it != this->receivers.end(); ++it)
+	for (std::list<BroadcastMember*>::iterator it = this->receivers.begin(); it != this->receivers.end(); ++it)
 	{
 		if (*it == member)
 		{

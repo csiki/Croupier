@@ -8,8 +8,8 @@
 */
 class KnowledgeTableXMLHandler {
 public:
-	static KnowledgeTable* loadXML(string xmlpath);
-	static bool saveXML(KnowledgeTable* kt, string xmlpath);
+	static KnowledgeTable* loadXML(std::string xmlpath);
+	static bool saveXML(KnowledgeTable* kt, std::string xmlpath);
 };
 
 #endif  //_KNOWLEDGETABLEXMLHANDLER_H

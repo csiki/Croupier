@@ -16,14 +16,14 @@ class Bot
 {
 private:
 	const int id;
-	const string name;
+	const std::string name;
 	const BotLanguage lang;
 
 protected:
 	BotCommunicator* const communicator;
 
 public:
-	Bot(BotCommunicator* communicator, int id, string name, BotLanguage lang)
+	Bot(BotCommunicator* communicator, int id, std::string name, BotLanguage lang)
 		: communicator(communicator), id(id), name(name), lang(lang) {}
 	virtual ~Bot() {}
 

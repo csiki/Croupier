@@ -3,7 +3,7 @@
 
 /** Returns the begin and end const_iterator of the events list.
 */
-void Log::getEventsIterators(list<Event*>::const_iterator& begin, list<Event*>::const_iterator& end) const
+void Log::getEventsIterators(std::list<Event*>::const_iterator& begin, std::list<Event*>::const_iterator& end) const
 {
 	begin = events.cbegin();
 	end = events.cend();
@@ -22,7 +22,7 @@ void Log::log(Event* e)
 {
 	++this->severityFequency.at(e->severity); // increase frequency
 
-	cout << e->toString() << endl; // TEST
+	std::cout << e->toString() << std::endl; // TEST
 
 	events.push_back(e);
 }

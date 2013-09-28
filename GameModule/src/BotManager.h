@@ -129,7 +129,7 @@ public:
 	bool isEmotionAllowed() const; 
 	bool isBotKnowledgeUseAllowed() const; 
 	int addKnowledgeTableRow(int tableID); 
-	int createKnowledgeTable(int numOfCols, list<KnowledgeDataType> colTypes);
+	int createKnowledgeTable(int numOfCols, std::list<KnowledgeDataType> colTypes);
 	KnowledgeDataType getKnowledgeTableDataType(int tableID, int col) const;
 	int getKnowledgeTableNumOfCols(int tableID) const;
 	int getKnowledgeTableNumOfRows(int tableID) const;

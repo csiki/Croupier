@@ -9,7 +9,7 @@
 class Deck
 {
 private:
-	vector<Card*> cards;
+	std::vector<Card*> cards;
 
 public:
 	/** Constructor of Deck.
@@ -31,7 +31,7 @@ public:
 	*/
 	virtual ~Deck()
 	{
-		for (vector<Card*>::iterator it = cards.begin(); it != cards.end(); ++it)
+		for (std::vector<Card*>::iterator it = cards.begin(); it != cards.end(); ++it)
 		{
 			delete *it;
 		}

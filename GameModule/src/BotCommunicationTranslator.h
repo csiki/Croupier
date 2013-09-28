@@ -13,16 +13,16 @@ class BotCommunicationTranslator : public Bot
 private:
 	Process* process;
 protected:
-	virtual void interpret(const string) = 0;
+	virtual void interpret(const std::string) = 0;
 	virtual void send(bool msg) = 0;
 	virtual void send(Card& msg) = 0;
 	virtual void send(Comment msg) = 0;
 	virtual void send(int msg) = 0;
 	virtual void send(int msgSize, const int* msg) = 0;
-	virtual void send(string msg) = 0;
+	virtual void send(std::string msg) = 0;
 public:
 	
-	BotCommunicationTranslator(BotCommunicator* communicator, int id, string name, BotLanguage lang, Process* process) : Bot(communicator, id, name, lang)
+	BotCommunicationTranslator(BotCommunicator* communicator, int id, std::string name, BotLanguage lang, Process* process) : Bot(communicator, id, name, lang)
 	{
 		this->process = process;
 	}

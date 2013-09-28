@@ -17,7 +17,7 @@ public:
 		severity(severity), loggerID(loggerID), msg(msg)
 	{}
 	
-	string toString() const;
+	std::string toString() const;
 
 };
 

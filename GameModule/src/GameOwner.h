@@ -20,9 +20,9 @@
 class GameOwner
 {
 private:
-	string logPath;
-	string rulzPath;
-	string resultsPath;
+	std::string logPath;
+	std::string rulzPath;
+	std::string resultsPath;
 	int numOfBots;
 	int* playersID;
 	Croupier* croupier;
@@ -35,10 +35,10 @@ private:
 	Rulz* rulz;
 	Table* table;
 	int gameState; // 1 - game initialised, 2 - game started, 3 - game ended (successfully), 4 - results saved, 5 - fatal error, else 0 (GameOwner just constructed)
-	string errorMsg;
-	map<BotLanguage, BotLoader*> botLoaders;
+	std::string errorMsg;
+	std::map<BotLanguage, BotLoader*> botLoaders;
 
-	void errorOccured(string msg);
+	void errorOccured(std::string msg);
 	void fillBotLoaders();
 public:
 	GameOwner(int numOfBots, int* playersID,
@@ -85,7 +85,7 @@ public:
 	void startGame();
 	void saveResults();
 	int getGameState() const;
-	string getErrorMsg() const;
+	std::string getErrorMsg() const;
 };
 
 #endif  //_GAMEOWNER_H

@@ -17,7 +17,7 @@ BotLanguage Bot::getLang() const
 
 /**	Returns AI's name.
 */
-string Bot::getName() const
+std::string Bot::getName() const
 {
 	return this->name;
 }

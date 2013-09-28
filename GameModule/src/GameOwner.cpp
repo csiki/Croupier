@@ -7,7 +7,7 @@
 
 /** Saves the error message.
 */
-void GameOwner::errorOccured(string msg)
+void GameOwner::errorOccured(std::string msg)
 {
 	this->gameState = 5; // error state
 	this->errorMsg = msg;
@@ -19,11 +19,11 @@ void GameOwner::fillBotLoaders()
 {
 	// CPP
 	this->botLoaders.insert(
-		pair<BotLanguage, BotLoader*>( BotLanguage::CPP, new CppBotLoader() ));
+		std::pair<BotLanguage, BotLoader*>( BotLanguage::CPP, new CppBotLoader() ));
 	
 	// ALIVE
 	this->botLoaders.insert(
-		pair<BotLanguage, BotLoader*>( BotLanguage::ALIVE, new AliveBotLoader() ));
+		std::pair<BotLanguage, BotLoader*>( BotLanguage::ALIVE, new AliveBotLoader() ));
 
 	// FILL WITH FURTHER LOADERS HERE !
 }
@@ -57,15 +57,15 @@ void GameOwner::initialiseGame()
 	for (int i = 0; i < this->numOfBots; ++i)
 	{
 		// load bot data
-		string path = _BOT_DATA_RELATIVE_PATH_;
-		path += to_string(this->playersID[i]);
+		std::string path = _BOT_DATA_RELATIVE_PATH_;
+		path += std::to_string(this->playersID[i]);
 		path += ".xml";
 
 		this->botsData[i] = BotDataXMLHandler::loadXML(path);
 		if (this->botsData[i] == nullptr)
 		{
-			string msg = "Cannot load BotData instance from xml! Player id: ";
-			msg += to_string(this->playersID[i]);
+			std::string msg = "Cannot load BotData instance from xml! Player id: ";
+			msg += std::to_string(this->playersID[i]);
 			this->errorOccured(msg);
 			return;
 		}
@@ -118,7 +118,7 @@ void GameOwner::initialiseGame()
 	this->hostess->fillBotsData();
 
 	// delete bot loaders (not needed anyomore)
-	for (map<BotLanguage, BotLoader*>::iterator it = this->botLoaders.begin(); it != this->botLoaders.end(); ++it)
+	for (std::map<BotLanguage, BotLoader*>::iterator it = this->botLoaders.begin(); it != this->botLoaders.end(); ++it)
 	{
 		delete it->second;
 	}
@@ -173,7 +173,7 @@ int GameOwner::getGameState() const
 
 /** Gets the message of the last error occured.
 */
-string GameOwner::getErrorMsg() const
+std::string GameOwner::getErrorMsg() const
 {
 	return this->errorMsg;
 }

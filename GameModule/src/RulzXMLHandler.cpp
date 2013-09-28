@@ -3,7 +3,7 @@
 
 /** Loads a Rulz object from an xml file.
 */
-Rulz* RulzXMLHandler::loadXML(string xmlPath)
+Rulz* RulzXMLHandler::loadXML(std::string xmlPath)
 {
 	// load file, check if file exists
 	pugi::xml_document doc;
@@ -34,7 +34,7 @@ Rulz* RulzXMLHandler::loadXML(string xmlPath)
 		pugi::xpath_node blindsNode = doc.select_single_node("/rulz/blinds");
 		
 		// small blinds
-		list<int> tempList;
+		std::list<int> tempList;
 		pugi::xml_node smallBlindsNode = blindsNode.node().child("small");
 		for (pugi::xml_node blindNode = smallBlindsNode.child("blind"); blindNode; blindNode = blindNode.next_sibling("blind"))
 		{
@@ -44,7 +44,7 @@ Rulz* RulzXMLHandler::loadXML(string xmlPath)
 
 		smallBlinds = new int[tempList.size()];
 		int i = 0;
-		for (list<int>::iterator it = tempList.begin(); it != tempList.end(); ++it)
+		for (std::list<int>::iterator it = tempList.begin(); it != tempList.end(); ++it)
 		{
 			smallBlinds[i++] = *it;
 		}
@@ -59,7 +59,7 @@ Rulz* RulzXMLHandler::loadXML(string xmlPath)
 
 		bigBlinds = new int[tempList.size()];
 		i = 0;
-		for (list<int>::iterator it = tempList.begin(); it != tempList.end(); ++it)
+		for (std::list<int>::iterator it = tempList.begin(); it != tempList.end(); ++it)
 		{
 			bigBlinds[i++] = *it;
 		}
@@ -74,7 +74,7 @@ Rulz* RulzXMLHandler::loadXML(string xmlPath)
 
 		shiftDeadlines = new int[tempList.size()];
 		i = 0;
-		for (list<int>::iterator it = tempList.begin(); it != tempList.end(); ++it)
+		for (std::list<int>::iterator it = tempList.begin(); it != tempList.end(); ++it)
 		{
 			shiftDeadlines[i++] = *it;
 		}
@@ -89,7 +89,7 @@ Rulz* RulzXMLHandler::loadXML(string xmlPath)
 
 		botCalcTimes = new int[tempList.size()];
 		i = 0;
-		for (list<int>::iterator it = tempList.begin(); it != tempList.end(); ++it)
+		for (std::list<int>::iterator it = tempList.begin(); it != tempList.end(); ++it)
 		{
 			botCalcTimes[i++] = *it;
 		}
@@ -105,7 +105,7 @@ Rulz* RulzXMLHandler::loadXML(string xmlPath)
 
 /** Saves a Rulz object as an xml file.
 */
-bool RulzXMLHandler::saveXML(Rulz* rules, string xmlPath)
+bool RulzXMLHandler::saveXML(Rulz* rules, std::string xmlPath)
 {
 	if (rules != nullptr)
 	{

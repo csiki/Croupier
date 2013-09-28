@@ -3,7 +3,7 @@
 
 /** Loads a Log object from an xml file.
 */
-Log* LogXMLHandler::loadXML(string xmlPath)
+Log* LogXMLHandler::loadXML(std::string xmlPath)
 {
 	// load file, check if file exists
 	pugi::xml_document doc;
@@ -35,7 +35,7 @@ Log* LogXMLHandler::loadXML(string xmlPath)
 
 /** Saves a Log object as an xml file.
 */
-bool LogXMLHandler::saveXML(Log* log, string xmlPath)
+bool LogXMLHandler::saveXML(Log* log, std::string xmlPath)
 {
 	if (log != nullptr)
 	{
@@ -43,11 +43,11 @@ bool LogXMLHandler::saveXML(Log* log, string xmlPath)
 		pugi::xml_node logNode = doc.append_child("log");
 		
 		// save events
-		list<Event*>::iterator begin;
-		list<Event*>::iterator end;
+		std::list<Event*>::iterator begin;
+		std::list<Event*>::iterator end;
 		log->getEventsIterators(begin, end);
 
-		for (list<Event*>::iterator it = begin; it != end; ++it)
+		for (std::list<Event*>::iterator it = begin; it != end; ++it)
 		{
 			// create event node
 			pugi::xml_node eventNode = logNode.append_child("event");

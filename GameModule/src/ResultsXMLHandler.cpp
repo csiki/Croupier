@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "ResultsXMLHandler.h"
 
-Results* ResultsXMLHandler::loadXML(string xmlPath)
+Results* ResultsXMLHandler::loadXML(std::string xmlPath)
 {
 	// load file, check if file exists
 	pugi::xml_document doc;
@@ -14,9 +14,9 @@ Results* ResultsXMLHandler::loadXML(string xmlPath)
 		pugi::xpath_node resultsNode = doc.select_single_node("/results");
 		
 		// load ids, credits, kicksatround
-		vector<int> idTemp;
-		vector<int> creditTemp;
-		vector<int> kickAtRoundTemp;
+		std::vector<int> idTemp;
+		std::vector<int> creditTemp;
+		std::vector<int> kickAtRoundTemp;
 		for (pugi::xml_node playerNode = resultsNode.node().child("player"); playerNode; playerNode = playerNode.next_sibling("player"))
 		{
 			idTemp.push_back(playerNode.child("id").text().as_int());
@@ -35,7 +35,7 @@ Results* ResultsXMLHandler::loadXML(string xmlPath)
 	return results;
 }
 
-bool ResultsXMLHandler::saveXML(Results* results, string xmlPath)
+bool ResultsXMLHandler::saveXML(Results* results, std::string xmlPath)
 {
 	if (results != nullptr)
 	{

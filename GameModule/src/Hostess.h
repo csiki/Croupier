@@ -16,7 +16,7 @@ class Hostess : public BroadcastMember
 private:
 	const Table* table;
 	const Rulz* rules;
-	map<int, const BotInfo*> botsByID;
+	std::map<int, const BotInfo*> botsByID;
 	bool* botsInRound; // define at constructor
 	bool* botsInGame; // define at constructor
 	int numOfBots;

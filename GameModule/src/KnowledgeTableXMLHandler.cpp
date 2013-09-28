@@ -3,7 +3,7 @@
 
 /** From an xml file, loads a KnowledgeTable instance.
 */
-KnowledgeTable* KnowledgeTableXMLHandler::loadXML(string xmlPath)
+KnowledgeTable* KnowledgeTableXMLHandler::loadXML(std::string xmlPath)
 {
 	// load file, check if file exists
 	pugi::xml_document doc;
@@ -15,7 +15,7 @@ KnowledgeTable* KnowledgeTableXMLHandler::loadXML(string xmlPath)
 		// file loaded successfully
 		// iterate through column types
 		pugi::xpath_node columnTypes = doc.select_single_node("/table/thead");
-		list<KnowledgeDataType> ctypes;
+		std::list<KnowledgeDataType> ctypes;
 		
 		for (pugi::xml_node colType = columnTypes.node().child("coltype"); colType; colType = colType.next_sibling("coltype"))
 		{
@@ -30,7 +30,7 @@ KnowledgeTable* KnowledgeTableXMLHandler::loadXML(string xmlPath)
 			
 			// copy column types to array
 			int i = 0;
-			for (list<KnowledgeDataType>::iterator it = ctypes.begin(); it != ctypes.end(); ++it)
+			for (std::list<KnowledgeDataType>::iterator it = ctypes.begin(); it != ctypes.end(); ++it)
 			{
 				ctypesArray[i] = *it;
 				++i;
@@ -64,7 +64,7 @@ KnowledgeTable* KnowledgeTableXMLHandler::loadXML(string xmlPath)
 						break;
 					case KnowledgeDataType::STRING:
 					{
-						string str(cell.text().as_string());
+						std::string str(cell.text().as_string());
 						ktable->setData(str, rowindex, colindex);
 						break;
 					}
@@ -86,7 +86,7 @@ KnowledgeTable* KnowledgeTableXMLHandler::loadXML(string xmlPath)
 
 /** Saves a KnowledgeTable instance as an xml file.
 */
-bool KnowledgeTableXMLHandler::saveXML(KnowledgeTable* kt, string xmlPath)
+bool KnowledgeTableXMLHandler::saveXML(KnowledgeTable* kt, std::string xmlPath)
 {
 	if (kt != nullptr)
 	{
@@ -173,7 +173,7 @@ bool KnowledgeTableXMLHandler::saveXML(KnowledgeTable* kt, string xmlPath)
 				}
 				else if (dataType == KnowledgeDataType::STRING)
 				{
-					string d;
+					std::string d;
 
 					if (kt->getData(d, rindex, cindex))
 					{

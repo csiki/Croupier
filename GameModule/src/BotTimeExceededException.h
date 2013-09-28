@@ -3,16 +3,16 @@
 
 /** Exception for identifying bot calculation overtime.
 */
-class BotTimeExceededException : public exception
+class BotTimeExceededException : public std::exception
 {
 private:
-	string inMethod;
+	std::string inMethod;
 
 public:
-	BotTimeExceededException(string inMethod)
-		: exception("Bot calculation time exceeded!"), inMethod(inMethod) {}
+	BotTimeExceededException(std::string inMethod)
+		: std::exception("Bot calculation time exceeded!"), inMethod(inMethod) {}
 
-	string whatMethod() const
+	std::string whatMethod() const
 	{
 		return this->inMethod;
 	}

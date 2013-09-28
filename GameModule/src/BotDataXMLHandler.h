@@ -9,8 +9,8 @@
 class BotDataXMLHandler
 {
 public:
-	static BotData* loadXML(string xmlpath);
-	static bool saveXML(BotData* botData, string xmlpath);
+	static BotData* loadXML(std::string xmlpath);
+	static bool saveXML(BotData* botData, std::string xmlpath);
 };
 
 #endif // _BOTDATAXMLHANDLER_H

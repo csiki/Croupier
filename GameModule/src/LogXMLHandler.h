@@ -9,8 +9,8 @@
 class LogXMLHandler
 {
 public:
-	static Log* loadXML(string xmlPath);
-	static bool saveXML(Log* log, string xmlPath);
+	static Log* loadXML(std::string xmlPath);
+	static bool saveXML(Log* log, std::string xmlPath);
 };
 
 #endif  //_LOGXMLHANDLER_H

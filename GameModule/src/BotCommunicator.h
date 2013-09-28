@@ -102,7 +102,7 @@ public:
 
 	virtual KnowledgeDataType getKnowledgeTableDataType(int tableID, int col) const = 0;
 	virtual int addKnowledgeTableRow(int tableID) = 0;
-	virtual int createKnowledgeTable(int numOfCols, list<KnowledgeDataType> colTypes) = 0;
+	virtual int createKnowledgeTable(int numOfCols, std::list<KnowledgeDataType> colTypes) = 0;
 	virtual int getKnowledgeTableNumOfCols(int tableID) const = 0;
 	virtual int getKnowledgeTableNumOfRows(int tableID) const = 0;
 	virtual bool removeKnowledgeTable(int tableID) = 0;

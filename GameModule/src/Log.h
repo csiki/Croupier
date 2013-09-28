@@ -5,15 +5,13 @@
 #include "Event.h"
 #include <list>
 
-using namespace std;
-
 /**	List of events.
 */
 class Log : public Loggable
 {
 private:
-	list<Event*> events;
-	map<Severity, int> severityFequency;
+	std::list<Event*> events;
+	std::map<Severity, int> severityFequency;
 
 public:
 	Log()
@@ -22,7 +20,7 @@ public:
 		for (int sevInt = Severity::FATAL; ; ++sevInt)
 		{
 			this->severityFequency.insert(
-				pair<Severity, int>(
+				std::pair<Severity, int>(
 					static_cast<Severity>(sevInt), 0));
 
 			if (sevInt == Severity::DEBUG)
@@ -35,14 +33,14 @@ public:
 	virtual ~Log()
 	{
 		// delete events
-		for (list<Event*>::iterator it = events.begin(); it != events.end(); ++it)
+		for (std::list<Event*>::iterator it = events.begin(); it != events.end(); ++it)
 		{
 			delete *it;
 		}
 	}
 
 	void log(Event* e);
-	void getEventsIterators(list<Event*>::const_iterator& begin, list<Event*>::const_iterator& end) const; // UNIT done
+	void getEventsIterators(std::list<Event*>::const_iterator& begin, std::list<Event*>::const_iterator& end) const; // UNIT done
 	int getSeverityFrequency(Severity sev) const;
 };
 
