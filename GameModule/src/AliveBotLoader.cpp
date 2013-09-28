@@ -4,8 +4,7 @@
 
 Bot* AliveBotLoader::loadBot(BotData* botData)
 {
-	return nullptr;
-	//return new AliveBot(; // TODO loadBot()-nak kell még communicator meg más paraméterek h tudjunk botot inicializálni (vagy BotData-ba beledobjuk a többi kellõ adatot is
+	return new AliveBot(botData->communicator, botData->id, botData->name, botData->lang);
 }
 
 Process* AliveBotLoader::initProcess()

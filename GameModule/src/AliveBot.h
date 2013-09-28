@@ -5,7 +5,7 @@
 #include "BotLanguage.h"
 #include "BettingSystem.h"
 
-class AliveBot : public Bot // TODO megcsinálni
+class AliveBot : public Bot
 {
 public:
 	AliveBot(BotCommunicator* communicator, int id, string name, BotLanguage lang)

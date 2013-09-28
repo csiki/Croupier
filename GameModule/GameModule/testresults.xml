@@ -2,17 +2,17 @@
 <results>
 	<player>
 		<id>1</id>
-		<credit>4000</credit>
-		<kickatround>0</kickatround>
+		<credit>1850</credit>
+		<kickatround>1</kickatround>
 	</player>
 	<player>
 		<id>2</id>
-		<credit>500</credit>
-		<kickatround>6</kickatround>
+		<credit>1500</credit>
+		<kickatround>1</kickatround>
 	</player>
 	<player>
 		<id>3</id>
-		<credit>1500</credit>
-		<kickatround>6</kickatround>
+		<credit>2650</credit>
+		<kickatround>0</kickatround>
 	</player>
 </results>

@@ -30,10 +30,11 @@ private:
 	BroadcastStation* broadcastStation;
 	Bot** bots;
 	BotManager** botManagers;
+	BotData** botsData;
 	Log* log;
 	Rulz* rulz;
 	Table* table;
-	int gameState; // 1 - game initialised, 2 - game started, 3 - game ended, 4 - results saved, 5 - fatal error, else 0 (GameOwner just constructed)
+	int gameState; // 1 - game initialised, 2 - game started, 3 - game ended (successfully), 4 - results saved, 5 - fatal error, else 0 (GameOwner just constructed)
 	string errorMsg;
 	map<BotLanguage, BotLoader*> botLoaders;
 
@@ -52,6 +53,7 @@ public:
 		this->numOfBots = numOfBots;
 		this->bots = new Bot*[numOfBots];
 		this->botManagers = new BotManager*[numOfBots];
+		this->botsData = new BotData*[numOfBots];
 		this->gameState = 0;
 		this->errorMsg = "";
 	}
@@ -63,11 +65,11 @@ public:
 		{
 			delete this->botManagers[i];
 			delete this->bots[i];
+			delete this->botsData[i];
 		}
 		delete [] this->botManagers;
 		delete [] this->bots;
-
-		// delete bot loaders (already deleted in initialiser)
+		delete [] this->botsData;
 
 		// delete others
 		delete this->croupier;
@@ -79,12 +81,11 @@ public:
 		delete [] this->playersID;
 	}
 
-	bool initialiseGame(); // UNIT
-	bool startGame(); // UNIT
-	void saveResults(); // UNIT
+	void initialiseGame();
+	void startGame();
+	void saveResults();
 	int getGameState() const;
 	string getErrorMsg() const;
-	void test();
 };
 
 #endif  //_GAMEOWNER_H

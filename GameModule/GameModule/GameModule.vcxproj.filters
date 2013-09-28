@@ -64,6 +64,9 @@
     <Filter Include="Header Files\TestBots">
       <UniqueIdentifier>{1626cc45-3944-47b8-a1cf-4c1730c94132}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Exceptions">
+      <UniqueIdentifier>{063e0f95-3365-4449-8435-90b9140ec17c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -263,6 +266,9 @@
     </ClInclude>
     <ClInclude Include="..\src\AliveBot.h">
       <Filter>Header Files\TestBots</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\BotTimeExceededException.h">
+      <Filter>Header Files\Exceptions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

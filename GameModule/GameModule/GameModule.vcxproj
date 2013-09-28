@@ -100,6 +100,7 @@
     <ClInclude Include="..\src\BotLanguage.h" />
     <ClInclude Include="..\src\BotLoader.h" />
     <ClInclude Include="..\src\BotManager.h" />
+    <ClInclude Include="..\src\BotTimeExceededException.h" />
     <ClInclude Include="..\src\BroadcastMember.h" />
     <ClInclude Include="..\src\BroadcastMessage.h" />
     <ClInclude Include="..\src\BroadcastStation.h" />

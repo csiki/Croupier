@@ -11,7 +11,7 @@ class RulzXMLHandler
 {
 public:
 	static Rulz* loadXML(string xmlPath);
-	static bool saveXML(Rulz* rules, string xmlPath); // TODO ide plussz deadline time ALIVE-nak
+	static bool saveXML(Rulz* rules, string xmlPath);
 };
 
 #endif  //_RULZXMLHANDLER_H

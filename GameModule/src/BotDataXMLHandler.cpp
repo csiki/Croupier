@@ -19,9 +19,11 @@ BotData* BotDataXMLHandler::loadXML(string xmlPath)
 		BotLanguage lang;
 		int *knowledgeTables;
 		string *files;
+		string name;
 
 		// load single instance data
 		id = botNode.node().child("id").text().as_int();
+		name = botNode.node().child("name").text().as_string();
 		lang = static_cast<BotLanguage>( botNode.node().child("lang").text().as_int() );
 		credit = botNode.node().child("credit").text().as_int();
 		
@@ -58,7 +60,7 @@ BotData* BotDataXMLHandler::loadXML(string xmlPath)
 			files[i++] = *it;
 		}
 
-		botData = new BotData(id, credit, lang,
+		botData = new BotData(id, name, credit, lang,
 			numOfKnowledgeTables, knowledgeTables,
 			numOfFiles, files);
 	}

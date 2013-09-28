@@ -6,81 +6,98 @@
 */
 void BotManager::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, const int* data)
 {
-	int *dataCopy;
 	this->talkToken = true; // bot can comment when receiving a message
 
-	switch (msg)
+	try
 	{
-		case ALLINED:
-			this->bot->allined(data[0], data[1]);
-			break;
-		case BLINDSRAISED:
-			this->bot->blindsRaised(data[0], data[1]);
-			break;
-		case CALLED:
-			this->bot->called(data[0], data[1]);
-			break;
-		case CHECKED:
-			this->bot->checked(data[0]);
-			break;
-		case FLOP:
-			this->bot->flop();
-			break;
-		case FOLDED:
-			this->bot->folded(data[0]);
-			break;
-		case GAMEWINNER:
-			this->bot->gameWinner(data[0]);
-			break;
-		case LEFTGAME:
-			this->bot->leftGame(data[0]);
-			break;
-		case LISTEN:
-			this->bot->listen(data[0], (Comment)data[1]);
-			break;
-		case PREFLOP:
-			this->bot->preflop();
-			break;
-		case QUIT:
-			this->bot->leftGame(data[0]);
-		case RAISED:
-			this->bot->raised(data[0], data[1]);
-			break;
-		case REBUYOCCURRED:
-			this->bot->rebuyOccurred(data[0], data[1]);
-			break;
-		case REBUYDEADLINEREACHED:
-			this->bot->rebuyDeadlineReached();
-			break;
-		case RIVER:
-			this->bot->river();
-			break;
-		case ROUNDENDED:
-			this->bot->roundEnded();
-			break;
-		case ROUNDSTARTED:
-			if (this->inGame)
-			{
-				this->inRound = true;
-			}
-			this->bot->roundStarted(data[0]);
-			break;
-		case ROUNDWINNERS:
-			// copying data, can't let bots delete it
-			dataCopy = new int[dataSize];
-			for (int i = 0; i < dataSize; ++i)
-				dataCopy[i] = data[i];
- 			this->bot->roundWinners(dataSize, dataCopy);
-			delete [] dataCopy;
-			break;
-		case SHOWDOWN:
-			this->bot->showdown();
-			break;
-		case TURN:
-			this->bot->turn();
-			break;
-		default: ;
-			// do nothing
+		switch (msg)
+		{
+			case ALLINED:
+				this->bot->allined(data[0], data[1]);
+				break;
+			case BLINDSRAISED:
+				this->bot->blindsRaised(data[0], data[1]);
+				break;
+			case CALLED:
+				this->bot->called(data[0], data[1]);
+				break;
+			case CHECKED:
+				this->bot->checked(data[0]);
+				break;
+			case FLOP:
+				this->bot->flop();
+				break;
+			case FOLDED:
+				this->bot->folded(data[0]);
+				break;
+			case GAMEWINNER:
+				this->bot->gameWinner(data[0]);
+				break;
+			case LEFTGAME:
+				this->bot->leftGame(data[0]);
+				break;
+			case LISTEN:
+				this->bot->listen(data[0], (Comment)data[1]);
+				break;
+			case PREFLOP:
+				this->bot->preflop();
+				break;
+			case QUIT:
+				this->bot->leftGame(data[0]);
+			case RAISED:
+				this->bot->raised(data[0], data[1]);
+				break;
+			case REBUYOCCURRED:
+				this->bot->rebuyOccurred(data[0], data[1]);
+				break;
+			case REBUYDEADLINEREACHED:
+				this->bot->rebuyDeadlineReached();
+				break;
+			case RIVER:
+				this->bot->river();
+				break;
+			case ROUNDENDED:
+				this->bot->roundEnded();
+				break;
+			case ROUNDSTARTED:
+				if (this->inGame)
+				{
+					this->inRound = true;
+				}
+				this->bot->roundStarted(data[0]);
+				break;
+			case ROUNDWINNERS:
+				// copying data, can't let bots delete it
+				int *dataCopy;
+				dataCopy = new int[dataSize];
+				for (int i = 0; i < dataSize; ++i)
+					dataCopy[i] = data[i];
+ 				this->bot->roundWinners(dataSize, dataCopy);
+				delete [] dataCopy;
+				break;
+			case SHOWDOWN:
+				this->bot->showdown();
+				break;
+			case TURN:
+				this->bot->turn();
+				break;
+			default: ;
+				// do nothing
+		}
+	}
+	catch (BotTimeExceededException& e)
+	{
+		// log
+		string msg = "timeExceeded ";
+		msg += to_string(this->getID());
+		msg += ",";
+		msg += to_string(this->bot->getID());
+		msg += ",";
+		msg += e.whatMethod();
+		this->log(Severity::ERROR, msg);
+
+		// quit bot
+		this->quit();
 	}
 
 	this->talkToken = false;
@@ -568,8 +585,8 @@ void BotManager::quit()
 	// log
 	this->log(Severity::INFORMATION, "quit");
 
-	this->inGame = false;
 	this->inRound = false;
+	this->inGame = false;
 	this->kickedAtRound = this->hostess->getCurrentRound();
 
 	// broadcast left game
@@ -1282,7 +1299,25 @@ void BotManager::step()
 	this->stepToken = true;
 
 	// call step (calls a wrapper, possibly TimerBotProxy)
-	this->bot->step();
+	try
+	{
+		this->bot->step();
+	}
+	catch (BotTimeExceededException& e)
+	{
+		// log
+		string msg = "timeExceeded ";
+		msg += to_string(this->getID());
+		msg += ",";
+		msg += to_string(this->bot->getID());
+		msg += ",";
+		msg += e.whatMethod();
+		this->log(Severity::ERROR, msg);
+
+		// quit bot
+		this->fold();
+		this->quit();
+	}
 
 	if (this->stepToken) // no step taken
 	{
@@ -1305,7 +1340,21 @@ void BotManager::leave()
 	this->inRound = false;
 	this->kickedAtRound = this->hostess->getCurrentRound();
 
-	this->bot->leave();
+	try
+	{
+		this->bot->leave();
+	}
+	catch (BotTimeExceededException& e)
+	{
+		// log
+		string msg = "timeExceeded ";
+		msg += to_string(this->getID());
+		msg += ",";
+		msg += to_string(this->bot->getID());
+		msg += ",";
+		msg += e.whatMethod();
+		this->log(Severity::ERROR, msg);
+	}
 
 	// broadcast left game
 	int msgdata = this->getID();
@@ -1318,15 +1367,26 @@ bool BotManager::rebuyOrLeave()
 {
 	if (this->canRebuy(1))
 	{
-		this->bot->rebuyOrLeave();
-
-		if (this->chips > 0)
+		try
 		{
-			return true;
+			this->bot->rebuyOrLeave();
+		}
+		catch (BotTimeExceededException& e)
+		{
+			// log
+			string msg = "timeExceeded ";
+			msg += to_string(this->getID());
+			msg += ",";
+			msg += to_string(this->bot->getID());
+			msg += ",";
+			msg += e.whatMethod();
+			this->log(Severity::ERROR, msg);
+
+			return false;
 		}
 	}
 
-	return false;
+	return this->chips > 0;
 }
 
 // own

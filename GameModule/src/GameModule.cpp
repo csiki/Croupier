@@ -15,18 +15,17 @@ int main(int argc, char* argv[])
 
 	go->initialiseGame();
 
-	try
+	if (go->getGameState() == 1) // initialised successfully
 	{
 		go->startGame();
-	}
-	catch (string e)
-	{
-		cout << "Exception: " << e << endl;
+
+		if (go->getGameState() == 3) // run successfully
+		{
+			go->saveResults();
+		}
 	}
 
-	go->saveResults();
-
-	return 0;
+	return go->getGameState();
 
 }
 
