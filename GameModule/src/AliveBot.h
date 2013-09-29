@@ -5,6 +5,8 @@
 #include "BotLanguage.h"
 #include "BettingSystem.h"
 
+// TODO talk?
+
 class AliveBot : public Bot
 {
 public:
@@ -85,10 +87,10 @@ public:
 	{
 		int rebuyAmount;
 		std::cout << "Rebuy or leave to human named " << this->getName() << " !" << std::endl;
-		std::cout << "Enter the amount of credits " << this->getName() << " want to get back with! Zero means no rebuy!" << std::endl;
-		std::cout << "Rebuy credits: ";
+		std::cout << "Enter the amount of credits " << this->getName() << " want to get back with! Zero means no rebuy !" << std::endl;
 		
 		do {
+			std::cout << "Rebuy credits: ";
 			std::cin >> rebuyAmount;
 		} while (!this->areYouSure());
 
@@ -125,20 +127,74 @@ public:
 
 	void step()
 	{
-		std::string move;
+		std::string move = "";
 		int param;
+		bool success;
 		std::cout << this->getName() << " moves now !" << std::endl;
-		std::cout << "Type check, call, raise or fold: ";
 		
 		do {
-			std::cin >> move;
-		} while(move != "check" && move != "call" && move != "raise" && move != "fold" && move != "allin");
+			success = false;
+			do {
+				std::cout << "Type check, call, raise or fold: ";
+				std::cin >> move;
+				if (move == "raise")
+				{
+					std::cout << "How much: ";
+					std::cin >> param;
+				}
+				else
+				{
+					param = 1;
+				}
+			} while (move != "check" && move != "call" && move != "raise" && move != "fold" && move != "allin" && param > 0);
 
-		//if (raise --> param bevétele) // TODO
+			if (move == "check")
+			{
+				success = this->communicator->canCheck();
+			}
+			else if (move == "call")
+			{
+				success = this->communicator->canCall();
+			}
+			else if (move == "raise")
+			{
+				success = this->communicator->canRaise(param);
+			}
+			else if (move == "fold")
+			{
+				success = this->communicator->canFold();
+			}
+			else if (move == "allin")
+			{
+				success = this->communicator->canAllin();
+			}
+			else
+			{
+				success = false;
+			}
+		} while (!success);
 
-		do {
-			//std::cin >> rebuyAmount;
-		} while (!this->areYouSure());
+		// take the move
+		if (move == "check")
+		{
+			success = this->communicator->check();
+		}
+		else if (move == "call")
+		{
+			success = this->communicator->call();
+		}
+		else if (move == "raise")
+		{
+			success = this->communicator->raise(param);
+		}
+		else if (move == "fold")
+		{
+			success = this->communicator->fold();
+		}
+		else if (move == "allin")
+		{
+			success = this->communicator->allin();
+		}
 	}
 
 	void turn()
