@@ -36,3 +36,14 @@ CREATE TABLE `bots` (
 )
   ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
+
+CREATE TABLE `news_posts` (
+  `id`       INT(11)     NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `title`    INT(200)    NOT NULL,
+  `author`   VARCHAR(50) NOT NULL,
+  `date`     DATETIME    NOT NULL,
+  `contents` TEXT        NOT NULL
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+

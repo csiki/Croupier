@@ -6,6 +6,7 @@
             if ($loggedin) {
                 echo '<li><a href="summary.php">' . $tr["SUMMARY"] . '</a></li>';
                 echo '<li><a href="manage_bots.php">' . $tr["MANAGE_BOTS"] . '</a></li>';
+                echo '<li><a href="leaderboards.php">' . $tr["LEADERBOARDS"] . '</a></li>';
             } else {
                 echo '<li><a href="login.php">' . $tr["LOGIN"] . '</a></li>';
                 echo '<li><a href="register.php">' . $tr["REGISTER"] . '</a></li>';
