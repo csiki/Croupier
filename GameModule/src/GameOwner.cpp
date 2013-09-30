@@ -1,9 +1,12 @@
 #include "stdafx.h"
 #include "GameOwner.h"
+#include "Card.h"
+
+// TEST
 #include "TestBot.h"
 #include "TestBotAggressive.h"
 #include "TestBotShy.h"
-#include "Card.h"
+#include "AliveBot.h"
 
 /** Saves the error message.
 */
@@ -99,10 +102,14 @@ void GameOwner::initialiseGame()
 		// TEST
 		if (i == 0)
 			this->bots[i] = new TestBot(this->botManagers[i], 10, "testbot", BotLanguage::CPP);
-		else if (i == 1)
-			this->bots[i] = new TestBotAggressive(this->botManagers[i], 20, "aggressivebot", BotLanguage::CPP);
+		//else if (i == 1)
+			//this->bots[i] = new TestBotAggressive(this->botManagers[i], 20, "aggressivebot", BotLanguage::CPP);
 		else
-			this->bots[i] = new TestBotShy(this->botManagers[i], 30, "shybot", BotLanguage::CPP);
+		{
+			std::string name = "alive-";
+			name += std::to_string(i);
+			this->bots[i] = new AliveBot(this->botManagers[i], i+10, name, BotLanguage::ALIVE);
+		}
 
 		// connect bot to communicator
 		this->botManagers[i]->monitor(this->bots[i]);

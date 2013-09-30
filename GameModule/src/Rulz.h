@@ -43,7 +43,7 @@ public:
 		for (int lang = BotLanguage::CPP; ; ++lang)
 		{
 			this->allowedBotCalcTime.insert(std::pair<BotLanguage, int>( static_cast<BotLanguage>(lang), allowedBotCalcTime[lang] ));
-			if (lang == BotLanguage::PHP)
+			if (lang == BotLanguage::ALIVE)
 			{
 				break;
 			}
