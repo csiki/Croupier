@@ -17,22 +17,19 @@ public:
 	const BotLanguage lang;
 	const int numOfKnowledgeTables;
 	const int* knowledgeTables;
-	const int numOfFiles;
-	const std::string* files;
+	const std::string file;
 	BotCommunicator* communicator;
 
 	BotData(int id, std::string name, int credit, BotLanguage lang,
-		int numOfKnowledgeTables, int* knowledgeTables,
-		int numOfFiles, std::string* files)
+		int numOfKnowledgeTables, int* knowledgeTables, std::string file)
 		: id(id), name(name), credit(credit), lang(lang),
 		numOfKnowledgeTables(numOfKnowledgeTables), knowledgeTables(knowledgeTables),
-		numOfFiles(numOfFiles), files(files)
+		file(file)
 	{}
 
 	virtual ~BotData()
 	{
 		delete [] this->knowledgeTables;
-		delete [] this->files;
 	}
 };
 

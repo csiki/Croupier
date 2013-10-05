@@ -7,7 +7,6 @@
 */
 bool TimerBotProxy::isInTime(boost::thread& runIn)
 {
-	// TODO idõtullépés log
 	std::clock_t begin = clock();
 	std::clock_t now = begin;
 	boost::chrono::milliseconds sleepDuration(10);

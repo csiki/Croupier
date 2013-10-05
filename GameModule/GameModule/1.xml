@@ -6,9 +6,5 @@
 	<lang>0</lang>
 	<knowledgetables />
 	<credit>2000</credit>
-	<files>
-		<file>
-		ultrabot.cpp
-		</file>
-	</files>
+	<file>ultrabot.cpp</file>
 </bot>

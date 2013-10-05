@@ -18,7 +18,7 @@ BotData* BotDataXMLHandler::loadXML(std::string xmlPath)
 		int id, credit, numOfKnowledgeTables, numOfFiles;
 		BotLanguage lang;
 		int *knowledgeTables;
-		std::string *files;
+		std::string file;
 		std::string name;
 
 		// load single instance data
@@ -26,6 +26,7 @@ BotData* BotDataXMLHandler::loadXML(std::string xmlPath)
 		name = botNode.node().child("name").text().as_string();
 		lang = static_cast<BotLanguage>( botNode.node().child("lang").text().as_int() );
 		credit = botNode.node().child("credit").text().as_int();
+		file = botNode.node().child("file").text().as_string();
 		
 		// load knowledge tables
 		std::list<int> tempList;
@@ -43,26 +44,8 @@ BotData* BotDataXMLHandler::loadXML(std::string xmlPath)
 			knowledgeTables[i++] = *it;
 		}
 
-		// load file names
-		std::list<std::string> tempListStr;
-		pugi::xml_node filesNode = botNode.node().child("files");
-
-		for (pugi::xml_node fileNode = filesNode.child("file"); fileNode; fileNode = fileNode.next_sibling("file"))
-		{
-			tempListStr.push_back(fileNode.text().as_string());
-		}
-		numOfFiles = tempListStr.size();
-
-		files = new std::string[numOfFiles];
-		i = 0;
-		for (std::list<std::string>::iterator it = tempListStr.begin(); it != tempListStr.end(); ++it)
-		{
-			files[i++] = *it;
-		}
-
 		botData = new BotData(id, name, credit, lang,
-			numOfKnowledgeTables, knowledgeTables,
-			numOfFiles, files);
+			numOfKnowledgeTables, knowledgeTables, file);
 	}
 
 	return botData;
@@ -79,20 +62,16 @@ bool BotDataXMLHandler::saveXML(BotData* botData, std::string xmlPath)
 
 		// save one instance propeties
 		botNode.append_child("id").text().set(botData->id);
+		botNode.append_child("name").text().set(botData->name.c_str());
 		botNode.append_child("lang").text().set(botData->lang);
+		botNode.append_child("credit").text().set(botData->credit);
+		botNode.append_child("file").text().set(botData->file.c_str());
 
 		// save knowledge tables
 		pugi::xml_node ktNode = botNode.append_child("knowledgetables");
 		for (int i = 0; i < botData->numOfKnowledgeTables; ++i)
 		{
 			ktNode.append_child("tableid").text().set(botData->knowledgeTables[i]);
-		}
-
-		// save file names
-		pugi::xml_node filesNode = botNode.append_child("files");
-		for (int i = 0; i < botData->numOfFiles; ++i)
-		{
-			filesNode.append_child("file").text().set(botData->files[i].c_str());
 		}
 
 		// save xml

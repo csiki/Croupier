@@ -18,7 +18,6 @@
 #include "TimerBotProxy.h"
 
 // Warning: botID != entityID (playerID)
-// TODO memórialimit, foglalás módjának meghatározása
 
 /**	Class for managing AIs' communication and validating moves.
 */

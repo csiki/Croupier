@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+<head>
+  <meta name="generator" content="HTML Tidy for Windows (vers 14 February 2006), see www.w3.org">
+
+  <title>Dynamic C++ Objects - Intro</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <meta content="MSHTML 6.00.2900.2963" name="GENERATOR">
+  <link rel="stylesheet" type="text/css" href="sqs.css">
+</head>
+
+<body>
+  <table summary="" style="width: 600px; height: text-align: left;" border="1" cellpadding="2" cellspacing="2">
+    <tbody>
+      <tr>
+        <td class="contents">  <br>
+          <h2>
+              DynObj - C++ Cross platform plugin objects
+          </h2>
+          <h3>Introduction</h3>
+          DynObj is an open source library that provides a C++ application with run-time class loading facilities (aka plugins). It's written in standard C++, can be used with any C++ compiler with good template support, so it is cross-platform from the outset.<br><br> 
+          It uses a minimal platform specific layer to handle OS specifics (<em>Win32, Linux + various Unix</em> supported now). <br><br> 
+          The project started out with me needing a way to support plugins in a cross platform application. The approaches I found were either too heavy weight (Modzilla XPCOM) or were platform/compiler specific. An <A href="http://aegisknight.org/cppinterface.html">article by Chad Austin</A> provided a good starting point for the DynObj library.<br><br>
+ 	  This article will cover some ground, so it is split in a number of sections:
+	  <ul><LI><A href="DynObj-intro.html"><strong>Intro</strong></A> - This page. General description of the problem area.</LI>
+	  <LI><A href="DynObj-background.html"><strong>Background</strong></A> - Explores C++ classes and the linking process.</LI>
+	  <LI><A href="DynObj-solution.html"><strong>Solution</strong></A> - Describes the DynObj library.</LI>
+	  <LI><A href="DynObj-sample.html"><strong>Sample</strong></A> - A sample plugin together with a main application.</LI>
+	  <LI><A href="DynObj-library.html"><strong>Library documentation</strong></A> - Documentation for the DynObj library.</LI>
+	  <LI><A href="DynObj-build.html"><strong>Building</strong></A> - Documentation for building the DynObj library.</LI>
+
+	  </ul><br>
+          <h3>Background - Problem area</h3>
+          C++ is a very feature rich language and within the same link time module (all sources and libraries) functionality can be exposed and shared without much difficulty. You may need to get some link flags right, but it can be done, with templates and the whole C++ machinery operating.<br><br>
+
+          This can be extended to run-time with shared libraries (DLLs on Windows, shared dynamic object files (SO) on various Unices). <br><br>
+
+          However, it quickly becomes rather difficult, since there is an intricate linking process going on between the application and the loaded modules. With C++ name mangling and automatically generated templates and a rich set of compiler/linker options, dependencies become complicated. With a code base under heavy development, linking with a a DLL compiled on a different system a month ago is not likely to work.<br><br>
+
+          This approach usually assumes that the same compiler is used for host and library. To link the binaries, often also the compiler version must be similar. You could not expect to link together a template or class library compiled with G++ with an application compiled with a Microsoft based compiler. You'd have problems doing it with a version of the same compiler from a year ago.<br><br>
+
+          The approach described above can be termed a 'tight' or a 'full' linking scheme.<br><br>
+           
+          C++ has never had it easy to make its internal features available to the outside world in a standard way. Old style:
+             <p class="code">
+             extern "C" int FunctionToExport(...) 
+             </p>
+     
+          has often been the way (and yes, this works reliably but can only expose global functions and variables). <br><br>
+ 
+          <h3>A plugin approach</h3>
+          A plugin is a more decoupled run-time library, supposedly not dependent on the main application being a certain version, and preferably the requirements on the plugin should be a bit more loose (they shouldn't need to know about the applications every header file and <em>#define</em>, and they need not mutually resolve massive amounts of global symbols). 
+            <br><br>
+          C++ doesn't provide any language or standard library support for this, but there are some good starting points in the language.<br><br>
+          
+          What can be investigated is what parts of the language can be used without creating link-time complexity, and what parts to be avoided for a plugin. Maybe one is not confined to only <em>extern "C" ...</em>. 
+            <br><br>
+
+          On the Windows platform, there is of course COM as a way forward. To be language neutral, it limits (severely) what features of C++ can be exposed and then re-used inside another run-time module (including expressing inheritence relationships). It is based on a particular way of sharing the <em>VTables</em> for run-time binary objects. However, it works, but has not evolved in a cross-platform direction. <br><br>
+
+          <h3>Middle ground</h3>
+          What we're looking at is if there some larger middle ground that can be defined, between (<strong>A</strong>) the compile time process when the full C++ feature set (and lots of header files) are be shared, and (<strong>B</strong>) the run-time DLL loading where only type-less symbols can be looked up in a loaded module (<em>extern "C"...</em>")<br><br>
+          The <A href="DynObj-background.html">next section</A> will define this middle ground and later introduce an object framework (<em>DynObj</em>) around it. 
+            <br>
+          </td>
+      </tr>
+    </tbody>
+  </table><br>
+</body>
+
+</html>

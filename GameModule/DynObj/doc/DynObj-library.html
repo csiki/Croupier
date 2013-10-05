@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+<head>
+  <meta name="generator" content="HTML Tidy for Windows (vers 14 February 2006), see www.w3.org">
+
+  <title>Dynamic C++ Objects - Library</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <meta content="MSHTML 6.00.2900.2963" name="GENERATOR">
+  <link rel="stylesheet" type="text/css" href="sqs.css">
+</head>
+
+<body>
+  <table summary="" style="width: 600px; height: text-align: left;" border="1" cellpadding="2" cellspacing="2">
+    <tbody>
+      <tr>
+        <td class="contents">  <br>
+          <h2>
+              DynObj - C++ Cross platform plugin objects
+          </h2>
+          <h3>The DynObj Library</h3>
+          DynObj is an open-source cross-platform library that uses the run-time plugin approach just decribed. Although the mechanisms used are generic and fairly simple, the library fills many gaps and make it straight-forward to use plugins inside a C++ application.<br><br>
+          The library provides:
+          <ul>
+          <LI>A small class hierarchy (<em>VObj, DynI, DynObj, DynSharedI</em>) establishing some common ground between a host and a plugin. The DynObj library also works with classes that are not rooted in this hierachy. <br><br></LI>
+          <li>A type description facility that allows types to be defined and shared by both host and plugins (<em>DynObjType</em>).<br><br></li>
+          <li>A way to convert C++ types to a plugin library (<em>doTypeInfo</em>, <em>DO_DECL_TYPE_INFO</em>).<br><br></li>
+          <li>Cast functions to query an object about the types it implements. This is similar to <em>dynamic_cast&lt;T&gt;</em> in C++ or <em>QueryInterface</em> in COM (<em>do_cast&lt;T&gt;, doGetObj</em>,...).<br><br></li>
+          <li>Instantiating C++ objects from plugins (<em>do_new&lt;T&gt;</em>).<br><br></li>
+          <li>A plugin library loading/unloading mechanism(<em>DynObjLib</em>).<br><br></li>
+          <li>C-level functions to handle objects.<br><br></li>
+          <li>Other practical C++ classes and templates for objects. <br></li>
+          </ul>
+          In addition to these library facilities, it includes a tool (<em>pdoh</em>) that parses C++ header files and generates source code for type registration.<br><br>
+          
+          <h3>VObj, DynI, DynObj and friends</h3>
+          All classes discussed below are defined in <em>DynObj.h</em>. The library is based on some properties of objects with VTables:
+          <ul>
+          <LI>The VPTR is always stored first in a binary object</LI>
+          <LI>VTables are shared by all instances of a class, but not with instances of any other class (so it provides a type identifier).</LI>
+          </ul>
+          In C++ there is not a builtin way to denote these classes. However, we define the class <em>VObj</em> to represent an object with a VTable with unknown size and methods. <em>VObj</em> in that sense becomes the 'stipulated' root class for all classes that contain one or more virtual functions.<br><br>
+          <h3>The VObj class:</h3>
+          <table>
+          <TR>
+          <TD>&nbsp;&nbsp;<em><strong>Base:</strong></em>&nbsp;&nbsp;</TD>
+          <TD>&nbsp;&nbsp;(no base class)&nbsp;&nbsp;</TD>
+          </TR><TR>
+          <TD>&nbsp;&nbsp;<em><strong>Methods:</strong></em>&nbsp;&nbsp;</TD>
+          <TD>&nbsp;&nbsp;(no methods)&nbsp;&nbsp;</TD>
+          </TR>
+          </table><br>
+          We see that VObj does not introduce any methods (it cannot since that would interfere with derived classes which use the first VTable slot). <br><br>
+	  However <em>VObj</em> has a number of convenient inline functions to query for types (<em>VObj::IsA, VObj::CanBeA, VObj::GetObj</em>,...), asking about errors (<em>VObj::Get/Set/ClearError</em>) and more.<br><br>
+          To determine if a class is a <em>VObj</em> or not, these templates can be used:
+          <p class="code">
+          bool has_vtable = IsVObj&lt;SomeType&gt;::v;<br><br>
+          template&lt;class T&gt;<br>
+          VObj* to_vobj( T* pt );
+          </p>
+          This provides type safety so that we cannot try to convert say a <em>char*</em> to an interface pointer (the compiler would give an error). <br><br>
+          <h3>The DynI class:</h3>
+          <table>
+          <TR>
+          <TD>&nbsp;&nbsp;<em><strong>Base:</strong></em>&nbsp;&nbsp;</TD>
+          <TD>&nbsp;&nbsp;<strong>VObj</strong>&nbsp;&nbsp;</TD>
+          </TR><TR>
+          <TD>&nbsp;&nbsp;<em>Returns</em>&nbsp;&nbsp;</TD>
+          <TD>&nbsp;&nbsp;<em><strong>Methods:</strong></em>&nbsp;&nbsp;</TD>
+          <TD>&nbsp;&nbsp;<em>Arguments</em>&nbsp;&nbsp;</TD>
+          </TR><TR>
+          <TD>&nbsp;&nbsp;DynObjType*&nbsp;&nbsp;</TD>
+          <TD>&nbsp;&nbsp;<em>doGetType</em>&nbsp;&nbsp;</TD>
+          <TD>&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+          </TR><TR>
+          <TD>&nbsp;&nbsp;void*&nbsp;&nbsp;</TD>
+          <TD>&nbsp;&nbsp;<em>doGetObj</em>&nbsp;&nbsp;</TD>
+          <TD>&nbsp;&nbsp;const char* type_name&nbsp;&nbsp;</TD>
+          </TR><TR>
+          <TD>&nbsp;&nbsp;const char*&nbsp;&nbsp;</TD>
+          <TD>&nbsp;&nbsp;<em>doGetError</em>&nbsp;&nbsp;</TD>
+          <TD>&nbsp;&nbsp;int *perr_code&nbsp;&nbsp;</TD>
+          </TR><TR>
+          <TD>&nbsp;&nbsp;void&nbsp;&nbsp;</TD>
+          <TD>&nbsp;&nbsp;<em>doClearError</em>&nbsp;&nbsp;</TD>
+          <TD>&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+          </TR>
+          </table><br>
+          The DynI class provides a way to know its type (<em>doGetType</em>) and for asking about other types it supports (<em>doGetObj</em>). To ask if a <em>DynI</em> supports the <em>DynStr</em> interface:
+          <p class="code">
+          DynI *pdi = /* Wherever pointer comes from */;<br>
+          DynStr *pds = pdi->doGetObj("DynStr");
+          </p>
+          This is equivalent to: 
+          <p class="code">
+          DynStr *pds = do_cast&lt;DynStr*&gt;(pdi);
+          </p>
+          The <em>DynI</em> class has an advantage over <em>VObj</em>: <ul><LI>It knows its own derived type</LI></ul>
+          In contrast, to find the type of a <em>VObj</em>, a lookup into a global table, using the VPTR, has to be made (and works only after the types has been registered). 
+          <br><br>
+          Since <em>DynI</em> is used across DLL (and possibly compiler) boundaries, we cannot use C++ exceptions. To provide error handling, the methods <em>doGetError</em> and <em>doClearError</em> are introduced. They allow for an object specific error state, without burdening the class with member variables for this. <em>SetError</em> is not a member, since object errors are usually are not set from 'outside'. <br><br>
+          We see also that the <em>DynI</em> interface has no support for creation or destrcution. The same applies to <em>VObj</em>. The lifespan that can be assumed is that of the current method. <br><br>
+          If a reference to the object is to be kept, these are different ways to go about it: 
+          <ul><LI>Ask for a <em>DynSharedI</em> interface (ref counted ownership)</LI>
+          <LI>Create a weak reference (if object supports <em>NotifierI</em>))</LI>          <LI>The object may be a known global or singleton which explicitely allows for references to be stored</LI>
+          </ul> <br>
+
+          <h3>The DynObj class:</h3>
+          <table>
+          <TR>
+          <TD>&nbsp;&nbsp;<em><strong>Base:</strong></em>&nbsp;&nbsp;</TD>
+          <TD>&nbsp;&nbsp;<strong>DynI</strong>&nbsp;&nbsp;</TD>
+          </TR><TR>
+          <TD>&nbsp;&nbsp;<em>Returns</em>&nbsp;&nbsp;</TD>
+          <TD>&nbsp;&nbsp;<em><strong>Methods:</strong></em>&nbsp;&nbsp;</TD>
+          <TD>&nbsp;&nbsp;<em>Arguments</em>&nbsp;&nbsp;</TD>
+          </TR><TR>
+          <TD>&nbsp;&nbsp;void&nbsp;&nbsp;</TD>
+          <TD>&nbsp;&nbsp;<em>doDestroy</em>&nbsp;&nbsp;</TD>
+          <TD>&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+          </TR><TR>
+          <TD>&nbsp;&nbsp;void&nbsp;&nbsp;</TD>
+          <TD>&nbsp;&nbsp;<em>doDtor</em>&nbsp;&nbsp;</TD>
+          <TD>&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+          </TR>
+          </table><br>
+          The <em>DynObj</em> interface represents an object that can be created an destroyed. It represents an object owned from a single point. Usually the functions <em>doDestroy</em> and <em>doDtor</em> would be implemented like: 
+          <p class="code">
+          void MyClass::doDestroy(){ ::delete this; }<br>
+          void MyClass::doDtor(){ this->~MyClass(); }
+          </p>
+          An object is destroyed through <em>doDestroy</em>. <em>doDtor</em> provides access to the destructor of the class (library internal use).
+          <br><br>
+          Objects can be created in some different ways:
+          <ul>
+          <LI>Using <em>do_new&lt;T&gt;</em></LI>
+          <LI>Using <em>DynObjLib::Create(...)</em></LI>
+          <li>Temporary objects can be created and released using <em>DynObjHolder&lt;T&gt;</em></li>
+          </ul><br>
+          <h3>The DynSharedI class:</h3>
+          <table>
+          <TR>
+          <TD>&nbsp;&nbsp;<em><strong>Base:</strong></em>&nbsp;&nbsp;</TD>
+          <TD>&nbsp;&nbsp;<strong>DynObj</strong>&nbsp;&nbsp;</TD>
+          </TR><TR>
+          <TD>&nbsp;&nbsp;<em>Returns</em>&nbsp;&nbsp;</TD>
+          <TD>&nbsp;&nbsp;<em><strong>Methods:</strong></em>&nbsp;&nbsp;</TD>
+          <TD>&nbsp;&nbsp;<em>Arguments</em>&nbsp;&nbsp;</TD>
+          </TR><TR>
+          <TD>&nbsp;&nbsp;int&nbsp;&nbsp;</TD>
+          <TD>&nbsp;&nbsp;<em>doAddRef</em>&nbsp;&nbsp;</TD>
+          <TD>&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+          </TR><TR>
+          <TD>&nbsp;&nbsp;int&nbsp;&nbsp;</TD>
+          <TD>&nbsp;&nbsp;<em>doRelease</em>&nbsp;&nbsp;</TD>
+          <TD>&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+          </TR>
+          </table><br>
+          The <em>DynSharedI</em> interface represents an object with shared ownership. <em>doAddRef</em> and <em>doRelease</em>  increases and decreases the ownership counter. <br><br>
+          <em>DynSharedI</em> derives from <em>DynObj</em> since it depends on a way of destroying itself (<em>DynObj::doDestroy</em>) when the lifetime counter reaches 0. <br><br>
+          To protect the object from being deleted before its actual end-of-life, a <em>doDestroy</em> method can check that the counter is actually zero:
+          <p class="code">
+          virtual void docall doDestroy( ) { <br>
+          &nbsp;&nbsp;&nbsp;if( !m_ref_cnt ) <br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::delete this; <br>
+          &nbsp;&nbsp;&nbsp;else <br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SetError(DOERR_DESTROY_ON_NON_ZERO_REF,<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"DynSharedI - Destroy on non-zero ref"); <br>
+          }
+          </p><br>
+          Documenation on <A href="DynObj-build.html">building the DynObj</A> library.
+          
+      </tr>
+    </tbody>
+  </table><br>
+</body>
+</html>

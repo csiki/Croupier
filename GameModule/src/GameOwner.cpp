@@ -140,11 +140,11 @@ void GameOwner::startGame()
 {
 	this->croupier->letsPoker();
 
-	if (this->log->getSeverityFrequency(Severity::FATAL) == 0) // TODO nem feltétlen kell, fatalokra dobálhat exceptiont is
-	{
+	//if (this->log->getSeverityFrequency(Severity::FATAL) == 0)
+	//{
 		// game ended successfully
 		this->gameState = 3;
-	}
+	//}
 }
 
 /** Save the results of the game.

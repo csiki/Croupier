@@ -8,9 +8,5 @@
 		<tableid>0</tableid>
 	</knowledgetables>
 	<credit>1500</credit>
-	<files>
-		<file>
-		ultrabot2.cpp
-		</file>
-	</files>
+	<file>ultrabot2.cpp</file>
 </bot>
