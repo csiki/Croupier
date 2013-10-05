@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "TimerBotProxy.h"
 #include "BotTimeExceededException.h"
+#include <chrono>
+#include <future>
 
 /** Measure the time between the call and the end of process of the thread given.
  *	@return true if the AI process was in time, false otherwise.
@@ -9,7 +11,7 @@ bool TimerBotProxy::isInTime(boost::thread& runIn)
 {
 	std::clock_t begin = clock();
 	std::clock_t now = begin;
-	boost::chrono::milliseconds sleepDuration(10);
+	boost::chrono::milliseconds sleepDuration(20);
 	bool doneInTime = false;
 	
 	while ((double(now - begin) / CLOCKS_PER_MILLISEC) < this->allowedCalcTime)
@@ -346,6 +348,20 @@ void TimerBotProxy::showdown()
 
 void TimerBotProxy::step()
 {
+	// c++11 solution
+	std::future<void> f = std::async(&Bot::step, this->forwardTo);
+	// isInTime():
+	auto start = std::chrono::time_point<std::chrono::high_resolution_clock, std::chrono::milliseconds>(); // TODO
+	auto const timeout = std::chrono::steady_clock::now() + std::chrono::milliseconds(this->allowedCalcTime);
+	// TODO
+
+	while (std::chrono::steady_clock::now() < timeout)
+	{
+
+	}
+	// TODO
+
+	// boost solution
 	Bot* bot = this->forwardTo;
 	boost::thread run([bot] () {
 		boost::this_thread::interruption_point();

@@ -9,7 +9,7 @@ class TimerBotProxy : public Bot
 {
 private:
 	Bot* const forwardTo;
-	const double allowedCalcTime; // in millisec
+	const int allowedCalcTime; // in millisec
 
 protected:
 	bool isInTime(boost::thread& runIn);
