@@ -1,36 +1,95 @@
 <?php
 include "php/include.php";
 needLogin();
+$codeErr = $fileErr = "";
+$name = $code = $lang = "";
+if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])) {
+    $id = 0;
+    if ($result = SQL("SELECT id FROM bots WHERE accountID = ? ORDER BY id DESC LIMIT 1;", $_SESSION["accountID"])) {
+        if ($result == null)
+            die("Invalid Request");
+        $id = $result[0]["id"];
+    }
+    $id++;
+    if (isset($_POST["name"]) && !empty($_POST["name"]))
+        $name = $_POST["name"];
+    else
+        $name = $tr["UNNAMED_BOT"] ." " . $id;
+    if (isset($_FILES["codefile"]) && $_FILES["codefile"]["error"] == 0) {
+        $code = file_get_contents($_FILES["codefile"]["tmp_name"]);
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        $mimeType = $finfo->buffer($code);
+        if (strpos($mimeType, "text/") !== 0 || strlen($code) < 11) {
+            $fileErr = $tr["ERR_CODEFILE"];
+        }
+    } else if (isset($_POST["code"]) && strlen($_POST["code"]) > 10) {
+        $code = $_POST["code"];
+    } else {
+        $codeErr = $tr["ERR_CODE_EMPTY"];
+    }
+    $lang = $_POST["lang"];
+    if ($fileErr == "" && $codeErr == "") {
+        SQL("INSERT INTO bots (id, accountID, name, lastChangeTime, code, code_lang, state)
+          VALUES (NULL, ?, ?, NOW(), ?, ?, 'processing')", $_SESSION["accountID"], $name, $code, $lang);
+        //update stats
+        $res = SQL("SELECT EXISTS(SELECT 1 FROM stat_bots_added WHERE time = CURDATE());");
+        if($res != null)
+            SQL("UPDATE stat_bots_added SET count = count + 1 WHERE time = CURDATE();");
+        else
+            SQL("INSERT INTO stat_bots_added (time, count) VALUES (CURRENT_DATE(), '1')");
+        header('Location: ../manage_bots.php');
+    }
+}
 ?>
 <!DOCTYPE html>
 <html>
-<?php include "php/head.php"; ?>
+<head>
+    <?php include "php/head.php"; ?>
+    <script type="text/javascript" src="scripts/codemirror-compressed.js"></script>
+    <link rel="stylesheet" href="scripts/codemirror.css">
+    <script type="text/javascript">
+        window.onload = function () {
+            var myCodeMirror = CodeMirror.fromTextArea(document.getElementById('code'));
+        }
+    </script>
+</head>
 <body>
 <?php include "php/header.php"; ?>
 <div id="main">
     <h2><?=$tr["ADDBOT"]?></h2>
+
     <p>
-        <form action="process_add_bot.php" method="post" id="botform" enctype="multipart/form-data">
-        <label for="name">Bot name</label><br />
-        <input name="name" id="name" type="text">
-        <br /><br />
-        <label for="code">Insert code here</label><br />
-        <textarea cols="80" rows="20" name="code" id="code" style="display: block" wrap="off"></textarea>
-        <br />
-        <label for="codefile">OR choose a file to upload</label><br />
-            <input name="codefile" id="codefile" type="file">
-        <br /><br />
-        <label for="langInput">Language</label><br />
-        <select name="lang" id="langInput" form="botform">
-            <option value="cpp">C++</option>
-            <option value="java">Java</option>
-            <option value="csharp">C#</option>
-        </select>
-        <br /><br />
-        <input type="submit" class="button" value="Submit">
-        </form>
+
+    <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post" id="botform" enctype="multipart/form-data">
+        <div style="display: inline-block">
+            <label for="name"><?=$tr["BOTNAME"]?></label><br/>
+            <input name="name" id="name" type="text" value="<?= $name ?>"></div>
+
+        <div style="display: inline-block; margin-left: 40px">
+            <label for="langInput"><?=$tr["CODE_LANG"]?></label><br/>
+            <select name="lang" id="langInput" form="botform">
+                <option value="cpp" <?php if ($lang == "cpp") echo "selected"; ?>>C++</option>
+                <option value="java" <?php if ($lang == "java") echo "selected"; ?>>Java</option>
+                <option value="csharp" <?php if ($lang == "csharp") echo "selected"; ?>>C#</option>
+            </select>
+        </div>
+        <br/><br/>
+        <label for="code"><?=$tr["INSERT_CODE"]?></label><br/>
+        <textarea cols="80" rows="20" name="code" id="code" style="display: block"
+                  wrap="off"><?php if (isset($_POST["code"])) echo $_POST["code"]; ?></textarea>
+        <?php if ($codeErr) echo '<span class="errorMessage">' . $codeErr . '</span><br />'; ?>
+        <br/>
+        <label for="codefile"><?=$tr["CHOOSE_FILE_TO"]?></label><br/>
+        <input name="codefile" id="codefile" type="file">
+        <br/>
+        <?php if ($fileErr) echo '<span class="errorMessage">' . $fileErr . '</span><br />'; ?>
+        <br/>
+        <input type="submit" class="button" value="<?= $tr["SUBMIT"] ?>">
+    </form>
     </p>
 </div>
-<div id="footer"></div>
+<footer>
+    <?php include "php/footer.php"; ?>
+</footer>
 </body>
 </html>

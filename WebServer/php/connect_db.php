@@ -11,13 +11,16 @@ define("USER", "root"); // The database username.
 define("PASSWORD", ""); // The database password.
 define("DATABASE", "croupierweb"); // The database name.
 
+$DB = null;
 $mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
 if ($mysqli->connect_errno) {
     dieDb($mysqli);
 }
+$DB = $mysqli;
 $mysqli->set_charset("utf8");
 
-function dieDb($mysqli)
+function dieDb()
 {
-    die("Failed to connect to MySQL: " . $mysqli->connect_error);
+    global $DB;
+    die("Failed to connect to MySQL: " . $DB->error);
 }

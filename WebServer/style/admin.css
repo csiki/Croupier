@@ -1,0 +1,18 @@
+table{
+    border-collapse: collapse;
+    border-spacing: 0px;
+    border: 2px solid black;
+}
+
+tbody{
+    height: 40px;
+    overflow-y: auto;
+}
+
+td, th{
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
+td:last-child, th:last-child{
+     border-right: none;
+ }

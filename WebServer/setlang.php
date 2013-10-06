@@ -1,6 +1,8 @@
 <?php
-include "php/functions.php";
-sec_session_start();
-if(isset($_GET["lang"]) && isValidLang($_GET["lang"]))
+include "php/include.php";
+if (isset($_GET["lang"]) && isValidLang($_GET["lang"])) {
     $_SESSION["lang"] = $_GET["lang"];
+    if ($loggedin)
+        SQL("UPDATE accounts SET language = ? WHERE id = ?;", $_GET["lang"], $_SESSION["accountID"]);
+}
 header('Location: ' . $_SERVER['HTTP_REFERER']);

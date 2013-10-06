@@ -12,63 +12,110 @@ function sec_session_start()
     session_regenerate_id(); // regenerated the session, delete the old one.
 }
 
+function SQL($Query)
+{
+    global $DB;
+    $args = func_get_args();
+    if (count($args) == 1) {
+        $result = $DB->query($Query);
+        if ($result == false)
+            dieDb();
+        else if ($result === true) {
+            return true;
+        }else if ($result->num_rows) {
+            return $result->fetch_all(MYSQLI_ASSOC);
+        }
+        return null;
+    } else {
+        if (!$stmt = $DB->prepare($Query))
+            dieDb();
+        array_shift($args); //remove $Query from args
+        //the following three lines are the only way to copy an array values in PHP
+        $a = array();
+        foreach ($args as $k => &$v)
+            $a[$k] = & $v;
+        $types = str_repeat("s", count($args)); //all params are strings, works well on MySQL and SQLite
+        array_unshift($a, $types);
+        call_user_func_array(array($stmt, 'bind_param'), $a);
+        $stmt->execute();
+        //fetching all results in a 2D array
+        $metadata = $stmt->result_metadata();
+        $out = array();
+        $fields = array();
+        if (!$metadata)
+            return null;
+        while (null != ($field = mysqli_fetch_field($metadata))) {
+            $fields [] = & $out [$field->name];
+        }
+        call_user_func_array(array(
+            $stmt, "bind_result"
+        ), $fields);
+        $output = array();
+        $count = 0;
+        while ($stmt->fetch()) {
+            foreach ($out as $k => $v)
+                $output [$count] [$k] = $v;
+            $count++;
+        }
+        $stmt->free_result();
+        return ($count == 0) ? null : $output;
+    }
+}
+
+function xssafe($data, $encoding = 'UTF-8')
+{
+    return htmlspecialchars($data, ENT_QUOTES | ENT_HTML401, $encoding);
+}
+
+class LoginResponse
+{
+    const Success = 0;
+    const NotFound = 1;
+    const Brute = 2;
+    const WrongPass = 3;
+}
+
 function login($email, $password, $mysqli)
 {
-    // Using prepared Statements means that SQL injection is not possible.
-    if ($stmt = $mysqli->prepare("SELECT id, username, password, salt FROM accounts WHERE email = ? LIMIT 1")) {
-        $stmt->bind_param('s', $email); // Bind "$email" to parameter.
-        $stmt->execute(); // Execute the prepared query.
-        $stmt->store_result();
-        $account_id = NULL;
-        $username = NULL;
-        $db_password = NULL;
-        $salt = NULL;
-        $stmt->bind_result($account_id, $username, $db_password, $salt); // get variables from result.
-        $stmt->fetch();
-        //print("user:" . $username . "<br/> pass: " . $password . "<br/> dbpass: " . $db_password . "<br/>salt: ".$salt);
-        $password = hash('sha512', $password . $salt); // hash the password with the unique salt.
-        //print("<br/> pass with salt: " . $password);
-
-        if ($stmt->num_rows == 1) { // If the user exists
-            // We check if the account is locked from too many login attempts
-            if (checkbrute($account_id, $mysqli) == true) {
-                // Account is locked
-                // Send an email to user saying their account is locked
-                return false;
-            } else {
-                if ($db_password == $password) { // Check if the password in the database matches the password the user submitted.
-                    // Password is correct!
-                    $user_browser = $_SERVER['HTTP_USER_AGENT']; // Get the user-agent string of the user.
-
-                    $account_id = preg_replace("/[^0-9]+/", "", $account_id); // XSS protection as we might print this value
-                    $_SESSION['account_id'] = $account_id;
-                    $username = preg_replace("/[^a-zA-Z0-9_\-]+/", "", $username); // XSS protection as we might print this value
-                    $_SESSION['username'] = $username;
-                    $_SESSION['login_string'] = hash('sha512', $password . $user_browser);
-                    return true;
-                } else {
-                    $now = time();
-                    $mysqli->query("INSERT INTO login_attempts (account_id, time) VALUES ('$account_id', '$now')");
-                    return false;
-                }
-            }
+    $result = SQL("SELECT id, username, password, salt FROM accounts WHERE email = ? LIMIT 1", $email);
+    if ($result == null) //not found
+        return LoginResponse::NotFound;
+    $accountID = $result[0]["id"];
+    $username = $result[0]["username"];
+    $db_password = $result[0]["password"];
+    $salt = $result[0]["salt"];
+    $password = hash('sha512', $password . $salt); // hash the password with the unique salt.
+    if (checkbrute($accountID, $mysqli) == true) {
+        // Account is locked
+        // Send an email to user saying their account is locked
+        return LoginResponse::Brute;
+    } else {
+        if ($db_password == $password) { // Check if the password in the database matches the password the user submitted.
+            // Password is correct!
+            $user_browser = $_SERVER['HTTP_USER_AGENT']; // Get the user-agent string of the user.
+            $accountID = preg_replace("/[^0-9]+/", "", $accountID); // XSS protection as we might print this value
+            $_SESSION['accountID'] = $accountID;
+            $username = preg_replace("/[^a-zA-Z0-9_\-]+/", "", $username); // XSS protection as we might print this value
+            $_SESSION['username'] = $username;
+            $_SESSION['login_string'] = hash('sha512', $password . $user_browser);
+            return LoginResponse::Success;
         } else {
-            // No user exists.
-            return false;
+            $now = time();
+            SQL("INSERT INTO login_attempts (accountID, time) VALUES ('$accountID', '$now')");
+            return LoginResponse::WrongPass;
         }
     }
 }
 
-function checkbrute($account_id, $mysqli)
+function checkbrute($accountID, $mysqli)
 {
     $now = time();
     $valid_attempts = $now - (2 * 60 * 60);
 
-    if ($stmt = $mysqli->prepare("SELECT time FROM login_attempts WHERE account_id = ? AND time > '$valid_attempts'")) {
-        $stmt->bind_param('i', $account_id);
-        $stmt->execute();
-        $stmt->store_result();
-        if ($stmt->num_rows > 5) {
+    if ($result = SQL("SELECT time FROM login_attempts WHERE accountID = ? AND time > '$valid_attempts'", $accountID)) {
+        if ($result == null) {
+            return true;
+        } else if (count($result) > 5) {
             return true;
         } else {
             return false;
@@ -76,48 +123,36 @@ function checkbrute($account_id, $mysqli)
     }
 }
 
-function login_check($mysqli)
+function login_check(&$loggedin, &$admin)
 {
-    if (isset($_SESSION['account_id'], $_SESSION['username'], $_SESSION['login_string'])) {
-        $account_id = $_SESSION['account_id'];
+    if (isset($_SESSION['accountID'], $_SESSION['username'], $_SESSION['login_string'])) {
+        $accountID = $_SESSION['accountID'];
         $login_string = $_SESSION['login_string'];
         $user_browser = $_SERVER['HTTP_USER_AGENT'];
 
-        if ($stmt = $mysqli->prepare("SELECT password FROM accounts WHERE id = ? LIMIT 1")) {
-            $stmt->bind_param('i', $account_id);
-            $stmt->execute();
-            $stmt->store_result();
-            $password = NULL;
-            $stmt->bind_result($password);
-            $stmt->fetch();
-            $login_check = hash('sha512', $password . $user_browser);
-            if ($login_check == $login_string) {
-                return true; //Logged in!
-            } else {
-                return false;
-            }
-        } else {
-            dieDb($mysqli);
+        $result = SQL("SELECT password,  admin FROM accounts WHERE id = ? LIMIT 1", $accountID);
+        if ($result == null)
+            die("Invalid request"); //the id not exists in the db
+        $password = $result[0]["password"];
+        $login_check = hash('sha512', $password . $user_browser);
+        if ($login_check == $login_string) {
+            //logged in
+            SQL("UPDATE accounts SET lastOnline=NOW() WHERE id = ?", $accountID); //set lastOnline
+            $loggedin = true;
+            $admin = $result[0]["admin"] == "1";
         }
-    } else {
-        return false;
     }
 }
 
-function initTranslate($mysqli)
+function initTranslate()
 {
     global $tr;
     if (!isset($_SESSION["lang"]))
         $_SESSION["lang"] = "en";
-    if ($stmt = $mysqli->prepare("SELECT identifier, text FROM strings WHERE language = ?")) {
-        $stmt->bind_param('s', $_SESSION["lang"]);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $arr = $result->fetch_all(MYSQLI_ASSOC);
-        foreach ($arr as $row) {
+    if ($result = SQL("SELECT identifier, text FROM strings WHERE language = ?", $_SESSION["lang"])) {
+        foreach ($result as $row) {
             $tr[$row["identifier"]] = $row["text"];
         }
-        $stmt->close();
     }
 }
 
@@ -139,9 +174,7 @@ function needLogin()
 
 function sanityCheck($string, $type, $lengthmin, $lengthmax)
 {
-
     $type = 'is_' . $type;
-
     if (!$type($string)) {
         return false;
     } elseif (empty($string)) {

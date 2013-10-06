@@ -7,6 +7,8 @@ if ($loggedin) {
 $error = "";
 $email = "";
 if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pSize'])) {
+    //form validation
+    //TODO:remove comment
     /*if (!isset($_POST['email']) || !sanityCheck($_POST['email'], 'string', 7, 50) || !checkEmail($_POST['email']))
         $error = $tr["ERR_LOGIN"];
     else
@@ -24,7 +26,8 @@ if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pSize'])) {
     $email = $_POST['email'];
     $password = $_POST['p'];
     if ($error == "") {
-        if(login($email, $password, $mysqli)) {
+        $ret = login($email, $password, $mysqli);
+        if ($ret == LoginResponse::Success) {
             header('Location: ../summary.php');
         } else {
             $error = $tr["ERR_LOGIN"];
@@ -35,9 +38,7 @@ if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pSize'])) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title><?php print($tr["WEBPAGENAME"]); ?></title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="style/main.css">
+    <?php include "php/head.php"; ?>
     <script type="text/javascript" src="scripts/sha512.js"></script>
     <script type="text/javascript" src="scripts/main.js"></script>
 </head>
@@ -49,14 +50,13 @@ if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pSize'])) {
     <div class="formDiv">
         <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post">
             <label for="email">Email</label><br/>
-            <input type="text" name="email" id="email" maxlength="50" value="<?=$email?>">
+            <input type="text" name="email" id="email" maxlength="50" value="<?= $email ?>">
             <br/>
             <br/>
             <label for="pass"><?=$tr["PASSWORD"]?></label><br/>
             <input type="password" name="pass" id="pass" maxlength="100">
             <br/>
-            <?php if ($error) echo '<span class="errorMessage">' . $error . '</span>'; ?>
-            <br/>
+            <?php if ($error) echo '<span class="errorMessage">' . $error . '</span><br />'; ?>
             <br/>
             <br/>
             <input type="submit" value="<?= $tr["LOGIN"] ?>" class="button"
@@ -64,6 +64,8 @@ if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pSize'])) {
         </form>
     </div>
 </div>
-<div id="footer"></div>
+<footer>
+    <?php include "php/footer.php"; ?>
+</footer>
 </body>
 </html>

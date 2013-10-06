@@ -10,7 +10,13 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
     if (!isset($_POST['name']) || !sanityCheck($_POST['name'], 'string', 3, 25))
         $nameErr = $tr["ERR_USERNAME_LENGTH"];
     else
-        $name = $_POST['name'];
+    {
+        $res = SQL("SELECT 1 FROM accounts WHERE username = ?;", $_POST['name']);
+        if($res != null)
+            $nameErr = $tr["ERR_USERNAME_EXITS"];
+        else
+            $name = $_POST['name'];
+    }
 
     if (!isset($_POST['email']) || !sanityCheck($_POST['email'], 'string', 7, 50) || !checkEmail($_POST['email']))
         $emailErr = $tr["ERR_EMAIL"];
@@ -30,21 +36,22 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
         $random_salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
         // Create salted password (Careful not to over season)
         $password = hash('sha512', $password . $random_salt);
-        if ($insert_stmt = $mysqli->prepare("INSERT INTO accounts (username, email, password, salt) VALUES (?, ?, ?, ?)")) {
-            $insert_stmt->bind_param('ssss', $_POST['name'], $_POST['email'], $password, $random_salt);
-            $insert_stmt->execute();
-            header('Location: ../register.php?success=1');
-        } else
-            dieDb($mysqli);
+        SQL("INSERT INTO accounts (username, email, password, salt)
+        VALUES (?, ?, ?, ?)", $_POST['name'], $_POST['email'], $password, $random_salt);
+        //update stats
+        $res = SQL("SELECT EXISTS(SELECT 1 FROM stat_accounts_added WHERE time = CURDATE());");
+        if($res != null)
+            SQL("UPDATE stat_accounts_added SET count = count + 1 WHERE time = CURDATE();");
+        else
+            SQL("INSERT INTO stat_accounts_added (time, count) VALUES (CURRENT_DATE(), '1')");
+        header('Location: ../register.php?success=1');
     }
 }
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title><?php print($tr["WEBPAGENAME"]); ?></title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="style/main.css">
+    <?php include "php/head.php"; ?>
     <script type="text/javascript" src="scripts/sha512.js"></script>
     <script type="text/javascript" src="scripts/main.js"></script>
 </head>
@@ -60,20 +67,19 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
         <div class="formDiv">
             <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post">
                 <label for="name"><?=$tr["USERNAME"]?></label><br/>
-                <input type="text" name="name" id="name" maxlength="25" value="<?= $name ?>">
+                <input type="text" name="name" id="name" maxlength="25" value="<?= isset($_POST["name"]) ? $_POST["name"] : "" ?>">
                 <br/>
-                <?php if ($nameErr) echo '<span class="errorMessage">' . $nameErr . '</span>'; ?>
+                <?php if ($nameErr) echo '<span class="errorMessage">' . $nameErr . '</span><br />'; ?>
                 <br/>
                 <label for="email">Email</label><br/>
-                <input type="text" name="email" id="email" maxlength="50" value="<?= $email ?>">
+                <input type="text" name="email" id="email" maxlength="50" value="<?= isset($_POST["email"]) ? $_POST["email"] : ""  ?>">
                 <br/>
-                <?php if ($emailErr) echo '<span class="errorMessage">' . $emailErr . '</span>'; ?>
+                <?php if ($emailErr) echo '<span class="errorMessage">' . $emailErr . '</span><br />'; ?>
                 <br/>
                 <label for="pass"><?=$tr["PASSWORD"]?></label><br/>
                 <input type="password" name="pass" id="pass" maxlength="100">
                 <br/>
-                <?php if ($passwordErr) echo '<span class="errorMessage">' . $passwordErr . '</span>'; ?>
-                <br/>
+                <?php if ($passwordErr) echo '<span class="errorMessage">' . $passwordErr . '</span><br />'; ?>
                 <br/>
                 <br/>
                 <input type="submit" value="<?= $tr["REGISTER"] ?>" class="button"
@@ -84,6 +90,8 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
     }
     ?>
 </div>
-<div id="footer"></div>
+<footer>
+    <?php include "php/footer.php"; ?>
+</footer>
 </body>
 </html>
