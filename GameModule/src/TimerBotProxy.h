@@ -12,9 +12,8 @@ private:
 	const int allowedCalcTime; // in millisec
 
 protected:
-	bool isInTime(boost::thread& runIn);
+	bool isInTime(std::future<void>& f);
 	void handleTimeout(std::string inMethod);
-	bool isThreadRunning(boost::thread& runIn);
 
 public:
 	TimerBotProxy(Bot* bot, int allowedCalcTime)

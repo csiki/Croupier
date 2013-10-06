@@ -39377,9 +39377,9 @@
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
 <XPD:ATTR name="Left" type="integer">3880</XPD:ATTR>
-<XPD:ATTR name="Top" type="integer">944</XPD:ATTR>
+<XPD:ATTR name="Top" type="integer">940</XPD:ATTR>
 <XPD:ATTR name="Width" type="integer">181</XPD:ATTR>
-<XPD:ATTR name="Height" type="integer">147</XPD:ATTR>
+<XPD:ATTR name="Height" type="integer">134</XPD:ATTR>
 <XPD:REF name="Model">uuD6tUCi+USBtcRGdzQoHgAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="I/hp8IiIr0ePupLHDpYabgAA">
 <XPD:OBJ name="NameLabel" type="LabelView" guid="S2hlkruNzEGOIDSsI2KxPgAA">
@@ -39407,7 +39407,7 @@
 <XPD:OBJ name="OwnedViews[103]" type="UMLDependencyView" guid="qui4AcNAV0yDYTAqtEJroQAA">
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">4201,1112;4060,1054</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">4208,1112;4060,1046</XPD:ATTR>
 <XPD:REF name="Model">ctRxnJAo102Zc0/3HqIXlgAA</XPD:REF>
 <XPD:REF name="Head">iIboEqYjiEiQa5UKTtE46wAA</XPD:REF>
 <XPD:REF name="Tail">zKZzKPVnkEOqiiPJxAgyVgAA</XPD:REF>
@@ -40366,7 +40366,7 @@
 <XPD:REF name="Views[3]">0IbrV91T3UaXBUqhjya6fgAA</XPD:REF>
 <XPD:ATTR name="#SupplierDependencies" type="integer">1</XPD:ATTR>
 <XPD:REF name="SupplierDependencies[0]">ctRxnJAo102Zc0/3HqIXlgAA</XPD:REF>
-<XPD:ATTR name="#Attributes" type="integer">8</XPD:ATTR>
+<XPD:ATTR name="#Attributes" type="integer">7</XPD:ATTR>
 <XPD:OBJ name="Attributes[0]" type="UMLAttribute" guid="NmuXvJFZNE2coi8/3Vb4gAAA">
 <XPD:ATTR name="Name" type="string">id</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">const int</XPD:ATTR>
@@ -40374,7 +40374,7 @@
 </XPD:OBJ>
 <XPD:OBJ name="Attributes[1]" type="UMLAttribute" guid="4U8y8977yk24OSFcC0dRbwAA">
 <XPD:ATTR name="Name" type="string">name</XPD:ATTR>
-<XPD:ATTR name="TypeExpression" type="string">string</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">const string</XPD:ATTR>
 <XPD:REF name="Owner">uuD6tUCi+USBtcRGdzQoHgAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="Attributes[2]" type="UMLAttribute" guid="Ik/vw6Lv/0Wyt9aJfEaNrgAA">
@@ -40392,17 +40392,12 @@
 <XPD:ATTR name="TypeExpression" type="string">const int*</XPD:ATTR>
 <XPD:REF name="Owner">uuD6tUCi+USBtcRGdzQoHgAA</XPD:REF>
 </XPD:OBJ>
-<XPD:OBJ name="Attributes[5]" type="UMLAttribute" guid="/74uyg9zDUmWbpSdbEDulwAA">
-<XPD:ATTR name="Name" type="string">numOfFiles</XPD:ATTR>
-<XPD:ATTR name="TypeExpression" type="string">const int</XPD:ATTR>
+<XPD:OBJ name="Attributes[5]" type="UMLAttribute" guid="Y+wUNZRUaUuFCNx4FERmzwAA">
+<XPD:ATTR name="Name" type="string">file</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">string</XPD:ATTR>
 <XPD:REF name="Owner">uuD6tUCi+USBtcRGdzQoHgAA</XPD:REF>
 </XPD:OBJ>
-<XPD:OBJ name="Attributes[6]" type="UMLAttribute" guid="Y+wUNZRUaUuFCNx4FERmzwAA">
-<XPD:ATTR name="Name" type="string">files</XPD:ATTR>
-<XPD:ATTR name="TypeExpression" type="string">const string*</XPD:ATTR>
-<XPD:REF name="Owner">uuD6tUCi+USBtcRGdzQoHgAA</XPD:REF>
-</XPD:OBJ>
-<XPD:OBJ name="Attributes[7]" type="UMLAttribute" guid="4LVu3plJNUaLytZW4b33jgAA">
+<XPD:OBJ name="Attributes[6]" type="UMLAttribute" guid="4LVu3plJNUaLytZW4b33jgAA">
 <XPD:ATTR name="Name" type="string">communicator</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">BotCommunicator*</XPD:ATTR>
 <XPD:REF name="Owner">uuD6tUCi+USBtcRGdzQoHgAA</XPD:REF>

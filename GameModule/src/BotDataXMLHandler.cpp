@@ -15,7 +15,7 @@ BotData* BotDataXMLHandler::loadXML(std::string xmlPath)
 		// collect data from xml
 		pugi::xpath_node botNode = doc.select_single_node("/bot");
 
-		int id, credit, numOfKnowledgeTables, numOfFiles;
+		int id, credit, numOfKnowledgeTables;
 		BotLanguage lang;
 		int *knowledgeTables;
 		std::string file;

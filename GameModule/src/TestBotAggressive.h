@@ -107,7 +107,7 @@ public:
 	void step()
 	{
 		std::cout << "step aggressivebot" << std::endl;
-		//while(1) {} // TEST
+		while(1) {} // TEST
 		if (this->communicator->getCallAmount() == 0)
 		{
 			if (!this->communicator->raise(this->communicator->getBigBlindAtRound()))

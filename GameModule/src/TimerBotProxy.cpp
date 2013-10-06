@@ -1,61 +1,41 @@
 #include "stdafx.h"
 #include "TimerBotProxy.h"
 #include "BotTimeExceededException.h"
-#include <chrono>
-#include <future>
 
 /** Measure the time between the call and the end of process of the thread given.
  *	@return true if the AI process was in time, false otherwise.
 */
-bool TimerBotProxy::isInTime(boost::thread& runIn)
+bool TimerBotProxy::isInTime(std::future<void>& f)
 {
-	std::clock_t begin = clock();
-	std::clock_t now = begin;
-	boost::chrono::milliseconds sleepDuration(20);
-	bool doneInTime = false;
-	
-	while ((double(now - begin) / CLOCKS_PER_MILLISEC) < this->allowedCalcTime)
-	{
-		// cycle till thread is running and till the allowed time not elapsed
-		boost::this_thread::sleep_for(sleepDuration);
-		now = clock();
+	auto start = std::chrono::high_resolution_clock::now();
+	auto now = std::chrono::high_resolution_clock::now();
 
-		if (!this->isThreadRunning(runIn))
+	long dur = 0;
+	while (dur < this->allowedCalcTime)
+	{
+		if (f.wait_for(std::chrono::milliseconds(0)) == std::future_status::ready)
 		{
-			doneInTime = true;
-			break;
+			return true;
 		}
-	}
-	
-	// interrupt if running
-	if (this->isThreadRunning(runIn))
-	{
-		runIn.interrupt();
+		std::this_thread::sleep_for(std::chrono::milliseconds(20));
+		now = std::chrono::high_resolution_clock::now();
+		dur = (now - start).count() / 10000;
 	}
 
-	return doneInTime;
+	return false;
 }
 
 void TimerBotProxy::handleTimeout(std::string inMethod)
 {
-	throw BotTimeExceededException(inMethod);
-}
 
-bool TimerBotProxy::isThreadRunning(boost::thread& runIn)
-{
-	return !runIn.timed_join(boost::posix_time::milliseconds(0));
+	throw BotTimeExceededException(inMethod);
 }
 
 void TimerBotProxy::allined(int botID, int amount)
 {
-	Bot* bot = this->forwardTo;
-	boost::thread run([bot, botID, amount] () {
-		boost::this_thread::interruption_point();
-		bot->allined(botID, amount);
-		boost::this_thread::interruption_point();
-	});
+	std::future<void> f = std::async(std::launch::async, &Bot::allined, this->forwardTo, botID, amount);
 
-	if(!isInTime(run))
+	if(!this->isInTime(f))
 	{
 		this->handleTimeout("allined");
 	}
@@ -63,14 +43,9 @@ void TimerBotProxy::allined(int botID, int amount)
 
 void TimerBotProxy::blindsRaised(int newSmallBlind, int newBigBlind)
 {
-	Bot* bot = this->forwardTo;
-	boost::thread run([bot, newSmallBlind, newBigBlind] () {
-		boost::this_thread::interruption_point();
-		bot->blindsRaised(newSmallBlind, newBigBlind);
-		boost::this_thread::interruption_point();
-	});
+	std::future<void> f = std::async(std::launch::async, &Bot::blindsRaised, this->forwardTo, newSmallBlind, newBigBlind);
 
-	if(!isInTime(run))
+	if(!this->isInTime(f))
 	{
 		this->handleTimeout("blindsRaised");
 	}
@@ -78,14 +53,9 @@ void TimerBotProxy::blindsRaised(int newSmallBlind, int newBigBlind)
 
 void TimerBotProxy::called(int botID, int amount)
 {
-	Bot* bot = this->forwardTo;
-	boost::thread run([bot, botID, amount] () {
-		boost::this_thread::interruption_point();
-		bot->called(botID, amount);
-		boost::this_thread::interruption_point();
-	});
+	std::future<void> f = std::async(std::launch::async, &Bot::called, this->forwardTo, botID, amount);
 
-	if(!isInTime(run))
+	if(!this->isInTime(f))
 	{
 		this->handleTimeout("called");
 	}
@@ -93,14 +63,9 @@ void TimerBotProxy::called(int botID, int amount)
 
 void TimerBotProxy::checked(int botID)
 {
-	Bot* bot = this->forwardTo;
-	boost::thread run([bot, botID] () {
-		boost::this_thread::interruption_point();
-		bot->checked(botID);
-		boost::this_thread::interruption_point();
-	});
+	std::future<void> f = std::async(std::launch::async, &Bot::checked, this->forwardTo, botID);
 
-	if(!isInTime(run))
+	if(!this->isInTime(f))
 	{
 		this->handleTimeout("checked");
 	}
@@ -108,14 +73,9 @@ void TimerBotProxy::checked(int botID)
 
 void TimerBotProxy::flop()
 {
-	Bot* bot = this->forwardTo;
-	boost::thread run([bot] () {
-		boost::this_thread::interruption_point();
-		bot->flop();
-		boost::this_thread::interruption_point();
-	});
+	std::future<void> f = std::async(std::launch::async, &Bot::flop, this->forwardTo);
 
-	if(!isInTime(run))
+	if(!this->isInTime(f))
 	{
 		this->handleTimeout("flop");
 	}
@@ -123,14 +83,9 @@ void TimerBotProxy::flop()
 
 void TimerBotProxy::folded(int botID)
 {
-	Bot* bot = this->forwardTo;
-	boost::thread run([bot, botID] () {
-		boost::this_thread::interruption_point();
-		bot->folded(botID);
-		boost::this_thread::interruption_point();
-	});
+	std::future<void> f = std::async(std::launch::async, &Bot::folded, this->forwardTo, botID);
 
-	if(!isInTime(run))
+	if(!this->isInTime(f))
 	{
 		this->handleTimeout("folded");
 	}
@@ -138,14 +93,9 @@ void TimerBotProxy::folded(int botID)
 
 void TimerBotProxy::gameWinner(int botID)
 {
-	Bot* bot = this->forwardTo;
-	boost::thread run([bot, botID] () {
-		boost::this_thread::interruption_point();
-		bot->gameWinner(botID);
-		boost::this_thread::interruption_point();
-	});
+	std::future<void> f = std::async(std::launch::async, &Bot::gameWinner, this->forwardTo, botID);
 
-	if(!isInTime(run))
+	if(!this->isInTime(f))
 	{
 		this->handleTimeout("gameWinner");
 	}
@@ -153,14 +103,9 @@ void TimerBotProxy::gameWinner(int botID)
 
 void TimerBotProxy::leftGame(int botID)
 {
-	Bot* bot = this->forwardTo;
-	boost::thread run([bot, botID] () {
-		boost::this_thread::interruption_point();
-		bot->leftGame(botID);
-		boost::this_thread::interruption_point();
-	});
+	std::future<void> f = std::async(std::launch::async, &Bot::leftGame, this->forwardTo, botID);
 
-	if(!isInTime(run))
+	if(!this->isInTime(f))
 	{
 		this->handleTimeout("leftGame");
 	}
@@ -168,14 +113,9 @@ void TimerBotProxy::leftGame(int botID)
 
 void TimerBotProxy::listen(int botID, Comment comment)
 {
-	Bot* bot = this->forwardTo;
-	boost::thread run([bot, botID, comment] () {
-		boost::this_thread::interruption_point();
-		bot->listen(botID, comment);
-		boost::this_thread::interruption_point();
-	});
+	std::future<void> f = std::async(std::launch::async, &Bot::listen, this->forwardTo, botID, comment);
 
-	if(!isInTime(run))
+	if(!this->isInTime(f))
 	{
 		this->handleTimeout("listen");
 	}
@@ -183,14 +123,9 @@ void TimerBotProxy::listen(int botID, Comment comment)
 
 void TimerBotProxy::preflop()
 {
-	Bot* bot = this->forwardTo;
-	boost::thread run([bot] () {
-		boost::this_thread::interruption_point();
-		bot->preflop();
-		boost::this_thread::interruption_point();
-	});
+	std::future<void> f = std::async(std::launch::async, &Bot::preflop, this->forwardTo);
 
-	if(!isInTime(run))
+	if(!this->isInTime(f))
 	{
 		this->handleTimeout("preflop");
 	}
@@ -198,14 +133,9 @@ void TimerBotProxy::preflop()
 
 void TimerBotProxy::leave()
 {
-	Bot* bot = this->forwardTo;
-	boost::thread run([bot] () {
-		boost::this_thread::interruption_point();
-		bot->leave();
-		boost::this_thread::interruption_point();
-	});
+	std::future<void> f = std::async(std::launch::async, &Bot::leave, this->forwardTo);
 
-	if(!isInTime(run))
+	if(!this->isInTime(f))
 	{
 		this->handleTimeout("leave");
 	}
@@ -213,14 +143,9 @@ void TimerBotProxy::leave()
 
 void TimerBotProxy::raised(int botID, int amount)
 {
-	Bot* bot = this->forwardTo;
-	boost::thread run([bot, botID, amount] () {
-		boost::this_thread::interruption_point();
-		bot->raised(botID, amount);
-		boost::this_thread::interruption_point();
-	});
+	std::future<void> f = std::async(std::launch::async, &Bot::raised, this->forwardTo, botID, amount);
 
-	if(!isInTime(run))
+	if(!this->isInTime(f))
 	{
 		this->handleTimeout("raised");
 	}
@@ -228,29 +153,19 @@ void TimerBotProxy::raised(int botID, int amount)
 
 void TimerBotProxy::rebuyOccurred(int botID, int amount)
 {
-	Bot* bot = this->forwardTo;
-	boost::thread run([bot, botID, amount] () {
-		boost::this_thread::interruption_point();
-		bot->rebuyOccurred(botID, amount);
-		boost::this_thread::interruption_point();
-	});
+	std::future<void> f = std::async(std::launch::async, &Bot::rebuyOccurred, this->forwardTo, botID, amount);
 
-	if(!isInTime(run))
+	if(!this->isInTime(f))
 	{
-		this->handleTimeout("rebuyOccurred");
+		this->handleTimeout("rebuyOccured");
 	}
 }
 
 void TimerBotProxy::rebuyDeadlineReached()
 {
-	Bot* bot = this->forwardTo;
-	boost::thread run([bot] () {
-		boost::this_thread::interruption_point();
-		bot->rebuyDeadlineReached();
-		boost::this_thread::interruption_point();
-	});
+	std::future<void> f = std::async(std::launch::async, &Bot::rebuyDeadlineReached, this->forwardTo);
 
-	if(!isInTime(run))
+	if(!this->isInTime(f))
 	{
 		this->handleTimeout("rebuyDeadlineReached");
 	}
@@ -258,14 +173,9 @@ void TimerBotProxy::rebuyDeadlineReached()
 
 void TimerBotProxy::rebuyOrLeave()
 {
-	Bot* bot = this->forwardTo;
-	boost::thread run([bot] () {
-		boost::this_thread::interruption_point();
-		bot->rebuyOrLeave();
-		boost::this_thread::interruption_point();
-	});
+	std::future<void> f = std::async(std::launch::async, &Bot::rebuyOrLeave, this->forwardTo);
 
-	if(!isInTime(run))
+	if(!this->isInTime(f))
 	{
 		this->handleTimeout("rebuyOrLeave");
 	}
@@ -273,14 +183,9 @@ void TimerBotProxy::rebuyOrLeave()
 
 void TimerBotProxy::river()
 {
-	Bot* bot = this->forwardTo;
-	boost::thread run([bot] () {
-		boost::this_thread::interruption_point();
-		bot->river();
-		boost::this_thread::interruption_point();
-	});
+	std::future<void> f = std::async(std::launch::async, &Bot::river, this->forwardTo);
 
-	if(!isInTime(run))
+	if(!this->isInTime(f))
 	{
 		this->handleTimeout("river");
 	}
@@ -288,14 +193,9 @@ void TimerBotProxy::river()
 
 void TimerBotProxy::roundEnded()
 {
-	Bot* bot = this->forwardTo;
-	boost::thread run([bot] () {
-		boost::this_thread::interruption_point();
-		bot->roundEnded();
-		boost::this_thread::interruption_point();
-	});
+	std::future<void> f = std::async(std::launch::async, &Bot::roundEnded, this->forwardTo);
 
-	if(!isInTime(run))
+	if(!this->isInTime(f))
 	{
 		this->handleTimeout("roundEnded");
 	}
@@ -303,14 +203,9 @@ void TimerBotProxy::roundEnded()
 
 void TimerBotProxy::roundStarted(int round)
 {
-	Bot* bot = this->forwardTo;
-	boost::thread run([bot, round] () {
-		boost::this_thread::interruption_point();
-		bot->roundStarted(round);
-		boost::this_thread::interruption_point();
-	});
+	std::future<void> f = std::async(std::launch::async, &Bot::roundStarted, this->forwardTo, round);
 
-	if(!isInTime(run))
+	if(!this->isInTime(f))
 	{
 		this->handleTimeout("roundStarted");
 	}
@@ -318,14 +213,9 @@ void TimerBotProxy::roundStarted(int round)
 
 void TimerBotProxy::roundWinners(int numOfWinners, const int* winners)
 {
-	Bot* bot = this->forwardTo;
-	boost::thread run([bot, numOfWinners, winners] () {
-		boost::this_thread::interruption_point();
-		bot->roundWinners(numOfWinners, winners);
-		boost::this_thread::interruption_point();
-	});
+	std::future<void> f = std::async(std::launch::async, &Bot::roundWinners, this->forwardTo, numOfWinners, winners);
 
-	if(!isInTime(run))
+	if(!this->isInTime(f))
 	{
 		this->handleTimeout("roundWinners");
 	}
@@ -333,14 +223,9 @@ void TimerBotProxy::roundWinners(int numOfWinners, const int* winners)
 
 void TimerBotProxy::showdown()
 {
-	Bot* bot = this->forwardTo;
-	boost::thread run([bot] () {
-		boost::this_thread::interruption_point();
-		bot->showdown();
-		boost::this_thread::interruption_point();
-	});
+	std::future<void> f = std::async(std::launch::async, &Bot::showdown, this->forwardTo);
 
-	if(!isInTime(run))
+	if(!this->isInTime(f))
 	{
 		this->handleTimeout("showdown");
 	}
@@ -348,28 +233,9 @@ void TimerBotProxy::showdown()
 
 void TimerBotProxy::step()
 {
-	// c++11 solution
-	std::future<void> f = std::async(&Bot::step, this->forwardTo);
-	// isInTime():
-	auto start = std::chrono::time_point<std::chrono::high_resolution_clock, std::chrono::milliseconds>(); // TODO
-	auto const timeout = std::chrono::steady_clock::now() + std::chrono::milliseconds(this->allowedCalcTime);
-	// TODO
+	std::future<void> f = std::async(std::launch::async, &Bot::step, this->forwardTo);
 
-	while (std::chrono::steady_clock::now() < timeout)
-	{
-
-	}
-	// TODO
-
-	// boost solution
-	Bot* bot = this->forwardTo;
-	boost::thread run([bot] () {
-		boost::this_thread::interruption_point();
-		bot->step();
-		boost::this_thread::interruption_point();
-	});
-
-	if(!isInTime(run))
+	if(!this->isInTime(f))
 	{
 		this->handleTimeout("step");
 	}
@@ -377,14 +243,9 @@ void TimerBotProxy::step()
 
 void TimerBotProxy::turn()
 {
-	Bot* bot = this->forwardTo;
-	boost::thread run([bot] () {
-		boost::this_thread::interruption_point();
-		bot->turn();
-		boost::this_thread::interruption_point();
-	});
+	std::future<void> f = std::async(std::launch::async, &Bot::turn, this->forwardTo);
 
-	if(!isInTime(run))
+	if(!this->isInTime(f))
 	{
 		this->handleTimeout("turn");
 	}

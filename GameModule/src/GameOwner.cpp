@@ -102,14 +102,16 @@ void GameOwner::initialiseGame()
 		// TEST
 		if (i == 0)
 			this->bots[i] = new TestBot(this->botManagers[i], 10, "testbot", BotLanguage::CPP);
-		//else if (i == 1)
-			//this->bots[i] = new TestBotAggressive(this->botManagers[i], 20, "aggressivebot", BotLanguage::CPP);
-		else
+		else if (i == 1)
+			this->bots[i] = new TestBotAggressive(this->botManagers[i], 20, "aggressivebot", BotLanguage::CPP);
+		else if (i == 2)
+			this->bots[i] = new TestBotShy(this->botManagers[i], 30, "shybot", BotLanguage::CPP);
+		/*else
 		{
 			std::string name = "alive-";
 			name += std::to_string(i);
 			this->bots[i] = new AliveBot(this->botManagers[i], i+10, name, BotLanguage::ALIVE);
-		}
+		}*/
 
 		// connect bot to communicator
 		this->botManagers[i]->monitor(this->bots[i]);
