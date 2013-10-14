@@ -3,37 +3,39 @@ include "php/include.php";
 needLogin();
 $codeErr = $fileErr = "";
 $name = $code = $lang = "";
-if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])) {
+if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
     $id = 0;
-    if ($result = SQL("SELECT id FROM bots WHERE accountID = ? ORDER BY id DESC LIMIT 1;", $_SESSION["accountID"])) {
-        if ($result == null)
-            die("Invalid Request");
-        $id = $result[0]["id"];
-    }
+    $result = SQL("SELECT id FROM bots WHERE accountID = ? ORDER BY id DESC LIMIT 1;", $_SESSION["accountID"]);
+    if ($result == null)
+        die("Invalid Request");
+    $id = $result[0]["id"];
     $id++;
     if (isset($_POST["name"]) && !empty($_POST["name"]))
         $name = $_POST["name"];
     else
-        $name = $tr["UNNAMED_BOT"] ." " . $id;
+        $name = $tr["UNNAMED_BOT"] . " " . $id;
     if (isset($_FILES["codefile"]) && $_FILES["codefile"]["error"] == 0) {
         $code = file_get_contents($_FILES["codefile"]["tmp_name"]);
         $finfo = new finfo(FILEINFO_MIME_TYPE);
         $mimeType = $finfo->buffer($code);
-        if (strpos($mimeType, "text/") !== 0 || strlen($code) < 11) {
+        if (strpos($mimeType, "text/") !== 0 || strlen($code) < BOT_CODE_MIN) {
             $fileErr = $tr["ERR_CODEFILE"];
         }
-    } else if (isset($_POST["code"]) && strlen($_POST["code"]) > 10) {
+    } else if (isset($_POST["code"]) && strlen($_POST["code"]) >= BOT_CODE_MIN) {
         $code = $_POST["code"];
     } else {
         $codeErr = $tr["ERR_CODE_EMPTY"];
     }
-    $lang = $_POST["lang"];
+    if(isset($_POST["lang"]) && isValidCodeLang($_POST["lang"]))
+        $lang = $_POST["lang"];
+    else
+        die("Invalid request");
     if ($fileErr == "" && $codeErr == "") {
         SQL("INSERT INTO bots (id, accountID, name, lastChangeTime, code, code_lang, state)
           VALUES (NULL, ?, ?, NOW(), ?, ?, 'processing')", $_SESSION["accountID"], $name, $code, $lang);
         //update stats
         $res = SQL("SELECT EXISTS(SELECT 1 FROM stat_bots_added WHERE time = CURDATE());");
-        if($res != null)
+        if ($res != null)
             SQL("UPDATE stat_bots_added SET count = count + 1 WHERE time = CURDATE();");
         else
             SQL("INSERT INTO stat_bots_added (time, count) VALUES (CURRENT_DATE(), '1')");
@@ -68,9 +70,9 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
         <div style="display: inline-block; margin-left: 40px">
             <label for="langInput"><?=$tr["CODE_LANG"]?></label><br/>
             <select name="lang" id="langInput" form="botform">
-                <option value="cpp" <?php if ($lang == "cpp") echo "selected"; ?>>C++</option>
+                <option value="c++" <?php if ($lang == "c++") echo "selected"; ?>>C++</option>
                 <option value="java" <?php if ($lang == "java") echo "selected"; ?>>Java</option>
-                <option value="csharp" <?php if ($lang == "csharp") echo "selected"; ?>>C#</option>
+                <option value="c#" <?php if ($lang == "c#") echo "selected"; ?>>C#</option>
             </select>
         </div>
         <br/><br/>

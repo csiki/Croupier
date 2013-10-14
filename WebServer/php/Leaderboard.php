@@ -3,6 +3,9 @@ class Leaderboard
 {
     public $id;
     public $rulz = null;
+    public $score = 0;
+    public $win = 0;
+    public $loose = 0;
     public $botsByPosition = null;
 
     public function addBot(Bot $bot)

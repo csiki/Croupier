@@ -97,7 +97,7 @@ function getBotInfos($mysqli)
             echo '<td colspan="6" id="noBotsFound">' . $tr["NO_BOTS_FOUND"] . '</td>';
         } else
             for ($i = 0; $i < count($rows); $i++) {
-                $a = 'onclick="document.location = \'edit_bot.php?botid=' . $rows[$i]["id"] . '\';"';
+                $a = 'onclick="document.location = \'edit_bot.php?id=' . $rows[$i]["id"] . '\';"';
                 echo '<tr id="bot' . $rows[$i]["id"] . '" >';
                 echo '<td style="width: 30px"><input type="checkbox" class="check" name="chk' . $rows[$i]["id"] . '"
                 ' . ($rows[$i]["participate"] ? 'checked' : '') . '></td>';

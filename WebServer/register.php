@@ -47,6 +47,11 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
         header('Location: ../register.php?success=1');
     }
 }
+else
+{
+    $name = $_SESSION["username"];
+    $emailRes = SQL("SELECT email FROM accounts WHERE id = ?", $_SESSION['accountID']);
+}
 ?>
 <!DOCTYPE html>
 <html>

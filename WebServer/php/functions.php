@@ -1,4 +1,6 @@
 <?php
+
+define("BOT_CODE_MIN", "60");
 function sec_session_start()
 {
     $session_name = 'crouper_s'; // Set a custom session name
@@ -160,7 +162,14 @@ function isValidLang($lang)
 {
     if ($lang == "en" || $lang == "hu")
         return true;
-    return fal;
+    return false;
+}
+
+function isValidCodeLang($lang)
+{
+    if ($lang == "c++" || $lang == "java" || $lang == "c#")
+        return true;
+    return false;
 }
 
 function needLogin()

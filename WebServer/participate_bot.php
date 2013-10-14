@@ -1,6 +1,7 @@
 <?php
 include "php/include.php";
 needLogin();
+$leaderBoard = Leaderboard::DeSerialize(1);
 if (isset($_GET["botid"]) && isset($_GET["val"])) {
     //validate
     if (($_GET["val"] == "1" || $_GET["val"] == "0") && is_numeric($_GET["botid"])) {
