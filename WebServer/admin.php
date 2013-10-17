@@ -11,7 +11,7 @@ if (!$admin) {
 <head>
     <?php include "php/head.php"; ?>
     <link rel="stylesheet" type="text/css" href="style/admin.css">
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="../scripts/jsapi_google.js"></script>
     <script>
         google.load('visualization', '1', {packages: ['corechart'], 'language': 'en'});
         window.onload =

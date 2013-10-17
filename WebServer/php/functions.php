@@ -95,9 +95,7 @@ function login($email, $password, $mysqli)
         if ($db_password == $password) { // Check if the password in the database matches the password the user submitted.
             // Password is correct!
             $user_browser = $_SERVER['HTTP_USER_AGENT']; // Get the user-agent string of the user.
-            $accountID = preg_replace("/[^0-9]+/", "", $accountID); // XSS protection as we might print this value
             $_SESSION['accountID'] = $accountID;
-            $username = preg_replace("/[^a-zA-Z0-9_\-]+/", "", $username); // XSS protection as we might print this value
             $_SESSION['username'] = $username;
             $_SESSION['login_string'] = hash('sha512', $password . $user_browser);
             return LoginResponse::Success;

@@ -56,33 +56,32 @@ body {
     margin-left: 14px;
 }
 
-#manageBotsTable {
+table {
     border: 0px;
     border-spacing: 0;
     border-collapse: collapse;
     border: 1px solid #dedede;
 }
 
-#manageBotsTable thead {
+table thead {
     background-color: palegreen;
     font-weight: 700;
     text-align: left;
 }
 
-#manageBotsTable tbody {
+table tbody {
     background-color: white;
 }
 
-#manageBotsTable tr {
-    cursor: pointer;
+table tr {
     padding: 5px 0px;
 }
 
-#manageBotsTable tbody tr:hover {
+table tbody tr:hover {
     background-color: #F4F4F4;
 }
 
-#manageBotsTable td, #manageBotsTable th {
+table td, table th {
     padding: 8px 4px;
     border-bottom: 1px solid #dedede;
 }
@@ -114,7 +113,7 @@ input[type=submit].button {
     padding: 5px 6px;
 }
 
-a.button {
+.button {
     display: block;
     background-color: #545cfe;
     border: 1px solid #000000;
@@ -125,10 +124,25 @@ a.button {
     text-align: center;
     text-decoration: none;
     font-weight: bold;
+    user-select: none;
 }
 
 .button:hover {
     background-color: #6d73fe;
+}
+
+.disabledButton {
+    display: block;
+    background-color: #cccccc;
+    border: 1px solid #000000;
+    color: #FFFFFF;
+    width: 110px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: default;
 }
 
 .errorMessage {
@@ -174,4 +188,46 @@ a.button {
     padding: 10px;
     text-align: center;
     font-size: 1.2em;
+}
+
+#tabsContainer{
+    width: 1000px;
+}
+
+#tabsContainer div *, #tabsContainer ul{
+    padding: 0px;
+    margin: 0px;
+}
+
+#tabsContainer ul li{
+    list-style: none outside none;
+    display: inline-block;
+    position: relative;
+    padding: 5px;
+    margin-right: 2px;
+    background-color: #98FB98;
+    border-left: 1px solid #000000;
+    border-top: 1px solid #000000;
+    border-right: 1px solid #000000;
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+    cursor: pointer;
+}
+
+#tabsContainer ul li.tabs-active{
+    background-color: #c4ffc9;
+}
+
+#tabPages{
+    background-color: white;
+    margin: 0px;
+    height: 600px;
+}
+
+#tabPages div{
+    padding: 30px;
+}
+
+#tabPages div div{
+    display: inline-block;
 }

@@ -40,7 +40,6 @@ if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pSize'])) {
 <head>
     <?php include "php/head.php"; ?>
     <script type="text/javascript" src="scripts/sha512.js"></script>
-    <script type="text/javascript" src="scripts/main.js"></script>
 </head>
 <body>
 <?php include "php/header.php"; ?>

@@ -16,12 +16,21 @@ function sendForm(form, password) {
     form.submit();
 }
 
+function getAJAX()
+{
+    var xmlhttp;
+    if (window.XMLHttpRequest)
+        xmlhttp = new XMLHttpRequest();
+    else
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    return xmlhttp;
+}
+
 function messageBoxAsk(text) {
     return confirm(text);
 }
 
 function messageBox(text) {
-    var p = document.createElement("div");
     var $mbox = $('<div class="messageBox"/>');
     $mbox.html(text);
     $mbox.hide();
@@ -34,42 +43,15 @@ function messageBox(text) {
         });
 }
 
-function participate_bot(id, isAdd, complete) {
-    var xmlhttp;
-    if (window.XMLHttpRequest)
-        xmlhttp = new XMLHttpRequest();
-    else
-        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    xmlhttp.onreadystatechange = function () {
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            complete.call();
-        }
-    }
-    xmlhttp.open("GET", "participate_bot.php?botid=" + id + "&val=" + (isAdd ? "1" : "0"), true);
-    xmlhttp.send();
-}
+function getQueryParams(qs) {
+    qs = qs.split("+").join(" ");
+    var params = {},
+        tokens,
+        re = /[?&]?([^=]+)=([^&]*)/g;
 
-function deleteBot(id) {
-    var xmlhttp;
-    if (window.XMLHttpRequest)
-        xmlhttp = new XMLHttpRequest();
-    else
-        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    xmlhttp.onreadystatechange = function () {
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            if (xmlhttp.responseText == "1") {
-                $("#bot" + id).children('td')
-                    .animate({ 'padding-top': 0, 'padding-bottom': 0}, 100, "linear", function () {
-                        $(this)
-                            .wrapInner('<div />')
-                            .children()
-                            .slideUp(200, function () {
-                                $(this).closest('tr').remove();
-                            });
-                    });
-            }
-        }
+    while (tokens = re.exec(qs)) {
+        params[decodeURIComponent(tokens[1])]
+            = decodeURIComponent(tokens[2]);
     }
-    xmlhttp.open("GET", "delete_bot.php?botid=" + id, true);
-    xmlhttp.send();
+    return params;
 }

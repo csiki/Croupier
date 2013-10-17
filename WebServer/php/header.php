@@ -22,7 +22,7 @@
     <?php
     if ($loggedin) {
         echo '<div id="accountMenu">';
-        echo '<a id="username_accountMenu" href="account_management.php">' . $_SESSION["username"] . '</a>';
+        echo '<a id="username_accountMenu" href="edit_account.php">' . $_SESSION["username"] . '</a>';
         echo '<a id="logout_accountMenu" href="logout.php">' . $tr["LOGOUT"] . '</a>';
         echo '</div>';
     }

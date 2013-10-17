@@ -5,7 +5,7 @@ $codeErr = $fileErr = "";
 $name = $code = $lang = "";
 if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
     $id = 0;
-    $result = SQL("SELECT id FROM bots WHERE accountID = ? ORDER BY id DESC LIMIT 1;", $_SESSION["accountID"]);
+    $result = SQL("SELECT id FROM bots ORDER BY id DESC LIMIT 1;");
     if ($result == null)
         die("Invalid Request");
     $id = $result[0]["id"];
@@ -48,7 +48,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
 <head>
     <?php include "php/head.php"; ?>
     <script type="text/javascript" src="scripts/codemirror-compressed.js"></script>
-    <link rel="stylesheet" href="scripts/codemirror.css">
+    <link rel="stylesheet" href="style/codemirror.css">
     <script type="text/javascript">
         window.onload = function () {
             var myCodeMirror = CodeMirror.fromTextArea(document.getElementById('code'));

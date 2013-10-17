@@ -25,18 +25,19 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
         if (strpos($mimeType, "text/") !== 0 || strlen($code) < BOT_CODE_MIN) {
             $fileErr = $tr["ERR_CODEFILE"];
         }
-    } else if (isset($_POST["code"]) && strlen($_POST["code"]) >= BOT_CODE_MIN) {
+    } else if (isset($_POST["code"])) {
         $code = $_POST["code"];
-    } else {
-        $codeErr = $tr["ERR_CODE_EMPTY"];
-    }
-    if (isset($_POST["lang"]) && isValidCodeLang($_POST["lang"]))
-        $lang = $_POST["lang"];
-    if ($fileErr == "" && $codeErr == "") {
-        SQL("UPDATE bots SET name = ?, lastChangeTime = NOW(), code = ?, code_lang = ?, state = 'processing',
+if (strlen($_POST["code"]) < BOT_CODE_MIN)
+    $codeErr = $tr["ERR_CODE_EMPTY"];
+
+}
+if (isset($_POST["lang"]) && isValidCodeLang($_POST["lang"]))
+    $lang = $_POST["lang"];
+if ($fileErr == "" && $codeErr == "") {
+    SQL("UPDATE bots SET name = ?, lastChangeTime = NOW(), code = ?, code_lang = ?, state = 'processing',
           participate = '0' WHERE id = ?", $name, $code, $lang, $id);
-        header('Location: ../manage_bots.php');
-    }
+    header('Location: ../manage_bots.php');
+}
 }
 ?>
 <!DOCTYPE html>
@@ -44,10 +45,14 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
 <head>
     <?php include "php/head.php"; ?>
     <script type="text/javascript" src="scripts/codemirror-compressed.js"></script>
-    <link rel="stylesheet" href="scripts/codemirror.css">
+    <link rel="stylesheet" href="style/codemirror.css">
     <script type="text/javascript">
         window.onload = function () {
             var myCodeMirror = CodeMirror.fromTextArea(document.getElementById('code'));
+        }
+        function saveAsk(form) {
+            if (messageBoxAsk('<?=$tr["SAVE_BOT_CONF"]?>'))
+                form.submit();
         }
     </script>
 </head>
@@ -82,7 +87,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
         <br/>
         <?php if ($fileErr) echo '<span class="errorMessage">' . $fileErr . '</span><br />'; ?>
         <br/>
-        <input type="submit" class="button" value="<?= $tr["SUBMIT"] ?>">
+        <input type="button" onclick="saveAsk(this.form)" class="button" value="<?= $tr["SAVE"] ?>">
     </form>
     </p>
 </div>
