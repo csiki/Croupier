@@ -14598,12 +14598,12 @@
 <XPD:ATTR name="IsAbstract" type="boolean">True</XPD:ATTR>
 <XPD:REF name="Owner">rWw/yI2Zz02CFb553JMpPgAA</XPD:REF>
 <XPD:ATTR name="#Parameters" type="integer">2</XPD:ATTR>
-<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="0dhYxnrTzUCJmAVeFv/CEgAA">
+<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="nQ4GhMrjk02ErRCe0ClUegAA">
 <XPD:ATTR name="DirectionKind" type="UMLParameterDirectionKind">pdkReturn</XPD:ATTR>
-<XPD:ATTR name="TypeExpression" type="string">int</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">07DohrbXRUC4gqs0ItC8NgAA</XPD:REF>
+<XPD:REF name="Type_">L3+HuYhf/EmWo7nVJ7bCrwAA</XPD:REF>
 </XPD:OBJ>
-<XPD:OBJ name="Parameters[1]" type="UMLParameter" guid="IkJpoYbVZEuwA614ITXz7wAA">
+<XPD:OBJ name="Parameters[1]" type="UMLParameter" guid="6IIo9T2nIE2I7fL6qGyaAQAA">
 <XPD:ATTR name="Name" type="string">botID</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">int</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">07DohrbXRUC4gqs0ItC8NgAA</XPD:REF>
@@ -43086,8 +43086,9 @@
 <XPD:REF name="Views[0]">913erT5noEWx1/fg3Ft53gAA</XPD:REF>
 <XPD:REF name="Views[1]">sRn6Gv4nfU6FpUmfH8JTVwAA</XPD:REF>
 <XPD:REF name="Views[2]">rGWqxq4uN0iTFR/z7ljltwAA</XPD:REF>
-<XPD:ATTR name="#TypedParameters" type="integer">1</XPD:ATTR>
+<XPD:ATTR name="#TypedParameters" type="integer">2</XPD:ATTR>
 <XPD:REF name="TypedParameters[0]">72U1xEaBGU2yBSUm+9OGwQAA</XPD:REF>
+<XPD:REF name="TypedParameters[1]">nQ4GhMrjk02ErRCe0ClUegAA</XPD:REF>
 <XPD:ATTR name="#Associations" type="integer">1</XPD:ATTR>
 <XPD:REF name="Associations[0]">R6EGhwxgm0elp25IbaF6lwAA</XPD:REF>
 <XPD:ATTR name="#Literals" type="integer">14</XPD:ATTR>

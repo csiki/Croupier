@@ -221,7 +221,7 @@ bool BotManager::isBotHandRevealed(int botID) const
 
 /** Returns a specified AI's languge it is written in.
 */
-int BotManager::getBotLang(int botID) const
+BotLanguage BotManager::getBotLang(int botID) const
 {
 	// log
 	std::string msg = "getBotLang ";
@@ -592,6 +592,7 @@ void BotManager::quit()
 	this->inRound = false;
 	this->inGame = false;
 	this->kickedAtRound = this->hostess->getCurrentRound();
+	this->unsubscribe();
 
 	// broadcast left game
 	int msgdata = this->getID();
@@ -1343,6 +1344,7 @@ void BotManager::leave()
 	this->inGame = false;
 	this->inRound = false;
 	this->kickedAtRound = this->hostess->getCurrentRound();
+	this->unsubscribe();
 
 	try
 	{

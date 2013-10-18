@@ -82,7 +82,7 @@ public:
 	int getBotPot(int botID) const; 
 	Emotion getBotEmotion(int botID) const; 
 	bool isBotHandRevealed(int botID) const; 
-	int getBotLang(int botID) const; 
+	BotLanguage getBotLang(int botID) const; 
 	bool isBotInGame(int botID) const; 
 	bool isBotInRound(bool botID) const; 
 	Card lookAtBotHand(int botID, int cardIndex) const; 

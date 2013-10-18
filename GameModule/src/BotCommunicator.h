@@ -36,7 +36,7 @@ public:
 	virtual int getBotChips(int botID) const = 0;
 	virtual int getBotPot(int botID) const = 0;
 	virtual bool isBotHandRevealed(int botID) const = 0;
-	virtual int getBotLang(int botID) const = 0;
+	virtual BotLanguage getBotLang(int botID) const = 0;
 	virtual bool isBotInGame(int botID) const = 0;
 	virtual bool isBotInRound(bool botID) const = 0;
 	virtual Card lookAtBotHand(int botID, int cardIndex) const = 0;
