@@ -1,34 +1,25 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual C++ Express 2005
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pimpl1", "pimpl1.vcproj", "{A7D8F5A4-2A82-4366-802A-507DEF383450}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pimpl1", "pimpl1.vcxproj", "{A7D8F5A4-2A82-4366-802A-507DEF383450}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pimpl2", "pimpl2.vcproj", "{C2A1EEC3-B343-4CB6-AF09-767F9B1E0966}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pimpl2", "pimpl2.vcxproj", "{C2A1EEC3-B343-4CB6-AF09-767F9B1E0966}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pimpl3", "pimpl3.vcproj", "{9BE3C29F-D86B-4595-9AAE-A6E0A3418065}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pimpl3", "pimpl3.vcxproj", "{9BE3C29F-D86B-4595-9AAE-A6E0A3418065}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "main1", "main1.vcproj", "{1E4B7E56-F61D-437B-99E0-0A6ADBE1EBB3}"
-	ProjectSection(ProjectDependencies) = postProject
-		{755A19DF-A076-4A83-8FDD-88974614830E} = {755A19DF-A076-4A83-8FDD-88974614830E}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "main1", "main1.vcxproj", "{1E4B7E56-F61D-437B-99E0-0A6ADBE1EBB3}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "main2", "main2.vcproj", "{DF2863E3-7E40-4A13-ADA8-2F3D90875CCF}"
-	ProjectSection(ProjectDependencies) = postProject
-		{4786FE82-6B7B-4F8C-B2CE-7E655D48906F} = {4786FE82-6B7B-4F8C-B2CE-7E655D48906F}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "main2", "main2.vcxproj", "{DF2863E3-7E40-4A13-ADA8-2F3D90875CCF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "main3", "main3.vcproj", "{FAF43837-2C75-4721-AEDB-00BAF9EA03E9}"
-	ProjectSection(ProjectDependencies) = postProject
-		{4786FE82-6B7B-4F8C-B2CE-7E655D48906F} = {4786FE82-6B7B-4F8C-B2CE-7E655D48906F}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "main3", "main3.vcxproj", "{FAF43837-2C75-4721-AEDB-00BAF9EA03E9}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "doliblt", "doliblt.vcproj", "{755A19DF-A076-4A83-8FDD-88974614830E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "doliblt", "doliblt.vcxproj", "{755A19DF-A076-4A83-8FDD-88974614830E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dolibdort", "dolibdort.vcproj", "{4786FE82-6B7B-4F8C-B2CE-7E655D48906F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dolibdort", "dolibdort.vcxproj", "{4786FE82-6B7B-4F8C-B2CE-7E655D48906F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DynStr", "DynStr.vcproj", "{B5CFB1E4-49BC-4E5F-8175-9F6307CB8B61}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DynStr", "DynStr.vcxproj", "{B5CFB1E4-49BC-4E5F-8175-9F6307CB8B61}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pdoh", "pdoh.vcproj", "{40906028-3E32-4709-B5AF-37896E43661C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pdoh", "pdoh.vcxproj", "{40906028-3E32-4709-B5AF-37896E43661C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

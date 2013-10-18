@@ -559,7 +559,7 @@ bool BotManager::rebuy(int rebuyAmount)
 
 /** Bot signals talk.
 */
-void BotManager::talk(Comment comment)
+bool BotManager::talk(Comment comment)
 {
 	// log
 	std::string msg = "talk ";
@@ -574,7 +574,11 @@ void BotManager::talk(Comment comment)
 		msgdata[1] = comment;
 		this->broadcast(BroadcastMessage::LISTEN, 2, msgdata);
 		delete [] msgdata;
+		
+		return true;
 	}
+
+	return false;
 }
 
 /** Bot signals to leave the game.
@@ -1363,7 +1367,7 @@ void BotManager::leave()
 
 /** Croupier signals that AI should rebuy or else leave the game.
 */
-bool BotManager::rebuyOrLeave()
+void BotManager::rebuyOrLeave()
 {
 	if (this->canRebuy(1))
 	{
@@ -1381,12 +1385,8 @@ bool BotManager::rebuyOrLeave()
 			msg += ",";
 			msg += e.whatMethod();
 			this->log(Severity::ERROR, msg);
-
-			return false;
 		}
 	}
-
-	return this->chips > 0;
 }
 
 // own
