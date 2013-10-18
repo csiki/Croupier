@@ -1,5 +1,29 @@
+@font-face {
+    font-family: 'Open Sans';
+    src: local('☺'), local('Open Sans'), local('OpenSans');
+    src: url('../fonts/opensans-regular-webfont.eot');
+    src: url('../fonts/opensans-regular-webfont.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/opensans-regular-webfont.woff') format('woff'),
+    url('../fonts/opensans-regular-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Open Sans Light';
+    src: local('☺'), local('Open Sans Light'), local('OpenSans-Light');
+    src: url('../fonts/opensans-light-webfont.eot');
+    src: url('../fonts/opensans-light-webfont.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/opensans-light-webfont.woff') format('woff'),
+    url('../fonts/opensans-light-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
     background-color: #e5f4ff;
+    font-family: 'Open Sans';
+    font-size: 14px;
 }
 
 #header {
@@ -25,6 +49,9 @@ body {
 #header a {
     color: white;
     text-decoration: none;
+    font-family: 'Open Sans Light';
+    text-transform: uppercase;
+    font-size: 16px;
 }
 
 #main {
@@ -102,19 +129,12 @@ table td, table th {
 }
 
 input[type=submit].button {
-    display: block;
-    background-color: #545cfe;
-    border: 1px solid #000000;
-    color: #FFFFFF;
     height: 30px;
-    text-align: center;
-    text-decoration: none;
-    font-weight: bold;
     padding: 5px 6px;
 }
 
 .button {
-    display: block;
+    display: inline-block;
     background-color: #545cfe;
     border: 1px solid #000000;
     color: #FFFFFF;
@@ -125,6 +145,7 @@ input[type=submit].button {
     text-decoration: none;
     font-weight: bold;
     user-select: none;
+    cursor: pointer;
 }
 
 .button:hover {
@@ -132,17 +153,7 @@ input[type=submit].button {
 }
 
 .disabledButton {
-    display: block;
-    background-color: #cccccc;
-    border: 1px solid #000000;
-    color: #FFFFFF;
-    width: 110px;
-    height: 28px;
-    line-height: 28px;
-    text-align: center;
-    text-decoration: none;
-    font-weight: bold;
-    cursor: default;
+    background-color: #cccccc !important;
 }
 
 .errorMessage {
@@ -173,6 +184,26 @@ input[type=submit].button {
 
 #noBotsFound{
     text-align: center;
+}
+
+.codeWrapper{
+    max-width: 1000px;
+}
+
+.icon{
+    width: 28px;
+    height: 28px;
+    display: inline-block;
+}
+
+.deleteIcon{
+    background-image: url("../images/icons.png");
+    background-position: 0 0;
+}
+
+.editIcon{
+    background-image: url("../images/icons.png");
+    background-position: -30px 0;
 }
 
 .messageBox{
@@ -219,9 +250,9 @@ input[type=submit].button {
 }
 
 #tabPages{
+    border: 1px solid black;
     background-color: white;
     margin: 0px;
-    height: 600px;
 }
 
 #tabPages div{
@@ -230,4 +261,13 @@ input[type=submit].button {
 
 #tabPages div div{
     display: inline-block;
+}
+
+.leaderboard{
+    float: left
+}
+
+#tabsContainer div * td
+{
+    padding: 8px 4px;
 }

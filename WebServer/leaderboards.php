@@ -6,7 +6,7 @@ needLogin();
 function getBotInfos($lb)
 {
     if ($result = SQL("SELECT bots.id, bots.name, bots.state,
-                        (SELECT EXISTS(SELECT * FROM leaderboard".$lb." WHERE botID = bots.id)) as participated
+                        (SELECT EXISTS(SELECT * FROM leaderboard" . $lb . " WHERE botID = bots.id)) as participated
                         FROM bots
                         WHERE bots.accountID = ?", $_SESSION["accountID"])
     ) {
@@ -15,6 +15,9 @@ function getBotInfos($lb)
     }
     return array();
 }
+
+$leaderboards = SQL("SELECT id from leaderboards");
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -24,17 +27,28 @@ function getBotInfos($lb)
         $(function () {
             $("#tabsContainer ul li").on("click", tabClicked);
 
-            $("div.bots table tbody, div.botsOwned table tbody").each(function () {
+            $("#tabPages div div table tbody").each(function () {
                 if ($(this).children("tr").length == 0) {
-                    addTableEmpty($(this));
+                    setTableLoading($(this));
                 }
             });
 
-            updateLeaderboard(1);//todo generic loading
+            $("[id^='tab-']").each(function () {
+                updateLeaderboard($(this));
+            });
         });
 
-        function addTableEmpty($tbody) {//todo check empty #bots
-            var $row = $('<td colspan="3" id="noBotsFound"><?=$tr["NO_BOTS_FOUND"]?></td>');
+        function setTableEmpty($tbody) {
+            var $columns = $tbody.parent().find("thead th").length;
+            $tbody.html("");
+            var $row = $('<td colspan="'+$columns+'" id="noBotsFound"><?=$tr["NO_BOTS_FOUND"]?></td>');
+            $row.appendTo($($tbody));
+        }
+
+        function setTableLoading($tbody) {
+            var $columns = $tbody.parent().find("thead th").length;
+            $tbody.html("");
+            var $row = $('<td colspan="'+$columns+'" id="noBotsFound"><?=$tr["LOADING"]?></td>');
             $row.appendTo($($tbody));
         }
 
@@ -59,36 +73,46 @@ function getBotInfos($lb)
         }
 
         function backtrack(element, id) {
-            var $p = $(element).parent();
+            var $tab = $(element).parents("[id^='tab-']");
+            var $ptd = $(element).parent();
             $(element).hide();
+            $ptd.children(".loading").show();
             participate_bot($("#tabsContainer ul li").index($("#tabsContainer ul li.tabs-active")) + 1, id, false,
                 function () {
-                    $p.children(".participate").show();
-                    updateLeaderboard(1);
+                    $ptd.children(".participate").show();
+                    $ptd.children(".loading").hide();
+                    updateLeaderboard($tab);
                 });
         }
 
         function participate(element, id) {
-            var $p = $(element).parent();
+            var $tab = $(element).parents("[id^='tab-']");
+            var $ptd = $(element).parent();
             $(element).hide();
+            $ptd.children(".loading").show();
             participate_bot($("#tabsContainer ul li").index($("#tabsContainer ul li.tabs-active")) + 1, id, true, function () {
-                $p.children(".backtrack").show();
-                updateLeaderboard(1);
+                $ptd.children(".backtrack").show();
+                $ptd.children(".loading").hide();
+                updateLeaderboard($tab);
             });
         }
 
-        function updateLeaderboard(id) {
-            var $tbody = $("#tab-" + id + " div.bots table tbody");
-            $.getJSON( "get_leaderboard.php",
-                { leaderBoard: id },
-                function( data ) {
-                    if(data.length != 0)
+        function updateLeaderboard(tab) {
+            var $tbody = $(tab).find(".leaderboard table tbody");
+            setTableLoading($tbody);
+            $.getJSON("get_leaderboard.php",
+                { leaderBoard: $(tab).attr('id').substr(4) },
+                function (data) {
+                    if (data.length != 0) {
                         $tbody.html("");
-                    $.each( data, function( i, val ) {
-                        $( "<tr/>", {
-                            html: "<td>" + val.name + "</td><td>"+val.username+"</td><td>"+val.score+"</td>"
-                        }).appendTo($tbody);
-                    });
+                        $.each(data, function (i, val) {
+                            $("<tr/>", {
+                                html: "<td>" + val.name + "</td><td>" + val.username + "</td><td>" + val.score + "</td>"
+                            }).appendTo($tbody);
+                        });
+                    }
+                    else
+                        setTableEmpty($tbody);
                 });
         }
     </script>
@@ -100,14 +124,17 @@ function getBotInfos($lb)
 
     <div id="tabsContainer">
         <ul>
-            <li class="tabs-active">Leaderboards1</li>
-            <li>Leaderboards2</li>
-            <li>Leaderboards3</li>
+            <?php
+            for ($i = 0; $i < count($leaderboards); $i++) {
+                echo '<li ' . ($i == 0 ? 'class="tabs-active"' : '') . '>Leaderboard' . $leaderboards[$i]["id"] . '</li>';
+            }
+            ?>
         </ul>
         <div id="tabPages">
-            <div id="tab-1">
-                <?php
-                echo '<div class="bots">
+            <?php
+            for ($i = 0; $i < count($leaderboards); $i++) {
+                echo '<div id="tab-' . ($i + 1) . '" ' . ($i == 0 ? '' : 'style="display:none;"') . '>';
+                echo '<div class="leaderboard">
                 <table>
                     <thead>
                     <tr>
@@ -129,29 +156,25 @@ function getBotInfos($lb)
                         </tr>
                         </thead>
                         <tbody>';
-                $rows = getBotInfos(1);
-                for ($i = 0; $i < count($rows); $i++) {
+                $rows = getBotInfos($leaderboards[$i]["id"]);
+                for ($j = 0; $j < count($rows); $j++) {
                     echo '<tr>';
-                    echo '<td>' . $rows[$i]["name"] . '</td>';
-                    echo '<td>' . $rows[$i]["state"] . '</td>';
+                    echo '<td>' . $rows[$j]["name"] . '</td>';
+                    echo '<td>' . $rows[$j]["state"] . '</td>';
                     echo '<td>';
-                    echo '<a href="javascript:;" ' . ($rows[$i]["participated"] == '1' ? '' : 'style="display:none"') . 'class="button backtrack" onclick="backtrack(this, ' . $rows[$i]["id"] . ')">' . $tr["BACKTRACK"] . '</a>';
-                    echo '<a class="disabledButton" ' . ($rows[$i]["participated"] != '1' && ($rows[$i]["state"] != "ok") ? '' : 'style="display:none"') . '>' . $tr["PARTICIPATE"] . '</a>';
-                    echo '<a href="javascript:;" ' . ($rows[$i]["participated"] != '1' && ($rows[$i]["state"] == "ok") ? '' : 'style="display:none"') . 'class="button participate" onclick="participate(this, ' . $rows[$i]["id"] . ')">' . $tr["PARTICIPATE"] . '</a>';
+                    echo '<a href="javascript:;" ' . ($rows[$j]["participated"] == '1' ? '' : 'style="display:none"') . 'class="button backtrack" onclick="backtrack(this, ' . $rows[$j]["id"] . ')">' . $tr["BACKTRACK"] . '</a>';
+                    echo '<a class="button disabledButton" ' . ($rows[$j]["participated"] != '1' && ($rows[$j]["state"] != "ok") ? '' : 'style="display:none"') . '>' . $tr["PARTICIPATE"] . '</a>';
+                    echo '<a class="button disabledButton loading" style="display:none">' . $tr["LOADING"] . '</a>';
+                    echo '<a href="javascript:;" ' . ($rows[$j]["participated"] != '1' && ($rows[$j]["state"] == "ok") ? '' : 'style="display:none"') . 'class="button participate" onclick="participate(this, ' . $rows[$j]["id"] . ')">' . $tr["PARTICIPATE"] . '</a>';
                     echo '</td>';
                     echo '</tr>';
                 }
                 echo '</tbody>
                     </table>
                 </div>';
-                ?>
-            </div>
-            <div id="tab-2" style="display: none">
-                vbvbv
-            </div>
-            <div id="tab-3" style="display: none">
-                vbvbbvbb
-            </div>
+                echo '</div>';
+            }
+            ?>
         </div>
     </div>
 </div>

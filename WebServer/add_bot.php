@@ -26,7 +26,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
     } else {
         $codeErr = $tr["ERR_CODE_EMPTY"];
     }
-    if(isset($_POST["lang"]) && isValidCodeLang($_POST["lang"]))
+    if (isset($_POST["lang"]) && isValidCodeLang($_POST["lang"]))
         $lang = $_POST["lang"];
     else
         die("Invalid request");
@@ -48,10 +48,36 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
 <head>
     <?php include "php/head.php"; ?>
     <script type="text/javascript" src="scripts/codemirror-compressed.js"></script>
+    <script type="text/javascript" src="scripts/matchbrackets.js"></script>
+    <script type="text/javascript" src="scripts/clike.js"></script>
     <link rel="stylesheet" href="style/codemirror.css">
+    <link rel="stylesheet" href="style/codemirror-neat-modified.css">
     <script type="text/javascript">
+        var editor = null;
         window.onload = function () {
-            var myCodeMirror = CodeMirror.fromTextArea(document.getElementById('code'));
+            editor = CodeMirror.fromTextArea($("#code").get(0), {
+                lineNumbers: true,
+                matchBrackets: true,
+                theme: "neat",
+                mode: "text/x-java"
+            });
+
+            $("#codeLang").on("change", langChanged);
+        }
+
+        function saveAsk(form) {
+            if (messageBoxAsk('<?=$tr["SAVE_BOT_CONF"]?>'))
+                form.submit();
+        }
+
+        function langChanged() {
+            var v = $(this).val();
+            if (v == "c++")
+                editor.setOption("mode", "text/x-c++src");
+            else if (v == "c#")
+                editor.setOption("mode", "text/x-csharp");
+            else if (v == "java")
+                editor.setOption("mode", "text/x-java");
         }
     </script>
 </head>
@@ -65,28 +91,33 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
     <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post" id="botform" enctype="multipart/form-data">
         <div style="display: inline-block">
             <label for="name"><?=$tr["BOTNAME"]?></label><br/>
-            <input name="name" id="name" type="text" value="<?= $name ?>"></div>
+            <input name="name" id="name" type="text" value="<?= $name ?>" autofocus></div>
 
         <div style="display: inline-block; margin-left: 40px">
-            <label for="langInput"><?=$tr["CODE_LANG"]?></label><br/>
-            <select name="lang" id="langInput" form="botform">
+            <label for="codeLang"><?=$tr["CODE_LANG"]?></label><br/>
+            <select name="lang" id="codeLang" form="botform">
                 <option value="c++" <?php if ($lang == "c++") echo "selected"; ?>>C++</option>
                 <option value="java" <?php if ($lang == "java") echo "selected"; ?>>Java</option>
                 <option value="c#" <?php if ($lang == "c#") echo "selected"; ?>>C#</option>
             </select>
         </div>
         <br/><br/>
-        <label for="code"><?=$tr["INSERT_CODE"]?></label><br/>
-        <textarea cols="80" rows="20" name="code" id="code" style="display: block"
-                  wrap="off"><?php if (isset($_POST["code"])) echo $_POST["code"]; ?></textarea>
-        <?php if ($codeErr) echo '<span class="errorMessage">' . $codeErr . '</span><br />'; ?>
+
+        <div class="codeWrapper">
+            <label for="code"><?=$tr["INSERT_CODE"]?></label><br/>
+            <textarea cols="80" rows="20" name="code" id="code" style="display: block"
+                      wrap="off"><?php if (isset($_POST["code"])) echo $_POST["code"]; ?></textarea>
+            <?php if ($codeErr) echo '<span class="errorMessage">' . $codeErr . '</span><br />'; ?>
+        </div>
         <br/>
         <label for="codefile"><?=$tr["CHOOSE_FILE_TO"]?></label><br/>
         <input name="codefile" id="codefile" type="file">
         <br/>
         <?php if ($fileErr) echo '<span class="errorMessage">' . $fileErr . '</span><br />'; ?>
         <br/>
-        <input type="submit" class="button" value="<?= $tr["SUBMIT"] ?>">
+        <input type="submit" class="button" value="<?= $tr["ADDBOT"] ?>">
+        <input type="button" onclick="javascript: window.location = '/manage_bots.php';" class="button disabledButton"
+               value="<?= $tr["CANCEL"] ?>">
     </form>
     </p>
 </div>

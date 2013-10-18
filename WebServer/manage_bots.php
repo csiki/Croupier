@@ -93,9 +93,9 @@ function getBotInfos()
             echo '<td>' . $rows[$i]["lastChangeTime"] . '</td>';
             echo '<td>' . $rows[$i]["code_lang"] . '</td>';
             echo '<td>' . $rows[$i]["state"] . '</td>';
-            echo '<td style="cursor:pointer" onclick="deleteBotAsk(' . $rows[$i]["id"] . ')">del</td>';
+            echo '<td style="cursor:pointer" onclick="deleteBotAsk(' . $rows[$i]["id"] . ')"><div class="icon deleteIcon" title="'.$tr["DELETE_BOT"].'"></div></td>';
             echo '<td style="cursor:pointer" onclick="document.location = \'edit_bot.php?id=' . $rows[$i]["id"] . '\';">
-                edit</td>';
+                <div class="icon editIcon" title="'.$tr["EDIT_BOT"].'"></div></td>';
             echo '</tr>';
         }
         ?>
