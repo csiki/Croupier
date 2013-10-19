@@ -3,7 +3,7 @@ include "php/include.php";
 needLogin();
 function getBotInfos()
 {
-    if ($result = SQL("SELECT id, name, lastChangeTime, code_lang, state, participate
+    if ($result = SQL("SELECT id, name, lastChangeTime, code_lang, state
     FROM bots WHERE accountID = ?", $_SESSION["accountID"])
     ) {
         if ($result != null)
@@ -26,6 +26,7 @@ function getBotInfos()
                     addTableEmpty();
                 }
             });
+
             if($("#manageBotsTable tbody tr").length == 0)
             {
                 addTableEmpty();
@@ -71,7 +72,7 @@ function getBotInfos()
 <?php include "php/header.php"; ?>
 <div id="main">
     <h2><?=$tr["MANAGE_BOTS"]?></h2>
-    <a href="add_bot.php" class="button"><?=$tr["ADDBOT"]?></a>
+    <a href="add_bot.php" class="button"><?=$tr["NEW_BOT"]?></a>
 
     <p>
     <table id="manageBotsTable">

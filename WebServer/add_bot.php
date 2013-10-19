@@ -34,11 +34,9 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
         SQL("INSERT INTO bots (id, accountID, name, lastChangeTime, code, code_lang, state)
           VALUES (NULL, ?, ?, NOW(), ?, ?, 'processing')", $_SESSION["accountID"], $name, $code, $lang);
         //update stats
-        $res = SQL("SELECT EXISTS(SELECT 1 FROM stat_bots_added WHERE time = CURDATE());");
-        if ($res != null)
-            SQL("UPDATE stat_bots_added SET count = count + 1 WHERE time = CURDATE();");
-        else
-            SQL("INSERT INTO stat_bots_added (time, count) VALUES (CURRENT_DATE(), '1')");
+        SQL("INSERT INTO stat_bots_added (date, count)
+            VALUES (CURRENT_DATE(), 1)
+            ON DUPLICATE KEY UPDATE date = VALUES(date), count = count +1;");
         header('Location: ../manage_bots.php');
     }
 }
@@ -84,7 +82,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
 <body>
 <?php include "php/header.php"; ?>
 <div id="main">
-    <h2><?=$tr["ADDBOT"]?></h2>
+    <h2><?=$tr["NEW_BOT"]?></h2>
 
     <p>
 
@@ -115,7 +113,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
         <br/>
         <?php if ($fileErr) echo '<span class="errorMessage">' . $fileErr . '</span><br />'; ?>
         <br/>
-        <input type="submit" class="button" value="<?= $tr["ADDBOT"] ?>">
+        <input type="submit" class="button" value="<?= $tr["NEW_BOT"] ?>">
         <input type="button" onclick="javascript: window.location = '/manage_bots.php';" class="button disabledButton"
                value="<?= $tr["CANCEL"] ?>">
     </form>

@@ -221,7 +221,7 @@ bool BotManager::isBotHandRevealed(int botID) const
 
 /** Returns a specified AI's languge it is written in.
 */
-int BotManager::getBotLang(int botID) const
+BotLanguage BotManager::getBotLang(int botID) const
 {
 	// log
 	std::string msg = "getBotLang ";
@@ -559,7 +559,7 @@ bool BotManager::rebuy(int rebuyAmount)
 
 /** Bot signals talk.
 */
-void BotManager::talk(Comment comment)
+bool BotManager::talk(Comment comment)
 {
 	// log
 	std::string msg = "talk ";
@@ -574,7 +574,11 @@ void BotManager::talk(Comment comment)
 		msgdata[1] = comment;
 		this->broadcast(BroadcastMessage::LISTEN, 2, msgdata);
 		delete [] msgdata;
+		
+		return true;
 	}
+
+	return false;
 }
 
 /** Bot signals to leave the game.
@@ -588,6 +592,7 @@ void BotManager::quit()
 	this->inRound = false;
 	this->inGame = false;
 	this->kickedAtRound = this->hostess->getCurrentRound();
+	this->unsubscribe();
 
 	// broadcast left game
 	int msgdata = this->getID();
@@ -1339,6 +1344,7 @@ void BotManager::leave()
 	this->inGame = false;
 	this->inRound = false;
 	this->kickedAtRound = this->hostess->getCurrentRound();
+	this->unsubscribe();
 
 	try
 	{
@@ -1363,7 +1369,7 @@ void BotManager::leave()
 
 /** Croupier signals that AI should rebuy or else leave the game.
 */
-bool BotManager::rebuyOrLeave()
+void BotManager::rebuyOrLeave()
 {
 	if (this->canRebuy(1))
 	{
@@ -1381,12 +1387,8 @@ bool BotManager::rebuyOrLeave()
 			msg += ",";
 			msg += e.whatMethod();
 			this->log(Severity::ERROR, msg);
-
-			return false;
 		}
 	}
-
-	return this->chips > 0;
 }
 
 // own

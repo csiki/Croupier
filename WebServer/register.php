@@ -39,11 +39,9 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
         SQL("INSERT INTO accounts (username, email, password, salt)
         VALUES (?, ?, ?, ?)", $_POST['name'], $_POST['email'], $password, $random_salt);
         //update stats
-        $res = SQL("SELECT EXISTS(SELECT 1 FROM stat_accounts_added WHERE time = CURDATE());");
-        if($res != null)
-            SQL("UPDATE stat_accounts_added SET count = count + 1 WHERE time = CURDATE();");
-        else
-            SQL("INSERT INTO stat_accounts_added (time, count) VALUES (CURRENT_DATE(), '1')");
+        SQL("INSERT INTO stat_accounts_added (date, count)
+            VALUES (CURRENT_DATE(), 1)
+            ON DUPLICATE KEY UPDATE date = VALUES(date), count = count +1;");
         header('Location: ../register.php?success=1');
     }
 }

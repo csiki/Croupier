@@ -2,9 +2,7 @@
     font-family: 'Open Sans';
     src: local('☺'), local('Open Sans'), local('OpenSans');
     src: url('../fonts/opensans-regular-webfont.eot');
-    src: url('../fonts/opensans-regular-webfont.eot?#iefix') format('embedded-opentype'),
-    url('../fonts/opensans-regular-webfont.woff') format('woff'),
-    url('../fonts/opensans-regular-webfont.ttf') format('truetype');
+    src: url('../fonts/opensans-regular-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/opensans-regular-webfont.woff') format('woff'), url('../fonts/opensans-regular-webfont.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -13,49 +11,53 @@
     font-family: 'Open Sans Light';
     src: local('☺'), local('Open Sans Light'), local('OpenSans-Light');
     src: url('../fonts/opensans-light-webfont.eot');
-    src: url('../fonts/opensans-light-webfont.eot?#iefix') format('embedded-opentype'),
-    url('../fonts/opensans-light-webfont.woff') format('woff'),
-    url('../fonts/opensans-light-webfont.ttf') format('truetype');
+    src: url('../fonts/opensans-light-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/opensans-light-webfont.woff') format('woff'), url('../fonts/opensans-light-webfont.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 body {
     background-color: #e5f4ff;
-    font-family: 'Open Sans';
+    font-family: 'Open Sans', 'sans-serif';
     font-size: 14px;
 }
 
 #header {
     background-color: black;
-    padding: 7px 0px;
-    font-size: 1.1em;
+    padding: 0px;
+    font-size: 16px;
 }
 
 #header ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    vertical-align: middle;
-    top: auto;
-    bottom: auto;
 }
 
 #header li {
-    display: inline;
-    margin: 0px 30px;
+    display: inline-block;
+    padding: 7px 30px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+#header li:hover {
+    background-color: #434343;
 }
 
 #header a {
     color: white;
     text-decoration: none;
-    font-family: 'Open Sans Light';
+    font-family: 'Open Sans Light', 'sans-serif';
     text-transform: uppercase;
     font-size: 16px;
 }
 
 #main {
     padding: 20px 0px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1000px;
 }
 
 #topmenu {
@@ -83,8 +85,19 @@ body {
     margin-left: 14px;
 }
 
+#headerTitle {
+    background-image: url('../images/header.jpg');
+    background-position: 20% -50px;
+    height: 70px;
+    font-size: 50px;
+    color: white;
+    text-shadow: 4px 4px 3px black;
+    line-height: 65px;
+    padding-left: 10px;
+    text-align: center;
+}
+
 table {
-    border: 0px;
     border-spacing: 0;
     border-collapse: collapse;
     border: 1px solid #dedede;
@@ -144,7 +157,6 @@ input[type=submit].button {
     text-align: center;
     text-decoration: none;
     font-weight: bold;
-    user-select: none;
     cursor: pointer;
 }
 
@@ -175,38 +187,38 @@ input[type=submit].button {
     text-decoration: none;
     font-weight: bold;
     background-color: white;
-    color:black;
+    color: black;
 }
 
 .newsNavigatorButton:hover {
     background-color: #F4F4F4;
 }
 
-#noBotsFound{
+#noBotsFound {
     text-align: center;
 }
 
-.codeWrapper{
+.codeWrapper {
     max-width: 1000px;
 }
 
-.icon{
+.icon {
     width: 28px;
     height: 28px;
     display: inline-block;
 }
 
-.deleteIcon{
+.deleteIcon {
     background-image: url("../images/icons.png");
     background-position: 0 0;
 }
 
-.editIcon{
+.editIcon {
     background-image: url("../images/icons.png");
     background-position: -30px 0;
 }
 
-.messageBox{
+.messageBox {
     display: block;
     position: fixed;
     top: 20px;
@@ -221,16 +233,16 @@ input[type=submit].button {
     font-size: 1.2em;
 }
 
-#tabsContainer{
+#tabsContainer {
     width: 1000px;
 }
 
-#tabsContainer div *, #tabsContainer ul{
+#tabsContainer div *, #tabsContainer ul {
     padding: 0px;
     margin: 0px;
 }
 
-#tabsContainer ul li{
+#tabsContainer ul li {
     list-style: none outside none;
     display: inline-block;
     position: relative;
@@ -245,29 +257,28 @@ input[type=submit].button {
     cursor: pointer;
 }
 
-#tabsContainer ul li.tabs-active{
+#tabsContainer ul li.tabs-active {
     background-color: #c4ffc9;
 }
 
-#tabPages{
+#tabPages {
     border: 1px solid black;
     background-color: white;
     margin: 0px;
 }
 
-#tabPages div{
+#tabPages div {
     padding: 30px;
 }
 
-#tabPages div div{
+#tabPages div div {
     display: inline-block;
 }
 
-.leaderboard{
-    float: left
+.leaderboard {
+    float: left;
 }
 
-#tabsContainer div * td
-{
+#tabsContainer div * td {
     padding: 8px 4px;
 }

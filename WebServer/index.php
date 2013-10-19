@@ -1,36 +1,19 @@
 <?php
-/*include "php/Leaderboard.php";
-include "php/Rulz.php";
-include "php/Bot.php";
-$lb = new Leaderboard(new Rulz());
-$lb->addBot(new Bot());
-$bot = new Bot();
-$lb->addBot($bot);
-$lb->addBot(new Bot());
-$lb->removeBot($bot);
-var_dump($lb->getNthBot(0));
-var_dump($lb->getNthBot(1));
-var_dump($lb->getNthBot(2));
-exit();*/
 include "php/include.php";
 $currentPage = 0;
 $itemsPerPage = 10;
 if (isset($_GET["page"]) && !empty($_GET["page"]) && is_numeric($_GET["page"]))
     $currentPage = $_GET["page"];
-if ($result = $mysqli->query("SELECT COUNT(*) FROM news_posts")) {
-    $itemTotal = $result->fetch_row()[0];
-    $result->free();
-} else
-    dieDb($mysqli);
+$res = SQL("SELECT COUNT(*) FROM news_posts");
+$itemTotal = $res[0]["COUNT(*)"];
 $lastPage = intval($itemTotal / $itemsPerPage);
 $skipItems = $currentPage * $itemsPerPage;
 if ($lastPage < $currentPage)
     die("Invalid request");
-if (($items = SQL("SELECT title, author, date, contents FROM news_posts
-ORDER BY date DESC LIMIT ? OFFSET ?", $itemsPerPage, $skipItems)) == null
-) {
+$items = SQL("SELECT title, author, date, content FROM news_posts
+                    ORDER BY date DESC LIMIT ? OFFSET ?", $itemsPerPage, $skipItems);
+if ($items == null)
     dieDb($mysqli);
-}
 ?>
 <!DOCTYPE html>
 <html>
@@ -47,7 +30,7 @@ ORDER BY date DESC LIMIT ? OFFSET ?", $itemsPerPage, $skipItems)) == null
         echo $item["title"] . "</h2>";
         echo $item["author"] . "<br />";
         echo $item["date"] . "<br />";
-        echo $item["contents"];
+        echo $item["content"];
         echo "</p>";
     }
     echo '<div id="newsNavigator">';

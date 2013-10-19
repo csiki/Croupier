@@ -82,7 +82,7 @@ public:
 	int getBotPot(int botID) const; 
 	Emotion getBotEmotion(int botID) const; 
 	bool isBotHandRevealed(int botID) const; 
-	int getBotLang(int botID) const; 
+	BotLanguage getBotLang(int botID) const; 
 	bool isBotInGame(int botID) const; 
 	bool isBotInRound(bool botID) const; 
 	Card lookAtBotHand(int botID, int cardIndex) const; 
@@ -100,7 +100,7 @@ public:
 	bool raise(int raiseAmount); // UNIT doone 
 	bool canRebuy(int rebuyAmount) const; // UNIT done 
 	bool rebuy(int rebuyAmount); // UNIT done 
-	void talk(Comment comment); 
+	bool talk(Comment comment); 
 	void quit(); 
 	int getNumOfBots(bool onlyInGame = false, bool onlyInRound = false) const; 
 	int getBotIDByIndex(int index) const; 
@@ -153,7 +153,7 @@ public:
 	// bothandler
 	void step();
 	void leave();
-	bool rebuyOrLeave();
+	void rebuyOrLeave();
 
 	// own
 	int getKickedAtRound() const;

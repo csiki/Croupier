@@ -1,5 +1,6 @@
 <?php
 include_once "php/include.php";
+needLogin();
 function getLeaderBoard($lb)
 {
     $lbName = "leaderboard" . $lb;

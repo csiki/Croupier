@@ -29,7 +29,7 @@ public:
 	int takePot(int amount = -1); // -1 default means all the pot
 	virtual void step() = 0;
 	virtual void leave() = 0;
-	virtual bool rebuyOrLeave() = 0;
+	virtual void rebuyOrLeave() = 0;
 	virtual int getBotID() const = 0;
 	virtual std::string getName() const = 0;
 	virtual BotLanguage getLang() const = 0;

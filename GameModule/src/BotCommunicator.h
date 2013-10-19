@@ -36,7 +36,7 @@ public:
 	virtual int getBotChips(int botID) const = 0;
 	virtual int getBotPot(int botID) const = 0;
 	virtual bool isBotHandRevealed(int botID) const = 0;
-	virtual int getBotLang(int botID) const = 0;
+	virtual BotLanguage getBotLang(int botID) const = 0;
 	virtual bool isBotInGame(int botID) const = 0;
 	virtual bool isBotInRound(bool botID) const = 0;
 	virtual Card lookAtBotHand(int botID, int cardIndex) const = 0;
@@ -55,7 +55,7 @@ public:
 	virtual bool raise(int raiseAmount) = 0;
 	virtual bool canRebuy(int rebuyAmount) const = 0;
 	virtual bool rebuy(int rebuyAmount) = 0;
-	virtual void talk(Comment comment) = 0;
+	virtual bool talk(Comment comment) = 0;
 	virtual void quit() = 0;
 	// hostess
 	virtual int getNumOfBots(bool onlyInGame = false, bool onlyInRound = false) const = 0;

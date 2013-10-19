@@ -13,6 +13,31 @@ td, th{
     border-right: 1px solid black;
     border-bottom: 1px solid black;
 }
+
 td:last-child, th:last-child{
      border-right: none;
- }
+}
+
+#post{
+    display: inline-block;
+    width: 400px;
+}
+
+#postPreview{
+    border: 1px solid #dedede;
+    margin-left: 40px;
+    margin-top: 60px;
+    padding: 10px;
+    vertical-align: top;
+    display: inline-block;
+    width: 400px;
+    height: 280px;
+}
+
+#postMessage{
+    margin-left: 10px;
+}
+
+#title{
+    width: 395px;
+}

@@ -34,8 +34,12 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
     if (isset($_POST["lang"]) && isValidCodeLang($_POST["lang"]))
         $lang = $_POST["lang"];
     if ($fileErr == "" && $codeErr == "") {
-        SQL("UPDATE bots SET name = ?, lastChangeTime = NOW(), code = ?, code_lang = ?, state = 'processing',
-          participate = '0' WHERE id = ?", $name, $code, $lang, $id);
+        SQL("UPDATE bots SET name = ?, lastChangeTime = NOW(), code = ?, code_lang = ?, state = 'processing'
+              WHERE id = ?", $name, $code, $lang, $id);
+        $res = SQL("SELECT tableName FROM leaderBoards");
+        for ($i = 0; $i < count($res); $i++) {
+            SQL("DELETE FROM ".$res[$i]["tableName"]." WHERE botID = ?", $id);
+        }
         header('Location: ../manage_bots.php');
     }
 }

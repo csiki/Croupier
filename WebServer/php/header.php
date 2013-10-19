@@ -14,6 +14,9 @@
                 echo '<li><a href="register.php">' . $tr["REGISTER"] . '</a></li>';
             } ?>
         </ul>
+        <script>
+            $("#topmenu ul li").on("click", function(){window.location.href = $(this).children().attr("href");});
+        </script>
     </div>
     <div id="lang">
         <a href="../setlang.php?lang=en">EN</a> |
@@ -28,3 +31,4 @@
     }
     ?>
 </div>
+<div id="headerTitle">Croupier poker framework</div>

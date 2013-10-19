@@ -6,7 +6,7 @@ needLogin();
 function getBotInfos($lb)
 {
     if ($result = SQL("SELECT bots.id, bots.name, bots.state,
-                        (SELECT EXISTS(SELECT * FROM leaderboard" . $lb . " WHERE botID = bots.id)) as participated
+                        (SELECT EXISTS(SELECT * FROM " . $lb . " WHERE botID = bots.id)) as participated
                         FROM bots
                         WHERE bots.accountID = ?", $_SESSION["accountID"])
     ) {
@@ -16,7 +16,7 @@ function getBotInfos($lb)
     return array();
 }
 
-$leaderboards = SQL("SELECT id from leaderboards");
+$leaderboards = SQL("SELECT tableName from leaderboards");
 
 ?>
 <!DOCTYPE html>
@@ -57,12 +57,12 @@ $leaderboards = SQL("SELECT id from leaderboards");
                 return;
             $("#tabsContainer ul li").removeClass("tabs-active");
             $(this).addClass("tabs-active");
-            $("#tabPages>div").hide();
-            $("#tab-" + ($("#tabsContainer ul li").index($(this)) + 1)).show();
+            $("#tabPages>div").fadeOut(300);
+            $("#tab-" + ($("#tabsContainer ul li").index($(this)) + 1)).delay(300).fadeIn(300);
         }
 
         function participate_bot(lb, id, isAdd, complete) {
-            var xmlhttp = getAJAX();
+            var xmlhttp = getAJAX(); //TODO rewrite this to JQuery
             xmlhttp.onreadystatechange = function () {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                     complete.call();
@@ -126,7 +126,7 @@ $leaderboards = SQL("SELECT id from leaderboards");
         <ul>
             <?php
             for ($i = 0; $i < count($leaderboards); $i++) {
-                echo '<li ' . ($i == 0 ? 'class="tabs-active"' : '') . '>Leaderboard' . $leaderboards[$i]["id"] . '</li>';
+                echo '<li ' . ($i == 0 ? 'class="tabs-active"' : '') . '>' . $leaderboards[$i]["tableName"] . '</li>';
             }
             ?>
         </ul>
@@ -156,7 +156,7 @@ $leaderboards = SQL("SELECT id from leaderboards");
                         </tr>
                         </thead>
                         <tbody>';
-                $rows = getBotInfos($leaderboards[$i]["id"]);
+                $rows = getBotInfos($leaderboards[$i]["tableName"]);
                 for ($j = 0; $j < count($rows); $j++) {
                     echo '<tr>';
                     echo '<td>' . $rows[$j]["name"] . '</td>';

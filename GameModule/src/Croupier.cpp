@@ -501,8 +501,11 @@ void Croupier::determineWinners(int& numOfWinners, int** winnersIndex)
 		(*winnersIndex)[i++] = *it;
 	}
 
+	// broadcast
+	this->broadcast(BroadcastMessage::ROUNDWINNERS, numOfWinners, *winnersIndex);
+
 	// log
-	std::string msg = "determineWinners ";
+	std::string msg = "roundWinners ";
 	msg += std::to_string(numOfWinners);
 	for (int i = 0; i < numOfWinners; ++i)
 	{

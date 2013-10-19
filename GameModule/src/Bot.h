@@ -7,7 +7,6 @@
 // mivan, ha nem csak egy osztály akar deklarálni, hanem saját adatszerkezeteket stb-ket akar..
 // --> több file-t is tud szerkeszteni és az egészet egybe compile-oljuk
 // + dekstop bot tester
-// TODO : bufferoverflow ellen védelmet !!!
 // rajzolni ábrát ami a játékmenet szerint milyen helyzetekben hívódnak meg a függvények (pl. flop() után step() stb.)
 
 /**	Base class for AIs.
@@ -27,9 +26,26 @@ public:
 		: communicator(communicator), id(id), name(name), lang(lang) {}
 	virtual ~Bot() {}
 
-	int getID() const;
-	BotLanguage getLang() const;
-	std::string getName() const;
+	/**	Returns AI's id.
+	*/
+	int getID() const
+	{
+		return this->id;
+	}
+
+	/** Returns the programming language the AI is written in.
+	*/
+	BotLanguage getLang() const
+	{
+		return this->lang;
+	}
+
+	/**	Returns AI's name.
+	*/
+	std::string getName() const
+	{
+		return this->name;
+	}
 	
 	virtual void allined(int botID, int amount) = 0;
 	virtual void blindsRaised(int newSmallBlind, int newBigBlind) = 0;
