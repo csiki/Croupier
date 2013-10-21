@@ -270,6 +270,9 @@
     <ClInclude Include="..\src\BotTimeExceededException.h">
       <Filter>Header Files\Exceptions</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\ConcreteBot.h">
+      <Filter>Header Files\TestBots</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Bot.cpp">

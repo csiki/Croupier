@@ -71,4 +71,8 @@ public:
 	virtual void turn() = 0;
 };
 
+// class factories for loading Bot from object files
+typedef Bot* create_bot();
+typedef void destroy_bot(Bot*);
+
 #endif  //_BOT_H

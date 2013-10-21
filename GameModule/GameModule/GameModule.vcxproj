@@ -108,6 +108,7 @@
     <ClInclude Include="..\src\CBotLoader.h" />
     <ClInclude Include="..\src\Comment.h" />
     <ClInclude Include="..\src\CommonLispBotLoader.h" />
+    <ClInclude Include="..\src\ConcreteBot.h" />
     <ClInclude Include="..\src\CppBotLoader.h" />
     <ClInclude Include="..\src\Croupier.h" />
     <ClInclude Include="..\src\CSharpBotLoader.h" />
