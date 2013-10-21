@@ -18,6 +18,11 @@ public:
 	/** Loads a bot.
 	*/
 	virtual Bot* loadBot(BotData* botData) = 0;
+
+	virtual ~BotLoader()
+	{
+
+	}
 };
 
 #endif  //_BOTLOADER_H

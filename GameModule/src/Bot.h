@@ -72,7 +72,7 @@ public:
 };
 
 // class factories for loading Bot from object files
-typedef Bot* create_bot();
+typedef Bot* create_bot(BotCommunicator*, int, std::string, BotLanguage);
 typedef void destroy_bot(Bot*);
 
 #endif  //_BOT_H

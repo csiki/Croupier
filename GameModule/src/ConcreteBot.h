@@ -107,11 +107,13 @@ public:
 
 
 /// class factory definitions
-extern "C" Bot* create(BotCommunicator* communicator, int id, std::string name, BotLanguage lang) {
+extern "C" Bot* create(BotCommunicator* communicator, int id, std::string name, BotLanguage lang)
+{
     return new ConcreteBot(communicator, id, name, lang);
 }
 
-extern "C" void destroy(Bot* bot) {
+extern "C" void destroy(Bot* bot)
+{
     delete bot;
 }
 

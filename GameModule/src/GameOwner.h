@@ -64,7 +64,7 @@ public:
 		for (int i = 0; i < this->numOfBots; ++i)
 		{
 			delete this->botManagers[i];
-			delete this->bots[i];
+			//delete this->bots[i]; // bot loaders delete objects
 			delete this->botsData[i];
 		}
 		delete [] this->botManagers;

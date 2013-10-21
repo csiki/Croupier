@@ -273,6 +273,12 @@
     <ClInclude Include="..\src\ConcreteBot.h">
       <Filter>Header Files\TestBots</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\dlfcn_just_header.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\BotLoaderException.h">
+      <Filter>Header Files\Exceptions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Bot.cpp">

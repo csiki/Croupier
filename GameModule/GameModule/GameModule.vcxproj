@@ -99,6 +99,7 @@
     <ClInclude Include="..\src\BotKnowledgeHandler.h" />
     <ClInclude Include="..\src\BotLanguage.h" />
     <ClInclude Include="..\src\BotLoader.h" />
+    <ClInclude Include="..\src\BotLoaderException.h" />
     <ClInclude Include="..\src\BotManager.h" />
     <ClInclude Include="..\src\BotTimeExceededException.h" />
     <ClInclude Include="..\src\BroadcastMember.h" />
@@ -113,6 +114,7 @@
     <ClInclude Include="..\src\Croupier.h" />
     <ClInclude Include="..\src\CSharpBotLoader.h" />
     <ClInclude Include="..\src\Deck.h" />
+    <ClInclude Include="..\src\dlfcn_just_header.h" />
     <ClInclude Include="..\src\Emotion.h" />
     <ClInclude Include="..\src\Entity.h" />
     <ClInclude Include="..\src\Event.h" />

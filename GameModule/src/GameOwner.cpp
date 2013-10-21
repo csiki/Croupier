@@ -89,23 +89,26 @@ void GameOwner::initialiseGame()
 		// set botdata communicator
 		this->botsData[i]->communicator = this->botManagers[i];
 
-		// load bot TODO
-		/*this->bots[i] = this->botLoaders.at(botData->lang)->loadBot(botData);
-		if (this->bots[i] == nullptr)
+		// load bot
+		try
 		{
-			string msg = "Cannot load Bot instance from BotData! Bot id: ";
-			msg += to_string(botData->id);
+			this->bots[i] = this->botLoaders.at(botsData[i]->lang)->loadBot(botsData[i]);
+		}
+		catch(BotLoaderException& e)
+		{
+			std::string msg = e.what();
+			msg += '\n';
+			msg += e.whatError();
 			this->errorOccured(msg);
-			return false;
-		}*/
+		}
 
 		// TEST
-		if (i == 0)
+		/*if (i == 0)
 			this->bots[i] = new TestBot(this->botManagers[i], 10, "testbot", BotLanguage::CPP);
 		else if (i == 1)
 			this->bots[i] = new TestBotAggressive(this->botManagers[i], 20, "aggressivebot", BotLanguage::CPP);
 		else if (i == 2)
-			this->bots[i] = new TestBotShy(this->botManagers[i], 30, "shybot", BotLanguage::CPP);
+			this->bots[i] = new TestBotShy(this->botManagers[i], 30, "shybot", BotLanguage::CPP);*/
 		/*else
 		{
 			std::string name = "alive-";
