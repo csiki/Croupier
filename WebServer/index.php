@@ -25,17 +25,18 @@ if ($items == null)
 <div id="main">
     <h2>Croupier poker AI</h2>
     <?php
+    echo '<div id="postSection">';
     foreach ($items as $item) {
-        echo "<p><h2>";
-        echo $item["title"] . "</h2>";
-        echo $item["author"] . "<br />";
-        echo $item["date"] . "<br />";
-        echo $item["content"];
-        echo "</p>";
+        echo '<div class="post">';
+        echo "<h2>" . $item["title"] . "</h2>";
+        echo '<div class="postHeader">' . $item["author"] . " - ". $item["date"] ."</div>";
+        echo '<div class="postContent">' . $item["content"] . '</div>';
+        echo '</div>';
     }
-    echo '<div id="newsNavigator">';
+    echo '</div>';
+    echo '<div id="postsNavigator">';
     if ($currentPage != 0)
-        echo '<a class="newsNavigatorButton" href="' . $_SERVER["PHP_SELF"] . '?page=' . ($currentPage - 1) .
+        echo '<a class="postsNavigatorButton" href="' . $_SERVER["PHP_SELF"] . '?page=' . ($currentPage - 1) .
             '">' . $tr["NEWER_PAGES"] . '</a>';
     if ($currentPage != $lastPage)
         echo '<a class="newsNavigatorButton" style="float:right;" href="' . $_SERVER["PHP_SELF"] . '?page=' .

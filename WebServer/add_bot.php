@@ -2,7 +2,7 @@
 include "php/include.php";
 needLogin();
 $codeErr = $fileErr = "";
-$name = $code = $lang = "";
+$name = $code = $lang = $nameErr = "";
 if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
     $id = 0;
     $result = SQL("SELECT id FROM bots ORDER BY id DESC LIMIT 1;");
@@ -11,7 +11,11 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
     $id = $result[0]["id"];
     $id++;
     if (isset($_POST["name"]) && !empty($_POST["name"]))
+    {
         $name = $_POST["name"];
+        if(SQL("SELECT * FROM bots WHERE name = ? AND accountID = ?", $name, $_SESSION["accountID"]) != null)
+            $nameErr = $tr["ERR_NAME_CONFLICT"];
+    }
     else
         $name = $tr["UNNAMED_BOT"] . " " . $id;
     if (isset($_FILES["codefile"]) && $_FILES["codefile"]["error"] == 0) {
@@ -30,7 +34,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
         $lang = $_POST["lang"];
     else
         die("Invalid request");
-    if ($fileErr == "" && $codeErr == "") {
+    if ($fileErr == "" && $codeErr == "" && $nameErr == "") {
         SQL("INSERT INTO bots (id, accountID, name, lastChangeTime, code, code_lang, state)
           VALUES (NULL, ?, ?, NOW(), ?, ?, 'processing')", $_SESSION["accountID"], $name, $code, $lang);
         //update stats
@@ -56,11 +60,10 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
             editor = CodeMirror.fromTextArea($("#code").get(0), {
                 lineNumbers: true,
                 matchBrackets: true,
-                theme: "neat",
-                mode: "text/x-java"
+                theme: "neat"
             });
-
             $("#codeLang").on("change", langChanged);
+            langChanged();
         }
 
         function saveAsk(form) {
@@ -69,7 +72,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
         }
 
         function langChanged() {
-            var v = $(this).val();
+            var v = $("#codeLang").val();
             if (v == "c++")
                 editor.setOption("mode", "text/x-c++src");
             else if (v == "c#")
@@ -99,7 +102,9 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
                 <option value="c#" <?php if ($lang == "c#") echo "selected"; ?>>C#</option>
             </select>
         </div>
-        <br/><br/>
+        <br/>
+        <?=$nameErr ? '<span class="errorMessage">' . $nameErr . '</span><br />' : ''?>
+        <br/>
 
         <div class="codeWrapper">
             <label for="code"><?=$tr["INSERT_CODE"]?></label><br/>

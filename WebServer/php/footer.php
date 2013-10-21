@@ -1,1 +1,1 @@
-<p><?=date("Y F d")?></p>
+<p id="footer"><?=date("Y F d")?></p>

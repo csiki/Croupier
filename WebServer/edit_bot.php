@@ -1,7 +1,7 @@
 <?php
 include "php/include.php";
 needLogin();
-$codeErr = $fileErr = "";
+$codeErr = $fileErr = $nameErr = "";
 $name = $code = $lang = $orig = $id = "";
 if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
     $id = $_GET["id"];
@@ -17,7 +17,11 @@ if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
 }
 if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])) {
     if (isset($_POST["name"]) && !empty($_POST["name"]))
+    {
         $name = $_POST["name"];
+        if(SQL("SELECT * FROM bots WHERE name = ? AND accountID = ?", $name, $_SESSION["accountID"]) != null)
+            $nameErr = $tr["ERR_NAME_CONFLICT"];
+    }
     if (isset($_FILES["codefile"]) && $_FILES["codefile"]["error"] == 0) {
         $code = file_get_contents($_FILES["codefile"]["tmp_name"]);
         $finfo = new finfo(FILEINFO_MIME_TYPE);
@@ -33,7 +37,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
     }
     if (isset($_POST["lang"]) && isValidCodeLang($_POST["lang"]))
         $lang = $_POST["lang"];
-    if ($fileErr == "" && $codeErr == "") {
+    if ($fileErr == "" && $codeErr == "" && $nameErr == "") {
         SQL("UPDATE bots SET name = ?, lastChangeTime = NOW(), code = ?, code_lang = ?, state = 'processing'
               WHERE id = ?", $name, $code, $lang, $id);
         $res = SQL("SELECT tableName FROM leaderBoards");
@@ -59,11 +63,10 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
             editor = CodeMirror.fromTextArea($("#code").get(0), {
                 lineNumbers: true,
                 matchBrackets: true,
-                theme: "neat",
-                mode: "text/x-java"
+                theme: "neat"
             });
-
             $("#codeLang").on("change", langChanged);
+            langChanged();
         }
 
         function saveAsk(form) {
@@ -72,7 +75,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
         }
 
         function langChanged() {
-            var v = $(this).val();
+            var v = $("#codeLang").val();
             if (v == "c++")
                 editor.setOption("mode", "text/x-c++src");
             else if (v == "c#")
@@ -102,13 +105,15 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
                 <option value="c#" <?php if ($lang == "c#") echo "selected"; ?>>C#</option>
             </select>
         </div>
-        <br/><br/>
+        <br/>
+        <?=$nameErr ? '<span class="errorMessage">' . $nameErr . '</span><br />' : ''?>
+        <br/>
 
         <div class="codeWrapper">
             <label for="code"><?=$tr["INSERT_CODE"]?></label><br/>
             <textarea cols="80" rows="20" name="code" id="code" style="display: block"
                       wrap="off" autofocus><?= $code ?></textarea>
-            <?php if ($codeErr) echo '<span class="errorMessage">' . $codeErr . '</span><br />'; ?>
+            <?= $codeErr ? '<span class="errorMessage">' . $codeErr . '</span><br />' : '' ?>
         </div>
         <br/>
         <label for="codefile"><?=$tr["CHOOSE_FILE_TO"]?></label><br/>

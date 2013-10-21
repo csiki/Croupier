@@ -74,7 +74,7 @@ function getBotInfos()
     <h2><?=$tr["MANAGE_BOTS"]?></h2>
     <a href="add_bot.php" class="button"><?=$tr["NEW_BOT"]?></a>
 
-    <p>
+    <div class="basicContainer">
     <table id="manageBotsTable">
         <thead>
         <tr>
@@ -102,7 +102,7 @@ function getBotInfos()
         ?>
         </tbody>
     </table>
-    </p>
+    </div>
 </div>
 <footer>
     <?php include "php/footer.php"; ?>

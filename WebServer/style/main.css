@@ -20,6 +20,7 @@ body {
     background-color: #e5f4ff;
     font-family: 'Open Sans', 'sans-serif';
     font-size: 14px;
+    margin: 0px;
 }
 
 #header {
@@ -53,11 +54,19 @@ body {
     font-size: 16px;
 }
 
+#footer{
+    margin: 10px;
+}
+
 #main {
-    padding: 20px 0px;
+    padding: 0px;
     margin-left: auto;
     margin-right: auto;
     max-width: 1000px;
+}
+
+#main>h2{
+    margin: 10px 0px;
 }
 
 #topmenu {
@@ -131,6 +140,7 @@ table td, table th {
     border: 1px solid #dedede;
     padding: 20px;
     width: 250px;
+    margin: 0 auto;
 }
 
 .formDiv label {
@@ -173,11 +183,18 @@ input[type=submit].button {
     font-weight: 700;
 }
 
-#newsNavigator {
+#postSection{
+    margin: 0 auto;
+    width: 700px;
+    background-color: white;
+    padding: 10px;
+}
+
+#postsNavigator {
     width: 600px;
 }
 
-.newsNavigatorButton {
+.postsNavigatorButton {
     display: inline-block;
     border: 1px solid #000000;
     width: 170px;
@@ -190,8 +207,29 @@ input[type=submit].button {
     color: black;
 }
 
-.newsNavigatorButton:hover {
+.postsNavigatorButton:hover {
     background-color: #F4F4F4;
+}
+
+.post{
+    margin-bottom: 30px;
+    color: #444444;
+}
+
+.post>h2{
+    margin: 5px 0px;
+}
+
+.postHeader{
+    border-top: 1px solid #d7d7d7;
+    border-bottom: 1px solid #d7d7d7;
+    height: 40px;
+    line-height: 40px;
+    margin: 10px 0px;
+}
+
+.postContent{
+    margin: 26px 0px;
 }
 
 #noBotsFound {
@@ -233,52 +271,73 @@ input[type=submit].button {
     font-size: 1.2em;
 }
 
-#tabsContainer {
-    width: 1000px;
-}
-
-#tabsContainer div *, #tabsContainer ul {
-    padding: 0px;
-    margin: 0px;
-}
-
-#tabsContainer ul li {
-    list-style: none outside none;
-    display: inline-block;
-    position: relative;
-    padding: 5px;
-    margin-right: 2px;
-    background-color: #98FB98;
-    border-left: 1px solid #000000;
-    border-top: 1px solid #000000;
-    border-right: 1px solid #000000;
-    border-top-right-radius: 6px;
-    border-top-left-radius: 6px;
-    cursor: pointer;
-}
-
-#tabsContainer ul li.tabs-active {
-    background-color: #c4ffc9;
-}
-
-#tabPages {
-    border: 1px solid black;
+.basicContainer {
     background-color: white;
-    margin: 0px;
+    margin-top: 10px;
+    max-height: 600px;
+    overflow-y: scroll;
+    padding: 20px;
 }
 
-#tabPages div {
-    padding: 30px;
+.leaderboardContainer td {
+    padding: 8px 4px;
 }
 
-#tabPages div div {
+.leaderboard, .botsOwned{
     display: inline-block;
 }
 
-.leaderboard {
-    float: left;
+.botsOwned{
+    float:right;
 }
 
-#tabsContainer div * td {
-    padding: 8px 4px;
+#leaderboardsMenu{
+    width: 750px;
+    background-color: white;
+    margin: 0 auto;
+}
+
+.leaderboardsMenuElement{
+    width: 200px;
+    height: 130px;
+    border: 4px solid black;
+    display: inline-block;
+    margin: 20px;
+    background-color:#0C9;
+    cursor: pointer;
+    position: relative;
+}
+
+.leaderboardsMenuElement:hover{
+    opacity: 0.8; //TODO: half transparent-background layer over image
+}
+
+.leaderboardsMenuElement span{
+    background-color: black;
+    color: white;
+    display: block;
+}
+
+.leaderboardsMenuElement ul{
+    color: black;
+    position: absolute;
+    right: 0;
+    margin: 5px;
+    list-style: none;
+    text-align: right;
+}
+
+.backToMenu{
+    position: absolute;
+    left:0;
+    top:0;
+}
+
+.leaderboardTitle{
+    text-align: center;
+}
+
+div[id^="lb"]{
+    display: none;
+    position: relative;
 }

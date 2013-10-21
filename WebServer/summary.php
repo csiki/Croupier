@@ -12,7 +12,8 @@ needLogin();
 <div id="main">
     <h2><?=$tr["SUMMARY"]?></h2>
 
-    <p><?=$tr["SUMMARY_WELCOME"]?></p>
+    <p><?=$tr["SUMMARY_WELCOME"]?><br/>TODO:statok a sima usereknek</p>
+
 </div>
 <footer>
     <?php include "php/footer.php"; ?>

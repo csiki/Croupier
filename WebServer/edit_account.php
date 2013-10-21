@@ -65,7 +65,7 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
 
     <div class="formDiv">
         <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post">
-            <label for="name"><?=$name?></label><br/>
+            <label for="name"><?=$tr["NAME"]?></label><br/>
             <input type="text" name="name" id="name" maxlength="25"
                    value="<?=$name ?>">
             <br/>

@@ -16,8 +16,6 @@ function getBotInfos($lb)
     return array();
 }
 
-$leaderboards = SQL("SELECT tableName from leaderboards");
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,40 +23,39 @@ $leaderboards = SQL("SELECT tableName from leaderboards");
     <?php include "php/head.php"; ?>
     <script>
         $(function () {
-            $("#tabsContainer ul li").on("click", tabClicked);
+            $(".leaderboardsMenuElement").on("click", menuElementClicked);
+            $(".backToMenu a").on("click", backToMenuClicked);
 
-            $("#tabPages div div table tbody").each(function () {
-                if ($(this).children("tr").length == 0) {
-                    setTableLoading($(this));
-                }
-            });
-
-            $("[id^='tab-']").each(function () {
+            $("[id^='lb-']").each(function () {
                 updateLeaderboard($(this));
             });
+            window.setInterval(updateBots, 600);
         });
 
         function setTableEmpty($tbody) {
             var $columns = $tbody.parent().find("thead th").length;
             $tbody.html("");
-            var $row = $('<td colspan="'+$columns+'" id="noBotsFound"><?=$tr["NO_BOTS_FOUND"]?></td>');
+            var $row = $('<td colspan="' + $columns + '" id="noBotsFound"><?=$tr["NO_BOTS_FOUND"]?></td>');
             $row.appendTo($($tbody));
         }
 
         function setTableLoading($tbody) {
             var $columns = $tbody.parent().find("thead th").length;
             $tbody.html("");
-            var $row = $('<td colspan="'+$columns+'" id="noBotsFound"><?=$tr["LOADING"]?></td>');
+            var $row = $('<td colspan="' + $columns + '" id="noBotsFound"><?=$tr["LOADING"]?></td>');
             $row.appendTo($($tbody));
         }
 
-        function tabClicked() {
-            if ($(this).hasClass("tabs-active"))
-                return;
-            $("#tabsContainer ul li").removeClass("tabs-active");
-            $(this).addClass("tabs-active");
-            $("#tabPages>div").fadeOut(300);
-            $("#tab-" + ($("#tabsContainer ul li").index($(this)) + 1)).delay(300).fadeIn(300);
+        function menuElementClicked() {
+            $("#leaderboardsMenu").fadeOut(300);
+            $("#leaderboardContainer").fadeIn(300);
+            $("#lb-" + ($("#leaderboardsMenu div").index($(this)) + 1)).delay(290).fadeIn(300);
+        }
+
+        function backToMenuClicked() {
+            $("[id^='lb-']").fadeOut(300);
+            $("#leaderboardContainer").fadeOut(300);
+            $("#leaderboardsMenu").delay(290).fadeIn(300);
         }
 
         function participate_bot(lb, id, isAdd, complete) {
@@ -73,27 +70,27 @@ $leaderboards = SQL("SELECT tableName from leaderboards");
         }
 
         function backtrack(element, id) {
-            var $tab = $(element).parents("[id^='tab-']");
+            var $lb = $(element).parents("[id^='lb-']");
             var $ptd = $(element).parent();
             $(element).hide();
             $ptd.children(".loading").show();
-            participate_bot($("#tabsContainer ul li").index($("#tabsContainer ul li.tabs-active")) + 1, id, false,
+            participate_bot($lb.attr('id').substr(3), id, false,
                 function () {
                     $ptd.children(".participate").show();
                     $ptd.children(".loading").hide();
-                    updateLeaderboard($tab);
+                    updateLeaderboard($lb);
                 });
         }
 
         function participate(element, id) {
-            var $tab = $(element).parents("[id^='tab-']");
+            var $lb = $(element).parents("[id^='lb-']");
             var $ptd = $(element).parent();
             $(element).hide();
             $ptd.children(".loading").show();
-            participate_bot($("#tabsContainer ul li").index($("#tabsContainer ul li.tabs-active")) + 1, id, true, function () {
+            participate_bot($lb.attr('id').substr(3), id, true, function () {
                 $ptd.children(".backtrack").show();
                 $ptd.children(".loading").hide();
-                updateLeaderboard($tab);
+                updateLeaderboard($lb);
             });
         }
 
@@ -101,7 +98,26 @@ $leaderboards = SQL("SELECT tableName from leaderboards");
             var $tbody = $(tab).find(".leaderboard table tbody");
             setTableLoading($tbody);
             $.getJSON("get_leaderboard.php",
-                { leaderBoard: $(tab).attr('id').substr(4) },
+                { leaderBoard: $(tab).attr('id').substr(3) },
+                function (data) {
+                    if (data.length != 0) {
+                        $tbody.html("");
+                        $.each(data, function (i, val) {
+                            $("<tr/>", {
+                                html: "<td>" + val.name + "</td><td>" + val.username + "</td><td>" + val.score + "</td>"
+                            }).appendTo($tbody);
+                        });
+                    }
+                    else
+                        setTableEmpty($tbody);
+                });
+        }
+
+        function updateBots() {
+            var $tbody = "[id^='lb-'] .leaderboard table tbody";
+            setTableLoading($tbody);
+            $.getJSON("get_leaderboard.php",
+                { leaderBoard: $(tab).attr('id').substr(3) },
                 function (data) {
                     if (data.length != 0) {
                         $tbody.html("");
@@ -121,19 +137,35 @@ $leaderboards = SQL("SELECT tableName from leaderboards");
 <?php include "php/header.php"; ?>
 <div id="main">
     <h2><?=$tr["LEADERBOARDS"]?></h2>
-
-    <div id="tabsContainer">
-        <ul>
+        <div id="leaderboardsMenu">
             <?php
+            $leaderboards = SQL("SELECT tableName from leaderboards");
             for ($i = 0; $i < count($leaderboards); $i++) {
-                echo '<li ' . ($i == 0 ? 'class="tabs-active"' : '') . '>' . $leaderboards[$i]["tableName"] . '</li>';
+                echo '<div class="leaderboardsMenuElement">';
+                echo '<span>' . $leaderboards[$i]["tableName"] . '</span>';
+                echo '<ul>';
+                echo '<li>
+                    Itt
+                    </li>
+                    <li>
+                    lesznek a
+                    </li>
+                    <li>
+                    szabályok
+                    </li>';
+                echo '</ul>';
+                echo '</div>';
             }
             ?>
-        </ul>
-        <div id="tabPages">
+
+        </div>
+        <div id="leaderboardContainer">
             <?php
             for ($i = 0; $i < count($leaderboards); $i++) {
-                echo '<div id="tab-' . ($i + 1) . '" ' . ($i == 0 ? '' : 'style="display:none;"') . '>';
+                echo '<div id="lb-' . ($i + 1) . '">';
+                echo '<div class="backToMenu"><a class="button">' . $tr["BACK"] . '</a></div>';
+                echo '<h2 class="leaderboardTitle">'. $leaderboards[$i]["tableName"] .'</h2>';
+                echo '<div class="basicContainer">';
                 echo '<div class="leaderboard">
                 <table>
                     <thead>
@@ -162,7 +194,7 @@ $leaderboards = SQL("SELECT tableName from leaderboards");
                     echo '<td>' . $rows[$j]["name"] . '</td>';
                     echo '<td>' . $rows[$j]["state"] . '</td>';
                     echo '<td>';
-                    echo '<a href="javascript:;" ' . ($rows[$j]["participated"] == '1' ? '' : 'style="display:none"') . 'class="button backtrack" onclick="backtrack(this, ' . $rows[$j]["id"] . ')">' . $tr["BACKTRACK"] . '</a>';
+                    echo '<a href="javascript:;" ' . ($rows[$j]["participated"] == '1' ? '' : 'style="display:none"') . ' class="button backtrack" onclick="backtrack(this, ' . $rows[$j]["id"] . ')">' . $tr["BACKTRACK"] . '</a>';
                     echo '<a class="button disabledButton" ' . ($rows[$j]["participated"] != '1' && ($rows[$j]["state"] != "ok") ? '' : 'style="display:none"') . '>' . $tr["PARTICIPATE"] . '</a>';
                     echo '<a class="button disabledButton loading" style="display:none">' . $tr["LOADING"] . '</a>';
                     echo '<a href="javascript:;" ' . ($rows[$j]["participated"] != '1' && ($rows[$j]["state"] == "ok") ? '' : 'style="display:none"') . 'class="button participate" onclick="participate(this, ' . $rows[$j]["id"] . ')">' . $tr["PARTICIPATE"] . '</a>';
@@ -172,12 +204,11 @@ $leaderboards = SQL("SELECT tableName from leaderboards");
                 echo '</tbody>
                     </table>
                 </div>';
-                echo '</div>';
+                echo '</div></div>';
             }
             ?>
         </div>
     </div>
-</div>
 <footer>
     <?php include "php/footer.php"; ?>
 </footer>
