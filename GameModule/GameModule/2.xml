@@ -8,5 +8,5 @@
 		<tableid>0</tableid>
 	</knowledgetables>
 	<credit>1500</credit>
-	<file>ultrabot2.cpp</file>
+	<file>ultrabot2.so</file>
 </bot>
