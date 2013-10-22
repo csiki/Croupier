@@ -3,9 +3,10 @@
 
 /** Adds a bot's result to results.
 */
-void Results::addResult(int id, int credit, int kickAtRound)
+void Results::addResult(int id, int playerID, int credit, int kickAtRound)
 {
 	this->botIDs[this->numOfBots] = id;
+	this->playerIDs[this->numOfBots] = playerID;
 	this->credits[this->numOfBots] = credit;
 	this->kicksAtRound[this->numOfBots] = kickAtRound;
 	++this->numOfBots;
@@ -29,7 +30,7 @@ int Results::getBotID(int index) const
 */
 int Results::getPlayerID(int index) const
 {
-	return this->playersID[index];
+	return this->playerIDs[index];
 }
 
 /** Gets a bot's credit.

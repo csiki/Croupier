@@ -24,7 +24,7 @@
 class BotManager : public BotCommunicator, public BotHandler
 {
 private:
-	int numOfRebuys;
+	size_t numOfRebuys;
 	int reservedCredit;
 	int kickedAtRound;
 	BotKnowledgeHandler *bkHandler;

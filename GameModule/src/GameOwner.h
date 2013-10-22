@@ -14,25 +14,21 @@
 #include "BotManager.h"
 #include "Results.h"
 #include "ResultsXMLHandler.h"
+#include "GameData.h"
+#include "GameDataXMLHandler.h"
 
 /**	Initialises the participants of the game; runs it; saves the results.
 */
 class GameOwner
 {
-	// TOOD GameData használata
 private:
-	std::string logPath;
-	std::string rulzPath;
-	std::string resultsPath;
-	int numOfBots;
-	int* playersID;
-	int* botsID;
+	size_t numOfBots;
+	GameData* gameData;
 	Croupier* croupier;
 	Hostess* hostess;
 	BroadcastStation* broadcastStation;
 	Bot** bots;
 	BotManager** botManagers;
-	BotData** botsData;
 	Log* log;
 	Rulz* rulz;
 	Table* table;
@@ -43,20 +39,12 @@ private:
 	void errorOccured(std::string msg);
 	void fillBotLoaders();
 public:
-	GameOwner(int numOfBots, int* playersID, int* botsID,
-		const char* logPath, const char* rulzPath,
-		const char* resultsPath)
+	GameOwner(const char* gameDataXMLPath)
 	{
-		// set attributes
-		this->playersID = playersID;
-		this->botsID = botsID;
-		this->logPath = logPath;
-		this->rulzPath = rulzPath;
-		this->resultsPath = resultsPath;
-		this->numOfBots = numOfBots;
+		this->gameData = GameDataXMLHandler::loadXML(gameDataXMLPath);
+		this->numOfBots = gameData->getNumOfBots();
 		this->bots = new Bot*[numOfBots];
 		this->botManagers = new BotManager*[numOfBots];
-		this->botsData = new BotData*[numOfBots];
 		this->gameState = 0;
 		this->errorMsg = "";
 	}
@@ -64,25 +52,21 @@ public:
 	virtual ~GameOwner()
 	{
 		// delete botmanagers and bots
-		for (int i = 0; i < this->numOfBots; ++i)
+		for (size_t i = 0; i < this->numOfBots; ++i)
 		{
 			delete this->botManagers[i];
-			//delete this->bots[i]; // bot loaders delete objects
-			delete this->botsData[i];
 		}
 		delete [] this->botManagers;
 		delete [] this->bots;
-		delete [] this->botsData;
 
 		// delete others
+		delete this->gameData;
 		delete this->croupier;
 		delete this->log;
 		delete this->rulz;
 		delete this->table;
 		delete this->broadcastStation;
 		delete this->hostess;
-		delete [] this->playersID;
-		delete [] this->botsID;
 	}
 
 	void initialiseGame();

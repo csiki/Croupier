@@ -67,7 +67,7 @@ int Table::getNumOfBots() const
 int Table::getPot() const
 {
 	int potSum = 0;
-	for (int i = 0; i < this->numOfBots; ++i)
+	for (size_t i = 0; i < this->numOfBots; ++i)
 	{
 		potSum += bots[i]->getPot();
 	}

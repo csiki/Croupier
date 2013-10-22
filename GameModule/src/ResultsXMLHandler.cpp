@@ -45,7 +45,7 @@ bool ResultsXMLHandler::saveXML(Results* results, std::string xmlPath)
 		pugi::xml_node resultsNode = doc.append_child("results");
 
 		// save player results
-		for (int i = 0; i < results->getNumOfPlayers(); ++i)
+		for (size_t i = 0; i < results->getNumOfPlayers(); ++i)
 		{
 			pugi::xml_node playerNode = resultsNode.append_child("bot");
 			playerNode.append_child("botid").text().set( results->getBotID(i) );

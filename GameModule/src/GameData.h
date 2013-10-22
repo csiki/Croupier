@@ -20,9 +20,17 @@ public:
 		: id(id), logFileName(logFileName), rulzFileName(rulzFileName), resultsFileName(resultsFileName)
 	{}
 
+	~GameData()
+	{
+		for (size_t i = 0; i < bots.size(); ++i)
+		{
+			delete bots.at(i);
+		}
+	}
+
 	void addBotData(BotData* bd);
 	BotData* getBotData(int index);
-	int getNumOfBots();
+	size_t getNumOfBots();
 };
 
 #endif

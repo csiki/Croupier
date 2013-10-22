@@ -43,7 +43,9 @@ void GameOwner::initialiseGame()
 
 	// create independent components
 	this->log = new Log();
-	this->rulz = RulzXMLHandler::loadXML(this->rulzPath);
+	std::string rulzPath = _RULZ_RELATIVE_PATH_;
+	rulzPath += this->gameData->rulzFileName;
+	this->rulz = RulzXMLHandler::loadXML(rulzPath);
 	
 	if (this->rulz == nullptr)
 	{
@@ -57,43 +59,31 @@ void GameOwner::initialiseGame()
 	this->croupier = new Croupier(this->numOfBots, this->broadcastStation, this->log, this->rulz, this->table);
 
 	// load bots
-	for (int i = 0; i < this->numOfBots; ++i)
+	for (size_t i = 0; i < this->numOfBots; ++i)
 	{
-		// load bot data
-		std::string path = _BOT_DATA_RELATIVE_PATH_;
-		path += std::to_string(this->botsID[i]);
-		path += ".xml";
-
-		this->botsData[i] = BotDataXMLHandler::loadXML(path);
-		if (this->botsData[i] == nullptr)
-		{
-			std::string msg = "Cannot load BotData instance from xml! Bot id: ";
-			msg += std::to_string(this->playersID[i]);
-			this->errorOccured(msg);
-			return;
-		}
+		// get bot data from game data
+		BotData* botdata = this->gameData->getBotData(i);
 
 		// create bot knowledge handler (if neccessery)
 		BotKnowledgeHandler* bkHandler = nullptr;
 		if (rulz->isBotKnowledgeUseAllowed())
 		{
-			// TODO game datára...
-			bkHandler = new BotKnowledgeHandler(this->botsData[i]);
+			bkHandler = new BotKnowledgeHandler(botdata->playerID, botdata->numOfKnowledgeTables, botdata->knowledgeTables);
 		}
 
 		// load bot manager
 		this->botManagers[i] = new BotManager(
 			bkHandler, this->hostess, this->table,
-			this->rulz, this->broadcastStation, log, this->playersID[i],
-			this->rulz->getStartingChips(), this->botsData[i]->credit - this->rulz->getStartingChips(), i);
+			this->rulz, this->broadcastStation, this->log, botdata->playerID,
+			this->rulz->getStartingChips(), botdata->credit - this->rulz->getStartingChips(), i);
 		
 		// set botdata communicator
-		this->botsData[i]->communicator = this->botManagers[i];
+		botdata->communicator = this->botManagers[i];
 
 		// load bot
 		try
 		{
-			this->bots[i] = this->botLoaders.at(botsData[i]->lang)->loadBot(botsData[i]);
+			this->bots[i] = this->botLoaders.at(botdata->lang)->loadBot(botdata);
 		}
 		catch(BotLoaderException& e)
 		{
@@ -145,34 +135,33 @@ void GameOwner::initialiseGame()
 void GameOwner::startGame()
 {
 	this->croupier->letsPoker();
-
-	//if (this->log->getSeverityFrequency(Severity::FATAL) == 0)
-	//{
-		// game ended successfully
-		this->gameState = 3;
-	//}
+	this->gameState = 3;
 }
 
 /** Save the results of the game.
 */
 void GameOwner::saveResults()
 {
-	// save bot knowledge tables (BotKnowledgeHandler destructor done it)
+	// save bot knowledge tables (BotKnowledgeHandler destructor does it)
 	// save log
-	LogXMLHandler::saveXML(this->log, this->logPath);
+	std::string logPath = _LOG_RELATIVE_PATH_;
+	logPath += this->gameData->logFileName;
+	LogXMLHandler::saveXML(this->log, logPath);
 
 	// save bot credits and the round when they fell out
 	Results* results = new Results(this->numOfBots);
 
-	for (int i = 0; i < this->numOfBots; ++i)
+	for (size_t i = 0; i < this->numOfBots; ++i)
 	{
 		results->addResult(
-			this->botManagers[i]->getID(),
+			this->botManagers[i]->getBotID(), this->botManagers[i]->getID(),
 			this->botManagers[i]->getReservedCredit() + this->botManagers[i]->getChips(),
 			this->botManagers[i]->getKickedAtRound());
 	}
 
-	ResultsXMLHandler::saveXML(results, this->resultsPath);
+	std::string resultsPath = _RESULTS_RELATIVE_PATH_;
+	resultsPath += this->gameData->resultsFileName;
+	ResultsXMLHandler::saveXML(results, resultsPath);
 
 	this->gameState = 4;
 }

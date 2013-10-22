@@ -14,15 +14,16 @@ public:
 	const int id;
 	const int playerID;
 	const std::string name;
+	const std::string src;
 	const int credit;
 	const BotLanguage lang;
 	const int numOfKnowledgeTables;
 	const int* knowledgeTables;
-	const BotCommunicator* communicator;
+	BotCommunicator* communicator;
 
-	BotData(int id, int playerID, std::string name, int credit, BotLanguage lang,
+	BotData(int id, int playerID, std::string name, std::string src, int credit, BotLanguage lang,
 		int numOfKnowledgeTables, int* knowledgeTables)
-		: id(id), playerID(playerID), name(name), credit(credit), lang(lang),
+		: id(id), playerID(playerID), name(name), src(src), credit(credit), lang(lang),
 		numOfKnowledgeTables(numOfKnowledgeTables), knowledgeTables(knowledgeTables)
 	{}
 

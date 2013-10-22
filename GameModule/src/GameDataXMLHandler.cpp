@@ -37,7 +37,28 @@ GameData* GameDataXMLHandler::loadXML(std::string xmlPath)
 */
 bool GameDataXMLHandler::saveXML(GameData* gameData, std::string xmlPath)
 {
-	// TODO
+	if (gameData != nullptr)
+	{
+		pugi::xml_document doc;
+		pugi::xml_node gameNode = doc.append_child("game");
+
+		// save one instance propeties
+		gameNode.append_child("id").text().set(gameData->id);
+		gameNode.append_child("log").text().set(gameData->logFileName);
+		gameNode.append_child("rules").text().set(gameData->rulzFileName);
+		gameNode.append_child("results").text().set(gameData->resultsFileName);
+
+		// save bot data
+		pugi::xml_node botsNode = gameNode.append_child("bots");
+		for (size_t i = 0; i < gameData->getNumOfBots(); ++i)
+		{
+			pugi::xml_node botNode = botsNode.append_child("bot");
+			BotDataXMLHandler::saveXML(gameData->getBotData(i), botNode);
+		}
+
+		// save xml
+		return doc.save_file(xmlPath.c_str());
+	}
 
 	return false;
 }

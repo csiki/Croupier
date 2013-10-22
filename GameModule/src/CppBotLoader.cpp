@@ -5,7 +5,7 @@ Bot* CppBotLoader::loadBot(BotData* botData)
 {
 	// load the dll library
 	std::string libPath = _BOT_AI_RELATIVE_PATH_;
-	libPath += botData->file;
+	libPath += botData->src;
 	void* botLib = dlopen(libPath.c_str(), RTLD_NOW);
 
 	if (!botLib)

@@ -12,9 +12,9 @@ private:
 	int* smallBlinds;
 	int* bigBlinds;
 	int* blindShiftDeadlines;
-	int numOfBlinds;
+	size_t numOfBlinds;
 	int rebuyDeadline;
-	int numOfRebuysAllowed;
+	size_t numOfRebuysAllowed;
 	bool talkAllowed;
 	bool emotionAllowed;
 	bool knowledgeBaseAllowed;
@@ -40,7 +40,7 @@ public:
 		this->knowledgeBaseAllowed = knowledgeBaseAllowed;
 
 		// fill allowedBotCalcTime
-		for (int lang = BotLanguage::CPP; ; ++lang)
+		for (size_t lang = BotLanguage::CPP; ; ++lang)
 		{
 			this->allowedBotCalcTime.insert(std::pair<BotLanguage, int>( static_cast<BotLanguage>(lang), allowedBotCalcTime[lang] ));
 			if (lang == BotLanguage::ALIVE)

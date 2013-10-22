@@ -17,7 +17,7 @@ public:
 	Log()
 	{
 		// fill severity frequency (with 0s)
-		for (int sevInt = Severity::FATAL; ; ++sevInt)
+		for (size_t sevInt = Severity::FATAL; ; ++sevInt)
 		{
 			this->severityFequency.insert(
 				std::pair<Severity, int>(

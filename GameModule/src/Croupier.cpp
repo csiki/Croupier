@@ -41,7 +41,7 @@ void Croupier::collectCards()
 	this->log(Severity::NOTIFICATION, "collectCards");
 
 	// burnt cards
-	for (int i = 0; i < this->numberOfBurntCards; ++i)
+	for (size_t i = 0; i < this->numberOfBurntCards; ++i)
 	{
 		this->deck.push(this->burnt[i]);
 		this->burnt[i] = nullptr;
@@ -56,7 +56,7 @@ void Croupier::collectCards()
 	}
 	
 	// hands
-	for (int i = 0; i < this->numOfBots; ++i)
+	for (size_t i = 0; i < this->numOfBots; ++i)
 	{
 		if (this->bots[i]->isInGame())
 		{
@@ -101,7 +101,7 @@ void Croupier::dealing()
 	this->deck.shuffle();
 
 	// first card
-	for (int i = 0; i < this->numOfBots; ++i)
+	for (size_t i = 0; i < this->numOfBots; ++i)
 	{
 		if (this->bots[i]->isInRound())
 		{
@@ -110,7 +110,7 @@ void Croupier::dealing()
 	}
 
 	// second card
-	for (int i = 0; i < this->numOfBots; ++i)
+	for (size_t i = 0; i < this->numOfBots; ++i)
 	{
 		if (this->bots[i]->isInRound())
 		{
@@ -252,7 +252,7 @@ void Croupier::showdown()
 	this->log(Severity::NOTIFICATION, "showdown");
 
 	// reveal cards
-	for (int i = 0; i < this->numOfBots; ++i)
+	for (size_t i = 0; i < this->numOfBots; ++i)
 	{
 		if (this->bots[i]->isInRound())
 		{
@@ -276,7 +276,7 @@ void Croupier::handOutPot(int winnerIndex)
 	BotHandler* winner = this->bots[winnerIndex];
 	int winnersPot = winner->getPot();
 
-	for (int i = 0; i < this->numOfBots; ++i)
+	for (size_t i = 0; i < this->numOfBots; ++i)
 	{
 		// give the winner at least the amount of pot he got
 		winner->receiveChips(this->bots[i]->takePot(winnersPot));
@@ -293,7 +293,7 @@ void Croupier::handOutPot(int numOfWinners, int* winnersIndex)
 	// log
 	std::string msg = "handOutPot ";
 	msg += std::to_string(numOfWinners);
-	for (int i = 0; i < numOfWinners; ++i)
+	for (size_t i = 0; i < numOfWinners; ++i)
 	{
 		msg += ',';
 		msg += std::to_string(winnersIndex[i]);
@@ -302,10 +302,10 @@ void Croupier::handOutPot(int numOfWinners, int* winnersIndex)
 
 	// fill winners to easily find out if a given index represents a winning or losing bot
 	bool* areWinners = new bool[this->numOfBots];
-	for (int i = 0; i < this->numOfBots; ++i)
+	for (size_t i = 0; i < this->numOfBots; ++i)
 	{
 		areWinners[i] = false;
-		for (int j = 0; j < numOfWinners; ++j)
+		for (size_t j = 0; j < numOfWinners; ++j)
 		{
 			if (winnersIndex[j] == i)
 			{
@@ -323,7 +323,7 @@ void Croupier::handOutPot(int numOfWinners, int* winnersIndex)
 	int amountToTake, amountAlreadyTaken, divider, loosersOriginalPot;
 	BotHandler *winnerBot, *looserBot;
 
-	for (int l = 0; l < this->numOfBots; ++l) // iterate through...
+	for (size_t l = 0; l < this->numOfBots; ++l) // iterate through...
 	{
 		amountAlreadyTaken = 0;
 		if (!areWinners[l]) // ... loosers
@@ -332,7 +332,7 @@ void Croupier::handOutPot(int numOfWinners, int* winnersIndex)
 			loosersOriginalPot = looserBot->getPot();
 			divider = numOfWinners;
 
-			for (int w = 0; w < numOfWinners; ++w) // iterate through winners
+			for (size_t w = 0; w < numOfWinners; ++w) // iterate through winners
 			{
 				winnerBot = this->bots[winnersIndex[w]];
 				if (loosersOriginalPot < winnerBot->getPot())
@@ -358,7 +358,7 @@ void Croupier::handOutPot(int numOfWinners, int* winnersIndex)
 	}
 
 	// take the rest of the pot to chips / bot
-	for (int i = 0; i < this->numOfBots; ++i)
+	for (size_t i = 0; i < this->numOfBots; ++i)
 	{
 		this->bots[i]->receiveChips(this->bots[i]->takePot());
 	}
@@ -403,7 +403,7 @@ void Croupier::determineWinners(int& numOfWinners, int** winnersIndex)
 	// count bots in round (here we don't use numOfBotsInRound() method because we need tmpIfOneWinnerIndex)
 	int numOfBotsInRound = 0;
 	int tmpIfOneWinnerIndex; // if one bot stayed, it stores its index, so don't have to look up again later
-	for (int i = 0; i < this->numOfBots; ++i)
+	for (size_t i = 0; i < this->numOfBots; ++i)
 	{
 		if (this->bots[i]->isInRound())
 		{
@@ -426,7 +426,7 @@ void Croupier::determineWinners(int& numOfWinners, int** winnersIndex)
 	const Card** tmpHand = new const Card*[7];
 
 	// tmpHand array first five items are the cards on table
-	for (int i = 0; i < 5; ++i)
+	for (size_t i = 0; i < 5; ++i)
 	{
 		tmpHand[i] = this->table->getCard(i);
 	}
@@ -441,7 +441,7 @@ void Croupier::determineWinners(int& numOfWinners, int** winnersIndex)
 	int winnerIndex = -1;
 	int comparison;
 
-	for (int i = 0; i < this->numOfBots; ++i)
+	for (size_t i = 0; i < this->numOfBots; ++i)
 	{
 		if (this->bots[i]->isInRound())
 		{
@@ -460,7 +460,7 @@ void Croupier::determineWinners(int& numOfWinners, int** winnersIndex)
 				winners->push_back(i);
 
 				// winnerBestHand = tmpBestHand (copy)
-				for (int j = 0; j < 5; ++j)
+				for (size_t j = 0; j < 5; ++j)
 				{
 					winnerBestHand[j] = tmpBestHand[j];
 				}
@@ -477,7 +477,7 @@ void Croupier::determineWinners(int& numOfWinners, int** winnersIndex)
 					winnerIndex = i;
 
 					// winnerBestHand = tmpBestHand (copy)
-					for (int j = 0; j < 5; ++j)
+					for (size_t j = 0; j < 5; ++j)
 					{
 						winnerBestHand[j] = tmpBestHand[j];
 					}
@@ -507,7 +507,7 @@ void Croupier::determineWinners(int& numOfWinners, int** winnersIndex)
 	// log
 	std::string msg = "roundWinners ";
 	msg += std::to_string(numOfWinners);
-	for (int i = 0; i < numOfWinners; ++i)
+	for (size_t i = 0; i < numOfWinners; ++i)
 	{
 		msg += ',';
 		msg += std::to_string((*winnersIndex)[i]);
@@ -525,7 +525,7 @@ void Croupier::determineWinners(int& numOfWinners, int** winnersIndex)
 */
 int Croupier::findBotIndexByID(int botID) const
 {
-	for (int i = 0; i < this->numOfBots; ++i)
+	for (size_t i = 0; i < this->numOfBots; ++i)
 	{
 		if (this->bots[i]->getID() == botID)
 		{
@@ -631,7 +631,7 @@ void Croupier::letsPoker()
 		// botmanager runs canRebuy() before forward the message to bot
 		if (this->rules->getNumOfRebuysAllowed() > 0)
 		{
-			for (int i = 0; i < this->numOfBots; ++i)
+			for (size_t i = 0; i < this->numOfBots; ++i)
 			{
 				if (this->bots[i]->getChips() == 0)
 				{
@@ -646,7 +646,7 @@ void Croupier::letsPoker()
 		}
 
 		// send leave() to those bots, who still has 0 chips
-		for (int i = 0; i < this->numOfBots; ++i)
+		for (size_t i = 0; i < this->numOfBots; ++i)
 		{
 			if (this->bots[i]->getChips() == 0)
 			{
@@ -668,7 +668,7 @@ void Croupier::letsPoker()
 
 	// declare winner
 	int winnerIndex;
-	for (int i = 0; i < this->numOfBots; ++i)
+	for (size_t i = 0; i < this->numOfBots; ++i)
 	{
 		if (this->bots[i]->isInGame())
 		{
@@ -711,7 +711,7 @@ bool Croupier::canStartNewRound() const
 {
 	// count the number of bots inGame
 	int numOfBotsInGame = 0;
-	for (int i = 0; i < this->numOfBots; ++i)
+	for (size_t i = 0; i < this->numOfBots; ++i)
 	{
 		if (this->bots[i]->isInGame())
 		{
@@ -731,10 +731,10 @@ bool Croupier::canRoundGoOn() const
 
 /** Returns the number of bots in round (have not folded).
 */
-int Croupier::numOfBotsInRound() const
+size_t Croupier::numOfBotsInRound() const
 {
 	int numOfBotsInRound = 0;
-	for (int i = 0; i < this->numOfBots; ++i)
+	for (size_t i = 0; i < this->numOfBots; ++i)
 	{
 		if (this->bots[i]->isInRound())
 		{

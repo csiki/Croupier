@@ -68,7 +68,7 @@ void Hostess::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize, c
 		this->minRaise = this->getBigBlindAtRound(this->round);
 
 		// update botsInRound
-		for (int i = 0; i < this->numOfBots; ++i)
+		for (size_t i = 0; i < this->numOfBots; ++i)
 		{
 			this->botsInRound[i] = this->botsInGame[i];
 		}
@@ -107,7 +107,7 @@ void Hostess::fillBotsData()
 {
 	const BotInfo* tmpBot;
 	
-	for (int i = 0; i < this->numOfBots; ++i)
+	for (size_t i = 0; i < this->numOfBots; ++i)
 	{
 		tmpBot = this->table->getBotByIndex(i);
 		
@@ -218,7 +218,7 @@ int Hostess::getBotIDByIndex(int index) const
 */
 int Hostess::getBotIndexByID(int botID) const
 {
-	for (int i = 0; i < this->numOfBots; ++i)
+	for (size_t i = 0; i < this->numOfBots; ++i)
 	{
 		if (botID == this->table->getBotByIndex(i)->getID())
 		{
@@ -247,7 +247,7 @@ int Hostess::getBotIDToTheRight(int fromID, int nth, bool onlyInGame, bool onlyI
 	if (onlyInGame)
 	{
 		isAny = false;
-		for (int i = 0; i < this->numOfBots; ++i)
+		for (size_t i = 0; i < this->numOfBots; ++i)
 		{
 			if (this->botsInGame[i])
 			{
@@ -266,7 +266,7 @@ int Hostess::getBotIDToTheRight(int fromID, int nth, bool onlyInGame, bool onlyI
 	if (onlyInRound)
 	{
 		isAny = false;
-		for (int i = 0; i < this->numOfBots; ++i)
+		for (size_t i = 0; i < this->numOfBots; ++i)
 		{
 			if (this->botsInRound[i])
 			{
@@ -317,7 +317,7 @@ int Hostess::getBotIDToTheLeft(int fromID, int nth, bool onlyInGame, bool onlyIn
 	if (onlyInGame)
 	{
 		isAny = false;
-		for (int i = 0; i < this->numOfBots; ++i)
+		for (size_t i = 0; i < this->numOfBots; ++i)
 		{
 			if (this->botsInGame[i])
 			{
@@ -336,7 +336,7 @@ int Hostess::getBotIDToTheLeft(int fromID, int nth, bool onlyInGame, bool onlyIn
 	if (onlyInRound)
 	{
 		isAny = false;
-		for (int i = 0; i < this->numOfBots; ++i)
+		for (size_t i = 0; i < this->numOfBots; ++i)
 		{
 			if (this->botsInRound[i])
 			{
@@ -381,7 +381,7 @@ int Hostess::getBotIDToTheLeft(int fromID, int nth, bool onlyInGame, bool onlyIn
 int Hostess::getNumOfBots(bool onlyInGame, bool onlyInRound) const
 {
 	int num = 0;
-	for (int i = 0; i < this->numOfBots; ++i)
+	for (size_t i = 0; i < this->numOfBots; ++i)
 	{
 		if ( (this->botsInGame[i] == onlyInGame || !onlyInGame)
 			&& (this->botsInRound[i] == onlyInRound || !onlyInRound) )

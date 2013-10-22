@@ -17,14 +17,14 @@ class Croupier : public Logger, public BroadcastMember
 private:
 	Deck deck;
 	Card* burnt[3];
-	int numberOfBurntCards;
+	size_t numberOfBurntCards;
 	int round;
 	int currentBotIndex;
 	int currentDealerIndex;
 	int lastBotRaisedIndex;
 	int currentBlindIndex;
 	int nextBlindShiftAtIndex;
-	int numOfBots;
+	size_t numOfBots;
 	BotHandler** bots;
 	const Rulz* rules;
 	Table* table;
@@ -48,7 +48,7 @@ private:
 	int findBotIndexByID(int botID) const;
 	bool canStartNewRound() const;
 	bool canRoundGoOn() const;
-	int numOfBotsInRound() const;
+	size_t numOfBotsInRound() const;
 
 public:
 	/** Method to create Croupier, setting its attibrutes to default.

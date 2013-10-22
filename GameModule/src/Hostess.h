@@ -19,7 +19,7 @@ private:
 	std::map<int, const BotInfo*> botsByID;
 	bool* botsInRound; // define at constructor
 	bool* botsInGame; // define at constructor
-	int numOfBots;
+	size_t numOfBots;
 	int round;
 	int callAmount;
 	int minRaise;

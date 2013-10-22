@@ -11,7 +11,7 @@ HandRank HandEvaluator::evalFiveCards(const Card** cards)
 	int histogram[5] = {0, 0, 0, 0, 0};
 	bool alreadyFound;
 	
-	for (int c = 0; c < 5; ++c)
+	for (size_t c = 0; c < 5; ++c)
 	{
 		if (cards[c]->rank != Card::Rank::NULLRANK) // if nullrank, don't increase histogram
 		{
@@ -25,7 +25,7 @@ HandRank HandEvaluator::evalFiveCards(const Card** cards)
 
 			// from 0 to c we check if there's already a card with the same rank
 			alreadyFound = false;
-			for (int i = 0; i < c; ++i)
+			for (size_t i = 0; i < c; ++i)
 			{
 				if (cards[i]->rank == cards[c]->rank)
 				{
@@ -77,7 +77,7 @@ HandRank HandEvaluator::evalFiveCards(const Card** cards)
 	
 	// check for flush
 	bool isFlush = true;
-	for (int i = 1; i < 5; ++i)
+	for (size_t i = 1; i < 5; ++i)
 	{
 		// all cards must have equal suit
 		if (cards[0]->suit != cards[i]->suit || cards[i]->suit == Card::Suit::NULLSUIT)
@@ -97,7 +97,7 @@ HandRank HandEvaluator::evalFiveCards(const Card** cards)
 	int highrank, lowrank;
 	highrank = cards[0]->rank;
 	lowrank = cards[0]->rank;
-	for (int i = 1; i < 5; ++i)
+	for (size_t i = 1; i < 5; ++i)
 	{
 		if (highrank < cards[i]->rank)
 		{
@@ -169,14 +169,14 @@ HandRank HandEvaluator::evalHand(const Card** cards, const Card** bestHand)
 	int tmp;
 
 	// all combination of 5 cards from 7, choosing two cards of the 5 (c1, c2)
-	for (int c1 = 0; c1 < 6; ++c1)
+	for (size_t c1 = 0; c1 < 6; ++c1)
 	{
-		for (int c2 = c1+1; c2 < 7; ++c2)
+		for (size_t c2 = c1+1; c2 < 7; ++c2)
 		{
 			// now the two cards c1, and c2 chosen out of the 7
 			// tmpHand with 5 cards
 			tmp = 0;
-			for (int i = 0; i < 7; ++i)
+			for (size_t i = 0; i < 7; ++i)
 			{
 				if (i != c1 && i != c2)
 				{
@@ -192,7 +192,7 @@ HandRank HandEvaluator::evalHand(const Card** cards, const Card** bestHand)
 				bestRank = tmpRank;
 				
 				// fill bestHand with tmpHand
-				for (int i = 0; i < 5; ++i)
+				for (size_t i = 0; i < 5; ++i)
 				{
 					bestHand[i] = tmpHand[i];
 				}
@@ -203,7 +203,7 @@ HandRank HandEvaluator::evalHand(const Card** cards, const Card** bestHand)
 				if (HandEvaluator::handComparator(bestRank, bestHand, tmpHand) == -1) // bestHand < tmpHand
 				{
 					// fill bestHand with tmpHand
-					for (int i = 0; i < 5; ++i)
+					for (size_t i = 0; i < 5; ++i)
 					{
 						bestHand[i] = tmpHand[i];
 					}
@@ -241,7 +241,7 @@ int HandEvaluator::handComparator(HandRank rank, const Card** bestHand1, const C
 	{
 		// iterate from the highest to the lowest
 		// check at given position, which card is higher
-		for (int i = 4; i >= 0; --i)
+		for (size_t i = 4; i >= 0; --i)
 		{
 			if (bestHand2[i]->rank < bestHand1[i]->rank)
 			{
@@ -259,7 +259,7 @@ int HandEvaluator::handComparator(HandRank rank, const Card** bestHand1, const C
 		pair1rank = pair2rank = 0;
 
 		// find the the rank of the pair (the rank of the 2 cards making the pair) for bestHand1
-		for (int i = 0; i < 4; ++i)
+		for (size_t i = 0; i < 4; ++i)
 		{
 			if (bestHand1[i]->rank == bestHand1[i+1]->rank)
 			{
@@ -269,7 +269,7 @@ int HandEvaluator::handComparator(HandRank rank, const Card** bestHand1, const C
 		}
 
 		// find the the rank of the pair for bestHand2
-		for (int i = 0; i < 4; ++i)
+		for (size_t i = 0; i < 4; ++i)
 		{
 			if (bestHand2[i]->rank == bestHand2[i+1]->rank)
 			{
@@ -290,7 +290,7 @@ int HandEvaluator::handComparator(HandRank rank, const Card** bestHand1, const C
 
 		// iterate from the highest to the lowest
 		// check at given position, which card is higher
-		for (int i = 4; i >= 0; --i)
+		for (size_t i = 4; i >= 0; --i)
 		{
 			if (bestHand2[i]->rank < bestHand1[i]->rank)
 			{
@@ -313,7 +313,7 @@ int HandEvaluator::handComparator(HandRank rank, const Card** bestHand1, const C
 		kicker1rank = kicker2rank = 0;
 
 		// find pair11rank, pair12rank and kicker1
-		for (int i = 0; i < 4; ++i)
+		for (size_t i = 0; i < 4; ++i)
 		{
 			// two cards are with the same rank
 			if (bestHand1[i]->rank == bestHand1[i+1]->rank)
@@ -337,7 +337,7 @@ int HandEvaluator::handComparator(HandRank rank, const Card** bestHand1, const C
 		}
 
 		// find pair21rank, pair22rank and kicker2
-		for (int i = 0; i < 4; ++i)
+		for (size_t i = 0; i < 4; ++i)
 		{
 			// two cards are with the same rank
 			if (bestHand2[i]->rank == bestHand2[i+1]->rank)
@@ -398,7 +398,7 @@ int HandEvaluator::handComparator(HandRank rank, const Card** bestHand1, const C
 		three1rank = three2rank = 0;
 
 		// find three1rank
-		for (int i = 0; i < 4; ++i)
+		for (size_t i = 0; i < 4; ++i)
 		{
 			if (bestHand1[i]->rank == bestHand1[i+1]->rank)
 			{
@@ -409,7 +409,7 @@ int HandEvaluator::handComparator(HandRank rank, const Card** bestHand1, const C
 		}
 
 		// find three2rank
-		for (int i = 0; i < 4; ++i)
+		for (size_t i = 0; i < 4; ++i)
 		{
 			if (bestHand2[i]->rank == bestHand2[i+1]->rank)
 			{
@@ -431,7 +431,7 @@ int HandEvaluator::handComparator(HandRank rank, const Card** bestHand1, const C
 
 		// iterate from the highest to the lowest
 		// check at given position, which card is higher
-		for (int i = 4; i >= 0; --i)
+		for (size_t i = 4; i >= 0; --i)
 		{
 			if (bestHand2[i]->rank < bestHand1[i]->rank)
 			{
@@ -559,7 +559,7 @@ int HandEvaluator::handComparator(HandRank rank, const Card** bestHand1, const C
 	{
 		// iterate from the highest to the lowest
 		// check at given position, which card is higher
-		for (int i = 4; i >= 0; --i)
+		for (size_t i = 4; i >= 0; --i)
 		{
 			if (bestHand2[i]->rank < bestHand1[i]->rank)
 			{

@@ -5,16 +5,16 @@
 #include "BotDataXMLHandler.h"
 
 /** Belepo pont he!
-    @param argv members in order: gameid
+    @param argv members in order: gameDataXMLFileName
 */
 int main(int argc, char* argv[])
 {
-	const int gameid = atoi(argv[1]);
-
-	// TODO load game data
+	// generate path of game data xml file
+	std::string gameDataXMLFileName = _GAME_DATA_RELATIVE_PATH_;
+	gameDataXMLFileName += argv[1];
 
 	// init game owner
-	GameOwner* go = new GameOwner(numOfBots, playersID, botsID, logPath, rulesPath, resultsPath);
+	GameOwner* go = new GameOwner(gameDataXMLFileName.c_str());
 	go->initialiseGame();
 
 	// run game

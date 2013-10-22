@@ -9,7 +9,7 @@ class KnowledgeTable
 {
 private:
 	std::vector<std::vector<void*> > data;
-	int numOfCols;
+	size_t numOfCols;
 	KnowledgeDataType *columnTypes;
 	bool updated;
 	bool removed;

@@ -70,7 +70,7 @@ void BotManager::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize
 				// copying data, can't let bots delete it
 				int *dataCopy;
 				dataCopy = new int[dataSize];
-				for (int i = 0; i < dataSize; ++i)
+				for (size_t i = 0; i < dataSize; ++i)
 					dataCopy[i] = data[i];
  				this->bot->roundWinners(dataSize, dataCopy);
 				delete [] dataCopy;

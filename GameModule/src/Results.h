@@ -7,9 +7,9 @@
 class Results
 {
 private:
-	int numOfBots;
+	size_t numOfBots;
 	int* botIDs;
-	int* playersID;
+	int* playerIDs;
 	int* credits;
 	int* kicksAtRound;
 
@@ -23,7 +23,7 @@ public:
 		this->botIDs = new int[numOfBotsExpected];
 		this->credits = new int[numOfBotsExpected];
 		this->kicksAtRound = new int[numOfBotsExpected];
-		this->playersID = new int[numOfBotsExpected];
+		this->playerIDs = new int[numOfBotsExpected];
 	}
 
 	virtual ~Results()
@@ -32,7 +32,7 @@ public:
 		delete [] this->botIDs;
 		delete [] this->credits;
 		delete [] this->kicksAtRound;
-		delete [] this->playersID;
+		delete [] this->playerIDs;
 	}
 
 	void addResult(int botID, int playerID, int credit, int kickAtRound);

@@ -21,22 +21,21 @@ private:
 	void removeTableFile(int tableID);
 public:
 
-	BotKnowledgeHandler(BotData* botData) : userID(botData->id) // UNIT
+	BotKnowledgeHandler(int userID, int numOfKnowledgeTables, const int* knowledgeTables) : userID(userID)
 	{
 		// set relPath
 		this->relPath = _BOT_KNOWLEDGE_RELATIVE_PATH_;
 		this->relPath += std::to_string(this->userID);
 		this->relPath += "/";
-		// TODO
 
 		// load tables
-		for (int i = 0; i < botData->numOfKnowledgeTables; ++i)
+		for (size_t i = 0; i < numOfKnowledgeTables; ++i)
 		{
-			KnowledgeTable* kt = this->loadTable(botData->knowledgeTables[i]);
+			KnowledgeTable* kt = this->loadTable(knowledgeTables[i]);
 
 			if (kt != nullptr)
 			{
-				this->loadedTables.insert( std::pair<int, KnowledgeTable*>(botData->knowledgeTables[i], kt) );
+				this->loadedTables.insert( std::pair<int, KnowledgeTable*>(knowledgeTables[i], kt) );
 			}
 		}
 	}

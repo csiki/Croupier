@@ -97,7 +97,7 @@ bool KnowledgeTableXMLHandler::saveXML(KnowledgeTable* kt, std::string xmlPath)
 		pugi::xml_node tbodyNode = tableNode.append_child("tbody");
 
 		// saving column types
-		for (int i = 0; i < kt->getNumOfCols(); ++i)
+		for (size_t i = 0; i < kt->getNumOfCols(); ++i)
 		{
 			KnowledgeDataType ctype = kt->getColumnType(i);
 			pugi::xml_node ctypeNode = theadNode.append_child("coltype");
@@ -111,10 +111,10 @@ bool KnowledgeTableXMLHandler::saveXML(KnowledgeTable* kt, std::string xmlPath)
 		}
 
 		// saving data
-		for (int rindex = 0; rindex < kt->getNumOfRows(); ++rindex)
+		for (size_t rindex = 0; rindex < kt->getNumOfRows(); ++rindex)
 		{
 			pugi::xml_node rowNode = tbodyNode.append_child("tr");
-			for (int cindex = 0; cindex < kt->getNumOfCols(); ++cindex)
+			for (size_t cindex = 0; cindex < kt->getNumOfCols(); ++cindex)
 			{
 				pugi::xml_node cellNode = rowNode.append_child("td");
 				KnowledgeDataType dataType = kt->getColumnType(cindex);

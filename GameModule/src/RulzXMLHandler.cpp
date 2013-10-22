@@ -125,7 +125,7 @@ bool RulzXMLHandler::saveXML(Rulz* rules, std::string xmlPath)
 		pugi::xml_node blindsNode = rulzNode.append_child("blinds");
 		pugi::xml_node smallNode = blindsNode.append_child("small");
 		pugi::xml_node bigNode = blindsNode.append_child("big");
-		for (int i = 0; i < rules->getNumOfBlinds(); ++i)
+		for (size_t i = 0; i < rules->getNumOfBlinds(); ++i)
 		{
 			smallNode.append_child("blind").text().set( rules->getSmallBlind(i) );
 			bigNode.append_child("blind").text().set( rules->getBigBlind(i) );
@@ -133,7 +133,7 @@ bool RulzXMLHandler::saveXML(Rulz* rules, std::string xmlPath)
 
 		// save blinds shifts (one less than the number of blinds)
 		pugi::xml_node shiftDLsNode = blindsNode.append_child("shiftdeadlines");
-		for (int i = 0; i < rules->getNumOfBlinds() - 1; ++i)
+		for (size_t i = 0; i < rules->getNumOfBlinds() - 1; ++i)
 		{
 			shiftDLsNode.append_child("dl").text().set( rules->getBlindShiftDeadline(i) );
 		}
