@@ -1,49 +1,64 @@
 <?php
 include "php/include.php";
 needLogin();
-$codeErr = $fileErr = $nameErr = "";
-$name = $code = $lang = $orig = $id = "";
-if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
-    $id = $_GET["id"];
-    $orig = SQL("SELECT name, code, code_lang FROM bots WHERE accountID = ? && id = ?;", $_SESSION["accountID"], $id);
-    if ($orig == null)
-        die("Invalid Request");
-    $name = $orig[0]["name"];
-    $code = $orig[0]["code"];
-    $lang = $orig[0]["code_lang"];
-} else {
-    header('Location: ../manage_bots.php');
-    exit();
-}
-if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])) {
-    if (isset($_POST["name"]) && !empty($_POST["name"]))
-    {
+$codeErr = $fileErr = "";
+$name = $code = $lang = $nameErr = "";
+if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
+    $id = SQL("SHOW TABLE STATUS LIKE 'bots'")[0]["Auto_increment"];
+    if (isset($_POST["name"]) && !empty($_POST["name"])) {
         $name = $_POST["name"];
-        if(SQL("SELECT * FROM bots WHERE name = ? AND accountID = ?", $name, $_SESSION["accountID"]) != null)
+        if (SQL("SELECT * FROM bots WHERE name = ? AND accountID = ?", $name, $_SESSION["accountID"]) != null)
             $nameErr = $tr["ERR_NAME_CONFLICT"];
-    }
-    if (isset($_FILES["codefile"]) && $_FILES["codefile"]["error"] == 0) {
-        $code = file_get_contents($_FILES["codefile"]["tmp_name"]);
-        $finfo = new finfo(FILEINFO_MIME_TYPE);
-        $mimeType = $finfo->buffer($code);
-        if (strpos($mimeType, "text/") !== 0 || strlen($code) < BOT_CODE_MIN) {
-            $fileErr = $tr["ERR_CODEFILE"];
-        }
-    } else if (isset($_POST["code"])) {
-        $code = $_POST["code"];
-        if (strlen($_POST["code"]) < BOT_CODE_MIN)
-            $codeErr = $tr["ERR_CODE_EMPTY"];
+    } else
+        $name = $tr["UNNAMED_BOT"] . " " . $id;
+    $codeFileUpload = isset($_FILES["codefile"]) && $_FILES["codefile"]["error"] != UPLOAD_ERR_NO_FILE;
+    if ($codeFileUpload) {
+        if ($_FILES["codefile"]["error"] == UPLOAD_ERR_OK) {
+            //$code = file_get_contents($_FILES["codefile"]["tmp_name"]);
+            $finfo = new finfo(FILEINFO_MIME_TYPE);
+            $mimeType = $finfo->file($_FILES["codefile"]["tmp_name"]);
+            if (strpos($mimeType, "text/") !== 0)
+                $fileErr = $tr["ERR_CODEFILE"];
+            else if ($_FILES["codefile"]["size"] < 7)
+                $fileErr = $tr["ERR_CODE_EMPTY"];
+        } else
+            die("File upload error: " . $_FILES["codefile"]["error"]);
 
+    } else if (isset($_POST["code"])) {
+        if (strlen(isset($_POST["code"]) < BOT_CODE_MIN))
+            $fileErr = $tr["ERR_CODE_EMPTY"];
+        else
+            $code = $_POST["code"];
     }
+
     if (isset($_POST["lang"]) && isValidCodeLang($_POST["lang"]))
         $lang = $_POST["lang"];
+    else
+        die("Invalid request");
+
     if ($fileErr == "" && $codeErr == "" && $nameErr == "") {
-        SQL("UPDATE bots SET name = ?, lastChangeTime = NOW(), code = ?, code_lang = ?, state = 'processing'
-              WHERE id = ?", $name, $code, $lang, $id);
-        $res = SQL("SELECT tableName FROM leaderBoards");
-        for ($i = 0; $i < count($res); $i++) {
-            SQL("DELETE FROM ".$res[$i]["tableName"]." WHERE botID = ?", $id);
+        //update database
+        SQL("INSERT INTO bots (id, accountID, name, lastChangeTime, code_lang, state)
+          VALUES (NULL, ?, ?, NOW(), ?, 'processing')", $_SESSION["accountID"], $name, $lang);
+
+        //create bot folder
+        mkdir(_BOT_AI_RELATIVE_PATH_ . $id);
+
+        //move or make file
+        if ($codeFileUpload) {
+            $tmp_name = $_FILES["codefile"]["tmp_name"];
+            move_uploaded_file($tmp_name, _BOT_AI_RELATIVE_PATH_ . $id . "/" . $id);
+        } else {
+            $ret = file_put_contents(_BOT_AI_RELATIVE_PATH_ . $id . "/" . $id, $code);
+            if ($ret === false)
+                die("Couldn't write bot to file: " . $id);
         }
+
+        //update stats
+        SQL("INSERT INTO stat_bots_added (date, count)
+            VALUES (CURRENT_DATE(), 1)
+            ON DUPLICATE KEY UPDATE date = VALUES(date), count = count + 1;");
+
         header('Location: ../manage_bots.php');
     }
 }
@@ -88,14 +103,14 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
 <body>
 <?php include "php/header.php"; ?>
 <div id="main">
-    <h2><?=$tr["EDIT_BOT"]?></h2>
+    <h2><?=$tr["NEW_BOT"]?></h2>
 
     <p>
 
-    <form action="<?= $_SERVER["PHP_SELF"] . "?id=" . $id ?>" method="post" id="botform" enctype="multipart/form-data">
+    <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post" id="botform" enctype="multipart/form-data">
         <div style="display: inline-block">
             <label for="name"><?=$tr["BOTNAME"]?></label><br/>
-            <input name="name" id="name" type="text" value="<?= $name ?>"></div>
+            <input name="name" id="name" type="text" value="<?= $name ?>" autofocus></div>
 
         <div style="display: inline-block; margin-left: 40px">
             <label for="codeLang"><?=$tr["CODE_LANG"]?></label><br/>
@@ -112,8 +127,8 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
         <div class="codeWrapper">
             <label for="code"><?=$tr["INSERT_CODE"]?></label><br/>
             <textarea cols="80" rows="20" name="code" id="code" style="display: block"
-                      wrap="off" autofocus><?= $code ?></textarea>
-            <?= $codeErr ? '<span class="errorMessage">' . $codeErr . '</span><br />' : '' ?>
+                      wrap="off"><?php if (isset($_POST["code"])) echo $_POST["code"]; ?></textarea>
+            <?php if ($codeErr) echo '<span class="errorMessage">' . $codeErr . '</span><br />'; ?>
         </div>
         <br/>
         <label for="codefile"><?=$tr["CHOOSE_FILE_TO"]?></label><br/>
@@ -121,7 +136,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
         <br/>
         <?php if ($fileErr) echo '<span class="errorMessage">' . $fileErr . '</span><br />'; ?>
         <br/>
-        <input type="button" onclick="saveAsk(this.form)" class="button" value="<?= $tr["SAVE"] ?>">
+        <input type="submit" class="button" value="<?= $tr["NEW_BOT"] ?>">
         <input type="button" onclick="javascript: window.location = '/manage_bots.php';" class="button disabledButton"
                value="<?= $tr["CANCEL"] ?>">
     </form>

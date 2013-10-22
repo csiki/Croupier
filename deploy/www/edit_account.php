@@ -1,7 +1,7 @@
 <?php
 include "php/include.php";
 needLogin();
-$nameErr = $passwordErr = $emailErr = "";
+$passwordErr = $emailErr = "";
 $id = $name = $email = "";
 //propagate default values
 $id = $_SESSION["accountID"];
@@ -10,12 +10,7 @@ $emailRes = SQL("SELECT email FROM accounts WHERE id = ?", $id);
 if ($emailRes != null)
     $email = $emailRes[0]["email"];
 //set post values
-if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pSize'])) {
-    if (!isset($_POST['name']) || !sanityCheck($_POST['name'], 'string', 3, 25))
-        $nameErr = $tr["ERR_USERNAME_LENGTH"];
-    else
-        $name = $_POST['name'];
-
+if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pSize'])) {
     if (!isset($_POST['email']) || !sanityCheck($_POST['email'], 'string', 7, 50) || !checkEmail($_POST['email']))
         $emailErr = $tr["ERR_EMAIL"];
     else
@@ -30,7 +25,7 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
         else
             $password = $_POST['p'];
     }
-    if ($nameErr == "" && $passwordErr == "" && $emailErr == "") {
+    if ($passwordErr == "" && $emailErr == "") {
         $random_salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
         // Create salted password (Careful not to over season)
         $password = hash('sha512', $password . $random_salt);
@@ -41,6 +36,7 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
         $_SESSION['accountID'] = $id;
         $_SESSION['username'] = $name;
         $_SESSION['login_string'] = hash('sha512', $password . $user_browser);
+
         header('Location: ../'.$_SERVER["PHP_SELF"].'?success=1');
     }
 }
@@ -66,10 +62,9 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
     <div class="formDiv">
         <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post">
             <label for="name"><?=$tr["NAME"]?></label><br/>
-            <input type="text" name="name" id="name" maxlength="25"
+            <input type="text" name="name" id="name" maxlength="25" disabled="disabled"
                    value="<?=$name ?>">
             <br/>
-            <?php if ($nameErr) echo '<span class="errorMessage">' . $nameErr . '</span><br />'; ?>
             <br/>
             <label for="email">Email</label><br/>
             <input type="text" name="email" id="email" maxlength="50"

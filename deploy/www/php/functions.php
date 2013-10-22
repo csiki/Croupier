@@ -1,6 +1,10 @@
 <?php
-
 define("BOT_CODE_MIN", "60");
+define("_BOT_AI_RELATIVE_PATH_", "../data/bots/");
+define("_GAME_DATA_RELATIVE_PATH_", "../data/games/");
+define("_LOG_RELATIVE_PATH_", "../data/logs/");
+define("_RESULTS_RELATIVE_PATH_", "../data/results/");
+
 function sec_session_start()
 {
     $session_name = 'crouper_s'; // Set a custom session name
@@ -24,7 +28,7 @@ function SQL($Query)
             dieDb();
         else if ($result === true) {
             return true;
-        }else if ($result->num_rows) {
+        } else if ($result->num_rows) {
             return $result->fetch_all(MYSQLI_ASSOC);
         }
         return null;
@@ -44,11 +48,15 @@ function SQL($Query)
         $metadata = $stmt->result_metadata();
         $out = array();
         $fields = array();
-        if (!$metadata)
+        if (!$metadata) {
+            if($stmt->affected_rows > 0)
+                return true;
             return null;
+        }
         while (null != ($field = mysqli_fetch_field($metadata))) {
             $fields [] = & $out [$field->name];
         }
+        $metadata->close();
         call_user_func_array(array(
             $stmt, "bind_result"
         ), $fields);
@@ -198,4 +206,35 @@ function sanityCheck($string, $type, $lengthmin, $lengthmax)
 function checkEmail($email)
 {
     return preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,6})$/', strtolower($email)) ? true : false;
+}
+
+function getCodeLangID($lang)
+{
+    switch($lang)
+    {
+        case 'c++':
+            return 0;
+            break;
+        case 'c#':
+            return 2;
+            break;
+        case 'java':
+            return 3;
+            break;
+    }
+    //from BotLanguage.h
+    /*CPP = 0,
+	C = 1,
+	CSHARP = 2,
+	JAVA = 3,
+	PASCAL = 4,
+	PROLOG = 5,
+	COMMONLISP = 6,
+	SCHEME = 7,
+	PYTHON = 8,
+	PERL = 9,
+	LUA = 10,
+	RUBY = 11,
+	PHP = 12,
+	ALIVE = 13*/
 }

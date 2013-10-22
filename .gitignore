@@ -148,6 +148,7 @@ $RECYCLE.BIN/
 
 # Mac crap
 .DS_Store
-WebServer/.idea/
-WebServer/tmp/
+
+Deploy/www/.idea/
 *.tlog
+Deploy/www/tmp/

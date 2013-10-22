@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<game>
+  <id>6</id>
+  <log>6.xml</log>
+  <results>6.xml</results>
+  <bots>
+    <bot>
+      <id>129</id>
+      <playerid>1</playerid>
+      <name>Unnamed bot 129</name>
+      <src>129</src>
+      <lang>0</lang>
+      <credit>2000</credit>
+      <knowledgetables/>
+    </bot>
+    <bot>
+      <id>130</id>
+      <playerid>1</playerid>
+      <name>probot</name>
+      <src>130</src>
+      <lang>0</lang>
+      <credit>2000</credit>
+      <knowledgetables/>
+    </bot>
+    <bot>
+      <id>131</id>
+      <playerid>1</playerid>
+      <name>pusztito</name>
+      <src>131</src>
+      <lang>0</lang>
+      <credit>2000</credit>
+      <knowledgetables/>
+    </bot>
+    <bot>
+      <id>132</id>
+      <playerid>1</playerid>
+      <name>xcvcv</name>
+      <src>132</src>
+      <lang>0</lang>
+      <credit>2000</credit>
+      <knowledgetables/>
+    </bot>
+  </bots>
+</game>
