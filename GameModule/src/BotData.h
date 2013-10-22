@@ -12,19 +12,18 @@ class BotData
 {
 public:
 	const int id;
+	const int playerID;
 	const std::string name;
 	const int credit;
 	const BotLanguage lang;
 	const int numOfKnowledgeTables;
 	const int* knowledgeTables;
-	const std::string file;
-	BotCommunicator* communicator;
+	const BotCommunicator* communicator;
 
-	BotData(int id, std::string name, int credit, BotLanguage lang,
-		int numOfKnowledgeTables, int* knowledgeTables, std::string file)
-		: id(id), name(name), credit(credit), lang(lang),
-		numOfKnowledgeTables(numOfKnowledgeTables), knowledgeTables(knowledgeTables),
-		file(file)
+	BotData(int id, int playerID, std::string name, int credit, BotLanguage lang,
+		int numOfKnowledgeTables, int* knowledgeTables)
+		: id(id), playerID(playerID), name(name), credit(credit), lang(lang),
+		numOfKnowledgeTables(numOfKnowledgeTables), knowledgeTables(knowledgeTables)
 	{}
 
 	virtual ~BotData()

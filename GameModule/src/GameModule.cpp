@@ -5,24 +5,19 @@
 #include "BotDataXMLHandler.h"
 
 /** Belepo pont he!
-  @param argv elemei sorban: logPath, rulesPath, resultsPath, numOfBots, bot1XML, bot2XML...
+    @param argv members in order: gameid
 */
 int main(int argc, char* argv[])
 {
-	const char* logPath = argv[1];
-	const char* rulesPath = argv[2];
-	const char* resultsPath = argv[3];
-	int numOfBots = atoi(argv[4]);
-	int* botsID;
+	const int gameid = atoi(argv[1]);
 
-	int* botsID = new int[3];
-	botsID[0] = 1;
-	botsID[1] = 2;
-	botsID[2] = 3;
-	GameOwner* go = new GameOwner(3, botsID, "testlog.xml", "testrules.xml", "testresults.xml");
+	// TODO load game data
 
+	// init game owner
+	GameOwner* go = new GameOwner(numOfBots, playersID, botsID, logPath, rulesPath, resultsPath);
 	go->initialiseGame();
 
+	// run game
 	if (go->getGameState() == 1) // initialised successfully
 	{
 		go->startGame();

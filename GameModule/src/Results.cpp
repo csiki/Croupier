@@ -20,9 +20,16 @@ int Results::getNumOfPlayers() const
 
 /** Gets a bot's id.
 */
-int Results::getID(int index) const
+int Results::getBotID(int index) const
 {
 	return this->botIDs[index];
+}
+
+/** Gets the bot owner's id.
+*/
+int Results::getPlayerID(int index) const
+{
+	return this->playersID[index];
 }
 
 /** Gets a bot's credit.

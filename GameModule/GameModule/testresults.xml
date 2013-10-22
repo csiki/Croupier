@@ -1,18 +1,21 @@
 <?xml version="1.0"?>
 <results>
-	<player>
-		<id>1</id>
+	<bot>
+		<botid>1</botid>
+		<playerid>33</playerid>
 		<credit>3000</credit>
 		<kickatround>0</kickatround>
-	</player>
-	<player>
-		<id>2</id>
+	</bot>
+	<bot>
+		<botid>2</botid>
+		<playerid>32</playerid>
 		<credit>1500</credit>
 		<kickatround>1</kickatround>
-	</player>
-	<player>
-		<id>3</id>
+	</bot>
+	<bot>
+		<botid>3</botid>
+		<playerid>31</playerid>
 		<credit>1500</credit>
 		<kickatround>11</kickatround>
-	</player>
+	</bot>
 </results>

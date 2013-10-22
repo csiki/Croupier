@@ -27,6 +27,7 @@ public:
 		this->relPath = _BOT_KNOWLEDGE_RELATIVE_PATH_;
 		this->relPath += std::to_string(this->userID);
 		this->relPath += "/";
+		// TODO
 
 		// load tables
 		for (int i = 0; i < botData->numOfKnowledgeTables; ++i)

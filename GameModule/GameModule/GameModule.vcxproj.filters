@@ -279,6 +279,12 @@
     <ClInclude Include="..\src\BotLoaderException.h">
       <Filter>Header Files\Exceptions</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\GameDataXMLHandler.h">
+      <Filter>Header Files\XMLHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GameData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Bot.cpp">
@@ -427,6 +433,12 @@
     </ClCompile>
     <ClCompile Include="..\src\AliveBotLoader.cpp">
       <Filter>Source Files\BotLoaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GameDataXMLHandler.cpp">
+      <Filter>Source Files\XMLHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GameData.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

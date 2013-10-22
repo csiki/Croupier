@@ -3,55 +3,46 @@
 
 /** From an xml file, loads a BotData instance.
 */
-BotData* BotDataXMLHandler::loadXML(std::string xmlPath)
+BotData* BotDataXMLHandler::loadXML(pugi::xml_node botNode)
 {
-	// load file, check if file exists
-	pugi::xml_document doc;
-	pugi::xml_parse_result result = doc.load_file(xmlPath.c_str());
-
 	BotData* botData = nullptr;
-	if (result)
-	{
-		// collect data from xml
-		pugi::xpath_node botNode = doc.select_single_node("/bot");
 
-		int id, credit, numOfKnowledgeTables;
-		BotLanguage lang;
-		int *knowledgeTables;
-		std::string file;
-		std::string name;
+	int id, playerID, credit, numOfKnowledgeTables;
+	BotLanguage lang;
+	int *knowledgeTables;
+	std::string name;
 
-		// load single instance data
-		id = botNode.node().child("id").text().as_int();
-		name = botNode.node().child("name").text().as_string();
-		lang = static_cast<BotLanguage>( botNode.node().child("lang").text().as_int() );
-		credit = botNode.node().child("credit").text().as_int();
-		file = botNode.node().child("file").text().as_string();
+	// load single instance data
+	id = botNode.child("id").text().as_int();
+	playerID = botNode.child("playerid").text().as_int();
+	name = botNode.child("name").text().as_string();
+	lang = static_cast<BotLanguage>( botNode.child("lang").text().as_int() );
+	credit = botNode.child("credit").text().as_int();
 		
-		// load knowledge tables
-		std::list<int> tempList;
-		pugi::xml_node ktNode = botNode.node().child("knowledgetables");
-		for (pugi::xml_node tableIDNode = ktNode.child("tableid"); tableIDNode; tableIDNode = tableIDNode.next_sibling("tableid"))
-		{
-			tempList.push_back(tableIDNode.text().as_int());
-		}
-		numOfKnowledgeTables = tempList.size();
-
-		knowledgeTables = new int[numOfKnowledgeTables];
-		int i = 0;
-		for (std::list<int>::iterator it = tempList.begin(); it != tempList.end(); ++it)
-		{
-			knowledgeTables[i++] = *it;
-		}
-
-		botData = new BotData(id, name, credit, lang,
-			numOfKnowledgeTables, knowledgeTables, file);
+	// load knowledge tables
+	std::list<int> tempList;
+	pugi::xml_node ktNode = botNode.child("knowledgetables");
+	for (pugi::xml_node tableIDNode = ktNode.child("tableid"); tableIDNode; tableIDNode = tableIDNode.next_sibling("tableid"))
+	{
+		tempList.push_back(tableIDNode.text().as_int());
 	}
+	numOfKnowledgeTables = tempList.size();
+
+	knowledgeTables = new int[numOfKnowledgeTables];
+	int i = 0;
+	for (std::list<int>::iterator it = tempList.begin(); it != tempList.end(); ++it)
+	{
+		knowledgeTables[i++] = *it;
+	}
+
+	botData = new BotData(id, playerID, name, credit, lang,
+		numOfKnowledgeTables, knowledgeTables);
 
 	return botData;
 }
 
 /** Saves a BotData instance as an xml file.
+  * DEPRICATED !
 */
 bool BotDataXMLHandler::saveXML(BotData* botData, std::string xmlPath)
 {

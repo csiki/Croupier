@@ -61,13 +61,13 @@ void GameOwner::initialiseGame()
 	{
 		// load bot data
 		std::string path = _BOT_DATA_RELATIVE_PATH_;
-		path += std::to_string(this->playersID[i]);
+		path += std::to_string(this->botsID[i]);
 		path += ".xml";
 
 		this->botsData[i] = BotDataXMLHandler::loadXML(path);
 		if (this->botsData[i] == nullptr)
 		{
-			std::string msg = "Cannot load BotData instance from xml! Player id: ";
+			std::string msg = "Cannot load BotData instance from xml! Bot id: ";
 			msg += std::to_string(this->playersID[i]);
 			this->errorOccured(msg);
 			return;
@@ -77,6 +77,7 @@ void GameOwner::initialiseGame()
 		BotKnowledgeHandler* bkHandler = nullptr;
 		if (rulz->isBotKnowledgeUseAllowed())
 		{
+			// TODO game datára...
 			bkHandler = new BotKnowledgeHandler(this->botsData[i]);
 		}
 

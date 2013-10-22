@@ -4,9 +4,6 @@
 	<id>432</id>
 	<name>ultra2</name>
 	<lang>0</lang>
-	<knowledgetables>
-		<tableid>0</tableid>
-	</knowledgetables>
 	<credit>1500</credit>
 	<file>ultrabot2.so</file>
 </bot>

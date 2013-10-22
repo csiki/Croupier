@@ -19,12 +19,14 @@
 */
 class GameOwner
 {
+	// TOOD GameData használata
 private:
 	std::string logPath;
 	std::string rulzPath;
 	std::string resultsPath;
 	int numOfBots;
 	int* playersID;
+	int* botsID;
 	Croupier* croupier;
 	Hostess* hostess;
 	BroadcastStation* broadcastStation;
@@ -41,12 +43,13 @@ private:
 	void errorOccured(std::string msg);
 	void fillBotLoaders();
 public:
-	GameOwner(int numOfBots, int* playersID,
+	GameOwner(int numOfBots, int* playersID, int* botsID,
 		const char* logPath, const char* rulzPath,
 		const char* resultsPath)
 	{
 		// set attributes
 		this->playersID = playersID;
+		this->botsID = botsID;
 		this->logPath = logPath;
 		this->rulzPath = rulzPath;
 		this->resultsPath = resultsPath;
@@ -79,6 +82,7 @@ public:
 		delete this->broadcastStation;
 		delete this->hostess;
 		delete [] this->playersID;
+		delete [] this->botsID;
 	}
 
 	void initialiseGame();

@@ -29,10 +29,9 @@
 
 namespace
 {
-	const char _BOT_KNOWLEDGE_RELATIVE_PATH_[] = ""; // must end with "/" if any
-	const char _BOT_DATA_RELATIVE_PATH_[] = ""; // must end with "/" if any
-	const char _BOT_AI_RELATIVE_PATH_[] = ""; // must end with "/" if any
-	const double CLOCKS_PER_MILLISEC = double(CLOCKS_PER_SEC) / 1000.0;
+	const char _BOT_KNOWLEDGE_RELATIVE_PATH_[] = "../data/ktables/"; // must end with "/" if any
+	const char _BOT_DATA_RELATIVE_PATH_[] = "../data/bots/"; // must end with "/" if any
+	const char _BOT_AI_RELATIVE_PATH_[] = "../data/bots/"; // must end with "/" if any
 }
 
 inline static int mod(int number, int modulo)

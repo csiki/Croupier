@@ -9,7 +9,7 @@
 class BotDataXMLHandler
 {
 public:
-	static BotData* loadXML(std::string xmlpath);
+	static BotData* loadXML(pugi::xml_node botNode);
 	static bool saveXML(BotData* botData, std::string xmlpath);
 };
 
