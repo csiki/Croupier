@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="croupier_linux" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/croupier_linux" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="-ldl" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/croupier_linux" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions -std=c++11" />
+		</Compiler>
+		<Unit filename="AliveBot.h" />
+		<Unit filename="AliveBotLoader.cpp" />
+		<Unit filename="AliveBotLoader.h" />
+		<Unit filename="BettingSystem.h" />
+		<Unit filename="Bot.cpp" />
+		<Unit filename="Bot.h" />
+		<Unit filename="BotCommunicationTranslator.cpp" />
+		<Unit filename="BotCommunicationTranslator.h" />
+		<Unit filename="BotCommunicator.cpp" />
+		<Unit filename="BotCommunicator.h" />
+		<Unit filename="BotData.cpp" />
+		<Unit filename="BotData.h" />
+		<Unit filename="BotDataXMLHandler.cpp" />
+		<Unit filename="BotDataXMLHandler.h" />
+		<Unit filename="BotHandler.cpp" />
+		<Unit filename="BotHandler.h" />
+		<Unit filename="BotInfo.cpp" />
+		<Unit filename="BotInfo.h" />
+		<Unit filename="BotKnowledgeHandler.cpp" />
+		<Unit filename="BotKnowledgeHandler.h" />
+		<Unit filename="BotLanguage.h" />
+		<Unit filename="BotLoader.h" />
+		<Unit filename="BotLoaderException.h" />
+		<Unit filename="BotManager.cpp" />
+		<Unit filename="BotManager.h" />
+		<Unit filename="BotTimeExceededException.h" />
+		<Unit filename="BroadcastMember.cpp" />
+		<Unit filename="BroadcastMember.h" />
+		<Unit filename="BroadcastMessage.h" />
+		<Unit filename="BroadcastStation.cpp" />
+		<Unit filename="BroadcastStation.h" />
+		<Unit filename="CBotLoader.cpp" />
+		<Unit filename="CBotLoader.h" />
+		<Unit filename="CSharpBotLoader.cpp" />
+		<Unit filename="CSharpBotLoader.h" />
+		<Unit filename="Card.cpp" />
+		<Unit filename="Card.h" />
+		<Unit filename="Comment.h" />
+		<Unit filename="CommonLispBotLoader.cpp" />
+		<Unit filename="CommonLispBotLoader.h" />
+		<Unit filename="ConcreteBot.h" />
+		<Unit filename="CppBotLoader.cpp" />
+		<Unit filename="CppBotLoader.h" />
+		<Unit filename="Croupier.cpp" />
+		<Unit filename="Croupier.h" />
+		<Unit filename="Deck.cpp" />
+		<Unit filename="Deck.h" />
+		<Unit filename="Emotion.h" />
+		<Unit filename="Entity.cpp" />
+		<Unit filename="Entity.h" />
+		<Unit filename="Event.cpp" />
+		<Unit filename="Event.h" />
+		<Unit filename="GameData.cpp" />
+		<Unit filename="GameData.h" />
+		<Unit filename="GameDataXMLHandler.cpp" />
+		<Unit filename="GameDataXMLHandler.h" />
+		<Unit filename="GameModule.cpp" />
+		<Unit filename="GameModule.h" />
+		<Unit filename="GameOwner.cpp" />
+		<Unit filename="GameOwner.h" />
+		<Unit filename="HandEvaluator.cpp" />
+		<Unit filename="HandEvaluator.h" />
+		<Unit filename="HandRank.h" />
+		<Unit filename="Hostess.cpp" />
+		<Unit filename="Hostess.h" />
+		<Unit filename="JavaBotLoader.cpp" />
+		<Unit filename="JavaBotLoader.h" />
+		<Unit filename="KnowledgeDataType.h" />
+		<Unit filename="KnowledgeTable.cpp" />
+		<Unit filename="KnowledgeTable.h" />
+		<Unit filename="KnowledgeTableXMLHandler.cpp" />
+		<Unit filename="KnowledgeTableXMLHandler.h" />
+		<Unit filename="Log.cpp" />
+		<Unit filename="Log.h" />
+		<Unit filename="LogXMLHandler.cpp" />
+		<Unit filename="LogXMLHandler.h" />
+		<Unit filename="Loggable.h" />
+		<Unit filename="Logger.cpp" />
+		<Unit filename="Logger.h" />
+		<Unit filename="LuaBotLoader.cpp" />
+		<Unit filename="LuaBotLoader.h" />
+		<Unit filename="PascalBotLoader.cpp" />
+		<Unit filename="PascalBotLoader.h" />
+		<Unit filename="PerlBotLoader.cpp" />
+		<Unit filename="PerlBotLoader.h" />
+		<Unit filename="PhpBotLoader.cpp" />
+		<Unit filename="PhpBotLoader.h" />
+		<Unit filename="Process.cpp" />
+		<Unit filename="Process.h" />
+		<Unit filename="PrologBotLoader.cpp" />
+		<Unit filename="PrologBotLoader.h" />
+		<Unit filename="PythonBotLoader.cpp" />
+		<Unit filename="PythonBotLoader.h" />
+		<Unit filename="Results.cpp" />
+		<Unit filename="Results.h" />
+		<Unit filename="ResultsXMLHandler.cpp" />
+		<Unit filename="ResultsXMLHandler.h" />
+		<Unit filename="RubyBotLoader.cpp" />
+		<Unit filename="RubyBotLoader.h" />
+		<Unit filename="Rulz.cpp" />
+		<Unit filename="Rulz.h" />
+		<Unit filename="RulzXMLHandler.cpp" />
+		<Unit filename="RulzXMLHandler.h" />
+		<Unit filename="SchemeBotLoader.cpp" />
+		<Unit filename="SchemeBotLoader.h" />
+		<Unit filename="Severity.h" />
+		<Unit filename="Table.cpp" />
+		<Unit filename="Table.h" />
+		<Unit filename="TestBot.h" />
+		<Unit filename="TestBotAggressive.h" />
+		<Unit filename="TestBotShy.h" />
+		<Unit filename="TimerBotProxy.cpp" />
+		<Unit filename="TimerBotProxy.h" />
+		<Unit filename="XYTranslator.cpp" />
+		<Unit filename="XYTranslator.h" />
+		<Unit filename="pugiconfig.hpp" />
+		<Unit filename="pugixml.cpp" />
+		<Unit filename="pugixml.hpp" />
+		<Unit filename="stdafx.cpp" />
+		<Unit filename="stdafx.h" />
+		<Unit filename="targetver.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

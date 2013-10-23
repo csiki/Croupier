@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Debug" />
+	<File name="Bot.h" open="1" top="0" tabpos="14">
+		<Cursor position="1082" topLine="36" />
+	</File>
+	<File name="BotCommunicationTranslator.h" open="1" top="1" tabpos="13">
+		<Cursor position="1781" topLine="17" />
+	</File>
+	<File name="BotHandler.cpp" open="1" top="0" tabpos="8">
+		<Cursor position="122" topLine="0" />
+	</File>
+	<File name="BotHandler.h" open="1" top="0" tabpos="7">
+		<Cursor position="473" topLine="1" />
+	</File>
+	<File name="BotInfo.h" open="1" top="0" tabpos="1">
+		<Cursor position="561" topLine="16" />
+	</File>
+	<File name="BotLoaderException.h" open="1" top="0" tabpos="4">
+		<Cursor position="453" topLine="0" />
+	</File>
+	<File name="BotTimeExceededException.h" open="1" top="0" tabpos="2">
+		<Cursor position="411" topLine="0" />
+	</File>
+	<File name="Card.h" open="1" top="0" tabpos="6">
+		<Cursor position="96" topLine="0" />
+	</File>
+	<File name="CppBotLoader.cpp" open="1" top="0" tabpos="11">
+		<Cursor position="200" topLine="0" />
+	</File>
+	<File name="CppBotLoader.h" open="1" top="0" tabpos="12">
+		<Cursor position="133" topLine="0" />
+	</File>
+	<File name="Croupier.cpp" open="1" top="0" tabpos="5">
+		<Cursor position="13297" topLine="506" />
+	</File>
+	<File name="GameModule.cpp" open="1" top="0" tabpos="9">
+		<Cursor position="302" topLine="2" />
+	</File>
+	<File name="KnowledgeTable.h" open="1" top="0" tabpos="3">
+		<Cursor position="1544" topLine="63" />
+	</File>
+	<File name="LogXMLHandler.cpp" open="1" top="0" tabpos="10">
+		<Cursor position="1458" topLine="29" />
+	</File>
+</CodeBlocks_layout_file>
