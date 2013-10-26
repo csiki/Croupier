@@ -8,7 +8,7 @@
 class Process
 {
 public:
-	Process()
+	Process(std::string programpath)
 	{
 	}
 
@@ -16,7 +16,7 @@ public:
 	{
 	}
 
-	void start(); // UNIT
+	void start(std::list<std::string> arguments); // UNIT
 	std::string readOutput(); // UNIT
 	void writeInput(const std::string msg); // UNIT
 	void exit(); // UNIT

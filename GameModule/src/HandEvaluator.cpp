@@ -87,61 +87,66 @@ HandRank HandEvaluator::evalFiveCards(const Card** cards)
 		}
 	}
 
+	if (isFlush && histoRank < HandRank::Flush)
+	{
+		histoRank = HandRank::Flush;
+	}
+
 	// check for straight(flush)
 	/*
 		If the difference between the highest and the lowest
 		cards rank is 4, than is's a straight (or it should
 		be a pair or something, but we've already drop them out).
 	*/
-	// find highest and lowest card rank
-	int highrank, lowrank;
-	highrank = cards[0]->rank;
-	lowrank = cards[0]->rank;
-	for (size_t i = 1; i < 5; ++i)
-	{
-		if (highrank < cards[i]->rank)
-		{
-			highrank = cards[i]->rank;
-		}
-		
-		if (cards[i]->rank < lowrank && cards[i]->rank == Card::Rank::NULLRANK) // nullcard can't be the lowest card
-		{
-			lowrank = cards[i]->rank;
-		}
-	}
-
-	// if the difference is 4, it's a straight(flush)
 	HandRank straightRank = HandRank::HighCard;
-	if ( (highrank - lowrank) == 4 )
+
+	if (histoRank == HandRank::HighCard) // no rank found previously
 	{
-		if (isFlush)
+		// find highest and lowest card rank
+		int highrank, lowrank;
+		highrank = cards[0]->rank;
+		lowrank = cards[0]->rank;
+		for (size_t i = 1; i < 5; ++i)
 		{
-			straightRank = HandRank::StraightFlush;
-			
-			// if the highest card is ACE it is a royal flush
-			if (highrank == Card::Rank::ACE)
+			if (highrank < cards[i]->rank)
 			{
-				straightRank = HandRank::RoyalFlush;
+				highrank = cards[i]->rank;
+			}
+		
+			if (cards[i]->rank < lowrank && cards[i]->rank != Card::Rank::NULLRANK) // nullcard can't be the lowest card
+			{
+				lowrank = cards[i]->rank;
 			}
 		}
-		else
+
+		// if the difference is 4, it's a straight(flush)
+		if ( (highrank - lowrank) == 4)
 		{
-			straightRank = HandRank::Straight;
+			if (isFlush)
+			{
+				straightRank = HandRank::StraightFlush;
+			
+				// if the highest card is ACE it is a royal flush
+				if (highrank == Card::Rank::ACE)
+				{
+					straightRank = HandRank::RoyalFlush;
+				}
+			}
+			else
+			{
+				straightRank = HandRank::Straight;
+			}
 		}
-	}
-	else if (isFlush)
-	{
-		straightRank = HandRank::Flush;
 	}
 
 	// see if straight or histo rank is higher
 	// and return with the higher
-	if (straightRank < histoRank)
+	if (straightRank > histoRank)
 	{
-		return histoRank;
+		return straightRank;
 	}
 	
-	return straightRank;
+	return histoRank;
 }
 
 /** Compares two cards by their rank.

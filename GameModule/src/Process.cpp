@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Process.h"
 
-void Process::start()
+void Process::start(std::list<std::string> arguments)
 {
 
 }
