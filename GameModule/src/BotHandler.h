@@ -18,7 +18,8 @@ public:
 		this->stepToken = false;
 		this->talkToken = false;
 	}
-
+	
+	const Card* checkCard(int index);
 	void addDealerButton();
 	void rmDealerButton();
 	void forceBlind(int blind);

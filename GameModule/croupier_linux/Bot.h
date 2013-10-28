@@ -47,28 +47,28 @@ public:
 		return this->name;
 	}
 	
-	virtual void allined(int botID, int amount) = 0;
-	virtual void blindsRaised(int newSmallBlind, int newBigBlind) = 0;
-	virtual void called(int botID, int amount) = 0;
-	virtual void checked(int botID) = 0;
-	virtual void flop() = 0;
-	virtual void folded(int botID) = 0;
-	virtual void gameWinner(int botID) = 0;
-	virtual void leftGame(int botID) = 0;
-	virtual void listen(int botID, Comment comment) = 0;
-	virtual void preflop() = 0;
-	virtual void leave() = 0;
-	virtual void raised(int botID, int amount) = 0;
-	virtual void rebuyOccurred(int botID, int amount) = 0;
-	virtual void rebuyDeadlineReached() = 0;
-	virtual void rebuyOrLeave() = 0;
-	virtual void river() = 0;
-	virtual void roundEnded() = 0;
-	virtual void roundStarted(int round) = 0;
-	virtual void roundWinners(int numOfWinners, const int* winners) = 0;
-	virtual void showdown() = 0;
+	virtual void allined(int botID, int amount) {}
+	virtual void blindsRaised(int newSmallBlind, int newBigBlind) {}
+	virtual void called(int botID, int amount) {}
+	virtual void checked(int botID) {}
+	virtual void flop() {}
+	virtual void folded(int botID) {}
+	virtual void gameWinner(int botID) {}
+	virtual void leftGame(int botID) {}
+	virtual void listen(int botID, Comment comment) {}
+	virtual void preflop() {}
+	virtual void leave() {}
+	virtual void raised(int botID, int amount) {}
+	virtual void rebuyOccurred(int botID, int amount) {}
+	virtual void rebuyDeadlineReached() {}
+	virtual void rebuyOrLeave() {}
+	virtual void river() {}
+	virtual void roundEnded() {}
+	virtual void roundStarted(int round) {}
+	virtual void roundWinners(int numOfWinners, const int* winners) {}
+	virtual void showdown() {}
 	virtual void step() = 0;
-	virtual void turn() = 0;
+	virtual void turn() {}
 };
 
 // class factories for loading Bot from object files

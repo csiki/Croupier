@@ -1,6 +1,13 @@
 #include "stdafx.h"
 #include "BotHandler.h"
 
+/**	Can see the bot's card. (returns pointer!)
+*/
+const Card* BotHandler::checkCard(int index)
+{
+    return this->hand[index];
+}
+
 /**	Adds the dealer button to the AI.
 */
 void BotHandler::addDealerButton()

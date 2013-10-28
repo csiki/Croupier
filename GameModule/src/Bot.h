@@ -4,7 +4,6 @@
 #include "Comment.h"
 #include "BotCommunicator.h"
 
-// TODO írj egy wrapper class-t, h ne tudják törölni a communicatort !!!
 // mivan, ha nem csak egy osztály akar deklarálni, hanem saját adatszerkezeteket stb-ket akar..
 // --> több file-t is tud szerkeszteni és az egészet egybe compile-oljuk
 // + dekstop bot tester
