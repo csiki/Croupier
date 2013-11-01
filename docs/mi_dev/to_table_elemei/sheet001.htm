@@ -1,0 +1,1205 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:x="urn:schemas-microsoft-com:office:excel"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1250">
+<meta name=ProgId content=Excel.Sheet>
+<meta name=Generator content="Microsoft Excel 14">
+<link id=Main-File rel=Main-File href="../to_table.htm">
+<link rel=File-List href=filelist.xml>
+<link rel=Stylesheet href=stylesheet.css>
+<style>
+<!--table
+	{mso-displayed-decimal-separator:"\,";
+	mso-displayed-thousand-separator:" ";}
+@page
+	{margin:.75in .7in .75in .7in;
+	mso-header-margin:.3in;
+	mso-footer-margin:.3in;}
+-->
+</style>
+<![if !supportTabStrip]><script language="JavaScript">
+<!--
+function fnUpdateTabs()
+ {
+  if (parent.window.g_iIEVer>=4) {
+   if (parent.document.readyState=="complete"
+    && parent.frames['frTabs'].document.readyState=="complete")
+   parent.fnSetActiveSheet(0);
+  else
+   window.setTimeout("fnUpdateTabs();",150);
+ }
+}
+
+if (window.name!="frSheet")
+ window.location.replace("../to_table.htm");
+else
+ fnUpdateTabs();
+//-->
+</script>
+<![endif]>
+</head>
+
+<body link=blue vlink=purple>
+
+<table border=0 cellpadding=0 cellspacing=0 width=1843 style='border-collapse:
+ collapse;table-layout:fixed;width:1383pt'>
+ <col width=617 style='mso-width-source:userset;mso-width-alt:22564;width:463pt'>
+ <col width=650 style='mso-width-source:userset;mso-width-alt:23771;width:488pt'>
+ <col width=64 span=9 style='width:48pt'>
+ <tr class=xl65 height=20 style='height:15.0pt'>
+  <td height=20 class=xl65 width=617 style='height:15.0pt;width:463pt'>BOT</td>
+  <td class=xl65 width=650 style='width:488pt'></td>
+  <td class=xl65 width=64 style='width:48pt'></td>
+  <td class=xl65 width=64 style='width:48pt'></td>
+  <td class=xl65 width=64 style='width:48pt'></td>
+  <td class=xl65 width=64 style='width:48pt'></td>
+  <td class=xl65 width=64 style='width:48pt'></td>
+  <td class=xl65 width=64 style='width:48pt'></td>
+  <td class=xl65 width=64 style='width:48pt'></td>
+  <td class=xl65 width=64 style='width:48pt'></td>
+  <td class=xl65 width=64 style='width:48pt'></td>
+ </tr>
+ <tr class=xl65 height=20 style='height:15.0pt'>
+  <td height=20 class=xl65 style='height:15.0pt'>Metódus</td>
+  <td class=xl65>Leírás</td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int getID()</td>
+  <td>Visszatér a bot azonosító számával.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>BotLanguage getLang()</td>
+  <td>Visszatér azzal a programnyelvvel melyel a botot írták.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>std::string getName()</td>
+  <td>Visszatér a bot nevével.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 colspan=11 style='height:15.0pt;mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>virtual void step();</td>
+  <td>Felszólítja a botot, hogy lépjen.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>virtual void rebuyOrLeave();</td>
+  <td>Felszólítja a botot, hogy vagy vásárolja vissza magát, vagy hagyja el a
+  játékot.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>virtual void leave();</td>
+  <td>Felszólítja a botot, hogy távozzon.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 colspan=11 style='height:15.0pt;mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>virtual void allined(int botID, int
+  amount);</td>
+  <td>Jelzi, hogy a 'botID' azonosítójú bot all in-elt 'amount' összeget.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>virtual void called(int botID, int
+  amount);</td>
+  <td>Jelzi, hogy a 'botID' azonosítójú bot megadta a tétet 'amount' összeggel.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>virtual void checked(int botID);</td>
+  <td>Jelzi, hogy a 'botID' azonosítójú bot csekkelt.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>virtual void folded(int botID);</td>
+  <td>Jelzi, hogy a 'botID' azonosítójú bot foldolt.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>virtual void raised(int botID, int
+  amount);</td>
+  <td>Jelzi, hogy a 'botID' azonosítójú bot emelt 'amount' összeggel.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>virtual void rebuyOccurred(int botID, int
+  amount);</td>
+  <td>Jelzi, hogy a 'botID' azonosítójú bot visszavásárolta magát 'amount'
+  összeggel.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>virtual void leftGame(int botID);</td>
+  <td>Jelzi, hogy a 'botID' azonosítójú bot elhagyta a játékot.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>virtual void listen(int botID, Comment
+  comment);</td>
+  <td>Jelzi, hogy a 'botID' azonosítójú bot commentált 'comment' tartalommal.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>virtual void roundStarted(int round);</td>
+  <td>Jelzi, hogy egy új kör kezdődött.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>virtual void blindsRaised(int
+  newSmallBlind, int newBigBlind);</td>
+  <td>Jelzi, hogy a vakokat felemelték, át is adja az új értékeket.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>virtual void preflop();</td>
+  <td>Jelzi, hogy a preflop tét kör fog következni (lekerültek a kézben lévő
+  kártyák).</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>virtual void flop();</td>
+  <td>Jelzi, hogy a flop tét kör fog következni (lekerült az első három lap az
+  asztalra).</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>virtual void turn();</td>
+  <td>Jelzi, hogy a turn tét kör fog következni (lekerült a negyedik lap az
+  asztalra).</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>virtual void river();</td>
+  <td>Jelzi, hogy a river tét kör fog következni (lekerült a ötödik lap az
+  asztalra).</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>virtual void showdown();</td>
+  <td>Jelzi, hogy a showdown - a lapok bemutatása - megtörtént.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>virtual void roundWinners(int
+  numOfWinners, const int* winners);</td>
+  <td>Megadja az előző kör győztesét / győzteseit.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>virtual void gameWinner(int botID);</td>
+  <td>Megadja a játék győztesét.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>virtual void rebuyDeadlineReached();</td>
+  <td>Jelzi, hogy elértük az utolsó kört, amikor még visszavásárlás lehetséges.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>virtual void roundEnded();</td>
+  <td>Jelzi, hogy az aktuális kör végetért.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 colspan=11 style='height:15.0pt;mso-ignore:colspan'></td>
+ </tr>
+ <tr class=xl65 height=20 style='height:15.0pt'>
+  <td height=20 class=xl65 style='height:15.0pt'>BOTCOMMUNICATOR</td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+ </tr>
+ <tr class=xl65 height=20 style='height:15.0pt'>
+  <td height=20 class=xl65 style='height:15.0pt'>std::string getName() const;</td>
+  <td class=xl65>Leírás</td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+ </tr>
+ <tr class=xl65 height=20 style='height:15.0pt'>
+  <td height=20 class=xl65 style='height:15.0pt'>Irrelevant</td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int getBotID() const;</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>std::string getName() const;</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>BotLanguage getLang() const;</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>Card lookAtHand(int cardIndex) const;</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 colspan=11 style='height:15.0pt;mso-ignore:colspan'></td>
+ </tr>
+ <tr class=xl65 height=20 style='height:15.0pt'>
+  <td height=20 class=xl65 style='height:15.0pt'>Relevant</td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+  <td class=xl65></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>Saját adatok lekérdezése</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>Card getHand(int cardIndex) const;</td>
+  <td>Visszatér a kézben lévő egyik 'cardIndex (0 vagy 1)' indexű kártyával.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>void setEmotion(Emotion emotion);</td>
+  <td>Beállítja a bot aktuális érzelmi állapotát.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int getReservedCredit() const;</td>
+  <td colspan=2 style='mso-ignore:colspan'>Visszatér a rebuy-hoz felhasználható
+  plusz creditekkel. Ennyi zsetonnal vásárolhatod magad vissza maximum.</td>
+  <td colspan=8 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int getNumOfRebuys() const;</td>
+  <td>Visszatér az aktuális játékban a bot által eszközölt visszavásárlások
+  számával.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int getChips() const;</td>
+  <td>Visszatér a kézben lévő zsetonok összértékével.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int getPot() const;</td>
+  <td>Visszatér a pot-ba tett zsetonok összértékével.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>Emotion getEmotion() const;</td>
+  <td>Visszatér a bot aktuális érzelmi állapotával.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool isDealer() const;</td>
+  <td>Megadja, hogy a bot dealer-e vagy nem.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool isHandRevealed() const;</td>
+  <td>Megadja, hogy a kézben lévő lapok fel vannak e fordítva.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool isInGame() const;</td>
+  <td>Megadja, hogy a bot játékban van-e még.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool isInRound() const;</td>
+  <td>Megadja, hogy a bot menetben van-e még (nem foldolt).</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=40 style='height:30.0pt;mso-xlrowspan:2'>
+  <td height=40 colspan=11 style='height:30.0pt;mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>// other bot</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>Emotion getBotEmotion(int botID) const;</td>
+  <td>Lekérdezi a 'botID' azonosítójú bot aktuális érzelmi állapotát.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>std::string getBotName(int botID) const;</td>
+  <td>Lekérdezi a 'botID' azonosítójú bot nevét.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool isBotDealer(int botID) const;</td>
+  <td>Lekérdezi, hogy a 'botID' azonosítójú bot dealer-e.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int getBotChips(int botID) const;</td>
+  <td>Lekérdezi a 'botID' azonosítójú bot kézben lévő zsetonjának összértékét.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int getBotPot(int botID) const;</td>
+  <td>Lekérdezi a 'botID' azonosítójú bot potjának összértékét.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool isBotHandRevealed(int botID) const;</td>
+  <td>Lekérdezi, hogy a 'botID' azonosítójú bot kártyái fel vannak-e fordítva
+  (megtekinthetők-e).</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>BotLanguage getBotLang(int botID) const;</td>
+  <td>Lekérdezi, hogy a 'botID' azonosítójú bot milyen nyelven íródott.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool isBotInGame(int botID) const;</td>
+  <td>Lekérdezi a 'botID' azonosítójú bot játékban van-e.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool isBotInRound(bool botID) const;</td>
+  <td>Lekérdezi a 'botID' azonosítójú bot menetben van-e (nem-e foldolt).</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>Card lookAtBotHand(int botID, int
+  cardIndex) const;</td>
+  <td colspan=4 style='mso-ignore:colspan'>Lekérdezi a 'botID' azonosítójú bot
+  'cardIndex(0 vagy 1)' indexű kártyáját. Ha nincs felfordítva a lap, ún.
+  'NullCard'-dal tér vissza.</td>
+  <td colspan=6 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>// move</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool canTalk() const;</td>
+  <td>Megadja, hogy a bot beszélhet-e.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool canStep() const;</td>
+  <td>Megadja, hogy a bot léphet-e.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool canAllin() const;</td>
+  <td>Megadja, hogy a bot all in-olhat-e.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool canCall() const;</td>
+  <td>Megadja, hogy a bot képes-e tartani a tétet.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool canCheck() const;</td>
+  <td>Megadja, hogy a botnak lehetőségében áll-e csekkelni.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool canFold() const;</td>
+  <td>Megadja, hogy a bot bedophatja-e a lapjait.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool canRaise(int raiseAmount) const;</td>
+  <td>Megadja, hogy a bot emelhet-e 'raiseAmount' összeggel.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool canRebuy(int rebuyAmount) const;</td>
+  <td>Megadja, hogy a bot visszavásárolhatja-e magát rebuyAmount összeggel.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool allin();</td>
+  <td>All in-ol és visszatér ennak a sikerességével.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool call();</td>
+  <td>Megadja az aktuális tétet és visszatér ennak a sikerességével.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool check();</td>
+  <td>Csekkol és visszatér ennak a sikerességével.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool fold();</td>
+  <td>Bedobja a lapjait és visszatér ennak a sikerességével.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool raise(int raiseAmount);</td>
+  <td>Emel 'raiseAmount' összeggel és visszatér ennak a sikerességével.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool rebuy(int rebuyAmount);</td>
+  <td>Vissza vásárolja magát és visszatér ennak a sikerességével.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool talk(Comment comment);</td>
+  <td>Beszél 'comment' tartalommal és visszatér ennak a sikerességével.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>void quit();</td>
+  <td>Kilép a játékból.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>// hostess</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int getNumOfBots(bool onlyInGame = false,
+  bool onlyInRound = false) const;</td>
+  <td colspan=6 style='mso-ignore:colspan'>Visszatér a botok számával. Ha
+  'onlyInGame' igaz, akkor csak a játékban lévő botokat, ha onlyInRound (is)
+  igaz, akkor csak a menetben lévő botokat számolja.</td>
+  <td colspan=4 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int getBotIDByIndex(int index) const;</td>
+  <td colspan=2 style='mso-ignore:colspan'>Visszatér bot azonosítóval a bot
+  indexe alapján. Az 'index (0…numOfBots-1)' az asztalnál ülés sorrendjét
+  jelöli.</td>
+  <td colspan=8 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int getBotIndexByID(int botID) const;</td>
+  <td>Visszatér a bot indexével (0…numOfBots-1), ami meghatározza, hogy az
+  asztalnál hol ül.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int getBotIDToTheRight(int nth = 1, bool
+  onlyInGame = false, bool onlyInRound = false) const;</td>
+  <td colspan=9 style='mso-ignore:colspan'>Visszatér az 'nth'-ik jobbra ülő bot
+  azonosítójával. Ha 'onlyInGame' igaz, akkor csak a játékban lévő botokat, ha
+  onlyInRound (is) igaz, akkor csak a menetben lévő botokat veszi figyelembe.</td>
+  <td></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int getBotIDToTheLeft(int nth = 1, bool
+  onlyInGame = false, bool onlyInRound = false) const;</td>
+  <td colspan=9 style='mso-ignore:colspan'>Visszatér az 'nth'-ik balra ülő bot
+  azonosítójával. Ha 'onlyInGame' igaz, akkor csak a játékban lévő botokat, ha
+  onlyInRound (is) igaz, akkor csak a menetben lévő botokat veszi figyelembe.</td>
+  <td></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int getCallAmount() const;</td>
+  <td>Visszatér az aktuális téttel.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int getMinRaise() const;</td>
+  <td>Visszatér a jelenleg eszközölhető minimális emelés értékével.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int getBigBlindAtRound(int round = -1)
+  const; // -1 means current round</td>
+  <td colspan=3 style='mso-ignore:colspan'>Visszatér a 'round' sorszámú
+  menetben aktuális nagyvakkal. Ha nem adjuk meg a round-ot, a jelenlegi
+  nagyvakkal tér vissza.</td>
+  <td colspan=7 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int getSmallBlindAtRound(int round = -1)
+  const; // -1 means current round</td>
+  <td colspan=3 style='mso-ignore:colspan'>Visszatér a 'round' sorszámú
+  menetben aktuális kisvakkal. Ha nem adjuk meg a round-ot, a jelenlegi
+  kisvakkal tér vissza.</td>
+  <td colspan=7 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int getBlindShiftDeadline(int
+  shiftDeadlineIndex) const;</td>
+  <td>Visszatér a 'shiftDeadlineIndex(0…numOfShifts-1)' sorszámú vak emelés
+  menetszámával.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int getNextBlindShiftDeadline() const;</td>
+  <td>Visszatér a következő vak emelés menetszámával.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int getCurrentRound() const;</td>
+  <td>Visszatér az aktuális menetszámmal.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>HandRank getHandRank() const;</td>
+  <td>Visszatér az asztalon és a kézben lévő kártyák maximális rangjával. River
+  előtt is használható.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>// table</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int getTableNumOfCards() const;</td>
+  <td>Visszatér az asztalon lévő kártyák számával.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>Card getTableCard(int cardIndex) const;</td>
+  <td>Visszatér az asztal 'cardIndex(0…tableNumOfCards-1)' indexű kártyával.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int getPotSum() const;</td>
+  <td>Visszatér az asztalon lévő összes potban lévő zseton értékével.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>// rulz</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int getNumOfBlinds() const;</td>
+  <td>Visszatéra játék során előfordulható vakok számával.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int getBigBlind(int blindIndex) const;</td>
+  <td>Visszatér a 'blindIndex'-edik nagyvak értékével ami a játék során
+  előfordulhat.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int getSmallBlind(int blindIndex) const;</td>
+  <td>Visszatér a 'blindIndex'-edik kisvak értékével ami a játék során
+  előfordulhat.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int getRebuyDeadline() const;</td>
+  <td>Visszatér az utolsó olyan menet sorszámával, amikor még a játékosok
+  visszavásárólhatják magukat.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int getAllowedBotCalcTime() const;</td>
+  <td>Visszatér a bot felhasználható számolási idejével millisecben.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int getStartingChips() const;</td>
+  <td>Visszatér a kezdő zseton mennyiséggel.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int getNumOfRebuysAllowed() const;</td>
+  <td>Visszatér a megengedett visszavásárlások számával / játékos.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool isTalkAllowed() const;</td>
+  <td>Igazzal tér vissza, ha a beszélgetés engedélyezett, hamissal egyébként.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool isEmotionAllowed() const;</td>
+  <td>Igazzal tér vissza, ha az érzelem kifejezés engedélyezett, hamissal
+  egyébként.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool isBotKnowledgeUseAllowed() const;</td>
+  <td colspan=2 style='mso-ignore:colspan'>Igazzal tér vissza, ha a bot
+  knowledge permanens tudástár rendelkezésére áll a botoknak, hamissal
+  egyébként.</td>
+  <td colspan=8 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>// knowledge handler</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool getKnowledgeTableData(int&amp; val,
+  int tableID, int row, int col) const;</td>
+  <td colspan=9 style='mso-ignore:colspan'>Egy 'int' típusú értéket kiemel a
+  permanens tudástárból és a 'val' változóba helyezi. Az értéket a 'tableID'
+  táblában, 'row' sorban, 'col' oszlopból veszi. Visszatér a művelet
+  sikerességével.</td>
+  <td></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool getKnowledgeTableData(bool&amp; val,
+  int tableID, int row, int col) const;</td>
+  <td colspan=9 style='mso-ignore:colspan'>Egy 'bool' típusú értéket kiemel a
+  permanens tudástárból és a 'val' változóba helyezi. Az értéket a 'tableID'
+  táblában, 'row' sorban, 'col' oszlopból veszi. Visszatér a művelet
+  sikerességével.</td>
+  <td></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool getKnowledgeTableData(char&amp; val,
+  int tableID, int row, int col) const;</td>
+  <td colspan=9 style='mso-ignore:colspan'>Egy 'char' típusú értéket kiemel a
+  permanens tudástárból és a 'val' változóba helyezi. Az értéket a 'tableID'
+  táblában, 'row' sorban, 'col' oszlopból veszi. Visszatér a művelet
+  sikerességével.</td>
+  <td></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool
+  getKnowledgeTableData(std::string&amp; val, int tableID, int row, int col)
+  const;</td>
+  <td colspan=10 style='mso-ignore:colspan'>Egy 'std::string' típusú értéket
+  kiemel a permanens tudástárból és a 'val' változóba helyezi. Az értéket a
+  'tableID' táblában, 'row' sorban, 'col' oszlopból veszi. Visszatér a művelet
+  sikerességével.</td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool getKnowledgeTableData(float&amp;
+  val, int tableID, int row, int col) const;</td>
+  <td colspan=9 style='mso-ignore:colspan'>Egy 'float' típusú értéket kiemel a
+  permanens tudástárból és a 'val' változóba helyezi. Az értéket a 'tableID'
+  táblában, 'row' sorban, 'col' oszlopból veszi. Visszatér a művelet
+  sikerességével.</td>
+  <td></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 colspan=11 style='height:15.0pt;mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool setKnowledgeTableData(int val, int
+  tableID, int row, int col);</td>
+  <td colspan=5 style='mso-ignore:colspan'>A tudástár 'tableID'<span
+  style='mso-spacerun:yes'>  </span>táblájában a 'row' sorában, 'col oszlopában
+  felülírja az 'int' típusú értéket a 'val' értékével. Visszatér a művelet
+  sikerességével.</td>
+  <td colspan=5 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool setKnowledgeTableData(bool val, int
+  tableID, int row, int col);</td>
+  <td colspan=6 style='mso-ignore:colspan'>A tudástár 'tableID'<span
+  style='mso-spacerun:yes'>  </span>táblájában a 'row' sorában, 'col oszlopában
+  felülírja az 'bool' típusú értéket a 'val' értékével. Visszatér a művelet
+  sikerességével.</td>
+  <td colspan=4 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool setKnowledgeTableData(char val, int
+  tableID, int row, int col);</td>
+  <td colspan=6 style='mso-ignore:colspan'>A tudástár 'tableID'<span
+  style='mso-spacerun:yes'>  </span>táblájában a 'row' sorában, 'col oszlopában
+  felülírja az 'char' típusú értéket a 'val' értékével. Visszatér a művelet
+  sikerességével.</td>
+  <td colspan=4 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool setKnowledgeTableData(const char*
+  val, int tableID, int row, int col);</td>
+  <td colspan=6 style='mso-ignore:colspan'>A tudástár 'tableID'<span
+  style='mso-spacerun:yes'>  </span>táblájában a 'row' sorában, 'col oszlopában
+  felülírja az 'const char*' típusú értéket a 'val' értékével. Visszatér a
+  művelet sikerességével.</td>
+  <td colspan=4 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool setKnowledgeTableData(std::string
+  val, int tableID, int row, int col);</td>
+  <td colspan=6 style='mso-ignore:colspan'>A tudástár 'tableID'<span
+  style='mso-spacerun:yes'>  </span>táblájában a 'row' sorában, 'col oszlopában
+  felülírja az 'std::string' típusú értéket a 'val' értékével. Visszatér a
+  művelet sikerességével.</td>
+  <td colspan=4 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool setKnowledgeTableData(float val, int
+  tableID, int row, int col);</td>
+  <td colspan=6 style='mso-ignore:colspan'>A tudástár 'tableID'<span
+  style='mso-spacerun:yes'>  </span>táblájában a 'row' sorában, 'col oszlopában
+  felülírja az 'float' típusú értéket a 'val' értékével. Visszatér a művelet
+  sikerességével.</td>
+  <td colspan=4 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 colspan=11 style='height:15.0pt;mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>KnowledgeDataType
+  getKnowledgeTableDataType(int tableID, int col) const;</td>
+  <td>Visszatér a 'tableID' tudástár tábla 'col' oszlopának adat típusával
+  (int, float, stb.).</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int addKnowledgeTableRow(int tableID);</td>
+  <td colspan=4 style='mso-ignore:colspan'>Hozzáad a 'tableID' táblához egy
+  sort és visszaadja annak (azonosító) számát. Az azonosító a sorok
+  felvevésének sorrendjében növekszik.</td>
+  <td colspan=6 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int createKnowledgeTable(int numOfCols,
+  std::list&lt;KnowledgeDataType&gt; colTypes);</td>
+  <td colspan=4 style='mso-ignore:colspan'>Létrehoz egy tudástár táblát
+  'numOfCols' oszloppal, és a 'colTypes' oszlop adattípusokkal. Visszatér a
+  tábla azonosító számával.</td>
+  <td colspan=6 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int getKnowledgeTableNumOfCols(int
+  tableID) const;</td>
+  <td>Visszatér a 'tableID' tudástár tábla oszlopainak számával.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>int getKnowledgeTableNumOfRows(int
+  tableID) const;</td>
+  <td>Visszatér a 'tableID' tudástár tábla sorainak számával.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool removeKnowledgeTable(int tableID);</td>
+  <td>Permanensen eltávolítja a tudástár 'tableID' azonosítójú tábláját. A
+  művelet sikerességével tér vissza.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool removeKnowledgeTableRow(int tableID,
+  int row);</td>
+  <td colspan=2 style='mso-ignore:colspan'>Permanensen eltávolítja a tudástár
+  'tableID' táblájának 'row' azonosítójú sorát. A művelet sikerességével tér
+  vissza.</td>
+  <td colspan=8 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>bool isTableLoaded(int tableID) const;</td>
+  <td>Megadja, hogy a 'tableID' azonosítójú tábla, be van-e töltve.</td>
+  <td colspan=9 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 colspan=11 style='height:15.0pt;mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'><span style='mso-spacerun:yes'> 
+  </span>enum Suit</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'><span style='mso-spacerun:yes'>  </span>{</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'><span style='mso-spacerun:yes'>   
+  </span>CLUBS = 1,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'><span style='mso-spacerun:yes'>   
+  </span>DIAMONDS = 2,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'><span style='mso-spacerun:yes'>   
+  </span>HEARTS = 3,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'><span style='mso-spacerun:yes'>   
+  </span>SPADES = 4</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'><span style='mso-spacerun:yes'> 
+  </span>};</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'><span style='mso-spacerun:yes'>  </span></td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'><span style='mso-spacerun:yes'> 
+  </span>enum Rank</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'><span style='mso-spacerun:yes'>  </span>{</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'><span style='mso-spacerun:yes'>   
+  </span>DEUCE = 2,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'><span style='mso-spacerun:yes'>   
+  </span>THREE = 3,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'><span style='mso-spacerun:yes'>   
+  </span>FOUR = 4,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'><span style='mso-spacerun:yes'>   
+  </span>FIVE = 5,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'><span style='mso-spacerun:yes'>   
+  </span>SIX = 6,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'><span style='mso-spacerun:yes'>   
+  </span>SEVEN = 7,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'><span style='mso-spacerun:yes'>   
+  </span>EIGHT = 8,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'><span style='mso-spacerun:yes'>   
+  </span>NINE = 9,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'><span style='mso-spacerun:yes'>   
+  </span>TEN = 10,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'><span style='mso-spacerun:yes'>   
+  </span>JACK = 11,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'><span style='mso-spacerun:yes'>   
+  </span>QUEEN = 12,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'><span style='mso-spacerun:yes'>   
+  </span>KING = 13,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'><span style='mso-spacerun:yes'>   
+  </span>ACE = 14</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'><span style='mso-spacerun:yes'> 
+  </span>};</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'><span style='mso-spacerun:yes'>  </span></td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>const Suit suit;</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>const Rank rank;</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 colspan=11 style='height:15.0pt;mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>enum Emotion</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>{</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>HIDDEN,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>HAPPY,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>SAD,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>UPSET,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>PATIENT,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>IMPATIENT,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>EXCITED,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>UNCERTAIN,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>RELAXED,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>EMBARASSED,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>POKERFACE,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>NERVOUS,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>DRUNKEN,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>HIGH</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>};</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 colspan=11 style='height:15.0pt;mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>enum Comment</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>{</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>YES,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>NO,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>CHECK,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>FOLD,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>CALL,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>RAISE,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>IM_IN,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>LETS_PLAY_HARD,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>HMMM,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>NICE_CATCH,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>BLUFF,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>MAKE_ME_A_SANDWICH,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>I_SEE_YOU_PREFER_THE_HARD_WAY,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>THATS_WHAT_SHE_SAID,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>YOU_SHOULD_HAVE_FOLDED_AT_THE_BEGINNING,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>WHAT_A_SHAME,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>A_LITTLE_BIT_OF_RAISE_HARMS_NONE,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>BET_YOUR_MOM_GETS_LAID_FOR_HALF_THE_POT_IM_GONNA_TAKE_NOW,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>IM_FUCKED,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>CALM_DOWN_BITCH</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>};</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 colspan=11 style='height:15.0pt;mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>enum HandRank</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>{</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>HighCard = 1,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>Pair = 2,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>TwoPair = 3,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>ThreeOfAKind = 4,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>Straight = 5,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>Flush = 6,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>FullHouses = 7,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>FourOfAKind = 8,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>StraightFlush = 9,</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>RoyalFlush = 10</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <tr height=20 style='height:15.0pt'>
+  <td height=20 style='height:15.0pt'>};</td>
+  <td colspan=10 style='mso-ignore:colspan'></td>
+ </tr>
+ <![if supportMisalignedColumns]>
+ <tr height=0 style='display:none'>
+  <td width=617 style='width:463pt'></td>
+  <td width=650 style='width:488pt'></td>
+  <td width=64 style='width:48pt'></td>
+  <td width=64 style='width:48pt'></td>
+  <td width=64 style='width:48pt'></td>
+  <td width=64 style='width:48pt'></td>
+  <td width=64 style='width:48pt'></td>
+  <td width=64 style='width:48pt'></td>
+  <td width=64 style='width:48pt'></td>
+  <td width=64 style='width:48pt'></td>
+  <td width=64 style='width:48pt'></td>
+ </tr>
+ <![endif]>
+</table>
+
+</body>
+
+</html>

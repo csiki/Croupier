@@ -66,7 +66,7 @@ public:
 	int getTableNumOfRows(int tableID) const;
 	bool removeTable(int tableID); // UNIT done
 	bool removeTableRow(int tableID, int row); // UNIT done
-	
+
 	bool getTableData(int& val, int tableID, int row, int col) const;
 	bool getTableData(bool& val, int tableID, int row, int col) const; // UNIT done
 	bool getTableData(char& val, int tableID, int row, int col) const;

@@ -10,29 +10,359 @@
 <h2>Basic</h2>
 <h3>Bevezetés</h3>
 <p>
-	A Croupier poker keretrendszer egyik fõ célja, hogy
-	az MI (bot) fejlesztõknek minél inkább megkönyítse a dolgát.
-	Ez fõként a Bot osztály és a ... egszerûségében nyílvánul meg
+	A Croupier poker keretrendszer egyik fõ erénye, hogy
+	az MI (bot) fejlesztõknek jelentõsen megkönnyíti a dolgát.
+	Botot létrehozni egy C++ osztály definiálásával lehet,
+	ami köteles reörökölni egy ún. Bot osztályból.
+</p>
+
+<p>
+	A bot számára szükséges egy interface, amin keresztül
+	beleszólhat a játékba, kommunikálhat a poker asztalnál.
+	Ez az interface egy C++ absztrakt osztály lesz ebben
+	az esetben: BotCommunicator. Publikus függvényeinek
+	meghívásával kommunikálhatunk kifelé.
+</p>
+
+<p>
+	Ugorjunk egybõl is egy példára!
 </p>
 
 <h3>Rögtön egy példa</h3>
 <p>
-	
+	Létrehozunk egy egyszerû botot, némi buta logikával,
+	használva a BotCommunicatort.
+</p>
+
+<pre>
+class PeldaBot : public Bot
+{
+public:
+	PeldaBot(BotCommunicator* communicator, int id, std::string name, BotLanguage lang)
+		: Bot(communicator, id, name, lang) {}
+
+	void step()
+	{
+		if (communicator->getHandRank() >= HandRank::Pair)
+		{
+			/* ha már pár vagy annál jobb lapjai vannak (az asztalival együtt),
+			 aggresszív üzemmódba vált
+			 emel ha tud
+			 meghív ha tud
+			 csekkel ha tud
+			 minden más esetben allin-ol */
+			if (communicator->canRaise(communicator->getBigBlindAtRound()))
+				communicator->raise(communicator->getBigBlindAtRound());
+			else if (communicator->canCall())
+				communicator->call();
+			else if (communicator->canCheck())
+				communicator->check();
+			else
+				communicator->allin();
+		}
+		else
+		{
+			/* ha párja sincs, akkor jámbor taktikára vált
+			 csekkel ha tud
+			 meghív, ha a meghívandó összeg, amit még
+			 be kell pakolnia, kevesebb mint a zsetonjainak fele
+			 egyébként bedobja a lapjait */
+			if (communicator->canCheck())
+				communicator->check();
+			else if (communicator->getCallAmount() < communicator->getChips() / 2)
+				communicator->call();
+			else
+				communicator->fold();
+		}
+	}
+
+};
+</pre>
+
+<p>
+	A step() metódus akkor hívódik, mikor az adott bot jön,
+	a bot lépése következik.
+	Ezt a metódust felül KELL írni minden MI implementációnak.
+	A konstruktort hasonlóképpen kell minden botnál definiálni.
+</p>
+
+<p>
+	A Botnak számos metódusa van, amiket felülírhatunk
+	és így szeparálhatjuk az MI-nk különbözõ funkcióiért
+	felelõs kódját. Ergo nem a step()-be kell írni mindent.
+	Komolyabb botokat csak a többi metódus használatával
+	tudsz könnyeden fejleszteni. Ezért jó ismerni õket.
 </p>
 
 <h3>Bot metódusai</h3>
+
+<table>
+	<thead>
+		<tr>
+			<th>Metódus</th>
+			<th>Magyarázat</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr><td>int getID()</td><td>Visszatér a bot azonosító számával.</td></tr>
+		<tr><td>BotLanguage getLang()</td><td>Visszatér azzal a programnyelvvel melyel a botot írták.</td></tr>
+		<tr><td>std::string getName()</td><td>Visszatér a bot nevével.</td></tr>
+
+		<tr><td>virtual void step();</td><td>Felszólítja a botot, hogy lépjen.</td></tr>
+		<tr><td>virtual void rebuyOrLeave();</td><td>Felszólítja a botot, hogy vagy vásárolja vissza magát, vagy hagyja el a játékot.</td></tr>
+		<tr><td>virtual void leave();</td><td>Felszólítja a botot, hogy távozzon.</td></tr>
+
+		<tr><td>virtual void allined(int botID, int amount);</td><td>Jelzi, hogy a 'botID' azonosítójú bot all in-elt 'amount' összeget.</td></tr>
+		<tr><td>virtual void called(int botID, int amount);</td><td>Jelzi, hogy a 'botID' azonosítójú bot megadta a tétet 'amount' összeggel.</td></tr>
+		<tr><td>virtual void checked(int botID);</td><td>Jelzi, hogy a 'botID' azonosítójú bot csekkelt.</td></tr>
+		<tr><td>virtual void folded(int botID);</td><td>Jelzi, hogy a 'botID' azonosítójú bot foldolt.</td></tr>
+		<tr><td>virtual void raised(int botID, int amount);</td><td>Jelzi, hogy a 'botID' azonosítójú bot emelt 'amount' összeggel.</td></tr>
+		<tr><td>virtual void rebuyOccurred(int botID, int amount);</td><td>Jelzi, hogy a 'botID' azonosítójú bot visszavásárolta magát 'amount' összeggel.</td></tr>
+		<tr><td>virtual void leftGame(int botID);</td><td>Jelzi, hogy a 'botID' azonosítójú bot elhagyta a játékot.</td></tr>
+		<tr><td>virtual void listen(int botID, Comment comment);</td><td>Jelzi, hogy a 'botID' azonosítójú bot commentált 'comment' tartalommal.</td></tr>
+		<tr><td>virtual void roundStarted(int round);</td><td>Jelzi, hogy egy új kör kezdõdött.</td></tr>
+		<tr><td>virtual void blindsRaised(int newSmallBlind, int newBigBlind);</td><td>Jelzi, hogy a vakokat felemelték, át is adja az új értékeket.</td></tr>
+		<tr><td>virtual void preflop();</td><td>Jelzi, hogy a preflop tét kör fog következni (lekerültek a kézben lévõ kártyák).</td></tr>
+		<tr><td>virtual void flop();</td><td>Jelzi, hogy a flop tét kör fog következni (lekerült az elsõ három lap az asztalra).</td></tr>
+		<tr><td>virtual void turn();</td><td>Jelzi, hogy a turn tét kör fog következni (lekerült a negyedik lap az asztalra).</td></tr>
+		<tr><td>virtual void river();</td><td>Jelzi, hogy a river tét kör fog következni (lekerült a ötödik lap az asztalra).</td></tr>
+		<tr><td>virtual void showdown();</td><td>Jelzi, hogy a showdown - a lapok bemutatása - megtörtént.</td></tr>
+		<tr><td>virtual void roundWinners(int numOfWinners, const int* winners);</td><td>Megadja az elõzõ kör gyõztesét / gyõzteseit.</td></tr>
+		<tr><td>virtual void gameWinner(int botID);</td><td>Megadja a játék gyõztesét.</td></tr>
+		<tr><td>virtual void rebuyDeadlineReached();</td><td>Jelzi, hogy elértük az utolsó kört, amikor még visszavásárlás lehetséges.</td></tr>
+		<tr><td>virtual void roundEnded();</td><td>Jelzi, hogy az aktuális kör végetért.</td></tr>
+	</tbody>
+</table>
+
 <p>
-	
+	A virtual kulcsszóval ellátott metódusok azok, amiket
+	felül tudsz definiálni, úgy ahogy a példában a step()-et.
 </p>
 
 <h3>Egyszerû interakció a környezettel</h3>
 <p>
-	
+	Ahogy a példában is látszik, a BotCommunicator (communicator nevû pointer)
+	segítségével tudunk saját, más botok és a környezet egyéb adatait lekérdezni
+	és meghatározni lépéseinket a játék során.
 </p>
+
+<p>
+	A communicator ennél több segítséget is nyujt. Itt van puskaként az
+	összes publikus BotCommunicator metódus. Egyes funkciók az advanced
+	résznél vannak kifejtve.
+</p>
+
+<table>
+	<thead>
+	</thead>
+	
+	<tbody>
+		<tr><td>Card getHand(int cardIndex) const;</td><td>Visszatér a kézben lévõ egyik 'cardIndex (0 vagy 1)' indexû kártyával.</td></tr>
+		<tr><td>void setEmotion(Emotion emotion);</td><td>Beállítja a bot aktuális érzelmi állapotát.</td></tr>
+		<tr><td>int getReservedCredit() const;</td><td>Visszatér a rebuy-hoz felhasználható plusz creditekkel. Ennyi zsetonnal vásárolhatod magad vissza maximum.</td></tr>
+		<tr><td>int getNumOfRebuys() const;</td><td>Visszatér az aktuális játékban a bot által eszközölt visszavásárlások számával.</td></tr>
+		<tr><td>int getChips() const;</td><td>Visszatér a kézben lévõ zsetonok összértékével.</td></tr>
+		<tr><td>int getPot() const;</td><td>Visszatér a pot-ba tett zsetonok összértékével.</td></tr>
+		<tr><td>Emotion getEmotion() const;</td><td>Visszatér a bot aktuális érzelmi állapotával.</td></tr>
+		<tr><td>bool isDealer() const;</td><td>Megadja, hogy a bot dealer-e vagy nem.</td></tr>
+		<tr><td>bool isHandRevealed() const;</td><td>Megadja, hogy a kézben lévõ lapok fel vannak e fordítva.</td></tr>
+		<tr><td>bool isInGame() const;</td><td>Megadja, hogy a bot játékban van-e még.</td></tr>
+		<tr><td>bool isInRound() const;</td><td>Megadja, hogy a bot menetben van-e még (nem foldolt).</td></tr>
+
+
+
+		<tr><td>Emotion getBotEmotion(int botID) const;</td><td>Lekérdezi a 'botID' azonosítójú bot aktuális érzelmi állapotát.</td></tr>
+		<tr><td>std::string getBotName(int botID) const;</td><td>Lekérdezi a 'botID' azonosítójú bot nevét.</td></tr>
+		<tr><td>bool isBotDealer(int botID) const;</td><td>Lekérdezi, hogy a 'botID' azonosítójú bot dealer-e.</td></tr>
+		<tr><td>int getBotChips(int botID) const;</td><td>Lekérdezi a 'botID' azonosítójú bot kézben lévõ zsetonjának összértékét.</td></tr>
+		<tr><td>int getBotPot(int botID) const;</td><td>Lekérdezi a 'botID' azonosítójú bot potjának összértékét.</td></tr>
+		<tr><td>bool isBotHandRevealed(int botID) const;</td><td>Lekérdezi, hogy a 'botID' azonosítójú bot kártyái fel vannak-e fordítva (megtekinthetõk-e).</td></tr>
+		<tr><td>BotLanguage getBotLang(int botID) const;</td><td>Lekérdezi, hogy a 'botID' azonosítójú bot milyen nyelven íródott.</td></tr>
+		<tr><td>bool isBotInGame(int botID) const;</td><td>Lekérdezi a 'botID' azonosítójú bot játékban van-e.</td></tr>
+		<tr><td>bool isBotInRound(bool botID) const;</td><td>Lekérdezi a 'botID' azonosítójú bot menetben van-e (nem-e foldolt).</td></tr>
+		<tr><td>Card lookAtBotHand(int botID, int cardIndex) const;</td><td>Lekérdezi a 'botID' azonosítójú bot 'cardIndex(0 vagy 1)' indexû kártyáját. Ha nincs felfordítva a lap, ún. 'NullCard'-dal tér vissza.</td></tr>
+
+		<tr><td>bool canTalk() const;</td><td>Megadja, hogy a bot beszélhet-e.</td></tr>
+		<tr><td>bool canStep() const;</td><td>Megadja, hogy a bot léphet-e.</td></tr>
+		<tr><td>bool canAllin() const;</td><td>Megadja, hogy a bot all in-olhat-e.</td></tr>
+		<tr><td>bool canCall() const;</td><td>Megadja, hogy a bot képes-e tartani a tétet.</td></tr>
+		<tr><td>bool canCheck() const;</td><td>Megadja, hogy a botnak lehetõségében áll-e csekkelni.</td></tr>
+		<tr><td>bool canFold() const;</td><td>Megadja, hogy a bot bedophatja-e a lapjait.</td></tr>
+		<tr><td>bool canRaise(int raiseAmount) const;</td><td>Megadja, hogy a bot emelhet-e 'raiseAmount' összeggel.</td></tr>
+		<tr><td>bool canRebuy(int rebuyAmount) const;</td><td>Megadja, hogy a bot visszavásárolhatja-e magát rebuyAmount összeggel.</td></tr>
+		<tr><td>bool allin();</td><td>All in-ol és visszatér ennak a sikerességével.</td></tr>
+		<tr><td>bool call();</td><td>Megadja az aktuális tétet és visszatér ennak a sikerességével.</td></tr>
+		<tr><td>bool check();</td><td>Csekkol és visszatér ennak a sikerességével.</td></tr>
+		<tr><td>bool fold();</td><td>Bedobja a lapjait és visszatér ennak a sikerességével.</td></tr>
+		<tr><td>bool raise(int raiseAmount);</td><td>Emel 'raiseAmount' összeggel és visszatér ennak a sikerességével.</td></tr>
+		<tr><td>bool rebuy(int rebuyAmount);</td><td>Vissza vásárolja magát és visszatér ennak a sikerességével.</td></tr>
+		<tr><td>bool talk(Comment comment);</td><td>Beszél 'comment' tartalommal és visszatér ennak a sikerességével.</td></tr>
+		<tr><td>void quit();</td><td>Kilép a játékból.</td></tr>
+
+		<tr><td>int getNumOfBots(bool onlyInGame = false, bool onlyInRound = false) const;</td><td>Visszatér a botok számával. Ha 'onlyInGame' igaz, akkor csak a játékban lévõ botokat, ha onlyInRound (is) igaz, akkor csak a menetben lévõ botokat számolja.</td></tr>
+		<tr><td>int getBotIDByIndex(int index) const;</td><td>Visszatér bot azonosítóval a bot indexe alapján. Az 'index (0…numOfBots-1)' az asztalnál ülés sorrendjét jelöli.</td></tr>
+		<tr><td>int getBotIndexByID(int botID) const;</td><td>Visszatér a bot indexével (0…numOfBots-1), ami meghatározza, hogy az asztalnál hol ül.</td></tr>
+		<tr><td>int getBotIDToTheRight(int nth = 1, bool onlyInGame = false, bool onlyInRound = false) const;</td><td>Visszatér az 'nth'-ik jobbra ülõ bot azonosítójával. Ha 'onlyInGame' igaz, akkor csak a játékban lévõ botokat, ha onlyInRound (is) igaz, akkor csak a menetben lévõ botokat veszi figyelembe.</td></tr>
+		<tr><td>int getBotIDToTheLeft(int nth = 1, bool onlyInGame = false, bool onlyInRound = false) const;</td><td>Visszatér az 'nth'-ik balra ülõ bot azonosítójával. Ha 'onlyInGame' igaz, akkor csak a játékban lévõ botokat, ha onlyInRound (is) igaz, akkor csak a menetben lévõ botokat veszi figyelembe.</td></tr>
+		<tr><td>int getCallAmount() const;</td><td>Visszatér az aktuális téttel.</td></tr>
+		<tr><td>int getMinRaise() const;</td><td>Visszatér a jelenleg eszközölhetõ minimális emelés értékével.</td></tr>
+		<tr><td>int getBigBlindAtRound(int round = -1) const; // -1 means current round</td><td>Visszatér a 'round' sorszámú menetben aktuális nagyvakkal. Ha nem adjuk meg a round-ot, a jelenlegi nagyvakkal tér vissza.</td></tr>
+		<tr><td>int getSmallBlindAtRound(int round = -1) const; // -1 means current round</td><td>Visszatér a 'round' sorszámú menetben aktuális kisvakkal. Ha nem adjuk meg a round-ot, a jelenlegi kisvakkal tér vissza.</td></tr>
+		<tr><td>int getBlindShiftDeadline(int shiftDeadlineIndex) const;</td><td>Visszatér a 'shiftDeadlineIndex(0…numOfShifts-1)' sorszámú vak emelés menetszámával.</td></tr>
+		<tr><td>int getNextBlindShiftDeadline() const;</td><td>Visszatér a következõ vak emelés menetszámával.</td></tr>
+		<tr><td>int getCurrentRound() const;</td><td>Visszatér az aktuális menetszámmal.</td></tr>
+		<tr><td>HandRank getHandRank() const;</td><td>Visszatér az asztalon és a kézben lévõ kártyák maximális rangjával. River elõtt is használható.</td></tr>
+
+		<tr><td>int getTableNumOfCards() const;</td><td>Visszatér az asztalon lévõ kártyák számával.</td></tr>
+		<tr><td>Card getTableCard(int cardIndex) const;</td><td>Visszatér az asztal 'cardIndex(0…tableNumOfCards-1)' indexû kártyával.</td></tr>
+		<tr><td>int getPotSum() const;</td><td>Visszatér az asztalon lévõ összes potban lévõ zseton értékével.</td></tr>
+
+		<tr><td>int getNumOfBlinds() const;</td><td>Visszatéra játék során elõfordulható vakok számával.</td></tr>
+		<tr><td>int getBigBlind(int blindIndex) const;</td><td>Visszatér a 'blindIndex'-edik nagyvak értékével ami a játék során elõfordulhat.</td></tr>
+		<tr><td>int getSmallBlind(int blindIndex) const;</td><td>Visszatér a 'blindIndex'-edik kisvak értékével ami a játék során elõfordulhat.</td></tr>
+		<tr><td>int getRebuyDeadline() const;</td><td>Visszatér az utolsó olyan menet sorszámával, amikor még a játékosok visszavásárólhatják magukat.</td></tr>
+		<tr><td>int getAllowedBotCalcTime() const;</td><td>Visszatér a bot felhasználható számolási idejével millisecben.</td></tr>
+		<tr><td>int getStartingChips() const;</td><td>Visszatér a kezdõ zseton mennyiséggel.</td></tr>
+		<tr><td>int getNumOfRebuysAllowed() const;</td><td>Visszatér a megengedett visszavásárlások számával / játékos.</td></tr>
+		<tr><td>bool isTalkAllowed() const;</td><td>Igazzal tér vissza, ha a beszélgetés engedélyezett, hamissal egyébként.</td></tr>
+		<tr><td>bool isEmotionAllowed() const;</td><td>Igazzal tér vissza, ha az érzelem kifejezés engedélyezett, hamissal egyébként.</td></tr>
+		<tr><td>bool isBotKnowledgeUseAllowed() const;</td><td>Igazzal tér vissza, ha a bot knowledge permanens tudástár rendelkezésére áll a botoknak, hamissal egyébként.</td></tr>
+
+		<tr><td>bool getKnowledgeTableData(int& val, int tableID, int row, int col) const;</td><td>Egy 'int' típusú értéket kiemel a permanens tudástárból és a 'val' változóba helyezi. Az értéket a 'tableID' táblában, 'row' sorban, 'col' oszlopból veszi. Visszatér a mûvelet sikerességével.</td></tr>
+		<tr><td>bool getKnowledgeTableData(bool& val, int tableID, int row, int col) const;</td><td>Egy 'bool' típusú értéket kiemel a permanens tudástárból és a 'val' változóba helyezi. Az értéket a 'tableID' táblában, 'row' sorban, 'col' oszlopból veszi. Visszatér a mûvelet sikerességével.</td></tr>
+		<tr><td>bool getKnowledgeTableData(char& val, int tableID, int row, int col) const;</td><td>Egy 'char' típusú értéket kiemel a permanens tudástárból és a 'val' változóba helyezi. Az értéket a 'tableID' táblában, 'row' sorban, 'col' oszlopból veszi. Visszatér a mûvelet sikerességével.</td></tr>
+		<tr><td>bool getKnowledgeTableData(std::string& val, int tableID, int row, int col) const;</td><td>Egy 'std::string' típusú értéket kiemel a permanens tudástárból és a 'val' változóba helyezi. Az értéket a 'tableID' táblában, 'row' sorban, 'col' oszlopból veszi. Visszatér a mûvelet sikerességével.</td></tr>
+		<tr><td>bool getKnowledgeTableData(float& val, int tableID, int row, int col) const;</td><td>Egy 'float' típusú értéket kiemel a permanens tudástárból és a 'val' változóba helyezi. Az értéket a 'tableID' táblában, 'row' sorban, 'col' oszlopból veszi. Visszatér a mûvelet sikerességével.</td></tr>
+
+		<tr><td>bool setKnowledgeTableData(int val, int tableID, int row, int col);</td><td>A tudástár 'tableID'  táblájában a 'row' sorában, 'col oszlopában felülírja az 'int' típusú értéket a 'val' értékével. Visszatér a mûvelet sikerességével.</td></tr>
+		<tr><td>bool setKnowledgeTableData(bool val, int tableID, int row, int col);</td><td>A tudástár 'tableID'  táblájában a 'row' sorában, 'col oszlopában felülírja az 'bool' típusú értéket a 'val' értékével. Visszatér a mûvelet sikerességével.</td></tr>
+		<tr><td>bool setKnowledgeTableData(char val, int tableID, int row, int col);</td><td>A tudástár 'tableID'  táblájában a 'row' sorában, 'col oszlopában felülírja az 'char' típusú értéket a 'val' értékével. Visszatér a mûvelet sikerességével.</td></tr>
+		<tr><td>bool setKnowledgeTableData(const char* val, int tableID, int row, int col);</td><td>A tudástár 'tableID'  táblájában a 'row' sorában, 'col oszlopában felülírja az 'const char*' típusú értéket a 'val' értékével. Visszatér a mûvelet sikerességével.</td></tr>
+		<tr><td>bool setKnowledgeTableData(std::string val, int tableID, int row, int col);</td><td>A tudástár 'tableID'  táblájában a 'row' sorában, 'col oszlopában felülírja az 'std::string' típusú értéket a 'val' értékével. Visszatér a mûvelet sikerességével.</td></tr>
+		<tr><td>bool setKnowledgeTableData(float val, int tableID, int row, int col);</td><td>A tudástár 'tableID'  táblájában a 'row' sorában, 'col oszlopában felülírja az 'float' típusú értéket a 'val' értékével. Visszatér a mûvelet sikerességével.</td></tr>
+
+		<tr><td>KnowledgeDataType getKnowledgeTableDataType(int tableID, int col) const;</td><td>Visszatér a 'tableID' tudástár tábla 'col' oszlopának adat típusával (int, float, stb.).</td></tr>
+		<tr><td>int addKnowledgeTableRow(int tableID);</td><td>Hozzáad a 'tableID' táblához egy sort és visszaadja annak (azonosító) számát. Az azonosító a sorok felvevésének sorrendjében növekszik.</td></tr>
+		<tr><td>int createKnowledgeTable(int numOfCols, std::list<KnowledgeDataType> colTypes);</td><td>Létrehoz egy tudástár táblát 'numOfCols' oszloppal, és a 'colTypes' oszlop adattípusokkal. Visszatér a tábla azonosító számával.</td></tr>
+		<tr><td>int getKnowledgeTableNumOfCols(int tableID) const;</td><td>Visszatér a 'tableID' tudástár tábla oszlopainak számával.</td></tr>
+		<tr><td>int getKnowledgeTableNumOfRows(int tableID) const;</td><td>Visszatér a 'tableID' tudástár tábla sorainak számával.</td></tr>
+		<tr><td>bool removeKnowledgeTable(int tableID);</td><td>Permanensen eltávolítja a tudástár 'tableID' azonosítójú tábláját. A mûvelet sikerességével tér vissza.</td></tr>
+		<tr><td>bool removeKnowledgeTableRow(int tableID, int row);</td><td>Permanensen eltávolítja a tudástár 'tableID' táblájának 'row' azonosítójú sorát. A mûvelet sikerességével tér vissza.</td></tr>
+		<tr><td>bool isTableLoaded(int tableID) const;</td><td>Megadja, hogy a 'tableID' azonosítójú tábla, be van-e töltve.</td></tr>
+
+	</tbody>
+</table>
 
 <h3>Használt enumerációk</h3>
 <p>
-	
+	Bot íráskor összesen 5 enumerációval találhatod szemben magad.
+	Puska jelleggel itt róluk egy felsorolás. Ahol explicit nincs
+	kifejezve számban az elemek értéke, ott értelem szerûen, az elsõ
+	elem nulla majd sorban eggyel nagyobb értékeket vesznek fel az elemek.
+</p>
+
+<h4>Card::Suit - kártya fajtája</h4>
+<pre>
+enum Suit
+{
+	NULLSUIT = 0,
+	CLUBS = 1,
+	DIAMONDS = 2,
+	HEARTS = 3,
+	SPADES = 4
+};
+</pre>
+
+<h4>Card::Rank - kártya rangja</h4>
+<pre>
+enum Rank
+{
+	NULLRANK = 0,
+	DEUCE = 2,
+	THREE = 3,
+	FOUR = 4,
+	FIVE = 5,
+	SIX = 6,
+	SEVEN = 7,
+	EIGHT = 8,
+	NINE = 9,
+	TEN = 10,
+	JACK = 11,
+	QUEEN = 12,
+	KING = 13,
+	ACE = 14
+};
+</pre>
+
+<h4>HandRank - a kézben és az asztalon lévõ kártyák értéke</h4>
+<pre>
+enum HandRank
+{
+	None = 0, // default
+	HighCard = 1,
+	Pair = 2,
+	TwoPair = 3,
+	ThreeOfAKind = 4,
+	Straight = 5,
+	Flush = 6,
+	FullHouses = 7,
+	FourOfAKind = 8,
+	StraightFlush = 9,
+	RoyalFlush = 10
+};
+</pre>
+
+<h4>Emotion - érzelmek kifejezésére</h4>
+<pre>
+enum Emotion
+{
+	HIDDEN,
+	HAPPY,
+	SAD,
+	UPSET,
+	PATIENT,
+	IMPATIENT,
+	EXCITED,
+	UNCERTAIN,
+	RELAXED,
+	EMBARASSED,
+	POKERFACE,
+	NERVOUS,
+	DRUNKEN,
+	HIGH
+};
+</pre>
+
+<h4>Comment - botok közti kommunikációra</h4>
+<pre>
+enum Comment
+{
+	YES,
+	NO,
+	CHECK,
+	FOLD,
+	CALL,
+	RAISE,
+	IM_IN,
+	LETS_PLAY_HARD,
+	HMMM,
+	NICE_CATCH,
+	BLUFF,
+	MAKE_ME_A_SANDWICH,
+	I_SEE_YOU_PREFER_THE_HARD_WAY,
+	THATS_WHAT_SHE_SAID,
+	YOU_SHOULD_HAVE_FOLDED_AT_THE_BEGINNING,
+	WHAT_A_SHAME,
+	A_LITTLE_BIT_OF_RAISE_HARMS_NONE,
+	BET_YOUR_MOM_GETS_LAID_FOR_HALF_THE_POT_IM_GONNA_TAKE_NOW,
+	IM_FUCKED,
+	CALM_DOWN_BITCH
+};
+</pre>
+
+<h3>Botok feltöltése</h3>
+<p>
+
 </p>
 
 <h2>Advanced</h2>
