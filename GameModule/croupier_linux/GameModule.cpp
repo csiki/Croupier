@@ -12,7 +12,7 @@ int main(int argc, char* argv[])
     if (argc < 2)
     {
         // no input
-        return -1;
+        return 6;
     }
 
 	// generate path of game data xml file

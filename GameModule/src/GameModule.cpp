@@ -28,6 +28,13 @@ int main(int argc, char* argv[])
 		}
 	}
 
+	// error
+	if (go->getGameState() == 5)
+	{
+		// error occured
+		std::cerr << "Error occured: " << go->getErrorMsg() << std::endl;
+	}
+
 	return go->getGameState();
 
 }
