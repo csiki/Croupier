@@ -1,10 +1,11 @@
 <?php
 include "php/include.php";
+require_once('php/recaptchalib.php');
 if ($loggedin) {
     header('Location: summary.php');
     exit();
 }
-$nameErr = $passwordErr = $emailErr = "";
+$nameErr = $passwordErr = $emailErr = $captchaErr = "";
 $name = $email = "";
 if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pSize'])) {
     if (!isset($_POST['name']) || !sanityCheck($_POST['name'], 'string', 3, 25))
@@ -32,7 +33,16 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
         else
             $password = $_POST['p'];
     }
-    if ($nameErr == "" && $passwordErr == "" && $emailErr == "") {
+
+    $cap = recaptcha_check_answer ("6Lev0-kSAAAAAKT9k5Ie0-1CWuxkywQmg2N8dNWr",
+        $_SERVER["REMOTE_ADDR"],
+        $_POST["recaptcha_challenge_field"],
+        $_POST["recaptcha_response_field"]);
+
+    if (!$cap->is_valid)
+        $captchaErr = $tr["ERR_CAPTCHA"];
+
+    if ($nameErr == "" && $passwordErr == "" && $emailErr == "" && $captchaErr == "") {
         $random_salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
         // Create salted password (Careful not to over season)
         $password = hash('sha512', $password . $random_salt);
@@ -41,7 +51,8 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
         //update stats
         SQL("INSERT INTO stat_accounts_added (date, count)
             VALUES (CURRENT_DATE(), 1)
-            ON DUPLICATE KEY UPDATE date = VALUES(date), count = count +1;");
+            ON DUPLICATE KEY UPDATE date = VALUES(date), count = count + 1;");
+
         header('Location: ../register.php?success=1');
     }
 }
@@ -77,6 +88,10 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
                 <input type="password" name="pass" id="pass" maxlength="100">
                 <br/>
                 <?php if ($passwordErr) echo '<span class="errorMessage">' . $passwordErr . '</span><br />'; ?>
+                <br/>
+                <label for="pass"><?=$tr["CAPTCHA"]?></label><br/>
+                <?=print_captcha()?>
+                <?php if ($captchaErr) echo '<span class="errorMessage">' . $captchaErr . '</span><br />'; ?>
                 <br/>
                 <br/>
                 <input type="submit" value="<?= $tr["REGISTER"] ?>" class="button"

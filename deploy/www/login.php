@@ -1,11 +1,13 @@
 <?php
 include "php/include.php";
+require_once('php/recaptchalib.php');
 if ($loggedin) {
     header('Location: summary.php');
     exit();
 }
-$error = "";
+$error = $captchaErr = "";
 $email = "";
+$showCapatcha = false;
 if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pSize'])) {
     //form validation
     //TODO:remove comment
@@ -25,10 +27,25 @@ if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pSize'])) {
     }*/
     $email = $_POST['email'];
     $password = $_POST['p'];
-    if ($error == "") {
+    $captchaGet = false;
+    if (isset($_POST["recaptcha_challenge_field"]) && isset($_POST["recaptcha_challenge_field"])) {
+        $captchaGet = true;
+        $cap = recaptcha_check_answer("6Lev0-kSAAAAAKT9k5Ie0-1CWuxkywQmg2N8dNWr",
+            $_SERVER["REMOTE_ADDR"],
+            $_POST["recaptcha_challenge_field"],
+            $_POST["recaptcha_response_field"]);
+        if (!$cap->is_valid)
+        {
+            $captchaErr = $tr["ERR_CAPTCHA"];
+            $showCapatcha = true;
+         }
+    }
+    if ($error == "" && (($captchaGet && $captchaErr == "") || !$captchaGet)) {
         $ret = login($email, $password, $mysqli);
         if ($ret == LoginResponse::Success) {
             header('Location: ../summary.php');
+        } else if ($ret == LoginResponse::Brute) {
+            $showCapatcha = true;
         } else {
             $error = $tr["ERR_LOGIN"];
         }
@@ -57,6 +74,13 @@ if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pSize'])) {
             <br/>
             <?php if ($error) echo '<span class="errorMessage">' . $error . '</span><br />'; ?>
             <br/>
+            <?php
+            if ($showCapatcha) {
+                echo '<label for="pass">' . $tr["CAPTCHA"] . '</label><br/>';
+                print_captcha();
+                if ($captchaErr) echo '<span class="errorMessage">' . $captchaErr . '</span><br />';
+            }
+            ?>
             <br/>
             <input type="submit" value="<?= $tr["LOGIN"] ?>" class="button"
                    onclick="sendForm(this.form, this.form.pass);">

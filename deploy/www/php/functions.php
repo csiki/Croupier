@@ -8,6 +8,7 @@ define("_RESULTS_RELATIVE_PATH_", "../data/results/");
 function sec_session_start()
 {
     $session_name = 'crouper_s'; // Set a custom session name
+    //TODO: set this to true
     $secure = false; // Set to true if using https.
     $httponly = true; // This stops javascript being able to access the session id.
     ini_set('session.use_only_cookies', 1); // Forces sessions to only use cookies.
@@ -49,7 +50,7 @@ function SQL($Query)
         $out = array();
         $fields = array();
         if (!$metadata) {
-            if($stmt->affected_rows > 0)
+            if ($stmt->affected_rows > 0)
                 return true;
             return null;
         }
@@ -85,21 +86,21 @@ class LoginResponse
     const WrongPass = 3;
 }
 
-function login($email, $password, $mysqli)
+function login($email, $password)
 {
-    $result = SQL("SELECT id, username, password, salt FROM accounts WHERE email = ? LIMIT 1", $email);
-    if ($result == null) //not found
-        return LoginResponse::NotFound;
-    $accountID = $result[0]["id"];
-    $username = $result[0]["username"];
-    $db_password = $result[0]["password"];
-    $salt = $result[0]["salt"];
-    $password = hash('sha512', $password . $salt); // hash the password with the unique salt.
-    if (checkbrute($accountID, $mysqli) == true) {
+    if (!check_brute("login", 5, 300)) {
         // Account is locked
         // Send an email to user saying their account is locked
         return LoginResponse::Brute;
     } else {
+        $result = SQL("SELECT id, username, password, salt FROM accounts WHERE email = ? LIMIT 1", $email);
+        if ($result == null) //not found
+            return LoginResponse::NotFound;
+        $accountID = $result[0]["id"];
+        $username = $result[0]["username"];
+        $db_password = $result[0]["password"];
+        $salt = $result[0]["salt"];
+        $password = hash('sha512', $password . $salt); // hash the password with the unique salt.
         if ($db_password == $password) { // Check if the password in the database matches the password the user submitted.
             // Password is correct!
             $user_browser = $_SERVER['HTTP_USER_AGENT']; // Get the user-agent string of the user.
@@ -109,26 +110,44 @@ function login($email, $password, $mysqli)
             return LoginResponse::Success;
         } else {
             $now = time();
-            SQL("INSERT INTO login_attempts (accountID, time) VALUES ('$accountID', '$now')");
+            //SQL("INSERT INTO brute_force (accountID, time) VALUES ('$accountID', '$now')");
             return LoginResponse::WrongPass;
         }
     }
 }
 
-function checkbrute($accountID, $mysqli)
+function check_brute($action, $max_count, $deltaTime)
 {
-    $now = time();
-    $valid_attempts = $now - (2 * 60 * 60);
+    $login_string = "";
+    if (isset($_SESSION['login_string']))
+        $login_string = $_SESSION['login_string'];
+    $ip = $_SERVER['REMOTE_ADDR'];
 
-    if ($result = SQL("SELECT time FROM login_attempts WHERE accountID = ? AND time > '$valid_attempts'", $accountID)) {
-        if ($result == null) {
-            return true;
-        } else if (count($result) > 5) {
-            return true;
-        } else {
-            return false;
-        }
+    SQL("DELETE FROM brute_force WHERE expires < NOW()");
+    $id = substr(base64_encode(sha1($ip . $login_string)), 0, 8);
+    $result = SQL("SELECT COUNT(*) FROM brute_force WHERE action = ? AND id = ?", $action, $id);
+    if ($result[0]["COUNT(*)"] > $max_count)
+        return false;
+    else {
+        $date = new DateTime();
+        $date->add(new DateInterval('PT' . $deltaTime . 'S'));
+        $res = SQL("INSERT INTO brute_force (id, action, expires) VALUES (?, ?, ?)", $id, $action,
+            $date->format("Y-m-d H:i:s"));
     }
+    return true;
+}
+
+function print_captcha()
+{
+    echo '<script type="text/javascript"
+                    src="https://www.google.com/recaptcha/api/challenge?k=6Lev0-kSAAAAAPJsNpRXcA-eLnzOlQD-sLttj2e1">
+            </script>
+            <noscript>
+                <iframe src="https://www.google.com/recaptcha/api/noscript?k=6Lev0-kSAAAAAPJsNpRXcA-eLnzOlQD-sLttj2e1"
+                        height="300" width="500" frameborder="0"></iframe><br/>
+                <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
+                <input type="hidden" name="recaptcha_response_field" value="manual_challenge"/>
+            </noscript>';
 }
 
 function login_check(&$loggedin, &$admin)
@@ -138,7 +157,7 @@ function login_check(&$loggedin, &$admin)
         $login_string = $_SESSION['login_string'];
         $user_browser = $_SERVER['HTTP_USER_AGENT'];
 
-        $result = SQL("SELECT password,  admin FROM accounts WHERE id = ? LIMIT 1", $accountID);
+        $result = SQL("SELECT password, admin FROM accounts WHERE id = ? LIMIT 1", $accountID);
         if ($result == null)
             die("Invalid request"); //the id not exists in the db
         $password = $result[0]["password"];
@@ -210,8 +229,7 @@ function checkEmail($email)
 
 function getCodeLangID($lang)
 {
-    switch($lang)
-    {
+    switch ($lang) {
         case 'c++':
             return 0;
             break;
