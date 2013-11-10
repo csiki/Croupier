@@ -1,12 +1,13 @@
 <?php
 include "php/include.php";
 needLogin();
-$codeErr = $fileErr = "";
+$codeErr = $fileErr = $bruteErr = "";
 $name = $code = $lang = $nameErr = "";
 if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
     $id = SQL("SHOW TABLE STATUS LIKE 'bots'")[0]["Auto_increment"];
     if (isset($_POST["name"]) && !empty($_POST["name"])) {
-        $name = $_POST["name"];
+        //TODO: warning when wrong format
+        $name = xssafe($_POST['name']);
         if (SQL("SELECT * FROM bots WHERE name = ? AND accountID = ?", $name, $_SESSION["accountID"]) != null)
             $nameErr = $tr["ERR_NAME_CONFLICT"];
     } else
@@ -37,29 +38,36 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
         die("Invalid request");
 
     if ($fileErr == "" && $codeErr == "" && $nameErr == "") {
-        //update database
-        SQL("INSERT INTO bots (id, accountID, name, lastChangeTime, code_lang, state)
-          VALUES (NULL, ?, ?, NOW(), ?, 'processing')", $_SESSION["accountID"], $name, $lang);
-
-        //create bot folder
-        mkdir(_BOT_AI_RELATIVE_PATH_ . $id);
-
-        //move or make file
-        if ($codeFileUpload) {
-            $tmp_name = $_FILES["codefile"]["tmp_name"];
-            move_uploaded_file($tmp_name, _BOT_AI_RELATIVE_PATH_ . $id . "/" . $id);
-        } else {
-            $ret = file_put_contents(_BOT_AI_RELATIVE_PATH_ . $id . "/" . $id, $code);
-            if ($ret === false)
-                die("Couldn't write bot to file: " . $id);
+        //check brute force
+        if (!check_brute("addBot", 30, 3600)) {
+            $bruteErr = $tr["ERR_ADDBOT_BRUTE"];
         }
+        else
+        {
+            //update database
+            SQL("INSERT INTO bots (id, accountID, name, lastChangeTime, code_lang, state)
+              VALUES (NULL, ?, ?, NOW(), ?, 'processing')", $_SESSION["accountID"], $name, $lang);
 
-        //update stats
-        SQL("INSERT INTO stat_bots_added (date, count)
-            VALUES (CURRENT_DATE(), 1)
-            ON DUPLICATE KEY UPDATE date = VALUES(date), count = count + 1;");
+            //create bot folder
+            mkdir(_BOT_AI_RELATIVE_PATH_ . $id);
 
-        header('Location: ../manage_bots.php');
+            //move or make file
+            if ($codeFileUpload) {
+                $tmp_name = $_FILES["codefile"]["tmp_name"];
+                move_uploaded_file($tmp_name, _BOT_AI_RELATIVE_PATH_ . $id . "/" . $id);
+            } else {
+                $ret = file_put_contents(_BOT_AI_RELATIVE_PATH_ . $id . "/" . $id, $code);
+                if ($ret === false)
+                    die("Couldn't write bot to file: " . $id);
+            }
+
+            //update stats
+            SQL("INSERT INTO stat_bots_added (date, count)
+                VALUES (CURRENT_DATE(), 1)
+                ON DUPLICATE KEY UPDATE date = VALUES(date), count = count + 1;");
+
+            header('Location: ../manage_bots.php');
+        }
     }
 }
 ?>
@@ -121,7 +129,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
             </select>
         </div>
         <br/>
-        <?=$nameErr ? '<span class="errorMessage">' . $nameErr . '</span><br />' : ''?>
+        <?php if ($nameErr) echo '<span class="errorMessage">' . $nameErr . '</span><br />'; ?>
         <br/>
 
         <div class="codeWrapper">
@@ -135,6 +143,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
         <input name="codefile" id="codefile" type="file">
         <br/>
         <?php if ($fileErr) echo '<span class="errorMessage">' . $fileErr . '</span><br />'; ?>
+        <?php if ($bruteErr) echo '<span class="errorMessage">' . $bruteErr . '</span><br />'; ?>
         <br/>
         <input type="submit" class="button" value="<?= $tr["NEW_BOT"] ?>">
         <input type="button" onclick="javascript: window.location = '/manage_bots.php';" class="button disabledButton"

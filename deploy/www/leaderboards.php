@@ -29,7 +29,6 @@ function getBotInfos($lb)
             $("[id^='lb-']").each(function () {
                 updateLeaderboard($(this));
             });
-            window.setInterval(updateBots, 600);
         });
 
         function setTableEmpty($tbody) {
@@ -48,13 +47,13 @@ function getBotInfos($lb)
 
         function menuElementClicked() {
             $("#leaderboardsMenu").fadeOut(300);
-            $("#leaderboardContainer").fadeIn(300);
+            //$("#leaderboardContainer").fadeIn(300);
             $("#lb-" + ($("#leaderboardsMenu div").index($(this)) + 1)).delay(290).fadeIn(300);
         }
 
         function backToMenuClicked() {
             $("[id^='lb-']").fadeOut(300);
-            $("#leaderboardContainer").fadeOut(300);
+            //$("#leaderboardContainer").fadeOut(300);
             $("#leaderboardsMenu").delay(290).fadeIn(300);
         }
 
@@ -112,25 +111,6 @@ function getBotInfos($lb)
                         setTableEmpty($tbody);
                 });
         }
-
-        function updateBots() {
-            var $tbody = "[id^='lb-'] .leaderboard table tbody";
-            setTableLoading($tbody);
-            $.getJSON("get_leaderboard.php",
-                { leaderBoard: $(tab).attr('id').substr(3) },
-                function (data) {
-                    if (data.length != 0) {
-                        $tbody.html("");
-                        $.each(data, function (i, val) {
-                            $("<tr/>", {
-                                html: "<td>" + val.name + "</td><td>" + val.username + "</td><td>" + val.score + "</td>"
-                            }).appendTo($tbody);
-                        });
-                    }
-                    else
-                        setTableEmpty($tbody);
-                });
-        }
     </script>
 </head>
 <body>
@@ -159,7 +139,6 @@ function getBotInfos($lb)
             ?>
 
         </div>
-        <div id="leaderboardContainer">
             <?php
             for ($i = 0; $i < count($leaderboards); $i++) {
                 echo '<div id="lb-' . ($i + 1) . '">';
@@ -171,7 +150,7 @@ function getBotInfos($lb)
                     <thead>
                     <tr>
                         <th style="width: 150px">' . $tr["NAME"] . '</th>
-                        <th style="width: 150px">' . $tr["USERNAME"] . '</th>
+                        <th style="width: 150px">' . $tr["OWNER"] . '</th>
                         <th style="width: 80px">' . $tr["SCORE"] . '</th>
                     </tr>
                     </thead>
@@ -207,7 +186,6 @@ function getBotInfos($lb)
                 echo '</div></div>';
             }
             ?>
-        </div>
     </div>
 <footer>
     <?php include "php/footer.php"; ?>

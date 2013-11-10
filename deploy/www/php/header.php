@@ -15,7 +15,9 @@
             } ?>
         </ul>
         <script>
-            $("#topmenu ul li").on("click", function(){window.location.href = $(this).children().attr("href");});
+            $("#topmenu ul li").on("click", function () {
+                window.location.href = $(this).children().attr("href");
+            });
         </script>
     </div>
     <div id="lang">
@@ -25,8 +27,15 @@
     <?php
     if ($loggedin) {
         echo '<div id="accountMenu">';
-        echo '<a id="username_accountMenu" href="edit_account.php">' . $_SESSION["username"] . '</a>';
-        echo '<a id="logout_accountMenu" href="logout.php">' . $tr["LOGOUT"] . '</a>';
+        echo '<a id="username_accountMenu" href="edit_account.php">';
+        echo '<img src="https://www.gravatar.com/avatar/' .
+            $_SESSION["gravatar"] . '?d=identicon&s=25&r=g" />';
+        echo $_SESSION["username"];
+        echo '</a>';
+        echo '<ul class="dropDownMenu">';
+        echo '<li><a href="edit_account.php">' . $tr["EDIT_ACCOUNT"] . '</a></li>';
+        echo '<li><a href="logout.php">' . $tr["LOGOUT"] . '</a></li>';
+        echo '</ul>';
         echo '</div>';
     }
     ?>

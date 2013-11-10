@@ -449,19 +449,6 @@ INSERT INTO `strings` (`id`, `identifier`, `language`, `text`) VALUES
 (123, 'CAPTCHA', 'en', 'Please solve the captcha'),
 (124, 'CAPTCHA', 'hu', 'Kérlek oldd meg az ellenőrző mezőt');
 
-<<<<<<< HEAD
---
--- Megkötések a kiírt táblákhoz
---
-
---
--- Megkötések a táblához `bots`
---
-ALTER TABLE `bots`
-  ADD CONSTRAINT `bots_ibfk_1` FOREIGN KEY (`accountID`) REFERENCES `accounts` (`id`);
-
-=======
->>>>>>> e0b9d77608b7d741cd133212372cfb3cdc8c3330
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
