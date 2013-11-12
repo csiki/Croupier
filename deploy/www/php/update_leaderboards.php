@@ -55,6 +55,6 @@ foreach($leaderboards as $leaderboard)
 
     SQL("INSERT INTO games (id, checked, leaderboard, rules, log, result, startTime, endTime)
         VALUES (NULL, 0, ?, ?, ?, ?, NOW(), NOW()-1000)", $leaderboard["tableName"], $rulzFile,  $gameID.".log", $gameID.".xml");
-    exec("cd .. && cd .. && cd exec && GameModule " . $gameID . ".xml"); //Maximum execution time of 30 sec
+    exec("cd .. && cd .. && cd exec && ./gamemodule " . $gameID . ".xml"); //Maximum execution time of 30 sec
     SQL("UPDATE leaderBoards SET lastRefresh = NOW() WHERE tableName = ?", $tableName);
 }

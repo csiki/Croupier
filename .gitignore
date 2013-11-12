@@ -151,3 +151,4 @@ $RECYCLE.BIN/
 Deploy/www/.idea/
 *.tlog
 Deploy/www/tmp/
+*.layout
