@@ -5,7 +5,7 @@
 #include "GameDataXMLHandler.h"
 #include <string>
 
-void ConcreteTest::initGame(BotData* botdata, int gameid)
+void ConcreteTest::initGame(BotData* toTest, int gameid)
 {
     BotData* shybot = TestBotDataRetreiver::retrieveShyBot();
     BotData* aggbot = TestBotDataRetreiver::retrieveAggressiveBot();
@@ -15,6 +15,10 @@ void ConcreteTest::initGame(BotData* botdata, int gameid)
     logandresultsfilename += ".xml";
 
     GameData gamedata(gameid, logandresultsfilename.c_str(), "testrules.xml", logandresultsfilename.c_str());
+    gamedata.addBotData(toTest);
+    gamedata.addBotData(aggbot);
+    gamedata.addBotData(shybot);
+    gamedata.addBotData(normalbot);
 
     std::string xmlpath = "../data/games/";
     xmlpath += std::to_string(gameid);

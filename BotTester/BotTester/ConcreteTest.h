@@ -7,7 +7,7 @@
 class ConcreteTest : public Test
 {
 public:
-    void initGame(BotData* botdata, int gameid);
+    void initGame(BotData* toTest, int gameid);
 };
 
 #endif  //_CONCRETETEST_H
