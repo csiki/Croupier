@@ -2,6 +2,18 @@
 include "connect_db.php";
 include "functions.php";
 
+function update_leaderboard($leaderboard)
+{
+	
+}
+
+$leaderboards = SQL("SELECT * FROM leaderboards WHERE activated = 1 ORDER BY lastRefresh ASC");
+
+foreach($leaderboards as $leaderboard)
+{
+	
+}
+
 //get leaderboards
 $leaderboards = SQL("SELECT * FROM leaderboards WHERE activated = 1 ORDER BY lastRefresh ASC");
 foreach($leaderboards as $leaderboard)
