@@ -13,7 +13,7 @@ function sec_session_start()
     $httponly = true; // This stops javascript being able to access the session id.
     ini_set('session.use_only_cookies', 1); // Forces sessions to only use cookies.
     $cookieParams = session_get_cookie_params();
-    session_set_cookie_params($cookieParams["lifetime"], $cookieParams["path"], $cookieParams["domain"], $secure, $httponly);
+    session_set_cookie_params(1200, $cookieParams["path"], $cookieParams["domain"], $secure, $httponly);
     session_name($session_name); // Sets the session name to the one set above.
     session_start(); // Start the php session
     session_regenerate_id(); // regenerated the session, delete the old one.
@@ -78,43 +78,6 @@ function xssafe($data, $encoding = 'UTF-8')
     return htmlspecialchars($data, ENT_QUOTES | ENT_HTML401, $encoding);
 }
 
-class LoginResponse
-{
-    const Success = 0;
-    const NotFound = 1;
-    const Brute = 2;
-    const WrongPass = 3;
-}
-
-function login($email, $password)
-{
-    if (!check_brute("login", 5, 300)) {
-        // Account is locked
-        // Send an email to user saying their account is locked
-        return LoginResponse::Brute;
-    } else {
-        $result = SQL("SELECT id, username, password, salt FROM accounts WHERE email = ? LIMIT 1", $email);
-        if ($result == null) //not found
-            return LoginResponse::NotFound;
-        $accountID = $result[0]["id"];
-        $username = $result[0]["username"];
-        $db_password = $result[0]["password"];
-        $salt = $result[0]["salt"];
-        $password = hash('sha512', $password . $salt); // hash the password with the unique salt.
-        if ($db_password == $password) { // Check if the password in the database matches the password the user submitted.
-            // Password is correct!
-            $user_browser = $_SERVER['HTTP_USER_AGENT']; // Get the user-agent string of the user.
-            $_SESSION['accountID'] = $accountID;
-            $_SESSION['username'] = $username;
-            $_SESSION['login_string'] = hash('sha512', $password . $user_browser);
-            return LoginResponse::Success;
-        } else {
-            $now = time();
-            //SQL("INSERT INTO brute_force (accountID, time) VALUES ('$accountID', '$now')");
-            return LoginResponse::WrongPass;
-        }
-    }
-}
 
 function check_brute($action, $max_count, $deltaTime)
 {
@@ -161,7 +124,7 @@ function login_check(&$loggedin, &$admin)
         if ($result == null)
             die("Invalid request"); //the id not exists in the db
         $password = $result[0]["password"];
-        $login_check = hash('sha512', $password . $user_browser);
+        $login_check = hash('sha512', $password . $user_browser . getenv("REMOTE_ADDR"));
         if ($login_check == $login_string) {
             //logged in
             SQL("UPDATE accounts SET lastOnline=NOW() WHERE id = ?", $accountID); //set lastOnline

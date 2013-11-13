@@ -164,7 +164,7 @@ if (!$admin) {
                 $bots[$botsRes[$i]["accountID"]] = 0;
             $bots[$botsRes[$i]["accountID"]]++;
         }
-        $acc = SQL("SELECT id, username, email, admin, lastOnline, language FROM accounts");
+        $acc = SQL("SELECT id, username, email, admin, lastOnline, lang FROM accounts");
         for ($i = 0; $i < count($acc); $i++) {
             echo '<tr>';
             echo '<td>' . $acc[$i]["id"] . '</td>';
@@ -172,7 +172,7 @@ if (!$admin) {
             echo '<td>' . $acc[$i]["email"] . '</td>';
             echo '<td>' . $acc[$i]["admin"] . '</td>';
             echo '<td>' . $acc[$i]["lastOnline"] . '</td>';
-            echo '<td>' . $acc[$i]["language"] . '</td>';
+            echo '<td>' . $acc[$i]["lang"] . '</td>';
             echo '<td>' . (isset($bots[$acc[$i]["id"]]) ? $bots[$acc[$i]["id"]] : "0") . '</td>';
             echo '</tr>';
         }
