@@ -107,7 +107,6 @@ csx
 AppPackages/
 
 # Others
-sql/
 *.Cache
 ClientBin/
 [Ss]tyle[Cc]op.*
@@ -152,3 +151,4 @@ $RECYCLE.BIN/
 Deploy/www/.idea/
 *.tlog
 Deploy/www/tmp/
+*.layout

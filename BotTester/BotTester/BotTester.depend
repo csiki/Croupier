@@ -1,0 +1,100 @@
+# depslib dependency file v1.0
+1384117465 source:f:\csiki\programing\c++\main\croupier\bottester\bottester\tester.cpp
+	"Tester.h"
+	"BotState.h"
+
+1384117447 f:\csiki\programing\c++\main\croupier\bottester\bottester\tester.h
+	"Test.h"
+	"Tester.h"
+	"ConcreteTest.h"
+	"BotData.h"
+	<map>
+
+1384117453 f:\csiki\programing\c++\main\croupier\bottester\bottester\test.h
+	"BotState.h"
+	"BotData.h"
+
+1384108079 f:\csiki\programing\c++\main\croupier\bottester\bottester\botstate.h
+
+1384117398 source:f:\csiki\programing\c++\main\croupier\bottester\bottester\main.cpp
+	<iostream>
+	<stdlib.h>
+	"Tester.h"
+	"BotData.h"
+
+1384117443 f:\csiki\programing\c++\main\croupier\bottester\bottester\concretetest.h
+	"Test.h"
+	"BotState.h"
+
+1384117281 source:f:\csiki\programing\c++\main\croupier\bottester\bottester\concretetest.cpp
+	"ConcreteTest.h"
+	"BotState.h"
+	"TestBotDataRetreiver.h"
+	"BotDataXMLHandler.h"
+	"GameDataXMLHandler.h"
+
+1384111363 source:f:\csiki\programing\c++\main\croupier\bottester\bottester\gamedata.cpp
+	"GameData.h"
+
+1384113185 f:\csiki\programing\c++\main\croupier\bottester\bottester\gamedata.h
+	"BotData.h"
+	<vector>
+
+1384113175 f:\csiki\programing\c++\main\croupier\bottester\bottester\botdata.h
+	"BotLanguage.h"
+	<string>
+
+1380310235 f:\csiki\programing\c++\main\croupier\bottester\bottester\botlanguage.h
+
+1384113267 source:f:\csiki\programing\c++\main\croupier\bottester\bottester\botdataxmlhandler.cpp
+	"BotDataXMLHandler.h"
+	<list>
+
+1382428253 f:\csiki\programing\c++\main\croupier\bottester\bottester\botdataxmlhandler.h
+	"BotData.h"
+	"pugixml.hpp"
+
+1335935950 f:\csiki\programing\c++\main\croupier\bottester\bottester\pugixml.hpp
+	"pugiconfig.hpp"
+	<stddef.h>
+	<exception>
+	<iterator>
+	<iosfwd>
+	<string>
+
+1335720148 f:\csiki\programing\c++\main\croupier\bottester\bottester\pugiconfig.hpp
+
+1384113299 source:f:\csiki\programing\c++\main\croupier\bottester\bottester\gamedataxmlhandler.cpp
+	"GameDataXMLHandler.h"
+
+1382399856 f:\csiki\programing\c++\main\croupier\bottester\bottester\gamedataxmlhandler.h
+	"GameData.h"
+	"BotLanguage.h"
+	"BotDataXMLHandler.h"
+	"pugixml.hpp"
+
+1384113253 source:f:\csiki\programing\c++\main\croupier\bottester\bottester\pugixml.cpp
+	"pugixml.hpp"
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<assert.h>
+	<wchar.h>
+	<math.h>
+	<float.h>
+	<setjmp.h>
+	<istream>
+	<ostream>
+	<string>
+	<new>
+	<stdint.h>
+
+1384113897 source:f:\csiki\programing\c++\main\croupier\bottester\bottester\botdata.cpp
+	"BotData.h"
+
+1384117996 f:\csiki\programing\c++\main\croupier\bottester\bottester\testbotdataretreiver.h
+	"BotData.h"
+
+1384117104 source:f:\csiki\programing\c++\main\croupier\bottester\bottester\testbotdataretreiver.cpp
+	"TestBotDataRetreiver.h"
+

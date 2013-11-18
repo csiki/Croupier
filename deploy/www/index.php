@@ -18,31 +18,34 @@ if ($items == null)
 <!DOCTYPE html>
 <html>
 <head>
-<?php include "php/head.php"; ?>
+    <?php include "php/head.php"; ?>
 </head>
 <body>
 <?php include "php/header.php"; ?>
 <div id="main">
     <h2>Croupier poker AI</h2>
-    <?php
-    echo '<div id="postSection">';
-    foreach ($items as $item) {
-        echo '<div class="post">';
-        echo "<h2>" . $item["title"] . "</h2>";
-        echo '<div class="postHeader">' . $item["author"] . " - ". $item["date"] ."</div>";
-        echo '<div class="postContent">' . $item["content"] . '</div>';
+
+    <div class="postsContainer">
+        <?php
+        echo '<div id="postSection">';
+        foreach ($items as $item) {
+            echo '<div class="post">';
+            echo "<h2>" . $item["title"] . "</h2>";
+            echo '<div class="postHeader">' . $item["author"] . " - " . $item["date"] . "</div>";
+            echo '<div class="postContent">' . $item["content"] . '</div>';
+            echo '</div>';
+        }
         echo '</div>';
-    }
-    echo '</div>';
-    echo '<div id="postsNavigator">';
-    if ($currentPage != 0)
-        echo '<a class="postsNavigatorButton" href="' . $_SERVER["PHP_SELF"] . '?page=' . ($currentPage - 1) .
-            '">' . $tr["NEWER_PAGES"] . '</a>';
-    if ($currentPage != $lastPage)
-        echo '<a class="newsNavigatorButton" style="float:right;" href="' . $_SERVER["PHP_SELF"] . '?page=' .
-            ($currentPage + 1) . '">' . $tr["OLDER_PAGES"] . '</a>';
-    echo '</div>';
-    ?>
+        echo '<div id="postsNavigator">';
+        if ($currentPage != 0)
+            echo '<a class="postsNavigatorButton" href="' . $_SERVER["PHP_SELF"] . '?page=' . ($currentPage - 1) .
+                '">' . $tr["NEWER_PAGES"] . '</a>';
+        if ($currentPage != $lastPage)
+            echo '<a class="postsNavigatorButton" style="right:0px;" href="' . $_SERVER["PHP_SELF"] . '?page=' .
+                ($currentPage + 1) . '">' . $tr["OLDER_PAGES"] . '</a>';
+        echo '</div>';
+        ?>
+    </div>
 </div>
 <footer>
     <?php include "php/footer.php"; ?>

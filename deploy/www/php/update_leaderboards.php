@@ -2,6 +2,18 @@
 include "connect_db.php";
 include "functions.php";
 
+function update_leaderboard($leaderboard)
+{
+	
+}
+
+$leaderboards = SQL("SELECT * FROM leaderboards WHERE activated = 1 ORDER BY lastRefresh ASC");
+
+foreach($leaderboards as $leaderboard)
+{
+	
+}
+
 //get leaderboards
 $leaderboards = SQL("SELECT * FROM leaderboards WHERE activated = 1 ORDER BY lastRefresh ASC");
 foreach($leaderboards as $leaderboard)
@@ -43,6 +55,6 @@ foreach($leaderboards as $leaderboard)
 
     SQL("INSERT INTO games (id, checked, leaderboard, rules, log, result, startTime, endTime)
         VALUES (NULL, 0, ?, ?, ?, ?, NOW(), NOW()-1000)", $leaderboard["tableName"], $rulzFile,  $gameID.".log", $gameID.".xml");
-    exec("cd .. && cd .. && cd exec && GameModule " . $gameID . ".xml"); //Maximum execution time of 30 sec
+    exec("cd .. && cd .. && cd exec && ./gamemodule " . $gameID . ".xml"); //Maximum execution time of 30 sec
     SQL("UPDATE leaderBoards SET lastRefresh = NOW() WHERE tableName = ?", $tableName);
 }

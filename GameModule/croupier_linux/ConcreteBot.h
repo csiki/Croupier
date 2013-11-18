@@ -98,6 +98,36 @@ public:
 
 	void step()
 	{
+		if (communicator->getHandRank() >= HandRank::Pair)
+		{
+			/* ha már pár vagy annál jobb lapja van (az asztalival együtt),
+			 emel ha tud
+			 meghív ha tud
+			 csekkel ha tud
+			 minden más esetben allin-ol */
+			if (communicator->canRaise(communicator->getBigBlindAtRound()))
+				communicator->raise(communicator->getBigBlindAtRound());
+			else if (communicator->canCall())
+				communicator->call();
+			else if (communicator->canCheck())
+				communicator->check();
+			else
+				communicator->allin();
+		}
+		else
+		{
+			/* ha párja sincs, akkor jámbor taktikára vált
+			 csekkel ha tud
+			 meghív, ha a meghívandó összeg, amit még
+			 be kell pakolnia, kevesebb mint a zsetonjainak fele
+			 egyébként bedobja a lapjait */
+			if (communicator->canCheck())
+				communicator->check();
+			else if (communicator->getCallAmount() < communicator->getChips() / 2)
+				communicator->call();
+			else
+				communicator->fold();
+		}
 	}
 
 	void turn()
