@@ -3,7 +3,7 @@
 
 /** Returns AI's amount of chips.
 */
-int BotInfo::getChips() const
+extern "C" int BotInfo::getChips() const
 {
 	return this->chips;
 }

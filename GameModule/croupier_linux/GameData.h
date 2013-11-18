@@ -12,9 +12,9 @@ private:
 
 public:
 	const int id;
-	const char* logFileName;
-	const char* rulzFileName;
-	const char* resultsFileName;
+	const std::string logFileName;
+	const std::string rulzFileName;
+	const std::string resultsFileName;
 
 	GameData(int id, const char* logFileName, const char* rulzFileName, const char* resultsFileName)
 		: id(id), logFileName(logFileName), rulzFileName(rulzFileName), resultsFileName(resultsFileName)

@@ -1,3 +1,7 @@
+#ifndef _DA_GUARDIAN
+#define _DA_GUARDIAN
+
+
 #include <stdio.h>
 #include <iostream>
 #include <map>
@@ -38,3 +42,5 @@ inline static int mod(int number, int modulo)
 
 	return ret;
 }
+
+#endif // DA_GUARDIAN
