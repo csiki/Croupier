@@ -151,5 +151,5 @@ $RECYCLE.BIN/
 
 Deploy/www/.idea/
 *.tlog
-Deploy/www/tmp/
+Deploy/www/tmp DO_NOT_UPLOAD/
 *.layout

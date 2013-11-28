@@ -83,11 +83,11 @@ if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pSize'])) {
     <div class="formDiv">
         <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post" autocomplete="on">
             <label for="email">Email</label><br/>
-            <input type="text" name="email" id="email" maxlength="50" value="<?= $email ?>">
+            <input autocomplete="on" type="text" name="email" id="email" maxlength="50" value="<?= $email ?>">
             <br/>
             <br/>
             <label for="pass"><?=$tr["PASSWORD"]?></label><br/>
-            <input type="password" name="pass" id="pass" maxlength="100">
+            <input autocomplete="on" type="password" name="pass" id="pass" maxlength="100">
             <br/>
             <?php if ($error) echo '<span class="errorMessage">' . $error . '</span><br />'; ?>
             <br/>

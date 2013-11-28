@@ -6,7 +6,7 @@ Bot* CppBotLoader::loadBot(BotData* botData)
 	// load the dll library
 	std::string libPath = _BOT_AI_RELATIVE_PATH_;
 	libPath += botData->src;
-	void* botLib = dlopen(libPath.c_str(), RTLD_NOW);
+	void* botLib = dlopen(("./"+libPath).c_str(), RTLD_NOW);
 
 	if (!botLib)
 	{
@@ -19,7 +19,7 @@ Bot* CppBotLoader::loadBot(BotData* botData)
 
 	/// load factory functions
 	// create
-	create_bot* create = (create_bot*) dlsym(botLib, "create");
+	create_bot create = (create_bot) dlsym(botLib, "create");
 	const char* dlsym_error = dlerror();
 	if (dlsym_error)
 	{
@@ -28,7 +28,7 @@ Bot* CppBotLoader::loadBot(BotData* botData)
 	}
 
 	// destroy
-	destroy_bot* destroy = (destroy_bot*) dlsym(botLib, "destroy");
+	destroy_bot destroy = (destroy_bot) dlsym(botLib, "destroy");
 	dlsym_error = dlerror();
 	if (dlsym_error)
 	{
