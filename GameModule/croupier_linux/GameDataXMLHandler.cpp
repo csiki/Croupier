@@ -44,9 +44,9 @@ bool GameDataXMLHandler::saveXML(GameData* gameData, std::string xmlPath)
 
 		// save one instance propeties
 		gameNode.append_child("id").text().set(gameData->id);
-		gameNode.append_child("log").text().set(gameData->logFileName);
-		gameNode.append_child("rules").text().set(gameData->rulzFileName);
-		gameNode.append_child("results").text().set(gameData->resultsFileName);
+		gameNode.append_child("log").text().set(gameData->logFileName.c_str());
+		gameNode.append_child("rules").text().set(gameData->rulzFileName.c_str());
+		gameNode.append_child("results").text().set(gameData->resultsFileName.c_str());
 
 		// save bot data
 		pugi::xml_node botsNode = gameNode.append_child("bots");

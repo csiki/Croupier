@@ -6,6 +6,7 @@
 #include "KnowledgeTableXMLHandler.h"
 #include "../pugixml/pugixml.hpp"
 #include "BotData.h"
+#include "stdafx.h"
 
 /**	Class for handling AIs' permanent knowledge.
 */

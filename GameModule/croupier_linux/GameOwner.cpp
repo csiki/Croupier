@@ -7,6 +7,7 @@
 #include "TestBotAggressive.h"
 #include "TestBotShy.h"
 #include "AliveBot.h"
+#include <iostream>
 
 /** Saves the error message.
 */
@@ -14,6 +15,7 @@ void GameOwner::errorOccured(std::string msg)
 {
 	this->gameState = 5; // error state
 	this->errorMsg = msg;
+    std::cerr << msg << std::endl;
 }
 
 /** Fills the botLoaders map with BotLanguage and BotLoader* pairs.
@@ -23,7 +25,7 @@ void GameOwner::fillBotLoaders()
 	// CPP
 	this->botLoaders.insert(
 		std::pair<BotLanguage, BotLoader*>( BotLanguage::CPP, new CppBotLoader() ));
-	
+
 	// ALIVE
 	this->botLoaders.insert(
 		std::pair<BotLanguage, BotLoader*>( BotLanguage::ALIVE, new AliveBotLoader() ));
@@ -46,7 +48,7 @@ void GameOwner::initialiseGame()
 	std::string rulzPath = _RULZ_RELATIVE_PATH_;
 	rulzPath += this->gameData->rulzFileName;
 	this->rulz = RulzXMLHandler::loadXML(rulzPath);
-	
+
 	if (this->rulz == nullptr)
 	{
 		this->errorOccured("Cannot load Rulz instance from xml!");
@@ -76,7 +78,7 @@ void GameOwner::initialiseGame()
 			bkHandler, this->hostess, this->table,
 			this->rulz, this->broadcastStation, this->log, botdata->playerID,
 			this->rulz->getStartingChips(), botdata->credit - this->rulz->getStartingChips(), i);
-		
+
 		// set botdata communicator
 		botdata->communicator = this->botManagers[i];
 

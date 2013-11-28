@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
+
 --
 -- A tábla adatainak kiíratása `accounts`
 --
@@ -50,6 +51,33 @@ INSERT INTO `accounts` (`id`, `username`, `email`, `password`, `salt`, `admin`, 
 
 -- --------------------------------------------------------
 
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `knowledge`
+--
+
+CREATE TABLE IF NOT EXISTS `knowledge` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ownerID` varchar(30) NOT NULL,
+  `used` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+
+
+--
+-- A tábla adatainak kiíratása `accounts`
+--
+
+INSERT INTO `accounts` (`id`, `username`, `email`, `password`, `salt`, `admin`, `lastOnline`, `language`) VALUES
+(1, 'asd', 'asd', '60c5603ca9c3a556dc53a260ec30331f38e3fde96b95d3c299c6613cf64732fe07cd86ddb203a2fb3ae52944d5c9fbe333992ba22455db880f736759c1380ce7', '6ef2502227d33bf3fe0ddbb611e4bd3d88893c46a8dfdc6e0942f5abbf40227b51e3bee1dbeede8d524dda4f692d81f812bf5ba02a8e86a938b1de18fba1007c', 1, '2013-11-06 22:26:14', 'hu'),
+(2, 'lol', 'lol1', '76f857bbca73a650d211eb2c0c0dc1db282a158111265d68cb16522f880bbb21da688adca02d70cf9abd41e1eea29496d7dddb71402696e5058e2085f7b1c26d', 'c0c7a6d690e8b5ae4352247da7c1609388db2fb2e961e08a75b310565561e3f009ab9d8c6970bb1a59a743af9cbd5e5c021e19989470e1785b71b1cc5bf11ea0', 1, '2013-10-05 20:14:50', 'hu'),
+(4, 'lolasd2', 'lol@lol.com', '7df9393aeccdd01c924a39c365ddb08b779d6c65bdf318da15c975156597752d19044dd985d8dd49da34537d4542f82208d2892a777234741de65a0513379c7b', '499cfd4c562d7416e127489611700a08d8671f584e8897760e7b854ad0e1ae0498b6c1217595d218550692d8b9793360877446519105f051a222c0ccc1a65964', 0, '2013-10-18 14:54:50', 'en'),
+(5, 'Kulabá', 'sheeeeet@poo.com', 'b1e94bdca8dee012ee0d693ac391e54ebbb54a76530311f34f56a520d6d039bcd7a64deb55cc3c08adf1dfb3191198171bf912be90b9733f1eed4a66ceb655de', '53ef30496db23850d28b072737fc710a10f2567679864899b279790452aa8e1c742150560ba6879715092c5e08d70d347894f4825806a48ee4c6ec498f6bfbd5', 0, '0000-00-00 00:00:00', '');
+
+-- --------------------------------------------------------
+
+
 --
 -- Tábla szerkezet ehhez a táblához `bots`
 --
@@ -60,6 +88,7 @@ CREATE TABLE IF NOT EXISTS `bots` (
   `name` varchar(30) NOT NULL,
   `lastChangeTime` datetime NOT NULL,
   `code_lang` enum('c++','java','c#') NOT NULL,
+  `src` varchar(50) NOT NULL,
   `state` enum('processing','ok','runtime','compilation') NOT NULL,
   `ErrorText` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
