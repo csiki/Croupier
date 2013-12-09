@@ -40,7 +40,7 @@ Bot* CppBotLoader::loadBot(BotData* botData)
 	Bot* bot = create(botData->communicator, botData->id, botData->name, botData->lang);
 
 	// append to destroyers
-	this->destroyers.insert(std::pair<Bot*, destroy_bot*>(bot, destroy));
+	this->destroyers.insert(std::pair<Bot*, destroy_bot>(bot, destroy));
 
 	return bot;
 }

@@ -4,7 +4,7 @@
 	"AliveBotLoader.h"
 	"AliveBot.h"
 
-1382470671 /home/csiki/croupier/GameModule/croupier_linux/stdafx.h
+1386610114 /home/csiki/croupier/GameModule/croupier_linux/stdafx.h
 	<stdio.h>
 	<iostream>
 	<map>
@@ -32,7 +32,7 @@
 	"Process.h"
 	"BotData.h"
 
-1382458698 /home/csiki/croupier/GameModule/croupier_linux/Bot.h
+1386610114 /home/csiki/croupier/GameModule/croupier_linux/Bot.h
 	"Comment.h"
 	"BotCommunicator.h"
 
@@ -90,12 +90,13 @@
 
 1382458698 /home/csiki/croupier/GameModule/croupier_linux/KnowledgeDataType.h
 
-1382458698 /home/csiki/croupier/GameModule/croupier_linux/BotKnowledgeHandler.h
+1386610114 /home/csiki/croupier/GameModule/croupier_linux/BotKnowledgeHandler.h
 	"KnowledgeTable.h"
 	"KnowledgeDataType.h"
 	"KnowledgeTableXMLHandler.h"
 	"../pugixml/pugixml.hpp"
 	"BotData.h"
+	"stdafx.h"
 
 1382458698 /home/csiki/croupier/GameModule/croupier_linux/KnowledgeTable.h
 	"KnowledgeDataType.h"
@@ -143,7 +144,7 @@
 
 1382458698 /home/csiki/croupier/GameModule/croupier_linux/HandRank.h
 
-1382458698 /home/csiki/croupier/GameModule/croupier_linux/Process.h
+1386610114 /home/csiki/croupier/GameModule/croupier_linux/Process.h
 
 1382458698 /home/csiki/croupier/GameModule/croupier_linux/AliveBot.h
 	"Bot.h"
@@ -187,7 +188,7 @@
 1382542269 /home/csiki/croupier/GameModule/croupier_linux/BotHandler.h
 	"BotInfo.h"
 
-1382458698 source:/home/csiki/croupier/GameModule/croupier_linux/BotInfo.cpp
+1386610114 source:/home/csiki/croupier/GameModule/croupier_linux/BotInfo.cpp
 	"stdafx.h"
 	"BotInfo.h"
 
@@ -229,7 +230,7 @@
 	"HandRank.h"
 	"Card.h"
 
-1382458698 /home/csiki/croupier/GameModule/croupier_linux/TimerBotProxy.h
+1386610114 /home/csiki/croupier/GameModule/croupier_linux/TimerBotProxy.h
 	"Bot.h"
 
 1382458698 source:/home/csiki/croupier/GameModule/croupier_linux/BroadcastMember.cpp
@@ -267,11 +268,11 @@
 1382458698 /home/csiki/croupier/GameModule/croupier_linux/CommonLispBotLoader.h
 	"BotLoader.h"
 
-1382458698 source:/home/csiki/croupier/GameModule/croupier_linux/CppBotLoader.cpp
+1386610648 source:/home/csiki/croupier/GameModule/croupier_linux/CppBotLoader.cpp
 	"stdafx.h"
 	"CppBotLoader.h"
 
-1382543094 /home/csiki/croupier/GameModule/croupier_linux/CppBotLoader.h
+1386610737 /home/csiki/croupier/GameModule/croupier_linux/CppBotLoader.h
 	"BotLoader.h"
 	"BotLoaderException.h"
 	<dlfcn.h>
@@ -311,14 +312,14 @@
 	"stdafx.h"
 	"Event.h"
 
-1382458698 source:/home/csiki/croupier/GameModule/croupier_linux/GameData.cpp
+1386610114 source:/home/csiki/croupier/GameModule/croupier_linux/GameData.cpp
 	"stdafx.h"
 	"GameData.h"
 
-1382458698 /home/csiki/croupier/GameModule/croupier_linux/GameData.h
+1386610114 /home/csiki/croupier/GameModule/croupier_linux/GameData.h
 	"BotData.h"
 
-1382458698 source:/home/csiki/croupier/GameModule/croupier_linux/GameDataXMLHandler.cpp
+1386610114 source:/home/csiki/croupier/GameModule/croupier_linux/GameDataXMLHandler.cpp
 	"stdafx.h"
 	"GameDataXMLHandler.h"
 
@@ -328,7 +329,7 @@
 	"BotDataXMLHandler.h"
 	"pugixml.hpp"
 
-1382542482 source:/home/csiki/croupier/GameModule/croupier_linux/GameModule.cpp
+1386610798 source:/home/csiki/croupier/GameModule/croupier_linux/GameModule.cpp
 	"stdafx.h"
 	"GameModule.h"
 	"Comment.h"
@@ -376,7 +377,7 @@
 	"pugixml.hpp"
 	"Results.h"
 
-1382458698 source:/home/csiki/croupier/GameModule/croupier_linux/GameOwner.cpp
+1386610114 source:/home/csiki/croupier/GameModule/croupier_linux/GameOwner.cpp
 	"stdafx.h"
 	"GameOwner.h"
 	"Card.h"
@@ -384,6 +385,7 @@
 	"TestBotAggressive.h"
 	"TestBotShy.h"
 	"AliveBot.h"
+	<iostream>
 
 1382458698 /home/csiki/croupier/GameModule/croupier_linux/TestBot.h
 	"Bot.h"
@@ -400,7 +402,7 @@
 	"BotLanguage.h"
 	"BettingSystem.h"
 
-1382458698 source:/home/csiki/croupier/GameModule/croupier_linux/HandEvaluator.cpp
+1386610114 source:/home/csiki/croupier/GameModule/croupier_linux/HandEvaluator.cpp
 	"stdafx.h"
 	"HandEvaluator.h"
 	"HandRank.h"
@@ -467,7 +469,7 @@
 1382458698 /home/csiki/croupier/GameModule/croupier_linux/PhpBotLoader.h
 	"BotLoader.h"
 
-1382458698 source:/home/csiki/croupier/GameModule/croupier_linux/Process.cpp
+1386610114 source:/home/csiki/croupier/GameModule/croupier_linux/Process.cpp
 	"stdafx.h"
 	"Process.h"
 
@@ -519,7 +521,7 @@
 	"stdafx.h"
 	"Table.h"
 
-1382458698 source:/home/csiki/croupier/GameModule/croupier_linux/TimerBotProxy.cpp
+1386610114 source:/home/csiki/croupier/GameModule/croupier_linux/TimerBotProxy.cpp
 	"stdafx.h"
 	"TimerBotProxy.h"
 	"BotTimeExceededException.h"

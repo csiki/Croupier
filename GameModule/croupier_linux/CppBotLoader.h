@@ -10,7 +10,7 @@
 class CppBotLoader : public BotLoader
 {
 private:
-	std::map<Bot*, destroy_bot*> destroyers;
+	std::map<Bot*, destroy_bot> destroyers;
 
 protected:
 	Process* initProcess(); // UNIT
@@ -20,9 +20,9 @@ public:
 
 	~CppBotLoader()
 	{
-		for (std::map<Bot*, destroy_bot*>::iterator it = destroyers.begin(); it != destroyers.end(); ++it)
+		for (std::map<Bot*, destroy_bot>::iterator it = destroyers.begin(); it != destroyers.end(); ++it)
 		{
-			(it->second)(it->first);
+			(*(it->second))(it->first);
 		}
 	}
 };
