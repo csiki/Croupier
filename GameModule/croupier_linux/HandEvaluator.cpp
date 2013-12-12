@@ -10,7 +10,7 @@ HandRank HandEvaluator::evalFiveCards(const Card** cards)
 	// building a histogram of the 5 cards rank
 	int histogram[5] = {0, 0, 0, 0, 0};
 	bool alreadyFound;
-	
+
 	for (size_t c = 0; c < 5; ++c)
 	{
 		if (cards[c]->rank != Card::Rank::NULLRANK) // if nullrank, don't increase histogram
@@ -46,7 +46,7 @@ HandRank HandEvaluator::evalFiveCards(const Card** cards)
 
 	// sort decreasing the histogram
 	std::sort(histogram, histogram + 5, std::greater<int>());
-	
+
 	// check if FourOfAKind, FullHouses, ThreeOfAKind, TwoPair, Pair
 	HandRank histoRank = HandRank::HighCard;
 	if (histogram[0] == 4)
@@ -74,7 +74,7 @@ HandRank HandEvaluator::evalFiveCards(const Card** cards)
 		// like 2,1,1,1,0
 		histoRank = HandRank::Pair;
 	}
-	
+
 	// check for flush
 	bool isFlush = true;
 	for (size_t i = 1; i < 5; ++i)
@@ -112,7 +112,7 @@ HandRank HandEvaluator::evalFiveCards(const Card** cards)
 			{
 				highrank = cards[i]->rank;
 			}
-		
+
 			if (cards[i]->rank < lowrank && cards[i]->rank != Card::Rank::NULLRANK) // nullcard can't be the lowest card
 			{
 				lowrank = cards[i]->rank;
@@ -125,7 +125,7 @@ HandRank HandEvaluator::evalFiveCards(const Card** cards)
 			if (isFlush)
 			{
 				straightRank = HandRank::StraightFlush;
-			
+
 				// if the highest card is ACE it is a royal flush
 				if (highrank == Card::Rank::ACE)
 				{
@@ -145,7 +145,7 @@ HandRank HandEvaluator::evalFiveCards(const Card** cards)
 	{
 		return straightRank;
 	}
-	
+
 	return histoRank;
 }
 
@@ -157,7 +157,7 @@ bool HandEvaluator::cardComparatorByRank(const Card* c1, const Card* c2)
 	{
 		return true;
 	}
-	
+
 	return false;
 }
 
@@ -191,11 +191,11 @@ HandRank HandEvaluator::evalHand(const Card** cards, const Card** bestHand)
 
 			// rank tmpHand
 			tmpRank = HandEvaluator::evalFiveCards(tmpHand);
-			
+
 			if (bestRank < tmpRank) // if higher rank found
 			{
 				bestRank = tmpRank;
-				
+
 				// fill bestHand with tmpHand
 				for (size_t i = 0; i < 5; ++i)
 				{

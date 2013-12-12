@@ -125,7 +125,8 @@ void GameOwner::initialiseGame()
 	// delete bot loaders (not needed anyomore)
 	for (std::map<BotLanguage, BotLoader*>::iterator it = this->botLoaders.begin(); it != this->botLoaders.end(); ++it)
 	{
-		delete it->second;
+        //TODO: move this away
+		//delete it->second;
 	}
 
 	this->gameState = 1;

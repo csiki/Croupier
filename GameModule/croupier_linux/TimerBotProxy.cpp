@@ -27,7 +27,6 @@ bool TimerBotProxy::isInTime(std::future<void>&& f)
 
 void TimerBotProxy::handleTimeout(std::string inMethod)
 {
-
 	throw BotTimeExceededException(inMethod);
 }
 
@@ -205,24 +204,10 @@ void TimerBotProxy::roundStarted(int round)
 {
 	std::future<void> f = std::async(std::launch::async, &Bot::roundStarted, this->forwardTo, round);
 
-
-_ASD:
-    auto start = std::chrono::high_resolution_clock::now();
-	auto now = std::chrono::high_resolution_clock::now();
-
-	long dur = 0;
-	while (dur < this->allowedCalcTime)
+	if(!this->isInTime(std::move(f)))
 	{
-		if (f.wait_for(std::chrono::milliseconds(0)) == std::future_status::ready)
-		{
-			goto _ASD;
-		}
-		std::this_thread::sleep_for(std::chrono::milliseconds(20));
-		now = std::chrono::high_resolution_clock::now();
-		dur = (now - start).count() / 10000;
+		this->handleTimeout("roundStarted");
 	}
-
-	this->handleTimeout("roundStarted");
 }
 
 void TimerBotProxy::roundWinners(int numOfWinners, const int* winners)

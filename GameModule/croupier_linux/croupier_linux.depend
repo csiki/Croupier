@@ -1113,3 +1113,559 @@
 	"Process.h"
 	"Card.h"
 
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/AliveBotLoader.cpp
+	"stdafx.h"
+	"AliveBotLoader.h"
+	"AliveBot.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/stdafx.h
+	<stdio.h>
+	<iostream>
+	<map>
+	<vector>
+	<fstream>
+	<memory>
+	<algorithm>
+	<list>
+	<functional>
+	<ctime>
+	<sstream>
+	<stdlib.h>
+	<thread>
+	<atomic>
+	<ctime>
+	<chrono>
+	<future>
+	<exception>
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/AliveBotLoader.h
+	"BotLoader.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/BotLoader.h
+	"Bot.h"
+	"Process.h"
+	"BotData.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/Bot.h
+	"Comment.h"
+	"BotCommunicator.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/Comment.h
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/BotCommunicator.h
+	"BotInfo.h"
+	"Comment.h"
+	"KnowledgeDataType.h"
+	"BotKnowledgeHandler.h"
+	"KnowledgeTable.h"
+	"Table.h"
+	"Emotion.h"
+	"HandRank.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/BotInfo.h
+	"Card.h"
+	"Emotion.h"
+	"BotLanguage.h"
+	"Logger.h"
+	"BroadcastMember.h"
+	"BroadcastStation.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/Card.h
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/Emotion.h
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/BotLanguage.h
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/Logger.h
+	"BroadcastMember.h"
+	"Entity.h"
+	"Loggable.h"
+	"Severity.h"
+	"BroadcastMessage.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/BroadcastMember.h
+	"Entity.h"
+	"BroadcastMessage.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/Entity.h
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/BroadcastMessage.h
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/Loggable.h
+	"Event.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/Event.h
+	"Severity.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/Severity.h
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/BroadcastStation.h
+	"BroadcastMessage.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/KnowledgeDataType.h
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/BotKnowledgeHandler.h
+	"KnowledgeTable.h"
+	"KnowledgeDataType.h"
+	"KnowledgeTableXMLHandler.h"
+	"../pugixml/pugixml.hpp"
+	"BotData.h"
+	"stdafx.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/KnowledgeTable.h
+	"KnowledgeDataType.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/KnowledgeTableXMLHandler.h
+	"KnowledgeTable.h"
+	"pugixml.hpp"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/pugixml.hpp
+	"pugiconfig.hpp"
+	<stddef.h>
+	<exception>
+	<iterator>
+	<iosfwd>
+	<string>
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/pugiconfig.hpp
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/pugixml/pugixml.hpp
+	"pugiconfig.hpp"
+	<stddef.h>
+	<exception>
+	<iterator>
+	<iosfwd>
+	<string>
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/pugixml/pugiconfig.hpp
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/BotData.h
+	"BotLanguage.h"
+	"BotTimeExceededException.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/BotTimeExceededException.h
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/Table.h
+	"BotInfo.h"
+	"Card.h"
+	"Rulz.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/Rulz.h
+	"BettingSystem.h"
+	"BotLanguage.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/BettingSystem.h
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/HandRank.h
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/Process.h
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/AliveBot.h
+	"Bot.h"
+	"BotLanguage.h"
+	"BettingSystem.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/Bot.cpp
+	"stdafx.h"
+	"Bot.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/BotCommunicationTranslator.cpp
+	"stdafx.h"
+	"BotCommunicationTranslator.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/BotCommunicationTranslator.h
+	"Process.h"
+	"Comment.h"
+	"Card.h"
+	"Bot.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/BotCommunicator.cpp
+	"stdafx.h"
+	"BotCommunicator.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/BotData.cpp
+	"stdafx.h"
+	"BotData.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/BotDataXMLHandler.cpp
+	"stdafx.h"
+	"BotDataXMLHandler.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/BotDataXMLHandler.h
+	"BotData.h"
+	"pugixml.hpp"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/BotHandler.cpp
+	"stdafx.h"
+	"BotHandler.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/BotHandler.h
+	"BotInfo.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/BotInfo.cpp
+	"stdafx.h"
+	"BotInfo.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/BotKnowledgeHandler.cpp
+	"stdafx.h"
+	"BotKnowledgeHandler.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/BotManager.cpp
+	"stdafx.h"
+	"BotManager.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/BotManager.h
+	"BotCommunicator.h"
+	"BotHandler.h"
+	"Logger.h"
+	"BroadcastMember.h"
+	"BotKnowledgeHandler.h"
+	"Bot.h"
+	"Table.h"
+	"BroadcastStation.h"
+	"Hostess.h"
+	"Rulz.h"
+	"Comment.h"
+	"KnowledgeDataType.h"
+	"BroadcastMessage.h"
+	"Comment.h"
+	"TimerBotProxy.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/Hostess.h
+	"BroadcastMember.h"
+	"Table.h"
+	"Rulz.h"
+	"BroadcastMessage.h"
+	"BotInfo.h"
+	"HandRank.h"
+	"HandEvaluator.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/HandEvaluator.h
+	"HandRank.h"
+	"Card.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/TimerBotProxy.h
+	"Bot.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/BroadcastMember.cpp
+	"stdafx.h"
+	"BroadcastStation.h"
+	"BroadcastMember.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/BroadcastStation.cpp
+	"stdafx.h"
+	"BroadcastStation.h"
+	"BroadcastMember.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/Card.cpp
+	"stdafx.h"
+	"Card.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/CBotLoader.cpp
+	"stdafx.h"
+	"CBotLoader.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/CBotLoader.h
+	"BotLoader.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/CommonLispBotLoader.cpp
+	"stdafx.h"
+	"CommonLispBotLoader.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/CommonLispBotLoader.h
+	"BotLoader.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/CppBotLoader.cpp
+	"stdafx.h"
+	"CppBotLoader.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/CppBotLoader.h
+	"BotLoader.h"
+	"BotLoaderException.h"
+	<dlfcn.h>
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/BotLoaderException.h
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/Croupier.cpp
+	"stdafx.h"
+	"Croupier.h"
+	"BroadcastMessage.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/Croupier.h
+	"Logger.h"
+	"BroadcastMember.h"
+	"Deck.h"
+	"Table.h"
+	"BotHandler.h"
+	"BroadcastStation.h"
+	"HandEvaluator.h"
+	"BroadcastMessage.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/Deck.h
+	"Card.h"
+	<time.h>
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/CSharpBotLoader.cpp
+	"stdafx.h"
+	"CSharpBotLoader.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/CSharpBotLoader.h
+	"BotLoader.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/Deck.cpp
+	"stdafx.h"
+	"Deck.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/Entity.cpp
+	"stdafx.h"
+	"Entity.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/Event.cpp
+	"stdafx.h"
+	"Event.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/GameData.cpp
+	"stdafx.h"
+	"GameData.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/GameData.h
+	"BotData.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/GameDataXMLHandler.cpp
+	"stdafx.h"
+	"GameDataXMLHandler.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/GameDataXMLHandler.h
+	"GameData.h"
+	"BotLanguage.h"
+	"BotDataXMLHandler.h"
+	"pugixml.hpp"
+
+1386776830 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/GameModule.cpp
+	"stdafx.h"
+	"GameModule.h"
+	"Comment.h"
+	"BotData.h"
+	"BotDataXMLHandler.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/GameModule.h
+	<stdio.h>
+	"GameOwner.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/GameOwner.h
+	"Bot.h"
+	"Log.h"
+	"LogXMLHandler.h"
+	"RulzXMLHandler.h"
+	"Croupier.h"
+	"BotDataXMLHandler.h"
+	"BotData.h"
+	"BotLoader.h"
+	"CppBotLoader.h"
+	"AliveBotLoader.h"
+	"BotManager.h"
+	"Results.h"
+	"ResultsXMLHandler.h"
+	"GameData.h"
+	"GameDataXMLHandler.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/Log.h
+	"Loggable.h"
+	"Event.h"
+	<list>
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/LogXMLHandler.h
+	"Log.h"
+	"pugixml.hpp"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/RulzXMLHandler.h
+	"Rulz.h"
+	"pugixml.hpp"
+	"BotLanguage.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/Results.h
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/ResultsXMLHandler.h
+	"pugixml.hpp"
+	"Results.h"
+
+1386840686 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/GameOwner.cpp
+	"stdafx.h"
+	"GameOwner.h"
+	"Card.h"
+	"TestBot.h"
+	"TestBotAggressive.h"
+	"TestBotShy.h"
+	"AliveBot.h"
+	<iostream>
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/TestBot.h
+	"Bot.h"
+	"BotLanguage.h"
+	"BettingSystem.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/TestBotAggressive.h
+	"Bot.h"
+	"BotLanguage.h"
+	"BettingSystem.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/TestBotShy.h
+	"Bot.h"
+	"BotLanguage.h"
+	"BettingSystem.h"
+
+1386840775 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/HandEvaluator.cpp
+	"stdafx.h"
+	"HandEvaluator.h"
+	"HandRank.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/Hostess.cpp
+	"stdafx.h"
+	"Hostess.h"
+	"BroadcastMessage.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/JavaBotLoader.cpp
+	"stdafx.h"
+	"JavaBotLoader.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/JavaBotLoader.h
+	"BotLoader.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/KnowledgeTable.cpp
+	"stdafx.h"
+	"KnowledgeTable.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/KnowledgeTableXMLHandler.cpp
+	"stdafx.h"
+	"KnowledgeTableXMLHandler.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/Log.cpp
+	"stdafx.h"
+	"Log.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/Logger.cpp
+	"stdafx.h"
+	"Logger.h"
+	"Severity.h"
+	"BroadcastMessage.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/LogXMLHandler.cpp
+	"stdafx.h"
+	"LogXMLHandler.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/LuaBotLoader.cpp
+	"stdafx.h"
+	"LuaBotLoader.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/LuaBotLoader.h
+	"BotLoader.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/PascalBotLoader.cpp
+	"stdafx.h"
+	"PascalBotLoader.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/PascalBotLoader.h
+	"BotLoader.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/PerlBotLoader.cpp
+	"stdafx.h"
+	"PerlBotLoader.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/PerlBotLoader.h
+	"BotLoader.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/PhpBotLoader.cpp
+	"stdafx.h"
+	"PhpBotLoader.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/PhpBotLoader.h
+	"BotLoader.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/Process.cpp
+	"stdafx.h"
+	"Process.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/PrologBotLoader.cpp
+	"stdafx.h"
+	"PrologBotLoader.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/PrologBotLoader.h
+	"BotLoader.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/pugixml.cpp
+	"stdafx.h"
+	"pugixml.hpp"
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<assert.h>
+	<wchar.h>
+	<math.h>
+	<float.h>
+	<setjmp.h>
+	<istream>
+	<ostream>
+	<string>
+	<new>
+	<stdint.h>
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/PythonBotLoader.cpp
+	"stdafx.h"
+	"PythonBotLoader.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/PythonBotLoader.h
+	"BotLoader.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/Results.cpp
+	"stdafx.h"
+	"Results.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/ResultsXMLHandler.cpp
+	"stdafx.h"
+	"ResultsXMLHandler.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/RubyBotLoader.cpp
+	"stdafx.h"
+	"RubyBotLoader.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/RubyBotLoader.h
+	"BotLoader.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/Rulz.cpp
+	"stdafx.h"
+	"Rulz.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/RulzXMLHandler.cpp
+	"stdafx.h"
+	"RulzXMLHandler.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/SchemeBotLoader.cpp
+	"stdafx.h"
+	"SchemeBotLoader.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/SchemeBotLoader.h
+	"BotLoader.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/stdafx.cpp
+	"stdafx.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/Table.cpp
+	"stdafx.h"
+	"Table.h"
+
+1386841040 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/TimerBotProxy.cpp
+	"stdafx.h"
+	"TimerBotProxy.h"
+	"BotTimeExceededException.h"
+
+1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/XYTranslator.cpp
+	"stdafx.h"
+	"XYTranslator.h"
+
+1386776223 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/XYTranslator.h
+	"Bot.h"
+	"BotCommunicationTranslator.h"
+	"Comment.h"
+	"Process.h"
+	"Card.h"
+
