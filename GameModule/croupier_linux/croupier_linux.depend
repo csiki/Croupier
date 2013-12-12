@@ -1489,7 +1489,7 @@
 	"pugixml.hpp"
 	"Results.h"
 
-1386840686 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/GameOwner.cpp
+1386841263 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/GameOwner.cpp
 	"stdafx.h"
 	"GameOwner.h"
 	"Card.h"
@@ -1514,7 +1514,7 @@
 	"BotLanguage.h"
 	"BettingSystem.h"
 
-1386840775 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/HandEvaluator.cpp
+1386856799 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/HandEvaluator.cpp
 	"stdafx.h"
 	"HandEvaluator.h"
 	"HandRank.h"
@@ -1653,7 +1653,7 @@
 	"stdafx.h"
 	"Table.h"
 
-1386841040 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/TimerBotProxy.cpp
+1386859618 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/TimerBotProxy.cpp
 	"stdafx.h"
 	"TimerBotProxy.h"
 	"BotTimeExceededException.h"

@@ -295,7 +295,7 @@ int HandEvaluator::handComparator(HandRank rank, const Card** bestHand1, const C
 
 		// iterate from the highest to the lowest
 		// check at given position, which card is higher
-		for (size_t i = 4; i >= 0; --i)
+		for (int i = 4; i >= 0; --i)
 		{
 			if (bestHand2[i]->rank < bestHand1[i]->rank)
 			{
@@ -564,7 +564,7 @@ int HandEvaluator::handComparator(HandRank rank, const Card** bestHand1, const C
 	{
 		// iterate from the highest to the lowest
 		// check at given position, which card is higher
-		for (size_t i = 4; i >= 0; --i)
+		for (int i = 4; i >= 0; --i)
 		{
 			if (bestHand2[i]->rank < bestHand1[i]->rank)
 			{
