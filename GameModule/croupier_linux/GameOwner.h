@@ -42,6 +42,12 @@ public:
 	GameOwner(const char* gameDataXMLPath)
 	{
 		this->gameData = GameDataXMLHandler::loadXML(gameDataXMLPath);
+		if (this->gameData == nullptr)
+		{
+		    this->errorOccured("Cannot load GameData instance from xml!");
+		    return;
+		}
+
 		this->numOfBots = gameData->getNumOfBots();
 		this->bots = new Bot*[numOfBots];
 		this->botManagers = new BotManager*[numOfBots];

@@ -330,7 +330,7 @@
 	"BotDataXMLHandler.h"
 	"pugixml.hpp"
 
-1386610798 source:/home/csiki/croupier/GameModule/croupier_linux/GameModule.cpp
+1387814635 source:/home/csiki/croupier/GameModule/croupier_linux/GameModule.cpp
 	"stdafx.h"
 	"GameModule.h"
 	"Comment.h"
@@ -341,7 +341,7 @@
 	<stdio.h>
 	"GameOwner.h"
 
-1382458698 /home/csiki/croupier/GameModule/croupier_linux/GameOwner.h
+1387815811 /home/csiki/croupier/GameModule/croupier_linux/GameOwner.h
 	"Bot.h"
 	"Log.h"
 	"LogXMLHandler.h"
@@ -378,7 +378,7 @@
 	"pugixml.hpp"
 	"Results.h"
 
-1386610114 source:/home/csiki/croupier/GameModule/croupier_linux/GameOwner.cpp
+1387811666 source:/home/csiki/croupier/GameModule/croupier_linux/GameOwner.cpp
 	"stdafx.h"
 	"GameOwner.h"
 	"Card.h"
@@ -403,7 +403,7 @@
 	"BotLanguage.h"
 	"BettingSystem.h"
 
-1386610114 source:/home/csiki/croupier/GameModule/croupier_linux/HandEvaluator.cpp
+1387811666 source:/home/csiki/croupier/GameModule/croupier_linux/HandEvaluator.cpp
 	"stdafx.h"
 	"HandEvaluator.h"
 	"HandRank.h"
@@ -522,7 +522,7 @@
 	"stdafx.h"
 	"Table.h"
 
-1386610114 source:/home/csiki/croupier/GameModule/croupier_linux/TimerBotProxy.cpp
+1387813729 source:/home/csiki/croupier/GameModule/croupier_linux/TimerBotProxy.cpp
 	"stdafx.h"
 	"TimerBotProxy.h"
 	"BotTimeExceededException.h"

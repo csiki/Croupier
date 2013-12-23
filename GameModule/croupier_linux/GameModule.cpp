@@ -21,17 +21,20 @@ int main(int argc, char* argv[])
 
 	// init game owner
 	GameOwner* go = new GameOwner(gameDataXMLFileName.c_str());
-	go->initialiseGame();
-
-	// run game
-	if (go->getGameState() == 1) // initialised successfully
+	if (go->getGameState() == 0)
 	{
-		go->startGame();
+        go->initialiseGame();
 
-		if (go->getGameState() == 3) // run successfully
-		{
-			go->saveResults();
-		}
+        // run game
+        if (go->getGameState() == 1) // initialised successfully
+        {
+            go->startGame();
+
+            if (go->getGameState() == 3) // run successfully
+            {
+                go->saveResults();
+            }
+        }
 	}
 
 	return go->getGameState();
