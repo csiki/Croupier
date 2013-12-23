@@ -20,6 +20,7 @@
 #include <chrono>
 #include <future>
 #include <exception>
+#include <ratio>
 
 namespace
 {

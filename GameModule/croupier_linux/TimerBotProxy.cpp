@@ -7,7 +7,9 @@
 */
 bool TimerBotProxy::isInTime(std::future<void>&& f)
 {
-	std::chrono::high_resolution_clock::time_point start = std::chrono::high_resolution_clock::now();
+    using namespace std::chrono;
+
+	auto start = high_resolution_clock::now();
 
 	long dur = 0;
 	while (dur < this->allowedCalcTime)
@@ -17,8 +19,8 @@ bool TimerBotProxy::isInTime(std::future<void>&& f)
 			return true;
 		}
 		std::this_thread::sleep_for(std::chrono::milliseconds(20));
-		std::chrono::high_resolution_clock::time_point now = std::chrono::high_resolution_clock::now();
-		dur = (now - start).count() / 10000;
+		auto now = std::chrono::high_resolution_clock::now();
+		dur = duration_cast<milliseconds>(now - start).count();
 	}
 
 	return false;

@@ -4,7 +4,7 @@
 	"AliveBotLoader.h"
 	"AliveBot.h"
 
-1386610114 /home/csiki/croupier/GameModule/croupier_linux/stdafx.h
+1387812666 /home/csiki/croupier/GameModule/croupier_linux/stdafx.h
 	<stdio.h>
 	<iostream>
 	<map>
@@ -23,6 +23,7 @@
 	<chrono>
 	<future>
 	<exception>
+	<ratio>
 
 1382458698 /home/csiki/croupier/GameModule/croupier_linux/AliveBotLoader.h
 	"BotLoader.h"
