@@ -24,9 +24,9 @@ public:
 	TimeoutBot(BotCommunicator* communicator, int id, std::string name, BotLanguage lang)
 		: Bot(communicator, id, name, lang)
 	{
-		/*time_t seconds;
+		time_t seconds;
 		time(&seconds);
-		srand((unsigned int) seconds);*/
+		srand((unsigned int) seconds);
 	}
 
 	void allined(int botID, int amount)
@@ -111,8 +111,8 @@ public:
 
 	void step()
 	{
-		/*if(rand() % 2)
-			while(true);*/
+		if(rand() % 2)
+			while(true);
 	}
 
 	void turn()

@@ -1312,7 +1312,7 @@
 	"stdafx.h"
 	"BotKnowledgeHandler.h"
 
-1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/BotManager.cpp
+1387837898 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/BotManager.cpp
 	"stdafx.h"
 	"BotManager.h"
 
@@ -1443,7 +1443,7 @@
 	"BotDataXMLHandler.h"
 	"pugixml.hpp"
 
-1387835852 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/GameModule.cpp
+1387836407 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/GameModule.cpp
 	"stdafx.h"
 	"GameModule.h"
 	"Comment.h"
@@ -1655,7 +1655,7 @@
 	"stdafx.h"
 	"Table.h"
 
-1387831404 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/TimerBotProxy.cpp
+1387837975 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/TimerBotProxy.cpp
 	"stdafx.h"
 	"TimerBotProxy.h"
 	"BotTimeExceededException.h"
