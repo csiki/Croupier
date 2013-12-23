@@ -18,6 +18,7 @@ int main(int argc, char* argv[])
 	// generate path of game data xml file
 	std::string gameDataXMLFileName = _GAME_DATA_RELATIVE_PATH_;
 	gameDataXMLFileName += argv[1];
+	gameDataXMLFileName += ".xml";
 
 	// init game owner
 	GameOwner* go = new GameOwner(gameDataXMLFileName.c_str());
