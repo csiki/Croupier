@@ -1,0 +1,20 @@
+<game>
+	<id></id>
+	<log></log>
+	<rules></rules>
+	<results></results>
+	<bots>
+		<bot>
+			<id></id>
+			<playerid></playerid>
+			<name></name>
+			<src></src>
+			<lang></lang>
+			<credit></credit>
+			<knowledgetables>
+				<tableid>
+				</tableid>
+			</knowledgetables>
+		</bot>
+	</bots>
+</game>

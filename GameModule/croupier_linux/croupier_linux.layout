@@ -1,84 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
-	<File name="BotManager.cpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="247" topLine="0" />
-		</Cursor>
+	<File name="Bot.h" open="0" top="0" tabpos="2">
+		<Cursor position="0" topLine="0" />
 	</File>
-	<File name="BotManager.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1237" topLine="33" />
-		</Cursor>
+	<File name="BotDataXMLHandler.cpp" open="0" top="0" tabpos="4">
+		<Cursor position="0" topLine="0" />
 	</File>
-	<File name="Bot.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1952" topLine="2" />
-		</Cursor>
+	<File name="BotManager.cpp" open="0" top="0" tabpos="5">
+		<Cursor position="0" topLine="0" />
 	</File>
-	<File name="stdafx.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="787" topLine="21" />
-		</Cursor>
+	<File name="BotManager.h" open="0" top="0" tabpos="5">
+		<Cursor position="0" topLine="0" />
 	</File>
-	<File name="CppBotLoader.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="796" topLine="0" />
-		</Cursor>
+	<File name="BotTimeExceededException.h" open="0" top="0" tabpos="8">
+		<Cursor position="0" topLine="0" />
 	</File>
-	<File name="GameDataXMLHandler.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1072" topLine="15" />
-		</Cursor>
+	<File name="CppBotLoader.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="0" topLine="0" />
 	</File>
-	<File name="TimerBotProxy.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="0" topLine="0" />
-		</Cursor>
+	<File name="GameModule.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="724" topLine="5" />
 	</File>
-	<File name="HandEvaluator.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="10371" topLine="434" />
-		</Cursor>
+	<File name="GameOwner.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="570" topLine="14" />
 	</File>
-	<File name="BotDataXMLHandler.cpp" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1562" topLine="46" />
-		</Cursor>
+	<File name="GameOwner.h" open="0" top="0" tabpos="7">
+		<Cursor position="0" topLine="0" />
 	</File>
-	<File name="GameOwner.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2448" topLine="73" />
-		</Cursor>
+	<File name="TimerBotProxy.cpp" open="0" top="0" tabpos="4">
+		<Cursor position="0" topLine="0" />
 	</File>
-	<File name="GameOwner.h" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1900" topLine="67" />
-		</Cursor>
+	<File name="TimerBotProxy.h" open="0" top="0" tabpos="3">
+		<Cursor position="0" topLine="0" />
 	</File>
-	<File name="BotData.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="188" topLine="15" />
-		</Cursor>
-	</File>
-	<File name="Croupier.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="13744" topLine="598" />
-		</Cursor>
-	</File>
-	<File name="GameModule.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="724" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="BotTimeExceededException.h" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="296" topLine="6" />
-		</Cursor>
-	</File>
-	<File name="TimerBotProxy.cpp" open="1" top="1" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="850" topLine="27" />
-		</Cursor>
+	<File name="stdafx.h" open="1" top="1" tabpos="0">
+		<Cursor position="954" topLine="11" />
 	</File>
 </CodeBlocks_layout_file>

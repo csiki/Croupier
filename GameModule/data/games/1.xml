@@ -1,0 +1,26 @@
+<game>
+	<id>1</id>
+	<log>1.xml</log>
+	<rules>texas1.xml</rules>
+	<results>1.xml</results>
+	<bots>
+		<bot>
+			<id>100</id>
+			<playerid>1</playerid>
+			<name>mind1</name>
+			<src>100.sh</src>
+			<lang>0</lang>
+			<credit>2000</credit>
+			<knowledgetables/>
+		</bot>
+		<bot>
+			<id>200</id>
+			<playerid>2</playerid>
+			<name>mind2</name>
+			<src>200.sh</src>
+			<lang>0</lang>
+			<credit>2000</credit>
+			<knowledgetables/>
+		</bot>
+	</bots>
+</game>
