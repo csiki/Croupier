@@ -106,6 +106,9 @@
 		<Unit filename="HandRank.h" />
 		<Unit filename="Hostess.cpp" />
 		<Unit filename="Hostess.h" />
+		<Unit filename="InterruptThreadException.h" />
+		<Unit filename="InterruptableThread.cpp" />
+		<Unit filename="InterruptableThread.h" />
 		<Unit filename="JavaBotLoader.cpp" />
 		<Unit filename="JavaBotLoader.h" />
 		<Unit filename="KnowledgeDataType.h" />

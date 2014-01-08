@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "TimerBotProxy.h"
 #include "BotTimeExceededException.h"
+#include "InterruptableThread.h"
 
 /** Measure the time between the call and the end of process of the thread given.
  *	@return true if the AI process was in time, false otherwise.
@@ -233,8 +234,8 @@ void TimerBotProxy::showdown()
 
 void TimerBotProxy::step()
 {
-	std::future<void> f = std::async(std::launch::async, &Bot::step, this->forwardTo);
-
+    InterruptableThread it;
+    auto f = it.Start(&Bot::turn, this->forwardTo);
 	if(!this->isInTime(std::move(f)))
 	{
 		this->handleTimeout("step");
