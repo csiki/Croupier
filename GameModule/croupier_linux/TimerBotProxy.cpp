@@ -6,7 +6,7 @@
 /** Measure the time between the call and the end of process of the thread given.
  *	@return true if the AI process was in time, false otherwise.
 */
-bool TimerBotProxy::isInTime(std::future<void>&& f)
+bool TimerBotProxy::isInTime(std::atomic_bool& exited)
 {
     using namespace std::chrono;
 
@@ -15,7 +15,7 @@ bool TimerBotProxy::isInTime(std::future<void>&& f)
 	long dur = 0;
 	while (dur < this->allowedCalcTime)
 	{
-		if (f.wait_for(std::chrono::milliseconds(0)) == std::future_status::ready)
+		if (exited.load())
 		{
 			return true;
 		}
@@ -34,220 +34,528 @@ void TimerBotProxy::handleTimeout(std::string inMethod)
 
 void TimerBotProxy::allined(int botID, int amount)
 {
-	std::future<void> f = std::async(std::launch::async, &Bot::allined, this->forwardTo, botID, amount);
+	auto lambda = [](std::atomic_bool& exited, Bot* bot, int botID, int amount)
+    {
+        pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS,NULL);
+        bot->allined(botID, amount);
+        exited.store(true);
+    };
 
-	if(!this->isInTime(std::move(f)))
+    std::atomic_bool exited(false);
+
+    std::thread t(lambda, ref(exited), this->forwardTo, botID, amount);
+
+	if(!this->isInTime(exited))
 	{
+        pthread_t id = t.native_handle();
+        t.detach();
+        pthread_cancel(id);
 		this->handleTimeout("allined");
 	}
+    else
+        t.join();
 }
 
 void TimerBotProxy::blindsRaised(int newSmallBlind, int newBigBlind)
 {
-	std::future<void> f = std::async(std::launch::async, &Bot::blindsRaised, this->forwardTo, newSmallBlind, newBigBlind);
+	auto lambda = [](std::atomic_bool& exited, Bot* bot, int newSmallBlind, int newBigBlind)
+    {
+        pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS,NULL);
+        bot->blindsRaised(newSmallBlind, newBigBlind);
+        exited.store(true);
+    };
 
-	if(!this->isInTime(std::move(f)))
+    std::atomic_bool exited(false);
+
+    std::thread t(lambda, ref(exited), this->forwardTo, newSmallBlind, newBigBlind);
+
+	if(!this->isInTime(exited))
 	{
+        pthread_t id = t.native_handle();
+        t.detach();
+        pthread_cancel(id);
 		this->handleTimeout("blindsRaised");
 	}
+    else
+        t.join();
 }
 
 void TimerBotProxy::called(int botID, int amount)
 {
-	std::future<void> f = std::async(std::launch::async, &Bot::called, this->forwardTo, botID, amount);
+	auto lambda = [](std::atomic_bool& exited, Bot* bot, int botID, int amount)
+    {
+        pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS,NULL);
+        bot->called(botID, amount);
+        exited.store(true);
+    };
 
-	if(!this->isInTime(std::move(f)))
+    std::atomic_bool exited(false);
+
+    std::thread t(lambda, ref(exited), this->forwardTo, botID, amount);
+
+	if(!this->isInTime(exited))
 	{
+        pthread_t id = t.native_handle();
+        t.detach();
+        pthread_cancel(id);
 		this->handleTimeout("called");
 	}
+    else
+        t.join();
 }
 
 void TimerBotProxy::checked(int botID)
 {
-	std::future<void> f = std::async(std::launch::async, &Bot::checked, this->forwardTo, botID);
+	auto lambda = [](std::atomic_bool& exited, Bot* bot, int botID)
+    {
+        pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS,NULL);
+        bot->checked(botID);
+        exited.store(true);
+    };
 
-	if(!this->isInTime(std::move(f)))
+    std::atomic_bool exited(false);
+
+    std::thread t(lambda, ref(exited), this->forwardTo, botID);
+
+	if(!this->isInTime(exited))
 	{
+        pthread_t id = t.native_handle();
+        t.detach();
+        pthread_cancel(id);
 		this->handleTimeout("checked");
 	}
+    else
+        t.join();
 }
 
 void TimerBotProxy::flop()
 {
-	std::future<void> f = std::async(std::launch::async, &Bot::flop, this->forwardTo);
+    auto lambda = [](std::atomic_bool& exited, Bot* bot)
+    {
+        pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS,NULL);
+        bot->flop();
+        exited.store(true);
+    };
 
-	if(!this->isInTime(std::move(f)))
+    std::atomic_bool exited(false);
+
+    std::thread t(lambda, ref(exited), this->forwardTo);
+
+	if(!this->isInTime(exited))
 	{
+        pthread_t id = t.native_handle();
+        t.detach();
+        pthread_cancel(id);
 		this->handleTimeout("flop");
 	}
+    else
+        t.join();
 }
 
 void TimerBotProxy::folded(int botID)
 {
-	std::future<void> f = std::async(std::launch::async, &Bot::folded, this->forwardTo, botID);
+	auto lambda = [](std::atomic_bool& exited, Bot* bot, int botID)
+    {
+        pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS,NULL);
+        bot->folded(botID);
+        exited.store(true);
+    };
 
-	if(!this->isInTime(std::move(f)))
+    std::atomic_bool exited(false);
+
+    std::thread t(lambda, ref(exited), this->forwardTo, botID);
+
+	if(!this->isInTime(exited))
 	{
+        pthread_t id = t.native_handle();
+        t.detach();
+        pthread_cancel(id);
 		this->handleTimeout("folded");
 	}
+    else
+        t.join();
 }
 
 void TimerBotProxy::gameWinner(int botID)
 {
-	std::future<void> f = std::async(std::launch::async, &Bot::gameWinner, this->forwardTo, botID);
+	auto lambda = [](std::atomic_bool& exited, Bot* bot, int botID)
+    {
+        pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS,NULL);
+        bot->gameWinner(botID);
+        exited.store(true);
+    };
 
-	if(!this->isInTime(std::move(f)))
+    std::atomic_bool exited(false);
+
+    std::thread t(lambda, ref(exited), this->forwardTo, botID);
+
+	if(!this->isInTime(exited))
 	{
+        pthread_t id = t.native_handle();
+        t.detach();
+        pthread_cancel(id);
 		this->handleTimeout("gameWinner");
 	}
+    else
+        t.join();
 }
 
 void TimerBotProxy::leftGame(int botID)
 {
-	std::future<void> f = std::async(std::launch::async, &Bot::leftGame, this->forwardTo, botID);
+	auto lambda = [](std::atomic_bool& exited, Bot* bot, int botID)
+    {
+        pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS,NULL);
+        bot->leftGame(botID);
+        exited.store(true);
+    };
 
-	if(!this->isInTime(std::move(f)))
+    std::atomic_bool exited(false);
+
+    std::thread t(lambda, ref(exited), this->forwardTo, botID);
+
+	if(!this->isInTime(exited))
 	{
+        pthread_t id = t.native_handle();
+        t.detach();
+        pthread_cancel(id);
 		this->handleTimeout("leftGame");
 	}
+    else
+        t.join();
 }
 
 void TimerBotProxy::listen(int botID, Comment comment)
 {
-	std::future<void> f = std::async(std::launch::async, &Bot::listen, this->forwardTo, botID, comment);
+	auto lambda = [](std::atomic_bool& exited, Bot* bot, int botID, Comment comment)
+    {
+        pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS,NULL);
+        bot->listen(botID, comment);
+        exited.store(true);
+    };
 
-	if(!this->isInTime(std::move(f)))
+    std::atomic_bool exited(false);
+
+    std::thread t(lambda, ref(exited), this->forwardTo, botID, comment);
+
+	if(!this->isInTime(exited))
 	{
+        pthread_t id = t.native_handle();
+        t.detach();
+        pthread_cancel(id);
 		this->handleTimeout("listen");
 	}
+    else
+        t.join();
 }
 
 void TimerBotProxy::preflop()
 {
-	std::future<void> f = std::async(std::launch::async, &Bot::preflop, this->forwardTo);
+    auto lambda = [](std::atomic_bool& exited, Bot* bot)
+    {
+        pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS,NULL);
+        bot->preflop();
+        exited.store(true);
+    };
 
-	if(!this->isInTime(std::move(f)))
+    std::atomic_bool exited(false);
+
+    std::thread t(lambda, ref(exited), this->forwardTo);
+
+	if(!this->isInTime(exited))
 	{
+        pthread_t id = t.native_handle();
+        t.detach();
+        pthread_cancel(id);
 		this->handleTimeout("preflop");
 	}
+    else
+        t.join();
 }
 
 void TimerBotProxy::leave()
 {
-	std::future<void> f = std::async(std::launch::async, &Bot::leave, this->forwardTo);
+    auto lambda = [](std::atomic_bool& exited, Bot* bot)
+    {
+        pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS,NULL);
+        bot->leave();
+        exited.store(true);
+    };
 
-	if(!this->isInTime(std::move(f)))
+    std::atomic_bool exited(false);
+
+    std::thread t(lambda, ref(exited), this->forwardTo);
+
+	if(!this->isInTime(exited))
 	{
+        pthread_t id = t.native_handle();
+        t.detach();
+        pthread_cancel(id);
 		this->handleTimeout("leave");
 	}
+    else
+        t.join();
 }
 
 void TimerBotProxy::raised(int botID, int amount)
 {
-	std::future<void> f = std::async(std::launch::async, &Bot::raised, this->forwardTo, botID, amount);
+	auto lambda = [](std::atomic_bool& exited, Bot* bot, int botID, int amount)
+    {
+        pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS,NULL);
+        bot->raised(botID, amount);
+        exited.store(true);
+    };
 
-	if(!this->isInTime(std::move(f)))
+    std::atomic_bool exited(false);
+
+    std::thread t(lambda, ref(exited), this->forwardTo, botID, amount);
+
+	if(!this->isInTime(exited))
 	{
+        pthread_t id = t.native_handle();
+        t.detach();
+        pthread_cancel(id);
 		this->handleTimeout("raised");
 	}
+    else
+        t.join();
 }
 
 void TimerBotProxy::rebuyOccurred(int botID, int amount)
 {
-	std::future<void> f = std::async(std::launch::async, &Bot::rebuyOccurred, this->forwardTo, botID, amount);
+	auto lambda = [](std::atomic_bool& exited, Bot* bot, int botID, int amount)
+    {
+        pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS,NULL);
+        bot->rebuyOccurred(botID, amount);
+        exited.store(true);
+    };
 
-	if(!this->isInTime(std::move(f)))
+    std::atomic_bool exited(false);
+
+    std::thread t(lambda, ref(exited), this->forwardTo, botID, amount);
+
+	if(!this->isInTime(exited))
 	{
-		this->handleTimeout("rebuyOccured");
+        pthread_t id = t.native_handle();
+        t.detach();
+        pthread_cancel(id);
+		this->handleTimeout("rebuyOccurred");
 	}
+    else
+        t.join();
 }
 
 void TimerBotProxy::rebuyDeadlineReached()
 {
-	std::future<void> f = std::async(std::launch::async, &Bot::rebuyDeadlineReached, this->forwardTo);
+    auto lambda = [](std::atomic_bool& exited, Bot* bot)
+    {
+        pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS,NULL);
+        bot->rebuyDeadlineReached();
+        exited.store(true);
+    };
 
-	if(!this->isInTime(std::move(f)))
+    std::atomic_bool exited(false);
+
+    std::thread t(lambda, ref(exited), this->forwardTo);
+
+	if(!this->isInTime(exited))
 	{
+        pthread_t id = t.native_handle();
+        t.detach();
+        pthread_cancel(id);
 		this->handleTimeout("rebuyDeadlineReached");
 	}
+    else
+        t.join();
 }
 
 void TimerBotProxy::rebuyOrLeave()
 {
-	std::future<void> f = std::async(std::launch::async, &Bot::rebuyOrLeave, this->forwardTo);
+    auto lambda = [](std::atomic_bool& exited, Bot* bot)
+    {
+        pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS,NULL);
+        bot->rebuyOrLeave();
+        exited.store(true);
+    };
 
-	if(!this->isInTime(std::move(f)))
+    std::atomic_bool exited(false);
+
+    std::thread t(lambda, ref(exited), this->forwardTo);
+
+	if(!this->isInTime(exited))
 	{
+        pthread_t id = t.native_handle();
+        t.detach();
+        pthread_cancel(id);
 		this->handleTimeout("rebuyOrLeave");
 	}
+    else
+        t.join();
 }
 
 void TimerBotProxy::river()
 {
-	std::future<void> f = std::async(std::launch::async, &Bot::river, this->forwardTo);
+    auto lambda = [](std::atomic_bool& exited, Bot* bot)
+    {
+        pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS,NULL);
+        bot->river();
+        exited.store(true);
+    };
 
-	if(!this->isInTime(std::move(f)))
+    std::atomic_bool exited(false);
+
+    std::thread t(lambda, ref(exited), this->forwardTo);
+
+	if(!this->isInTime(exited))
 	{
+        pthread_t id = t.native_handle();
+        t.detach();
+        pthread_cancel(id);
 		this->handleTimeout("river");
 	}
+    else
+        t.join();
 }
 
 void TimerBotProxy::roundEnded()
 {
-	std::future<void> f = std::async(std::launch::async, &Bot::roundEnded, this->forwardTo);
+    auto lambda = [](std::atomic_bool& exited, Bot* bot)
+    {
+        pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS,NULL);
+        bot->roundEnded();
+        exited.store(true);
+    };
 
-	if(!this->isInTime(std::move(f)))
+    std::atomic_bool exited(false);
+
+    std::thread t(lambda, ref(exited), this->forwardTo);
+
+	if(!this->isInTime(exited))
 	{
+        pthread_t id = t.native_handle();
+        t.detach();
+        pthread_cancel(id);
 		this->handleTimeout("roundEnded");
 	}
+    else
+        t.join();
 }
 
 void TimerBotProxy::roundStarted(int round)
 {
-	std::future<void> f = std::async(std::launch::async, &Bot::roundStarted, this->forwardTo, round);
+	auto lambda = [](std::atomic_bool& exited, Bot* bot, int round)
+    {
+        pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS,NULL);
+        bot->roundStarted(round);
+        exited.store(true);
+    };
 
-	if(!this->isInTime(std::move(f)))
+    std::atomic_bool exited(false);
+
+    std::thread t(lambda, ref(exited), this->forwardTo, round);
+
+	if(!this->isInTime(exited))
 	{
+        pthread_t id = t.native_handle();
+        t.detach();
+        pthread_cancel(id);
 		this->handleTimeout("roundStarted");
 	}
+	else
+        t.join();
 }
 
 void TimerBotProxy::roundWinners(int numOfWinners, const int* winners)
 {
-	std::future<void> f = std::async(std::launch::async, &Bot::roundWinners, this->forwardTo, numOfWinners, winners);
+	auto lambda = [](std::atomic_bool& exited, Bot* bot, int numOfWinners, const int* winners)
+    {
+        pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS,NULL);
+        bot->roundWinners(numOfWinners, winners);
+        exited.store(true);
+    };
 
-	if(!this->isInTime(std::move(f)))
+    std::atomic_bool exited(false);
+
+    std::thread t(lambda, ref(exited), this->forwardTo, numOfWinners, winners);
+
+	if(!this->isInTime(exited))
 	{
+        pthread_t id = t.native_handle();
+        t.detach();
+        pthread_cancel(id);
 		this->handleTimeout("roundWinners");
 	}
+    else
+        t.join();
 }
 
 void TimerBotProxy::showdown()
 {
-	std::future<void> f = std::async(std::launch::async, &Bot::showdown, this->forwardTo);
+    auto lambda = [](std::atomic_bool& exited, Bot* bot)
+    {
+        pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS,NULL);
+        bot->showdown();
+        exited.store(true);
+    };
 
-	if(!this->isInTime(std::move(f)))
+    std::atomic_bool exited(false);
+
+    std::thread t(lambda, ref(exited), this->forwardTo);
+
+	if(!this->isInTime(exited))
 	{
+        pthread_t id = t.native_handle();
+        t.detach();
+        pthread_cancel(id);
 		this->handleTimeout("showdown");
 	}
+    else
+        t.join();
 }
 
 void TimerBotProxy::step()
 {
-    InterruptableThread it;
-    auto f = it.Start(&Bot::turn, this->forwardTo);
-	if(!this->isInTime(std::move(f)))
+    auto lambda = [](std::atomic_bool& exited, Bot* bot)
+    {
+        pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS,NULL);
+        bot->step();
+        exited.store(true);
+    };
+
+    std::atomic_bool exited(false);
+
+    std::thread t(lambda, ref(exited), this->forwardTo);
+
+	if(!this->isInTime(exited))
 	{
+        pthread_t id = t.native_handle();
+        t.detach();
+        pthread_cancel(id);
 		this->handleTimeout("step");
 	}
+    else
+        t.join();
 }
 
 void TimerBotProxy::turn()
 {
-	std::future<void> f = std::async(std::launch::async, &Bot::turn, this->forwardTo);
+	 auto lambda = [](std::atomic_bool& exited, Bot* bot)
+    {
+        pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS,NULL);
+        bot->turn();
+        exited.store(true);
+    };
 
-	if(!this->isInTime(std::move(f)))
+    std::atomic_bool exited(false);
+
+    std::thread t(lambda, ref(exited), this->forwardTo);
+
+	if(!this->isInTime(exited))
 	{
+        pthread_t id = t.native_handle();
+        t.detach();
+        pthread_cancel(id);
 		this->handleTimeout("turn");
 	}
+    else
+        t.join();
 }

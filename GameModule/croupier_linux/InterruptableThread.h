@@ -6,7 +6,7 @@
 #include "Bot.h"
 
 
-//forrás: http://stackoverflow.com/questions/13893060/i-want-to-kill-a-stdthread-using-its-thread-object
+//kill: http://stackoverflow.com/questions/13893060/i-want-to-kill-a-stdthread-using-its-thread-object
 //isAlive check: http://stackoverflow.com/questions/9094422/how-to-check-if-a-stdthread-is-still-running
 class InterruptableThread
 {
@@ -40,7 +40,7 @@ if(!this->isInTime(std::move(future)))
     template <typename Function, typename... Args>
     std::future<void>&& Start(Function&& fun, Bot* instance, Args&&... args)
     {
-        std::packaged_task<void()> task(
+        std::packaged_task<void(Bot*, std::atomic_bool&, Function&&, Args&&...)> task(
         [] (Bot* instanceA, std::atomic_bool& f, Function&& funA, Args&&... argsA)
             {
                 _flag_ref = &f;
@@ -54,6 +54,7 @@ if(!this->isInTime(std::move(future)))
                     _flag,
                     std::forward<Function>(fun),
                     std::forward<Args>(args)...);
+        return std::move(future);
     }
 
     bool Stopping() const { return _flag.load(); }

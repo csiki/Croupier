@@ -12,7 +12,7 @@ private:
 	const int allowedCalcTime; // in millisec
 
 protected:
-	bool isInTime(std::future<void>&& f);
+	bool isInTime(std::atomic_bool& exited);
 	void handleTimeout(std::string inMethod);
 
 public:
