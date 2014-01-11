@@ -1119,7 +1119,7 @@
 	"AliveBotLoader.h"
 	"AliveBot.h"
 
-1389437414 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/stdafx.h
+1389438173 /home/sabvente/Documents/Croupier/GameModule/croupier_linux/stdafx.h
 	<stdio.h>
 	<iostream>
 	<map>
@@ -1134,7 +1134,6 @@
 	<stdlib.h>
 	<thread>
 	<atomic>
-	<signal.h>
 	<ctime>
 	<chrono>
 	<future>
@@ -1656,11 +1655,10 @@
 	"stdafx.h"
 	"Table.h"
 
-1389438041 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/TimerBotProxy.cpp
+1389456139 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/TimerBotProxy.cpp
 	"stdafx.h"
 	"TimerBotProxy.h"
 	"BotTimeExceededException.h"
-	"InterruptableThread.h"
 
 1386776223 source:/home/sabvente/Documents/Croupier/GameModule/croupier_linux/XYTranslator.cpp
 	"stdafx.h"

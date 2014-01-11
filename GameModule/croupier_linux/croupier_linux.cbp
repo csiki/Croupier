@@ -14,6 +14,7 @@
 				<Option compiler="gcc" />
 				<Option parameters="testgame" />
 				<Compiler>
+					<Add option="-std=c++11" />
 					<Add option="-g" />
 				</Compiler>
 				<Linker>
@@ -31,9 +32,13 @@
 				<Option parameters="testgame" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-std=c++11" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add option="-ldl" />
+					<Add option="-rdynamic" />
+					<Add option="-pthread" />
 				</Linker>
 			</Target>
 		</Build>

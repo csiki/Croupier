@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "TimerBotProxy.h"
 #include "BotTimeExceededException.h"
-#include "InterruptableThread.h"
 
 /** Measure the time between the call and the end of process of the thread given.
  *	@return true if the AI process was in time, false otherwise.
