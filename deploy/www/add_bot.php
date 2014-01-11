@@ -4,7 +4,8 @@ needLogin();
 $codeErr = $fileErr = $bruteErr = "";
 $name = $code = $lang = $nameErr = "";
 if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
-    $id = SQL("SHOW TABLE STATUS LIKE 'bots'")[0]["Auto_increment"];
+    $res = SQL("SHOW TABLE STATUS LIKE 'bots'");
+    $id = $res[0]["Auto_increment"];
     if (isset($_POST["name"]) && !empty($_POST["name"])) {
         //TODO: warning when wrong format
         $name = xssafe($_POST['name']);
@@ -49,8 +50,12 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
               VALUES (NULL, ?, ?, NOW(), ?, 'processing')", $_SESSION["accountID"], $name, $lang);
 
             //create bot folder
-            mkdir(_BOT_AI_RELATIVE_PATH_ . $id);
-
+            $ret = mkdir(_BOT_AI_RELATIVE_PATH_ . $id);
+            if ($ret === false)
+            {
+                SQL("DELETE FROM bots WHERE id = ?", $id); //remove db entry
+                die("Couldn't create folder for bot: " . $name);
+            }
             //move or make file
             if ($codeFileUpload) {
                 $tmp_name = $_FILES["codefile"]["tmp_name"];
@@ -58,7 +63,11 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
             } else {
                 $ret = file_put_contents(_BOT_AI_RELATIVE_PATH_ . $id . "/" . $id, $code);
                 if ($ret === false)
-                    die("Couldn't write bot to file: " . $id);
+                {
+                    SQL("DELETE FROM bots WHERE id = ?", $id); //remove db entry
+                    rmdir(_BOT_AI_RELATIVE_PATH_ . $id); //remove folder
+                    die("Couldn't write bot to file: " . $name);
+                }
             }
 
             //update stats
