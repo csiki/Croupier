@@ -23,11 +23,14 @@ bool TimerBotProxy::isInTime(std::atomic_bool& exited)
 		dur = duration_cast<milliseconds>(now - start).count();
 	}
 
+    timeout_occured.store(true);
+
 	return false;
 }
 
 void TimerBotProxy::handleTimeout(std::string inMethod)
 {
+    timeout_occured.store(false);
 	throw BotTimeExceededException(inMethod);
 }
 
@@ -47,6 +50,8 @@ void TimerBotProxy::allined(int botID, int amount)
 	if(!this->isInTime(exited))
 	{
         pthread_t id = t.native_handle();
+        while (this->critical_to_thread_cancel.load())
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         t.detach();
         pthread_cancel(id);
 		this->handleTimeout("allined");
@@ -71,6 +76,8 @@ void TimerBotProxy::blindsRaised(int newSmallBlind, int newBigBlind)
 	if(!this->isInTime(exited))
 	{
         pthread_t id = t.native_handle();
+        while (this->critical_to_thread_cancel.load())
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         t.detach();
         pthread_cancel(id);
 		this->handleTimeout("blindsRaised");
@@ -95,6 +102,8 @@ void TimerBotProxy::called(int botID, int amount)
 	if(!this->isInTime(exited))
 	{
         pthread_t id = t.native_handle();
+        while (this->critical_to_thread_cancel.load())
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         t.detach();
         pthread_cancel(id);
 		this->handleTimeout("called");
@@ -119,6 +128,8 @@ void TimerBotProxy::checked(int botID)
 	if(!this->isInTime(exited))
 	{
         pthread_t id = t.native_handle();
+        while (this->critical_to_thread_cancel.load())
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         t.detach();
         pthread_cancel(id);
 		this->handleTimeout("checked");
@@ -143,6 +154,8 @@ void TimerBotProxy::flop()
 	if(!this->isInTime(exited))
 	{
         pthread_t id = t.native_handle();
+        while (this->critical_to_thread_cancel.load())
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         t.detach();
         pthread_cancel(id);
 		this->handleTimeout("flop");
@@ -167,6 +180,8 @@ void TimerBotProxy::folded(int botID)
 	if(!this->isInTime(exited))
 	{
         pthread_t id = t.native_handle();
+        while (this->critical_to_thread_cancel.load())
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         t.detach();
         pthread_cancel(id);
 		this->handleTimeout("folded");
@@ -191,6 +206,8 @@ void TimerBotProxy::gameWinner(int botID)
 	if(!this->isInTime(exited))
 	{
         pthread_t id = t.native_handle();
+        while (this->critical_to_thread_cancel.load())
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         t.detach();
         pthread_cancel(id);
 		this->handleTimeout("gameWinner");
@@ -215,6 +232,8 @@ void TimerBotProxy::leftGame(int botID)
 	if(!this->isInTime(exited))
 	{
         pthread_t id = t.native_handle();
+        while (this->critical_to_thread_cancel.load())
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         t.detach();
         pthread_cancel(id);
 		this->handleTimeout("leftGame");
@@ -239,6 +258,8 @@ void TimerBotProxy::listen(int botID, Comment comment)
 	if(!this->isInTime(exited))
 	{
         pthread_t id = t.native_handle();
+        while (this->critical_to_thread_cancel.load())
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         t.detach();
         pthread_cancel(id);
 		this->handleTimeout("listen");
@@ -263,6 +284,8 @@ void TimerBotProxy::preflop()
 	if(!this->isInTime(exited))
 	{
         pthread_t id = t.native_handle();
+        while (this->critical_to_thread_cancel.load())
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         t.detach();
         pthread_cancel(id);
 		this->handleTimeout("preflop");
@@ -287,6 +310,8 @@ void TimerBotProxy::leave()
 	if(!this->isInTime(exited))
 	{
         pthread_t id = t.native_handle();
+        while (this->critical_to_thread_cancel.load())
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         t.detach();
         pthread_cancel(id);
 		this->handleTimeout("leave");
@@ -311,6 +336,8 @@ void TimerBotProxy::raised(int botID, int amount)
 	if(!this->isInTime(exited))
 	{
         pthread_t id = t.native_handle();
+        while (this->critical_to_thread_cancel.load())
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         t.detach();
         pthread_cancel(id);
 		this->handleTimeout("raised");
@@ -335,6 +362,8 @@ void TimerBotProxy::rebuyOccurred(int botID, int amount)
 	if(!this->isInTime(exited))
 	{
         pthread_t id = t.native_handle();
+        while (this->critical_to_thread_cancel.load())
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         t.detach();
         pthread_cancel(id);
 		this->handleTimeout("rebuyOccurred");
@@ -359,6 +388,8 @@ void TimerBotProxy::rebuyDeadlineReached()
 	if(!this->isInTime(exited))
 	{
         pthread_t id = t.native_handle();
+        while (this->critical_to_thread_cancel.load())
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         t.detach();
         pthread_cancel(id);
 		this->handleTimeout("rebuyDeadlineReached");
@@ -383,6 +414,8 @@ void TimerBotProxy::rebuyOrLeave()
 	if(!this->isInTime(exited))
 	{
         pthread_t id = t.native_handle();
+        while (this->critical_to_thread_cancel.load())
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         t.detach();
         pthread_cancel(id);
 		this->handleTimeout("rebuyOrLeave");
@@ -407,6 +440,8 @@ void TimerBotProxy::river()
 	if(!this->isInTime(exited))
 	{
         pthread_t id = t.native_handle();
+        while (this->critical_to_thread_cancel.load())
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         t.detach();
         pthread_cancel(id);
 		this->handleTimeout("river");
@@ -431,6 +466,8 @@ void TimerBotProxy::roundEnded()
 	if(!this->isInTime(exited))
 	{
         pthread_t id = t.native_handle();
+        while (this->critical_to_thread_cancel.load())
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         t.detach();
         pthread_cancel(id);
 		this->handleTimeout("roundEnded");
@@ -455,6 +492,8 @@ void TimerBotProxy::roundStarted(int round)
 	if(!this->isInTime(exited))
 	{
         pthread_t id = t.native_handle();
+        while (this->critical_to_thread_cancel.load())
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         t.detach();
         pthread_cancel(id);
 		this->handleTimeout("roundStarted");
@@ -479,6 +518,8 @@ void TimerBotProxy::roundWinners(int numOfWinners, const int* winners)
 	if(!this->isInTime(exited))
 	{
         pthread_t id = t.native_handle();
+        while (this->critical_to_thread_cancel.load())
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         t.detach();
         pthread_cancel(id);
 		this->handleTimeout("roundWinners");
@@ -503,6 +544,8 @@ void TimerBotProxy::showdown()
 	if(!this->isInTime(exited))
 	{
         pthread_t id = t.native_handle();
+        while (this->critical_to_thread_cancel.load())
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         t.detach();
         pthread_cancel(id);
 		this->handleTimeout("showdown");
@@ -527,6 +570,8 @@ void TimerBotProxy::step()
 	if(!this->isInTime(exited))
 	{
         pthread_t id = t.native_handle();
+        while (this->critical_to_thread_cancel.load())
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         t.detach();
         pthread_cancel(id);
 		this->handleTimeout("step");
@@ -551,6 +596,8 @@ void TimerBotProxy::turn()
 	if(!this->isInTime(exited))
 	{
         pthread_t id = t.native_handle();
+        while (this->critical_to_thread_cancel.load())
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         t.detach();
         pthread_cancel(id);
 		this->handleTimeout("turn");

@@ -11,13 +11,19 @@ private:
 	Bot* const forwardTo;
 	const int allowedCalcTime; // in millisec
 
+	/// Shared with TimerBotProxy
+	std::atomic_bool& critical_to_thread_cancel;
+	std::atomic_bool& timeout_occured;
+
 protected:
 	bool isInTime(std::atomic_bool& exited);
 	void handleTimeout(std::string inMethod);
 
 public:
-	TimerBotProxy(Bot* bot, int allowedCalcTime)
-		: Bot(nullptr, bot->getID(), bot->getName(), bot->getLang()), forwardTo(bot), allowedCalcTime(allowedCalcTime) {}
+	TimerBotProxy(Bot* bot, int allowedCalcTime, std::atomic_bool& critical_to_thread_cancel, std::atomic_bool& timeout_occured)
+		: Bot(nullptr, bot->getID(), bot->getName(), bot->getLang()), forwardTo(bot), allowedCalcTime(allowedCalcTime),
+            critical_to_thread_cancel(critical_to_thread_cancel), timeout_occured(timeout_occured) {}
+
 	virtual ~TimerBotProxy() {}
 
 	// inherited from bot

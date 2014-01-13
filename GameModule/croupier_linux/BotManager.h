@@ -33,6 +33,10 @@ private:
 	const Table *table;
 	const Rulz *rules;
 
+	/// Shared with TimerBotProxy
+	std::atomic_bool critical_to_thread_cancel;
+	std::atomic_bool timeout_occured;
+
 	/// Bot's index at table
 	int nthAtTable;
 
@@ -55,7 +59,9 @@ public:
 		this->kickedAtRound = 0;
 		this->numOfRaises = 0;
 		this->bot = nullptr;
-		
+		this->critical_to_thread_cancel.store(false);
+		this->timeout_occured.store(false);
+
 		// subscribe to BroadcastStation
 		this->subscribe();
 	}
@@ -72,62 +78,62 @@ public:
 	int getBotID() const;
 	std::string getName() const;
 	BotLanguage getLang() const;
-	 
+
 	// botcommunicator
-	int getReservedCredit() const; 
-	int getNumOfRebuys() const; 
-	std::string getBotName(int botID) const; 
-	bool isBotDealer(int botID) const; 
-	int getBotChips(int botID) const; 
-	int getBotPot(int botID) const; 
-	Emotion getBotEmotion(int botID) const; 
-	bool isBotHandRevealed(int botID) const; 
-	BotLanguage getBotLang(int botID) const; 
-	bool isBotInGame(int botID) const; 
-	bool isBotInRound(bool botID) const; 
-	Card lookAtBotHand(int botID, int cardIndex) const; 
-	bool allin(); // UNIT done 
-	bool call(); // UNIT done 
-	bool canTalk() const; 
-	bool canStep() const; 
+	int getReservedCredit() const;
+	int getNumOfRebuys() const;
+	std::string getBotName(int botID) const;
+	bool isBotDealer(int botID) const;
+	int getBotChips(int botID) const;
+	int getBotPot(int botID) const;
+	Emotion getBotEmotion(int botID) const;
+	bool isBotHandRevealed(int botID) const;
+	BotLanguage getBotLang(int botID) const;
+	bool isBotInGame(int botID) const;
+	bool isBotInRound(bool botID) const;
+	Card lookAtBotHand(int botID, int cardIndex) const;
+	bool allin(); // UNIT done
+	bool call(); // UNIT done
+	bool canTalk() const;
+	bool canStep() const;
 	bool canAllin() const; // UNIT done
-	bool canCall() const; 
-	bool canCheck() const; 
-	bool canFold() const; 
-	bool canRaise(int raiseAmount) const; // UNIT done 
-	bool check(); // UNIT done 
-	bool fold(); // UNIT done 
-	bool raise(int raiseAmount); // UNIT doone 
-	bool canRebuy(int rebuyAmount) const; // UNIT done 
-	bool rebuy(int rebuyAmount); // UNIT done 
-	bool talk(Comment comment); 
-	void quit(); 
-	int getNumOfBots(bool onlyInGame = false, bool onlyInRound = false) const; 
-	int getBotIDByIndex(int index) const; 
-	int getBotIndexByID(int botID) const; 
-	int getBotIDToTheRight(int nth = 1, bool onlyInGame = false, bool onlyInRound = false) const; 
-	int getBotIDToTheLeft(int nth = 1, bool onlyInGame = false, bool onlyInRound = false) const; 
-	int getCallAmount() const; 
-	int getMinRaise() const; 
-	int getBigBlindAtRound(int round = -1) const; // -1 means current round 
-	int getBlindShiftDeadline(int shiftDeadlineIndex) const; 
-	int getNextBlindShiftDeadline() const; 
-	int getSmallBlindAtRound(int round = -1) const; // -1 means current round 
-	int getCurrentRound() const; 
-	int getTableNumOfCards() const; 
-	Card getTableCard(int cardIndex) const; 
-	int getPotSum() const; 
-	int getBigBlind(int blindIndex) const; 
-	int getRebuyDeadline() const; 
-	int getSmallBlind(int blindIndex) const; 
-	int getAllowedBotCalcTime() const; 
-	int getStartingChips() const; 
-	int getNumOfBlinds() const; 
-	int getNumOfRebuysAllowed() const; 
-	bool isTalkAllowed() const; 
-	bool isEmotionAllowed() const; 
-	bool isBotKnowledgeUseAllowed() const; 
-	int addKnowledgeTableRow(int tableID); 
+	bool canCall() const;
+	bool canCheck() const;
+	bool canFold() const;
+	bool canRaise(int raiseAmount) const; // UNIT done
+	bool check(); // UNIT done
+	bool fold(); // UNIT done
+	bool raise(int raiseAmount); // UNIT doone
+	bool canRebuy(int rebuyAmount) const; // UNIT done
+	bool rebuy(int rebuyAmount); // UNIT done
+	bool talk(Comment comment);
+	void quit();
+	int getNumOfBots(bool onlyInGame = false, bool onlyInRound = false) const;
+	int getBotIDByIndex(int index) const;
+	int getBotIndexByID(int botID) const;
+	int getBotIDToTheRight(int nth = 1, bool onlyInGame = false, bool onlyInRound = false) const;
+	int getBotIDToTheLeft(int nth = 1, bool onlyInGame = false, bool onlyInRound = false) const;
+	int getCallAmount() const;
+	int getMinRaise() const;
+	int getBigBlindAtRound(int round = -1) const; // -1 means current round
+	int getBlindShiftDeadline(int shiftDeadlineIndex) const;
+	int getNextBlindShiftDeadline() const;
+	int getSmallBlindAtRound(int round = -1) const; // -1 means current round
+	int getCurrentRound() const;
+	int getTableNumOfCards() const;
+	Card getTableCard(int cardIndex) const;
+	int getPotSum() const;
+	int getBigBlind(int blindIndex) const;
+	int getRebuyDeadline() const;
+	int getSmallBlind(int blindIndex) const;
+	int getAllowedBotCalcTime() const;
+	int getStartingChips() const;
+	int getNumOfBlinds() const;
+	int getNumOfRebuysAllowed() const;
+	bool isTalkAllowed() const;
+	bool isEmotionAllowed() const;
+	bool isBotKnowledgeUseAllowed() const;
+	int addKnowledgeTableRow(int tableID);
 	int createKnowledgeTable(int numOfCols, std::list<KnowledgeDataType> colTypes);
 	KnowledgeDataType getKnowledgeTableDataType(int tableID, int col) const;
 	int getKnowledgeTableNumOfCols(int tableID) const;
