@@ -34,8 +34,8 @@ private:
 	const Rulz *rules;
 
 	/// Shared with TimerBotProxy
-	std::atomic_bool critical_to_thread_cancel;
-	std::atomic_bool timeout_occured;
+	mutable std::atomic_bool critical_to_thread_cancel;
+	mutable std::atomic_bool timeout_occured;
 
 	/// Bot's index at table
 	int nthAtTable;

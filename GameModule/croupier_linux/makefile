@@ -27,7 +27,7 @@ LIB_DEBUG = $(LIB)
 LDFLAGS_DEBUG = $(LDFLAGS) -ldl -rdynamic -pthread
 OBJDIR_DEBUG = obj/Debug
 DEP_DEBUG = 
-OUT_DEBUG = ../../exec/gamemodule
+OUT_DEBUG = ../../exec/croupier_linux
 
 INC_RELEASE = $(INC)
 CFLAGS_RELEASE = $(CFLAGS) -O2 -std=c++11
@@ -38,7 +38,7 @@ LIB_RELEASE = $(LIB)
 LDFLAGS_RELEASE = $(LDFLAGS) -s -ldl -rdynamic -pthread
 OBJDIR_RELEASE = obj/Release
 DEP_RELEASE = 
-OUT_RELEASE = ../../exec/gamemodule
+OUT_RELEASE = ../../exec/croupier_linux
 
 OBJ_DEBUG = $(OBJDIR_DEBUG)/PrologBotLoader.o $(OBJDIR_DEBUG)/Process.o $(OBJDIR_DEBUG)/PhpBotLoader.o $(OBJDIR_DEBUG)/PerlBotLoader.o $(OBJDIR_DEBUG)/PascalBotLoader.o $(OBJDIR_DEBUG)/LuaBotLoader.o $(OBJDIR_DEBUG)/Logger.o $(OBJDIR_DEBUG)/PythonBotLoader.o $(OBJDIR_DEBUG)/LogXMLHandler.o $(OBJDIR_DEBUG)/Log.o $(OBJDIR_DEBUG)/KnowledgeTableXMLHandler.o $(OBJDIR_DEBUG)/KnowledgeTable.o $(OBJDIR_DEBUG)/JavaBotLoader.o $(OBJDIR_DEBUG)/Hostess.o $(OBJDIR_DEBUG)/Table.o $(OBJDIR_DEBUG)/stdafx.o $(OBJDIR_DEBUG)/pugixml.o $(OBJDIR_DEBUG)/XYTranslator.o $(OBJDIR_DEBUG)/TimerBotProxy.o $(OBJDIR_DEBUG)/HandEvaluator.o $(OBJDIR_DEBUG)/SchemeBotLoader.o $(OBJDIR_DEBUG)/RulzXMLHandler.o $(OBJDIR_DEBUG)/Rulz.o $(OBJDIR_DEBUG)/RubyBotLoader.o $(OBJDIR_DEBUG)/ResultsXMLHandler.o $(OBJDIR_DEBUG)/Results.o $(OBJDIR_DEBUG)/BroadcastStation.o $(OBJDIR_DEBUG)/BroadcastMember.o $(OBJDIR_DEBUG)/BotManager.o $(OBJDIR_DEBUG)/BotKnowledgeHandler.o $(OBJDIR_DEBUG)/BotInfo.o $(OBJDIR_DEBUG)/BotHandler.o $(OBJDIR_DEBUG)/BotDataXMLHandler.o $(OBJDIR_DEBUG)/BotData.o $(OBJDIR_DEBUG)/BotCommunicator.o $(OBJDIR_DEBUG)/BotCommunicationTranslator.o $(OBJDIR_DEBUG)/Bot.o $(OBJDIR_DEBUG)/AliveBotLoader.o $(OBJDIR_DEBUG)/Deck.o $(OBJDIR_DEBUG)/GameOwner.o $(OBJDIR_DEBUG)/GameModule.o $(OBJDIR_DEBUG)/GameDataXMLHandler.o $(OBJDIR_DEBUG)/GameData.o $(OBJDIR_DEBUG)/Event.o $(OBJDIR_DEBUG)/Entity.o $(OBJDIR_DEBUG)/Croupier.o $(OBJDIR_DEBUG)/CppBotLoader.o $(OBJDIR_DEBUG)/CommonLispBotLoader.o $(OBJDIR_DEBUG)/Card.o $(OBJDIR_DEBUG)/CSharpBotLoader.o $(OBJDIR_DEBUG)/CBotLoader.o
 

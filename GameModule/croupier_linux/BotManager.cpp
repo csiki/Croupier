@@ -171,7 +171,11 @@ std::string BotManager::getBotName(int botID) const
 	this->log(Severity::VERBOSE, msg);
 	this->critical_to_thread_cancel.store(false);
 
-	return this->hostess->getBotByID(botID)->getName();
+    const BotInfo* bot = this->hostess->getBotByID(botID);
+    if(bot != nullptr)
+        return bot->getName();
+    else
+        return false;
 }
 
 /** Returns if a specified AI is a dealer.
@@ -188,7 +192,11 @@ bool BotManager::isBotDealer(int botID) const
 	this->log(Severity::VERBOSE, msg);
 	this->critical_to_thread_cancel.store(false);
 
-	return this->hostess->getBotByID(botID)->isDealer();
+    const BotInfo* bot = this->hostess->getBotByID(botID);
+    if(bot != nullptr)
+        return bot->isDealer();
+    else
+        return false;
 }
 
 /** Returns a specified AI's chips at hand.
@@ -205,7 +213,11 @@ int BotManager::getBotChips(int botID) const
 	this->log(Severity::VERBOSE, msg);
 	this->critical_to_thread_cancel.store(false);
 
-	return this->hostess->getBotByID(botID)->getChips();
+    const BotInfo* bot = this->hostess->getBotByID(botID);
+    if(bot != nullptr)
+        return bot->getChips();
+    else
+        return -1;
 }
 
 /** Returns a specified AI's pot in game.
@@ -222,7 +234,11 @@ int BotManager::getBotPot(int botID) const
 	this->log(Severity::VERBOSE, msg);
 	this->critical_to_thread_cancel.store(false);
 
-	return this->hostess->getBotByID(botID)->getPot();
+    const BotInfo* bot = this->hostess->getBotByID(botID);
+    if(bot != nullptr)
+        return bot->getPot();
+    else
+        return -1;
 }
 
 /** Returns a specified AI's name.
@@ -239,7 +255,11 @@ Emotion BotManager::getBotEmotion(int botID) const
 	this->log(Severity::VERBOSE, msg);
 	this->critical_to_thread_cancel.store(false);
 
-	return this->hostess->getBotByID(botID)->getEmotion();
+    const BotInfo* bot = this->hostess->getBotByID(botID);
+    if(bot != nullptr)
+        return bot->getEmotion();
+    else
+        return Emotion::DRUNKEN; //TODO: find better default
 }
 
 /** Returns if a specified AI's hand is revealed.
@@ -256,7 +276,11 @@ bool BotManager::isBotHandRevealed(int botID) const
 	this->log(Severity::VERBOSE, msg);
 	this->critical_to_thread_cancel.store(false);
 
-	return this->hostess->getBotByID(botID)->isHandRevealed();
+    const BotInfo* bot = this->hostess->getBotByID(botID);
+    if(bot != nullptr)
+        return bot->isHandRevealed();
+    else
+        return false;
 }
 
 /** Returns a specified AI's languge it is written in.
@@ -273,7 +297,11 @@ BotLanguage BotManager::getBotLang(int botID) const
 	this->log(Severity::VERBOSE, msg);
 	this->critical_to_thread_cancel.store(false);
 
-	return this->hostess->getBotByID(botID)->getLang();
+    const BotInfo* bot = this->hostess->getBotByID(botID);
+    if(bot != nullptr)
+        return bot->getLang();
+    else
+        return BotLanguage::ALIVE; //TODO: find better default
 }
 
 /** Returns if a specified AI's is in game (haven't fallen out or quited).
@@ -290,7 +318,11 @@ bool BotManager::isBotInGame(int botID) const
 	this->log(Severity::VERBOSE, msg);
 	this->critical_to_thread_cancel.store(false);
 
-	return this->hostess->getBotByID(botID)->isInGame();
+    const BotInfo* bot = this->hostess->getBotByID(botID);
+    if(bot != nullptr)
+        return bot->isInGame();
+    else
+        return false;
 }
 
 /** Returns if a specified AI's is in round (in game and haven't folded).
@@ -307,7 +339,11 @@ bool BotManager::isBotInRound(bool botID) const
 	this->log(Severity::VERBOSE, msg);
 	this->critical_to_thread_cancel.store(false);
 
-	return this->hostess->getBotByID(botID)->isInRound();
+    const BotInfo* bot = this->hostess->getBotByID(botID);
+    if(bot != nullptr)
+        return bot->isInRound();
+    else
+        return false;
 }
 
 /** Returns a specified AI's card in hand if revealed, else NullCard.
@@ -324,7 +360,11 @@ Card BotManager::lookAtBotHand(int botID, int cardIndex) const
 	this->log(Severity::VERBOSE, msg);
 	this->critical_to_thread_cancel.store(false);
 
-	return this->hostess->getBotByID(botID)->lookAtHand(cardIndex);
+    const BotInfo* bot = this->hostess->getBotByID(botID);
+    if(bot != nullptr)
+        return bot->lookAtHand(cardIndex);
+    else
+        return Card::getNullCard();
 }
 
 /** Returns if a specified AI can talk.
@@ -788,7 +828,11 @@ int BotManager::getBotIDByIndex(int index) const
 	this->log(Severity::VERBOSE, msg);
 	this->critical_to_thread_cancel.store(false);
 
-	return this->table->getBotByIndex(index)->getID();
+    const BotInfo* bot = this->table->getBotByIndex(index);
+    if(bot != nullptr)
+        return bot->getID();
+    else
+        return -1;
 }
 
 /** Returns AI's index by id (index: from 0 to n-1 same order at table; n: number of bots).
