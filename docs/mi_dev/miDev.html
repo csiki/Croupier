@@ -14,7 +14,7 @@
 
 <h1>Croupier MI fejlesztési útmutató</h1>
 
-<h2>Basic</h2>
+<h2>Basic sheet</h2>
 <h3>Bevezetés</h3>
 <p>
 	A Croupier poker keretrendszer egyik fő erénye, hogy
@@ -292,7 +292,7 @@ Ez a típus lehet: int, bool, char, std::string vagy float.
 
 		<tr><td>KnowledgeDataType <span class="important">getKnowledgeTableDataType</span>(int tableID, int col) const;</td><td>Visszatér a 'tableID' tudástár tábla 'col' oszlopának adat típusával (int, float, stb.).</td></tr>
 		<tr><td>int <span class="important">addKnowledgeTableRow</span>(int tableID);</td><td>Hozzáad a 'tableID' táblához egy sort és visszaadja annak (azonosító) számát. Az azonosító a sorok felvevésének sorrendjében növekszik.</td></tr>
-		<tr><td>int <span class="important">createKnowledgeTable</span>(int numOfCols, std::list<KnowledgeDataType> colTypes);</td><td>Létrehoz egy tudástár táblát 'numOfCols' oszloppal, és a 'colTypes' oszlop adattípusokkal. Visszatér a tábla azonosító számával.</td></tr>
+		<tr><td>int <span class="important">createKnowledgeTable</span>(int numOfCols, std::list&#60;KnowledgeDataType&#62; colTypes);</td><td>Létrehoz egy tudástár táblát 'numOfCols' oszloppal, és a 'colTypes' oszlop adattípusokkal. Visszatér a tábla azonosító számával.</td></tr>
 		<tr><td>int <span class="important">getKnowledgeTableNumOfCols</span>(int tableID) const;</td><td>Visszatér a 'tableID' tudástár tábla oszlopainak számával.</td></tr>
 		<tr><td>int <span class="important">getKnowledgeTableNumOfRows</span>(int tableID) const;</td><td>Visszatér a 'tableID' tudástár tábla sorainak számával.</td></tr>
 		<tr><td>bool <span class="important">removeKnowledgeTable</span>(int tableID);</td><td>Permanensen eltávolítja a tudástár 'tableID' azonosítójú tábláját. A művelet sikerességével tér vissza.</td></tr>
@@ -412,20 +412,116 @@ enum Comment
 
 </p>
 
-<h2>Advanced</h2>
-<h3>Az aktuális játékszabályok lekérdezése</h3>
-<p>
 
-</p>
 
-<h3>Hostess segítségül hívása</h3>
-<p>
-	
-</p>
+<h2>Advancedebb példák</h2>
 
 <h3>A permanens tudástár kihasználása</h3>
 <p>
-	
+Itt egy példa ami használja a permanens tudástárt arra, hogy a botok agresszivitásáról készítsen statisztikát.
+Botonként ment egy aggr float értéket, amit a raised(), folded(), called() és checked() metódusokban növel vagy csökkent;
+aszerint, hogy az adott művelet mennyire mondható aggresszívnak.
 </p>
+<pre class="brush: cpp">
+#include "Bot.h"
+#include "BotLanguage.h"
+#include "BettingSystem.h"
+#include "KnowledgeDataType.h"
+
+class PeldaBot : public Bot
+{
+private:
+	const int tabla_id;
+
+public:
+	PeldaBot(BotCommunicator* communicator, int id, std::string name, BotLanguage lang)
+		: Bot(communicator, id, name, lang), tabla_id(0) // első létrehozott tábla id-je 0
+	{
+		// egy userhez egy adatbázis tartozik; akárhány botja is van,
+		// azok a botok ugyanazokat a táblákat érik el
+		if (communicator->isBotKnowledgeUseAllowed()
+            && !communicator->isTableLoaded(tabla_id))
+        {
+            // csak akkor hozzuk létre ha még nem létezik.
+            // feljegyezzük botonként, hogy melyik id-jű bot
+            // mennyire aggresszív (persze azok közül akikkel
+            // eddig sikerült játszani).
+            std::list&#60;KnowledgeDataType&#62; oszlopAdatTipusok;
+            oszlopAdatTipusok.push_back(KnowledgeDataType::INT); // bot id-je
+            oszlopAdatTipusok.push_back(KnowledgeDataType::FLOAT); // aggr értéke
+
+            communicator->createKnowledgeTable(2, oszlopAdatTipusok);
+        }
+	}
+	
+	void raised(int botID, int amount)
+	{
+        if (amount > 2 * communicator->getBigBlindAtRound() // csak ha serious emelés
+            && communicator->isBotKnowledgeUseAllowed())
+        {
+            novelAggr(botID, 0.2); // növeljük ha emel
+        }
+	}
+	
+	void folded(int botID)
+	{
+		if (communicator->isBotKnowledgeUseAllowed())
+        {
+            novelAggr(botID, -0.2); // csökkentjük ha bedobja
+        }
+	}
+	
+	void called(int botID, int amount)
+	{
+		if (communicator->isBotKnowledgeUseAllowed())
+        {
+            novelAggr(botID, 0.1); // egy kicsivel növelünk
+        }
+	}
+	
+	void checked(int botID)
+	{
+		if (communicator->isBotKnowledgeUseAllowed())
+        {
+            novelAggr(botID, -0.1); // egy kicsivel csökkentünk
+        }
+	}
+	
+	void step()
+	{
+		// kihasználjuk a szerzett infot.
+		// mondjuk az aggresszívabb játékos (aggr > 1.0)
+		// nagyobb eséllyel blöffölhet..
+	}
+	
+	/** Itt manipuláljuk az aggr értékeket.
+	*/
+	void novelAggr(int botID, float mennyivel)
+	{
+        int bid, sor = 0;
+        float val = 0.0;
+        bool megvan = false; // apróságok
+        while (communicator->getKnowledgeTableData(bid, tabla_id, sor, 0))
+        {
+            if (bid == botID)
+            {
+                megvan = true;
+                communicator->getKnowledgeTableData(val, tabla_id, sor, 1);
+                break;
+            }
+
+            ++sor;
+        }
+        if (!megvan)
+        {
+            sor = communicator->addKnowledgeTableRow(tabla_id);
+            communicator->setKnowledgeTableData(botID, tabla_id, sor, 0);
+        }
+
+        val += mennyivel; // növeljük az aggr értéket (csökkentjük ha 'mennyivel' negatív)
+        communicator->setKnowledgeTableData(val, tabla_id, sor, 1); // visszamentjük az értéket
+	}
+};
+</pre>
 </body>
 </html>
