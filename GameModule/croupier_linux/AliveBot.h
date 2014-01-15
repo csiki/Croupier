@@ -4,32 +4,14 @@
 #include "Bot.h"
 #include "BotLanguage.h"
 #include "BettingSystem.h"
-#include "KnowledgeDataType.h"
 
 // TODO talk?
 
 class AliveBot : public Bot
 {
-    const int tabla_id;
-
 public:
 	AliveBot(BotCommunicator* communicator, int id, std::string name, BotLanguage lang)
-		: Bot(communicator, id, name, lang), tabla_id(0)
-    {
-        if (communicator->isBotKnowledgeUseAllowed()
-            && !communicator->isTableLoaded(tabla_id))
-        {
-            // csak akkor hozzuk létre ha még nem létezik.
-            // feljegyezzük botonként, hogy melyik id-ju bot
-            // mennyire aggresszív (persze azok közül akikkel
-            // eddig sikerült játszani).
-            std::list<KnowledgeDataType> oszlopAdatTipusok;
-            oszlopAdatTipusok.push_back(KnowledgeDataType::INT); // bot id-je
-            oszlopAdatTipusok.push_back(KnowledgeDataType::FLOAT); // aggr értéke
-
-            communicator->createKnowledgeTable(2, oszlopAdatTipusok);
-        }
-    }
+		: Bot(communicator, id, name, lang) {}
 
 	void allined(int botID, int amount)
 	{
@@ -43,18 +25,12 @@ public:
 
 	void called(int botID, int amount)
 	{
-		if (communicator->isBotKnowledgeUseAllowed())
-        {
-            novelAggr(botID, -0.1); // egy kicsivel növelünk
-        }
+		// nothing to do here
 	}
 
 	void checked(int botID)
 	{
-		if (communicator->isBotKnowledgeUseAllowed())
-        {
-            novelAggr(botID, -0.1); // egy kicsivel csökkentünk
-        }
+		// nothing to do here
 	}
 
 	void flop()
@@ -64,10 +40,7 @@ public:
 
 	void folded(int botID)
 	{
-		if (communicator->isBotKnowledgeUseAllowed())
-        {
-            novelAggr(botID, -0.2); // csökkentjük az aggr pontját
-        }
+		// nothing to do here
 	}
 
 	void gameWinner(int botID)
@@ -97,37 +70,7 @@ public:
 
 	void raised(int botID, int amount)
 	{
-        if (amount > 2 * communicator->getBigBlindAtRound() // csak ha serious emelés
-            && communicator->isBotKnowledgeUseAllowed())
-        {
-            novelAggr(botID, 0.2); // 0.2-vel növeljük ha emel
-        }
-	}
-
-	void novelAggr(int botID, float mennyivel)
-	{
-        int bid, sor = 0;
-        float val = 0.0;
-        bool megvan = false; // apróságok
-        while (communicator->getKnowledgeTableData(bid, tabla_id, sor, 0))
-        {
-            if (bid == botID)
-            {
-                megvan = true;
-                communicator->getKnowledgeTableData(val, tabla_id, sor, 1);
-                break;
-            }
-
-            ++sor;
-        }
-        if (!megvan)
-        {
-            sor = communicator->addKnowledgeTableRow(tabla_id);
-            communicator->setKnowledgeTableData(botID, tabla_id, sor, 0);
-        }
-
-        val += mennyivel; // növeljük aggr pontot (csökkentjük ha mennyivel negatív)
-        communicator->setKnowledgeTableData(val, tabla_id, sor, 1); // visszamentjük az értéket
+		// nothing to do here
 	}
 
 	void rebuyOccurred(int botID, int amount)
