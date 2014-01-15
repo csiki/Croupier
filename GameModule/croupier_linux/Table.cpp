@@ -40,7 +40,7 @@ const Card* Table::getCard(int index) const
 		return this->cards[index];
 	}
 
-	return nullptr;
+	return Card();
 }
 
 /** Returns a reference to a bot by its index (at table).
