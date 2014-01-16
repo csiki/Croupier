@@ -14,6 +14,31 @@
 
 <h1>Croupier MI fejlesztési útmutató</h1>
 
+<h2>Tartalomjegyzék</h2>
+<ul>
+	<li>Basic sheet</li>
+		<ul>
+			<li>Bevezetés</li>
+			<li>Bot metódusai</li>
+			<li>Egyszerű interakció a környezettel</li>
+				<ul>
+					<li>Saját bot adatainak lekérése</li>
+					<li>Más bot adatainak lekérése</li>
+					<li>'Can' lekérdező metódusok</li>
+					<li>Lépések, műveletek</li>
+					<li>Egyéb lekérdezések</li>
+				</ul>
+			<li>Használt enumerációk</li>
+			<li>Botok feltöltése</li>
+			<li>Bot fordítása a szerveren</li>
+			<li>Megkötések</li>
+		</ul>
+	<li>Advancetebb példák</li>
+		<ul>
+			<li>A permanens adatbázis kihasználása</li>
+		</ul>
+</ul>
+
 <h2>Basic sheet</h2>
 <h3>Bevezetés</h3>
 <p>
@@ -22,6 +47,8 @@
 	ezt a következőkben tapasztalhatjátok is.
 	Botot létrehozni egy C++ osztály definiálásával lehet,
 	ami köteles <span class="important">leörökölni</span> egy ún. <span class="important">Bot osztályból</span>.
+	A keretrendszer a Bot metódusait (függvényeit) fogja hívogatni játék közben, amiket felüldefiniálva
+	írhatod az MI-det.
 </p>
 
 <p>
@@ -100,9 +127,34 @@ public:
 <p>
 	A step() metódus akkor hívódik, mikor az adott bot jön,
 	a bot lépése következik.
-	Ezt a metódust felül KELL írni minden MI implementációnak.
+	A step() metódust felül KELL írni minden MI implementációnak.
 	A konstruktort hasonlóképpen kell minden botnál definiálni.
 </p>
+
+<p class="info">A step() metódusban meg kell hívnod a 'communicator'
+	egyik függvényét a következők közül: check(), call(), raise(),
+	fold(), allin(); ezzel eldöntve a lépésedet, amennyiben a lépés
+	véghezvihető. Ha nem teljesíthető, a lépés nem érvényes és
+	válaszhatsz újból. Ha már választottál lépést és a következőkben
+	egy másikat választasz, az első választás lesz figyelembevéve.
+	Tehát a következő step() implementáció is valid:</p>
+
+<pre class="brush: cpp">
+	/** Egy visszafogottabb bot step() metódusa.
+	*/
+	void step()
+	{
+		// csekkol ha tud
+		communicator->check();
+		
+		// ha nem tudott csekkolni tart
+		communicator->call();
+		
+		// ha se csekkolni se tartani nem tudott,
+		// tehát valaki emelt, akkor dob
+		communicator->fold();
+	}
+</pre>
 
 <p>
 	A Botnak számos metódusa van, amiket felülírhatunk
@@ -173,6 +225,7 @@ public:
 </p>
 
 <h4>Saját bot adatainak lekérése</h4>
+
 <table>
 		<tr><td>Card <span class="important">getHand</span>(int cardIndex) const;</td><td>Visszatér a kézben lévő egyik 'cardIndex' (0 vagy 1) indexű kártyával.</td></tr>
 		<tr><td>void <span class="important">setEmotion</span>(Emotion emotion);</td><td>Beállítja a bot aktuális érzelmi állapotát.</td></tr>
@@ -229,7 +282,7 @@ public:
 		<tr><td>bool <span class="important">raise</span>(int raiseAmount);</td><td>Emel 'raiseAmount' összeggel és visszatér ennak a sikerességével.</td></tr>
 		<tr><td>bool <span class="important">rebuy</span>(int rebuyAmount);</td><td>Vissza vásárolja magát és visszatér ennak a sikerességével.</td></tr>
 		<tr><td>bool <span class="important">talk</span>(Comment comment);</td><td>Beszél 'comment' tartalommal és visszatér ennak a sikerességével.</td></tr>
-		<tr><td>void <span class="important">quit</span>();</td><td>Kilép a játékból.</td></tr>
+		<tr><td>void <span class="important">quit</span>();</td><td>Önként kiléphetsz a játékból. Ekkor fel kell állnod az asztaltól; már semmilyen üzenetet nem küld neked a keretrendszer.</td></tr>
 </table>
 
 <h4>Egyéb lekérdezések</h4>
@@ -272,7 +325,7 @@ public:
 		<tr><td>bool <span class="important">isEmotionAllowed</span>() const;</td><td>Igazzal tér vissza, ha az érzelem kifejezés engedélyezett, hamissal egyébként.</td></tr>
 </table>
 
-<h4>Permanens tudásbázis eléréséhez használt metódusok</h4>
+<h4>Permanens adatbázis eléréséhez használt metódusok</h4>
 
 <p class="info">
 Ezeken keresztül érheted el a permanens táradat.
@@ -299,6 +352,21 @@ Ez a típus lehet: int, bool, char, std::string vagy float.
 		<tr><td>bool <span class="important">removeKnowledgeTableRow</span>(int tableID, int row);</td><td>Permanensen eltávolítja a tudástár 'tableID' táblájának 'row' azonosítójú sorát. A művelet sikerességével tér vissza.</td></tr>
 		<tr><td>bool <span class="important">isTableLoaded</span>(int tableID) const;</td><td>Megadja, hogy a 'tableID' azonosítójú tábla, be van-e töltve.</td></tr>
 </table>
+
+<p class="info">
+Ha rossz indexet vagy bot azonosító számot (botID) adsz meg
+egy getter függvénynél, az nem generál hibát.
+Ezek a default értékek melyekkel az ilyen
+esetekben visszatér a függvény:
+</p>
+<ul>
+	<li>bool: false</li>
+	<li>int: -1</li>
+	<li>Emotion: Emotion::DRUNKEN</li>
+	<li>BotLanguage: BotLanguage::CPP</li>
+	<li>Card: Card::getNullCard() függvény visszatérési értéke - Card::isNullCard() függvénnyel ellenőrizheted</li>
+	<li>HandRank: HandRank::None</li>
+</ul>
 
 <h3>Használt enumerációk</h3>
 <p>
@@ -409,18 +477,47 @@ enum Comment
 
 <h3>Botok feltöltése</h3>
 <p>
-
+Botot a <a href="http://poker.sch.bme.hu" target="_blank">poker.sch.bme.hu</a> oldalon tudsz feltölteni és versenyeztetni.
 </p>
 
+<h3>Bot fordítása a szerveren</h3>
+<p>
+A bot fordítása a következő módon történik a szerveren:
+</p>
+<p style="font-size: 1.5em; font-weight: bold">
+	g++ -shared -fPIC -std=c++11 -o forditott.so botnev.cpp
+</p>
+<p>
+Így a c++11-es szabvány előnyei használhatók és használatuk ajánlott is
+(pl. <a href="http://www.classes.cs.uchicago.edu/archive/2013/spring/12300-1/labs/lab6/" target="_blank">többszálasítás</a>).
+</p>
 
+<h3>Megkötések</h3>
+<ul>
+	<li>Külső könyvtárakat nem használhatsz, nyilván mivel nem fordítjuk a szerveren
+	a botodhoz.</li>
+	<li>Bármelyik Bot függvényt is írod felül, annak 1 másodpercen belül vissza kell térnie,
+	mikor a keretrendszer meghívja. Ha nem teszi, a botot a keretrendszer azonnal kilépteti
+	a játékból; úgy veszi, hogy a játékos felállt az asztaltól.</li>
+	<li>Minden kivételt (exception) kapj el amit a kódod generálhat.</li>
+</ul>
 
 <h2>Advancedebb példák</h2>
 
-<h3>A permanens tudástár kihasználása</h3>
+<h3>A permanens adatbázis kihasználása</h3>
 <p>
-Itt egy példa ami használja a permanens tudástárt arra, hogy a botok agresszivitásáról készítsen statisztikát.
+Itt egy példa ami használja a permanens adatbázist arra, hogy a botok agresszivitásáról készítsen statisztikát.
 Botonként ment egy aggr float értéket, amit a raised(), folded(), called() és checked() metódusokban növel vagy csökkent;
 aszerint, hogy az adott művelet mennyire mondható aggresszívnak.
+</p>
+<p class="info">
+Egy userhez egy adatbázis tartozik; akárhány botja is van,
+azok a botok ugyanazokat a táblákat érik el.
+A táblák elérése az azonosító számuk alapján történhet.
+Az első létrehozott tábla id-je 0, a következőé 1, majd 2... stb.
+(Célszerű lehet a 0. táblába menteni, hogy a többi táblánk
+milyen azonosítóval jött létre. Itt ezt hanyagolom, csak egy
+táblánk lesz.)
 </p>
 <pre class="brush: cpp">
 #include "Bot.h"
@@ -437,12 +534,10 @@ public:
 	PeldaBot(BotCommunicator* communicator, int id, std::string name, BotLanguage lang)
 		: Bot(communicator, id, name, lang), tabla_id(0) // első létrehozott tábla id-je 0
 	{
-		// egy userhez egy adatbázis tartozik; akárhány botja is van,
-		// azok a botok ugyanazokat a táblákat érik el
 		if (communicator->isBotKnowledgeUseAllowed()
             && !communicator->isTableLoaded(tabla_id))
         {
-            // csak akkor hozzuk létre ha még nem létezik.
+            // csak akkor hozzuk létre a táblát ha még nem létezik.
             // feljegyezzük botonként, hogy melyik id-jű bot
             // mennyire aggresszív (persze azok közül akikkel
             // eddig sikerült játszani).
@@ -491,7 +586,8 @@ public:
 	{
 		// kihasználjuk a szerzett infot.
 		// mondjuk az aggresszívabb játékos (aggr > 1.0)
-		// nagyobb eséllyel blöffölhet..
+		// nagyobb eséllyel blöffölhet,
+		// a visszafogottabb érzékenyebb az emelésre stb.
 	}
 	
 	/** Itt manipuláljuk az aggr értékeket.
@@ -514,6 +610,9 @@ public:
         }
         if (!megvan)
         {
+			// ha még nincs bejegyzés ilyen botID-vel,
+			// adjunk a táblához egy új sort
+			// és állítsuk be a bot id-jét tároló attribútumát
             sor = communicator->addKnowledgeTableRow(tabla_id);
             communicator->setKnowledgeTableData(botID, tabla_id, sor, 0);
         }

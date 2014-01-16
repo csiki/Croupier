@@ -259,7 +259,7 @@ Emotion BotManager::getBotEmotion(int botID) const
     if(bot != nullptr)
         return bot->getEmotion();
     else
-        return Emotion::DRUNKEN; //TODO: find better default
+        return Emotion::DRUNKEN;
 }
 
 /** Returns if a specified AI's hand is revealed.
@@ -301,7 +301,7 @@ BotLanguage BotManager::getBotLang(int botID) const
     if(bot != nullptr)
         return bot->getLang();
     else
-        return BotLanguage::ALIVE; //TODO: find better default
+        return BotLanguage::CPP;
 }
 
 /** Returns if a specified AI's is in game (haven't fallen out or quited).
