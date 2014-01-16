@@ -21,7 +21,7 @@
 	az MI (bot) fejlesztőknek jelentősen megkönnyíti a dolgát;
 	ezt a következőkben tapasztalhatjátok is.
 	Botot létrehozni egy C++ osztály definiálásával lehet,
-	ami köteles <span class="important">leörökölni</span> egy ún. <span class="important">Bot osztályból</span>.
+	aminek öröklődnie kell a <span class="important">Bot osztályból</span>.
 </p>
 
 <p>
@@ -202,7 +202,7 @@ public:
 </table>
 
 <h4>'Can' lekérdező metódusok</h4>
-<p>Tét nélkül meg tudsz győződni arról, hogy egy adott lépés, művelet legitim-e.</p>
+<p>Tét nélkül meg tudsz győződni arról, hogy egy adott lépés, művelet éppen lehetséges-e.</p>
 <table>
 		<tr><td>bool <span class="important">canTalk</span>() const;</td><td>Megadja, hogy a bot beszélhet-e.</td></tr>
 		<tr><td>bool <span class="important">canStep</span>() const;</td><td>Megadja, hogy a bot léphet-e.</td></tr>
@@ -303,8 +303,8 @@ Ez a típus lehet: int, bool, char, std::string vagy float.
 <h3>Használt enumerációk</h3>
 <p>
 	Bot íráskor összesen 5 enumerációval találhatod szemben magad.
-	Puska jelleggel itt róluk egy felsorolás. Ahol explicit nincs
-	kifejezve számban az elemek értéke, ott értelem szerűen, az első
+	Ahol explicit nincs
+	kifejezve számban az elemek értéke, ott az első
 	elem nulla majd sorban eggyel nagyobb értékeket vesznek fel az elemek.
 </p>
 
@@ -414,7 +414,7 @@ enum Comment
 
 
 
-<h2>Advancedebb példák</h2>
+<h2>Haladó példák</h2>
 
 <h3>A permanens tudástár kihasználása</h3>
 <p>
