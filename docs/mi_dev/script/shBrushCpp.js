@@ -62,7 +62,7 @@
 						'ispunct isspace isupper isxdigit tolower toupper errno localeconv ' +
 						'setlocale acos asin atan atan2 ceil cos cosh exp fabs floor fmod ' +
 						'frexp ldexp log log10 modf pow sin sinh sqrt tan tanh jmp_buf ' +
-						'longjmp setjmp raise signal sig_atomic_t va_arg va_end va_start ' +
+						'longjmp setjmp signal sig_atomic_t va_arg va_end va_start ' +
 						'clearerr fclose feof ferror fflush fgetc fgetpos fgets fopen ' +
 						'fprintf fputc fputs fread freopen fscanf fseek fsetpos ftell ' +
 						'fwrite getc getchar gets perror printf putc putchar puts remove ' +
