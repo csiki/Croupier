@@ -1,11 +1,21 @@
 #include "stdafx.h"
 #include "Card.h"
 
+// init shared nullcard
+Card Card::nullCard = Card();
+
 /** Returns a null card.
 */
 Card Card::getNullCard()
 {
 	return Card(Card::Suit::NULLSUIT, Card::Rank::NULLRANK);
+}
+
+/** Returns a pointer to a (shared) null card.
+*/
+Card* Card::getSharedNullCard()
+{
+    return &nullCard;
 }
 
 /** Returns if a given card is a null card.

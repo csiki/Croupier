@@ -15,7 +15,7 @@ public:
     HEARTS = 3,
     SPADES = 4
   };
-  
+
   enum Rank
   {
 	NULLRANK = 0,
@@ -33,14 +33,14 @@ public:
     KING = 13,
     ACE = 14
   };
-  
+
 	const Suit suit;
 	const Rank rank;
 
 	Card() : suit(Suit::NULLSUIT), rank(Rank::NULLRANK) {}
 	Card(int s, int r) : suit((Card::Suit)s), rank((Card::Rank)r) {}
 	int getVal() const; // suit*100 + rank
-	
+
 	bool operator<(const Card& card) const { return this->rank < card.rank; }
 	bool operator==(const Card& card) const { return this->rank == card.rank; }
 	bool operator>(const Card& card) const { return this->rank > card.rank; }
@@ -48,8 +48,11 @@ public:
 	std::string toString() const;
 
 	static Card getNullCard();
+	static Card* getSharedNullCard();
 	static bool isNullCard(Card& card);
 	static Card getCardByVal(int val);
+
+    static Card nullCard;
 };
 
 #endif  //_CARD_H

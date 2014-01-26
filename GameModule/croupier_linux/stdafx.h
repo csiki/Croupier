@@ -1,6 +1,7 @@
 #ifndef _DA_GUARDIAN
 #define _DA_GUARDIAN
 
+#define _GLIBCXX_USE_NANOSLEEP // for using sleep_for - http://stackoverflow.com/questions/4438084/stdthis-threadsleep-for-and-gcc
 
 #include <stdio.h>
 #include <iostream>
