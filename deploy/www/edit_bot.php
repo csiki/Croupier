@@ -5,7 +5,7 @@ $codeErr = $fileErr = $nameErr = "";
 $name = $code = $lang = $orig = $id = "";
 if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
     $id = $_GET["id"];
-    $orig = SQL("SELECT name, code_lang FROM bots WHERE accountID = ? && id = ?;", $_SESSION["accountID"], $id);
+    $orig = SQL("SELECT name, code_lang FROM bots WHERE accountID = ? AND id = ?;", $_SESSION["accountID"], $id);
     if ($orig == null)
         die("Invalid Request");
     $name = $orig[0]["name"];

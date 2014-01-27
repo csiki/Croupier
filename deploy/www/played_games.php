@@ -5,7 +5,7 @@ $botID = 0;
 $botName = "";
 if (isset($_GET["botID"]) && is_numeric($_GET["botID"])) {
     $botID = $_GET["botID"];
-    $bot = SQL("SELECT name FROM bots WHERE accountID = ? && id = ?", $_SESSION["accountID"], $botID);
+    $bot = SQL("SELECT name FROM bots WHERE accountID = ? AND id = ?", $_SESSION["accountID"], $botID);
     if ($bot == null)
         die("Invalid request");
     $botName = $bot[0]["name"];
@@ -52,7 +52,7 @@ if (isset($_GET["botID"]) && is_numeric($_GET["botID"])) {
             <?php
                 $games = SQL("SELECT gameID FROM games_by_bots WHERE botID = ?", $botID);
                 for ($i = 0; $i < count($games); $i++) {
-                    $gameDate = SQL("SELECT endTime FROM games WHERE id = ? && checked = 1", $games[$i]["gameID"]);
+                    $gameDate = SQL("SELECT endTime FROM games WHERE id = ? AND checked = 1", $games[$i]["gameID"]);
                     echo '<tr>';
                     echo '<td>' . $gameDate[0]["endTime"] . '</td>';
                     echo '<td style="cursor:pointer" onclick="document.location = \'show_game.php'
