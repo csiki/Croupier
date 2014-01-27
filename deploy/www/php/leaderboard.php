@@ -4,24 +4,25 @@ class Leaderboard
 {
 	private $tableName;
 	private $rulzName;
-	private $resultName;
 	private $gameid;
 	private $bots = array();
 	
-	Leaderboard($leaderboard)
+	function __construct($leaderboard)
 	{
-		$tableName = $leaderboard["tableName"];
-		$rulzFile = $leaderboard["rules"];
-		$bots = SQL("SELECT botID, score, win, loose FROM ".$tableName." ORDER BY (win+loose)");
+		$this->tableName = $leaderboard["tableName"];
+		//$this->rulzFile = $leaderboard["rules"]; // TODO
+		$this->bots = SQL("SELECT botID, score, win, loose FROM ".$this->tableName." ORDER BY (win+loose)");
 	}
 	
 	public function randMatchmaking($nGames, $nPlayers)
 	{
 		$sumWeight = 0;
 		
-		for ($i = 0; $i < count($bots); ++$i)
+		for ($i = 0; $i < count($this->bots); ++$i)
 		{
-			$sumWeight += 1.0f / ($bots[$i]["win"] + $bots[$i]["loose"]);
+			if ($this->bots[$i]["win"] + $this->bots[$i]["loose"] != 0)
+				$sumWeight += 1.0 / ($this->bots[$i]["win"] + $this->bots[$i]["loose"]);
+			else $sumWeight += 1.0;
 		}
 		
 		$randomWeights = array();
@@ -36,7 +37,7 @@ class Leaderboard
 			$players = array();
 			
 			// rand nums
-			for ($p = 0; $p < nPlayers; ++$p)
+			for ($p = 0; $p < $nPlayers; ++$p)
 			{
 				array_push($randomWeights, mt_rand() / mt_getrandmax() * $sumWeight);
 			}
@@ -48,13 +49,15 @@ class Leaderboard
 			$i = 0;
 			$weight = 0;
 			$nBotsMultipleSelected = 0;
-			while ($b < count($bots) && $r < $nPlayers)
+			while ($b < count($this->bots) && $r < $nPlayers)
 			{
-				$weight += 1.0f / ($bots[$b]["win"] + $bots[$b]["loose"]);
+				if ($this->bots[$b]["win"] + $this->bots[$b]["loose"] != 0)
+					$weight += 1.0 / ($this->bots[$b]["win"] + $this->bots[$b]["loose"]);
+				else $weight += 1.0;
 				
 				if ($randomWeights[$r] < $weight)
 				{
-					array_push($players, $bots[$b]);
+					array_push($players, $this->bots[$b]);
 					++$r;
 					
 					// if a player selected more than once, we random another later
@@ -77,15 +80,15 @@ class Leaderboard
 			for ($i = 0; $i < $nBotsMultipleSelected; ++$i)
 			{
 				do {
-					$tmpbot = $bots[mt_rand(0, count($bots) - 1)];
+					$tmpbot = $this->bots[mt_rand(0, count($this->bots) - 1)];
 				} while (in_array($players, $tmpbot));
 			}
 			
 			// play match
-			$return_var = playMatch($players);
+			$return_var = $this->playMatch($players);
 			
 			// process results
-			processResults($return_var);
+			$this->processResults($return_var);
 		}
 	}
 	
@@ -95,40 +98,48 @@ class Leaderboard
 		// insert database row into games
 		// and retreive the id of thr row
 		SQL("INSERT INTO games(checked, leaderboard, rules, log, result, startTime, endTime)
-			VALUES(0, '$tableName', '$rulzName', '', '', 0, 0)");
-		$gameid = $mysqli->insert_id;
-		$resultName = $logname = $gameid.'.xml';
+			VALUES(0, '".$this->tableName."', '".$this->rulzName."', '', '', 0, 0)");
+		$this->gameid = $mysqli->insert_id;
+		$resultname = $logname = $this->gameid.'.xml';
 		SQL("UPDATE games SET log='$logname', result='$resultname'
-			WHERE id=$gameid");
+			WHERE id=".$this->gameid."");
 		
 		// prepare gamedata xml
 		$xmlRoot = new SimpleXMLElement('<?xml version="1.0"?><game></game>');
-		$xmlRoot->addChild("id", $gameid);
+		$xmlRoot->addChild("id", $this->gameid);
 		$xmlRoot->addChild("log", $logname);
 		$xmlRoot->addChild("results", $resultname);
 		$botsElement = $xmlRoot->addChild("bots");
 		
-		//add bots to gameXML
-		foreach($bots as $bot)
+		//add bots to gameXML and update games_by_bots
+		foreach($this->bots as $bot)
 		{
-			$botdata = SQL("SELECT * FROM bots WHERE id = ".$bot["id"]);
+			// games_by_bots update
+			SQL("INSERT INTO games_by_bots(gameID, botID) VALUES(".$this->gameid.", ".$bot["botID"].")");
+			
+			// xml
+			$botdata = SQL("SELECT * FROM bots WHERE id = ".$bot["botID"]);
 			$botElement = $botsElement->addChild("bot");
-			$botElement->addChild("id", $bot["id"]);
+			$botElement->addChild("id", $bot["botID"]);
 			$botElement->addChild("playerid", $botdata[0]["accountID"]);
 			$botElement->addChild("name", $botdata[0]["name"]);
 			$botElement->addChild("src", $botdata[0]["src"]);
-			$botElement->addChild("lang", getCodeLangID($bot[0]["code_lang"]));
+			$botElement->addChild("lang", getCodeLangID($botdata[0]["code_lang"]));
 			$botElement->addChild("credit", 2000); // 2000 konstans !!!
 			
 			// knowledge tables
 			$ktablesElement = $botElement->addChild("knowledgetables");
+			$ktables = array();
 			$ktables = SQL("SELECT id FROM knowledge WHERE ownerID=".$botdata[0]["accountID"]." AND used=1");
-			foreach ($ktable as $ktables)
+			if (!empty($ktables))
 			{
-				$ktablesElement->addChild("tableid", $ktable);
+				foreach ($ktables as $ktable)
+				{
+					$ktablesElement->addChild("tableid", $ktable);
+				}
 			}
 		}
-		$gameXML = "../data/games/" . $gameid . ".xml";
+		$gameXML = "../data/games/" . $this->gameid . ".xml";
 		
 		//write to file formatted
 		$dom = new DOMDocument('1.0');
@@ -138,7 +149,7 @@ class Leaderboard
 		$dom->save($gameXML);
 		
 		// run gamemodule
-		$command = "../exec/gamemodule $gameid";
+		$command = "../exec/gamemodule ".$this->gameid;
 		$output = "";
 		$return_var = 0;
 		exec($command, $output, $return_var);
@@ -148,49 +159,64 @@ class Leaderboard
 	
 	public function processResults($return_var)
 	{
-		// read results xml
-		$result = new SimpleXMLElement("../data/results/".$resultName);
-		$kicks = array();
-		foreach ($result->results->bot as $botres)
+		if ($return_var == 4) // everything went alright
 		{
-			$kicks[$botres->botid] = $botres->kickatround;
-		}
-		arsort($kicks); // reverse sorting by {kick at round}
-		
-		foreach ($kicks as $winnerid => $winnerkick)
-		{
-			foreach ($kicks as $looserid => $looserkick)
+			// read results xml
+			try {
+				$result = new SimpleXMLElement("../data/results/".$this->gameid.'.xml');
+			}
+			catch(Exception $e) {
+				return;
+			}
+			
+			// find winner
+			$winnerid = 0;
+			foreach ($result->results->bot as $botres)
 			{
-				// TODO növelni win-t és loose-t !!!
-				if ($winnerid != $looserid && $winnerkick != $looserkick)
+				if ($botres->kickatround == 0) // winner
 				{
-					updateScores($winnerid, $looserid);
-				}
-				else if ($winnerid != $looserid && $winnerkick == $looserkick) // draw
-				{
-					updateScores($winnerid, $looserid);
-					updateScores($looserid, $winnerid);
+					$winnerid = $botres->botid;
+					break;
 				}
 			}
-			unset($kicks[$winnerid]); // we don't need it anymore
+			
+			// update scores
+			$Rw = SQL("SELECT score FROM ".$this->tableName." WHERE botID=$winnerid")[0]["score"];
+			$Rwdiff = 0;
+			foreach ($result->results->bot as $botres)
+			{
+				if ($winnerid != $botres->botid)
+				{
+					$diff += $this->updateScores($winnerid, $botres->botid);
+				}
+			}
+			
+			$Rw += $Rwdiff;
+			SQL("UPDATE ".$this->tableName." SET score=$Rw WHERE botID=$winnerid");
 		}
 	}
 	
 	protected function updateScores($winnerid, $looserid)
 	{
-		$Rw = SQL("SELECT score FROM bots WHERE id=$winnerid")[0]["score"]; // TODO ide kell [0]["score"] ???
-		$Rl = SQL("SELECT score FROM bots WHERE id=$looserid")[0]["score"];
+		$Rw = SQL("SELECT score FROM ".$this->tableName." WHERE botID=$winnerid")[0]["score"];
+		$Rl = SQL("SELECT score FROM ".$this->tableName." WHERE botID=$looserid")[0]["score"];
 		
-		// elo rating system: http://en.wikipedia.org/wiki/Elo_rating_system#Mathematical_details
-		$Ew = 1 / (1 + pow(10, ($Rl - $Rw) / 400));
-		$El = 1 / (1 + pow(10, ($Rw - $Rl) / 400));
+		$Rwdiff = 0;
+		if ($Rw > 0 && $Rl > 0)
+		{
+			// elo rating system: http://en.wikipedia.org/wiki/Elo_rating_system#Mathematical_details
+			$Ew = 1.0 / (1.0 + pow(10.0, ($Rl - $Rw) / 400.0));
+			//$El = 1.0 / (1.0 + pow(10.0, ($Rw - $Rl) / 400.0));
+			
+			$K = 24;
+			$Rwdiff = (1.0 - $Ew) * $K;
+			$Rl -= (1.0 - $Ew) * $K;
+			
+			SQL("UPDATE ".$this->tableName." SET score=$Rl WHERE botID=$looserid");
+			// winner update later
+		}
 		
-		$K = 32;
-		$Rw += (1 - $Ew) * $K;
-		$Rl -= (1 - $Ew) * $K; // TODO ez így jó e?
-		
-		SQL("UPDATE $tableName SET score=$Rw WHERE id=$winnerid");
-		SQL("UPDATE $tableName SET score=$Rl WHERE id=$looserid");
+		return $Rwdiff;
 	}
 };
 
