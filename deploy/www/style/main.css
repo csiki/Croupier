@@ -204,9 +204,9 @@ table td, table th {
     font-weight: 700;
 }
 
-input[type=submit].button {
+input[type=submit].button, input[type=button].button {
     height: 30px;
-    padding: 5px 6px;
+    padding: 0px;
 }
 
 .button {
@@ -214,13 +214,15 @@ input[type=submit].button {
     background-color: #545cfe;
     border: 1px solid #000000;
     color: #FFFFFF;
-    width: 110px;
+    width: 112px;
     height: 28px;
     line-height: 28px;
+    font-size: 13px;
     text-align: center;
     text-decoration: none;
     font-weight: bold;
     cursor: pointer;
+    margin: 0px 0px 20px;
 }
 
 .button:hover {
@@ -294,10 +296,6 @@ input[type=submit].button {
     margin: 26px 0px;
 }
 
-#noBotsFound {
-    text-align: center;
-}
-
 .codeWrapper {
     max-width: 1000px;
 }
@@ -339,10 +337,9 @@ input[type=submit].button {
 
 .basicContainer {
     background-color: white;
-    margin-top: 10px;
     height: 600px;
     overflow-y: scroll;
-    padding: 20px;
+    padding: 0px 20px 20px 20px;
 }
 
 .leaderboardContainer td {
@@ -402,6 +399,9 @@ input[type=submit].button {
 
 .leaderboardTitle {
     text-align: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid black;
+    margin: 0px;
 }
 
 div[id^="lb"] {

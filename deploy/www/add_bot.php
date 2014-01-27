@@ -75,7 +75,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
                 VALUES (CURRENT_DATE(), 1)
                 ON DUPLICATE KEY UPDATE date = VALUES(date), count = count + 1;");
 
-            header('Location: ../manage_bots.php');
+            header('Location: ../my_bots.php');
         }
     }
 }
@@ -154,9 +154,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
         <?php if ($fileErr) echo '<span class="errorMessage">' . $fileErr . '</span><br />'; ?>
         <?php if ($bruteErr) echo '<span class="errorMessage">' . $bruteErr . '</span><br />'; ?>
         <br/>
-        <input type="submit" class="button" value="<?= $tr["NEW_BOT"] ?>">
-        <input type="button" onclick="javascript: window.location = '/manage_bots.php';" class="button disabledButton"
-               value="<?= $tr["CANCEL"] ?>">
+        <input type="submit" class="button" value="<?= $tr["SAVE"] ?>">
     </form>
     </p>
 </div>

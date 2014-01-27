@@ -34,14 +34,14 @@ function getBotInfos($lb)
         function setTableEmpty($tbody) {
             var $columns = $tbody.parent().find("thead th").length;
             $tbody.html("");
-            var $row = $('<td colspan="' + $columns + '" id="noBotsFound"><?=$tr["NO_BOTS_FOUND"]?></td>');
+            var $row = $('<td colspan="' + $columns + '" style="text-align:center"><?=$tr["NO_BOTS_FOUND"]?></td>');
             $row.appendTo($($tbody));
         }
 
         function setTableLoading($tbody) {
             var $columns = $tbody.parent().find("thead th").length;
             $tbody.html("");
-            var $row = $('<td colspan="' + $columns + '" id="noBotsFound"><?=$tr["LOADING"]?></td>');
+            var $row = $('<td colspan="' + $columns + '" style="text-align:center"><?=$tr["LOADING"]?></td>');
             $row.appendTo($($tbody));
         }
 
@@ -146,6 +146,7 @@ function getBotInfos($lb)
                 echo '<h2 class="leaderboardTitle">'. $leaderboards[$i]["tableName"] .'</h2>';
                 echo '<div class="basicContainer">';
                 echo '<div class="leaderboard">
+                <h3>'.$tr["PARTICIPATED_BOTS"].'</h3>
                 <table>
                     <thead>
                     <tr>
@@ -158,6 +159,7 @@ function getBotInfos($lb)
                 echo '</tbody></table>
                 </div>
                 <div class="botsOwned">
+                    <h3>'.$tr["MY_BOTS"].'</h3>
                     <table>
                         <thead>
                         <tr>
@@ -175,7 +177,7 @@ function getBotInfos($lb)
                     echo '<td>';
                     echo '<a href="javascript:;" ' . ($rows[$j]["participated"] == '1' ? '' : 'style="display:none"') . ' class="button backtrack" onclick="backtrack(this, ' . $rows[$j]["id"] . ')">' . $tr["BACKTRACK"] . '</a>';
                     echo '<a class="button disabledButton" ' . ($rows[$j]["participated"] != '1' && ($rows[$j]["state"] != "ok") ? '' : 'style="display:none"') . '>' . $tr["PARTICIPATE"] . '</a>';
-                    echo '<a class="button disabledButton loading" style="display:none">' . $tr["LOADING"] . '</a>';
+                    echo '<a class="button disabledButton loading" style="display:none">' . $tr["PROCESSING"] . '</a>';
                     echo '<a href="javascript:;" ' . ($rows[$j]["participated"] != '1' && ($rows[$j]["state"] == "ok") ? '' : 'style="display:none"') . 'class="button participate" onclick="participate(this, ' . $rows[$j]["id"] . ')">' . $tr["PARTICIPATE"] . '</a>';
                     echo '</td>';
                     echo '</tr>';

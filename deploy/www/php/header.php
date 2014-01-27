@@ -5,7 +5,7 @@
             echo '<li><a href="./">' . $tr["MAIN"] . '</a></li>';
             if ($loggedin) {
                 echo '<li><a href="summary.php">' . $tr["SUMMARY"] . '</a></li>';
-                echo '<li><a href="manage_bots.php">' . $tr["MANAGE_BOTS"] . '</a></li>';
+                echo '<li><a href="my_bots.php">' . $tr["MY_BOTS"] . '</a></li>';
                 echo '<li><a href="leaderboards.php">' . $tr["LEADERBOARDS"] . '</a></li>';
                 if ($admin)
                     echo '<li><a href="admin.php">Admin</a></li>';
