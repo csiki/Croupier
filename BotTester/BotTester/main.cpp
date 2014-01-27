@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
     }
 
     // create BotData object from arguments
-    int playerid = atoi(argv[1]);
+    int accountid = atoi(argv[1]);
     int botid = atoi(argv[2]);
     int testcase = atoi(argv[3]);
     int gameid = atoi(argv[4]);
@@ -28,7 +28,7 @@ int main(int argc, char* argv[])
         knowledgeTables[i] = atoi(argv[9 + i]);
     }
 
-    BotData botdata(botid, playerid, std::string(name), std::string(src), 1000, lang,
+    BotData botdata(botid, accountid, std::string(name), std::string(src), 1000, lang,
 		numOfKnowledgeTables, knowledgeTables);
 
     Tester tester;
@@ -36,5 +36,5 @@ int main(int argc, char* argv[])
 
     delete [] knowledgeTables;
 
-    return gameid;
+    return 0;
 }

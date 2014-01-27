@@ -22,7 +22,7 @@
 	"Tester.h"
 	"BotData.h"
 
-1384117443 f:\csiki\programing\c++\main\croupier\bottester\bottester\concretetest.h
+1384295147 f:\csiki\programing\c++\main\croupier\bottester\bottester\concretetest.h
 	"Test.h"
 	"BotState.h"
 
@@ -44,17 +44,17 @@
 	"BotLanguage.h"
 	<string>
 
-1380310235 f:\csiki\programing\c++\main\croupier\bottester\bottester\botlanguage.h
+1380313835 f:\csiki\programing\c++\main\croupier\bottester\bottester\botlanguage.h
 
 1384113267 source:f:\csiki\programing\c++\main\croupier\bottester\bottester\botdataxmlhandler.cpp
 	"BotDataXMLHandler.h"
 	<list>
 
-1382428253 f:\csiki\programing\c++\main\croupier\bottester\bottester\botdataxmlhandler.h
+1382431853 f:\csiki\programing\c++\main\croupier\bottester\bottester\botdataxmlhandler.h
 	"BotData.h"
 	"pugixml.hpp"
 
-1335935950 f:\csiki\programing\c++\main\croupier\bottester\bottester\pugixml.hpp
+1335939550 f:\csiki\programing\c++\main\croupier\bottester\bottester\pugixml.hpp
 	"pugiconfig.hpp"
 	<stddef.h>
 	<exception>
@@ -62,12 +62,12 @@
 	<iosfwd>
 	<string>
 
-1335720148 f:\csiki\programing\c++\main\croupier\bottester\bottester\pugiconfig.hpp
+1335723748 f:\csiki\programing\c++\main\croupier\bottester\bottester\pugiconfig.hpp
 
 1384113299 source:f:\csiki\programing\c++\main\croupier\bottester\bottester\gamedataxmlhandler.cpp
 	"GameDataXMLHandler.h"
 
-1382399856 f:\csiki\programing\c++\main\croupier\bottester\bottester\gamedataxmlhandler.h
+1382403456 f:\csiki\programing\c++\main\croupier\bottester\bottester\gamedataxmlhandler.h
 	"GameData.h"
 	"BotLanguage.h"
 	"BotDataXMLHandler.h"

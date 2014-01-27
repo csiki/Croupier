@@ -93,6 +93,7 @@ void GameOwner::initialiseGame()
 			msg += '\n';
 			msg += e.whatError();
 			this->errorOccured(msg);
+			return;
 		}
 
 		// connect bot to communicator
