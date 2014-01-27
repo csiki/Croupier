@@ -258,7 +258,7 @@
 1390668951 /home/csiki/croupier/GameModule/croupier_linux/CSharpBotLoader.h
 	"BotLoader.h"
 
-1388314402 source:/home/csiki/croupier/GameModule/croupier_linux/Card.cpp
+1390748019 source:/home/csiki/croupier/GameModule/croupier_linux/Card.cpp
 	"stdafx.h"
 	"Card.h"
 
@@ -518,20 +518,20 @@
 1390668951 /home/csiki/croupier/GameModule/croupier_linux/SchemeBotLoader.h
 	"BotLoader.h"
 
-1388314402 source:/home/csiki/croupier/GameModule/croupier_linux/Table.cpp
+1390674337 source:/home/csiki/croupier/GameModule/croupier_linux/Table.cpp
 	"stdafx.h"
 	"Table.h"
 
-1388314402 source:/home/csiki/croupier/GameModule/croupier_linux/TimerBotProxy.cpp
+1390668951 source:/home/csiki/croupier/GameModule/croupier_linux/TimerBotProxy.cpp
 	"stdafx.h"
 	"TimerBotProxy.h"
 	"BotTimeExceededException.h"
 
-1388314402 source:/home/csiki/croupier/GameModule/croupier_linux/XYTranslator.cpp
+1390668951 source:/home/csiki/croupier/GameModule/croupier_linux/XYTranslator.cpp
 	"stdafx.h"
 	"XYTranslator.h"
 
-1388314402 /home/csiki/croupier/GameModule/croupier_linux/XYTranslator.h
+1390668951 /home/csiki/croupier/GameModule/croupier_linux/XYTranslator.h
 	"Bot.h"
 	"BotCommunicationTranslator.h"
 	"Comment.h"
