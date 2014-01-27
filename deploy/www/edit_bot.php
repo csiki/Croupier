@@ -64,12 +64,12 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
         }
 
         //remove bot from leaderboards
-        $res = SQL("SELECT tableName FROM leaderBoards");
-        for ($i = 0; $i < count($res); $i++) {
-            SQL("DELETE FROM ".$res[$i]["tableName"]." WHERE botID = ?", $id);
+        $leaderBoardTables = SQL("SELECT tableName FROM leaderboards");
+        for ($i = 0; $i < count($leaderBoardTables); $i++) {
+            SQL("DELETE FROM ".$leaderBoardTables[$i]["tableName"]." WHERE botID = ?", $id);
         }
 
-        header('Location: ../manage_bots.php');
+        header('Location: ../my_bots.php');
     }
 }
 ?>
@@ -147,8 +147,6 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
         <?php if ($fileErr) echo '<span class="errorMessage">' . $fileErr . '</span><br />'; ?>
         <br/>
         <input type="button" onclick="saveAsk(this.form)" class="button" value="<?= $tr["SAVE"] ?>">
-        <input type="button" onclick="javascript: window.location = '/manage_bots.php';" class="button disabledButton"
-               value="<?= $tr["CANCEL"] ?>">
     </form>
     </p>
 </div>
