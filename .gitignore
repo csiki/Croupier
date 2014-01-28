@@ -153,3 +153,4 @@ Deploy/www/.idea/
 *.tlog
 Deploy/www/tmp DO_NOT_UPLOAD/
 *.layout
+Deploy/www/wrong.php

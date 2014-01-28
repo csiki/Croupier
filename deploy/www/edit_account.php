@@ -58,9 +58,14 @@ if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pSize'])) {
                 }
             });
             setInterval(checkMatch, 500);
-            $("[title]").tooltip({position: {
-                my: "center bottom-20",
-                at: "right top"}});
+            $("[title]").tooltip({
+                position: {
+                    my: "center bottom-20",
+                    at: "right top"
+                },
+                show: { duration: 100 },
+                hide: { duration: 100 }
+            });
         });
         function checkMatch() {
             $("#pass_mismatch").hide();
@@ -98,12 +103,13 @@ if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pSize'])) {
             <input type="password" id="pass_again" maxlength="100">
             <br/>
 
-            <div id="pass_mismatch" style="display: none;"><span class="errorMessage"
-                                                                 id="pass_mismatch"><?=$tr["PASS_NOT_MATCH"]?></span>
+            <div id="pass_mismatch" style="display: none;">
+                <span class="errorMessage" id="pass_mismatch"><?=$tr["PASS_NOT_MATCH"]?></span>
                 <br/></div>
             <?php if ($passwordErr) echo '<span class="errorMessage">' . $passwordErr . '</span><br />'; ?>
             <br/>
             <br/>
+            <input type="button" onclick="window.history.back()" class="disabledButton button" value="<?= $tr["CANCEL"] ?>">
             <input type="button" value="<?= $tr["SAVE"] ?>" class="button" id="submitButton">
         </form>
     </div>

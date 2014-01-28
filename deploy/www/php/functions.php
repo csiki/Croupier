@@ -187,7 +187,17 @@ function sanityCheck($string, $type, $lengthmin, $lengthmax)
 
 function checkEmail($email)
 {
-    return preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,6})$/', strtolower($email)) ? true : false;
+    return preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,6})$/', strtolower($email));
+}
+
+function checkUsername($username)
+{
+    return preg_match('/^[a-zA-Z0-9_]{5,20}$/', $username);
+}
+
+function checkBotname($botname)
+{
+    return preg_match('/^[a-zA-Z0-9_]{5,30}$/', $botname);
 }
 
 function getCodeLangID($lang)

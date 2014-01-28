@@ -207,6 +207,7 @@ table td, table th {
 input[type=submit].button, input[type=button].button {
     height: 30px;
     padding: 0px;
+    margin: 0px;
 }
 
 .button {
@@ -222,7 +223,6 @@ input[type=submit].button, input[type=button].button {
     text-decoration: none;
     font-weight: bold;
     cursor: pointer;
-    margin: 0px 0px 20px;
 }
 
 .button:hover {
@@ -320,6 +320,15 @@ input[type=submit].button, input[type=button].button {
     background-position: -30px 0;
 }
 
+.playedGamesIcon {
+    background-image: url("../images/icons.png");
+    background-position: -59px 0;
+}
+.showGameIcon {
+    background-image: url("../images/icons.png");
+    background-position: -86px 0;
+}
+
 .messageBox {
     display: block;
     position: fixed;
@@ -373,7 +382,7 @@ input[type=submit].button, input[type=button].button {
 
 .leaderboardsMenuElement:hover {
     opacity: 0.8;
-/ / TODO : half transparent-background layer over image
+   /*TODO : half transparent-background layer over image*/
 }
 
 .leaderboardsMenuElement span {
@@ -393,7 +402,7 @@ input[type=submit].button, input[type=button].button {
 
 .backToMenu {
     position: absolute;
-    left: 0;
+    left: 20px;
     top: 0;
 }
 
@@ -407,6 +416,8 @@ input[type=submit].button, input[type=button].button {
 div[id^="lb"] {
     display: none;
     position: relative;
+    background-color: white;
+    padding: 0px 20px 20px;
 }
 
 /*tooltips*/

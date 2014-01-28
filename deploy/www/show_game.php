@@ -13,8 +13,8 @@ abstract class Severity
     const DEBUG = 6; //none
 };
 
-$orig_msg = array("receiveCard", "fold");
-$hun_msg = array("Kapott kártyát", "Eldob");
+$orig_msg = array("receiveCard", "fold", "check", "call", "raise");
+$hun_msg = array("Kapott kártya", "Eldobás", "Passzolás", "Megadás", "Emelés");
 
 $gameID = $botID = 0;
 $date = $botName = "";
@@ -53,44 +53,62 @@ if (isset($_GET["gameID"]) && is_numeric($_GET["gameID"]) && isset($_GET["botID"
     </h2>
 
     <div class="basicContainer">
-        <table>
-            <thead>
-            <tr>
-                <th>Who</th>
-                <th>What</th>
-                <th>Severity</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php
-            if (file_exists($logFile)) {
+
+        <?php
+        if (file_exists($logFile)) {
+            ?>
+            <table>
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Who</th>
+                    <th>What</th>
+                    <th>Severity</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
                 $log = simplexml_load_file($logFile);
+                $i = 1;
                 foreach ($log->event as $event) {
-                    if ($event->severity == Severity::DEBUG)
-                        continue;
-                    if ($event->logger != $botID &&
-                        ($event->severity == Severity::ERROR || $event->severity == Severity::WARNING ||
-                            $event->severity == Severity::VERBOSE)
+                    //skip hidden events
+                    if ($event->severity == Severity::DEBUG
+                        || ($event->logger != $botID &&
+                            ($event->severity == Severity::ERROR
+                                || $event->severity == Severity::WARNING
+                                || $event->severity == Severity::VERBOSE)
+                        )
                     )
                         continue;
-                    $rgb = "#FFFF" . dechex(255 / 6 * $event->severity);
-                    if($event->logger == $botID)
-                        echo '<tr style="background-color: ' . $rgb. '; font-weight:700">';
+
+                    //calculate color for each severity
+                    if ($event->logger == 0)
+                        $rgb = "#E6E7FF";
                     else
-                        echo '<tr style="background-color: ' . $rgb. '">';
-                    if($event->logger == 0)
+                        $rgb = "#FFFF" . dechex(170 / 6 * $event->severity);
+
+                    echo '<tr style="background-color: ' . $rgb . '; '
+                        . ($event->logger == $botID ? 'font-weight:700; ' : '') . '">';
+                    echo '<td>' . $i . '</td>';
+                    if ($event->logger == 0)
                         echo '<td>Croupier</td>';
+                    else if ($event->logger == $botID)
+                        echo '<td>' . $botName . '</td>';
                     else
-                        echo '<td>bot ' . $event->logger . '</td>';
+                        echo '<td>' . 'bot ' . $event->logger . '</td>';
+                    $i++;
                     echo '<td>' . str_replace($orig_msg, $hun_msg, $event->msg) . '</td>';
                     echo '<td>' . $event->severity . '</td>';
                     echo '</tr>';
                 }
-            } else
-                echo "Fatal error during game";
-            ?>
-            </tbody>
-        </table>
+                ?>
+
+                </tbody>
+            </table>
+        <?php
+        } else
+            echo "Fatal error during game";
+        ?>
     </div>
 </div>
 <footer>

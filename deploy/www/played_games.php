@@ -44,24 +44,24 @@ if (isset($_GET["botID"]) && is_numeric($_GET["botID"])) {
         <table id="manageBotsTable">
             <thead>
             <tr>
-                <th style="width: 200px"><?=$tr["DATE_TIME"]?></th>
-                <th style="width: 30px"><?=$tr["OPERATIONS"]?></th>
+                <th><?=$tr["DATE_TIME"]?></th>
+                <th><?=$tr["LEADERBOARD"]?></th>
+                <th><?=$tr["OPERATIONS"]?></th>
             </tr>
             </thead>
             <tbody>
             <?php
                 $games = SQL("SELECT gameID FROM games_by_bots WHERE botID = ?", $botID);
                 for ($i = 0; $i < count($games); $i++) {
-                    $gameDate = SQL("SELECT endTime FROM games WHERE id = ? AND checked = 1", $games[$i]["gameID"]);
+                    $gameDate = SQL("SELECT leaderboard, endTime FROM games WHERE id = ? AND checked = 1
+                    ORDER BY endTime DESC", $games[$i]["gameID"]);
                     echo '<tr>';
                     echo '<td>' . $gameDate[0]["endTime"] . '</td>';
+                    echo '<td>' . $gameDate[0]["leaderboard"] . '</td>';
                     echo '<td style="cursor:pointer" onclick="document.location = \'show_game.php'
-                        . '?botID='
-                        . $botID
-                        . '&gameID='
-                        . $games[$i]["gameID"]
-                        . '\';">
-                    <a>' . $tr["SHOW"]. '</a></td>';
+                        . '?botID='. $botID
+                        . '&gameID='. $games[$i]["gameID"]
+                        . '\';"><div class="icon showGameIcon" title="' .$tr["SHOW"] . '"></div></td>';
                     echo '</tr>';
                 }
             ?>

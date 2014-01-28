@@ -7,10 +7,14 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
     $res = SQL("SHOW TABLE STATUS LIKE 'bots'");
     $id = $res[0]["Auto_increment"];
     if (isset($_POST["name"]) && !empty($_POST["name"])) {
-        //TODO: warning when wrong format
-        $name = xssafe($_POST['name']);
-        if (SQL("SELECT * FROM bots WHERE name = ? AND accountID = ?", $name, $_SESSION["accountID"]) != null)
+        if(!sanityCheck($_POST['name'], 'string', 5, 30))
+            $nameErr = $tr["ERR_BOTNAME_LENGTH"];
+        else if (!checkBotname($_POST['name']))
+            $nameErr = $tr["ERR_BOTNAME_FORMAT"];
+        else  if (SQL("SELECT 1 FROM bots WHERE name = ?", $name) != null)
             $nameErr = $tr["ERR_NAME_CONFLICT"];
+        else
+            $name = xssafe($_POST['name']);
     } else
         $name = $tr["UNNAMED_BOT"] . " " . $id;
     $codeFileUpload = isset($_FILES["codefile"]) && $_FILES["codefile"]["error"] != UPLOAD_ERR_NO_FILE;
@@ -21,14 +25,14 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
             $mimeType = $finfo->file($_FILES["codefile"]["tmp_name"]);
             if (strpos($mimeType, "text/") !== 0)
                 $fileErr = $tr["ERR_CODEFILE"];
-            else if ($_FILES["codefile"]["size"] < 7)
-                $fileErr = $tr["ERR_CODE_EMPTY"];
+            else if ($_FILES["codefile"]["size"] < BOT_CODE_MIN)
+                $fileErr = $tr["ERR_CODE_SHORT"];
         } else
             die("File upload error: " . $_FILES["codefile"]["error"]);
 
     } else if (isset($_POST["code"])) {
-        if (strlen(isset($_POST["code"]) < BOT_CODE_MIN))
-            $fileErr = $tr["ERR_CODE_EMPTY"];
+        if (strlen($_POST["code"]) < BOT_CODE_MIN)
+            $fileErr = $tr["ERR_CODE_SHORT"];
         else
             $code = $_POST["code"];
     }
@@ -51,6 +55,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
 
             //create bot folder
             $ret = mkdir(_BOT_AI_RELATIVE_PATH_ . $id);
+            chmod(_BOT_AI_RELATIVE_PATH_ . $id, 0770);
             if ($ret === false)
             {
                 SQL("DELETE FROM bots WHERE id = ?", $id); //remove db entry
@@ -59,9 +64,12 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
             //move or make file
             if ($codeFileUpload) {
                 $tmp_name = $_FILES["codefile"]["tmp_name"];
-                move_uploaded_file($tmp_name, _BOT_AI_RELATIVE_PATH_ . $id . "/" . $id);
+                $newFileName = _BOT_AI_RELATIVE_PATH_ . $id . "/" . $id;
+                move_uploaded_file($tmp_name, $newFileName);
+                chmod($newFileName, 0770);
             } else {
                 $ret = file_put_contents(_BOT_AI_RELATIVE_PATH_ . $id . "/" . $id, $code);
+                chmod(_BOT_AI_RELATIVE_PATH_ . $id . "/" . $id, 0770);
                 if ($ret === false)
                 {
                     SQL("DELETE FROM bots WHERE id = ?", $id); //remove db entry
@@ -122,6 +130,10 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
 <div id="main">
     <h2><?=$tr["NEW_BOT"]?></h2>
 
+    <?= $bruteErr ? '<span class="errorMessage">' . $bruteErr . '</span><br />': '' ?>
+    <?= $nameErr ? '<span class="errorMessage">' . $nameErr . '</span><br />' : ''?>
+    <?= $fileErr ? '<span class="errorMessage">' . $fileErr . '</span><br />' :  '' ?>
+    <?= $codeErr ? '<span class="errorMessage">' . $codeErr . '</span><br />' : '' ?>
     <p>
 
     <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post" id="botform" enctype="multipart/form-data">
@@ -138,22 +150,19 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
             </select>
         </div>
         <br/>
-        <?php if ($nameErr) echo '<span class="errorMessage">' . $nameErr . '</span><br />'; ?>
         <br/>
 
         <div class="codeWrapper">
             <label for="code"><?=$tr["INSERT_CODE"]?></label><br/>
             <textarea cols="80" rows="20" name="code" id="code" style="display: block"
                       wrap="off"><?php if (isset($_POST["code"])) echo $_POST["code"]; ?></textarea>
-            <?php if ($codeErr) echo '<span class="errorMessage">' . $codeErr . '</span><br />'; ?>
         </div>
         <br/>
         <label for="codefile"><?=$tr["CHOOSE_FILE_TO"]?></label><br/>
         <input name="codefile" id="codefile" type="file">
         <br/>
-        <?php if ($fileErr) echo '<span class="errorMessage">' . $fileErr . '</span><br />'; ?>
-        <?php if ($bruteErr) echo '<span class="errorMessage">' . $bruteErr . '</span><br />'; ?>
         <br/>
+        <input type="button" onclick="window.history.back()" class="disabledButton button" value="<?= $tr["CANCEL"] ?>">
         <input type="submit" class="button" value="<?= $tr["SAVE"] ?>">
     </form>
     </p>

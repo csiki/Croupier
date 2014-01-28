@@ -11,14 +11,12 @@ $name = $email = "";
 if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pSize'])) {
     if (!isset($_POST['name']) || !sanityCheck($_POST['name'], 'string', 3, 25))
         $nameErr = $tr["ERR_USERNAME_LENGTH"];
-    else {
-        $res = SQL("SELECT 1 FROM accounts WHERE username = ?;", $_POST['name']);
-        //TODO: warning when wrong format
-        if ($res != null)
-            $nameErr = $tr["ERR_USERNAME_EXITS"];
-        else
-            $name = xssafe($_POST['name']);
-    }
+    else if (SQL("SELECT 1 FROM accounts WHERE username = ?;", $_POST['name']) != null)
+        $nameErr = $tr["ERR_USERNAME_EXITS"];
+    else if (!checkUsername($_POST['name']))
+        $nameErr = $tr["ERR_USERNAME_FORMAT"];
+    else
+        $name = xssafe($_POST['name']);
 
     if (!isset($_POST['email']) || !sanityCheck($_POST['email'], 'string', 7, 50) || !checkEmail($_POST['email']))
         $emailErr = $tr["ERR_EMAIL"];
@@ -70,10 +68,18 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
                 if (checkMatch())
                     sendForm($("#register_form").get(0), $("#pass").get(0));
             });
+
             setInterval(checkMatch, 500);
-            $("[title]").tooltip({position: {
-                my: "center bottom-20",
-                at: "right top"}});
+
+            //tooltip
+            $("[title]").tooltip({
+                position: {
+                    my: "center bottom-20",
+                    at: "right top"
+                    },
+                show: { duration: 100 },
+                hide: { duration: 100 }
+            });
         });
         function checkMatch() {
             $("#pass_mismatch").hide();
@@ -97,8 +103,9 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
         ?>
         <div class="formDiv">
             <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post" id="register_form" autocomplete="off">
-                <label for="name"><?=$tr["USERNAME"]?></label><br/>
+                <label for="name"><?= $tr["USERNAME"] ?></label><br/>
                 <input type="text" name="name" id="name" maxlength="25"
+                       title="<?= $tr["ERR_USERNAME_FORMAT"] ?>"
                        value="<?= isset($_POST["name"]) ? $_POST["name"] : "" ?>">
                 <br/>
                 <?php if ($nameErr) echo '<span class="errorMessage">' . $nameErr . '</span><br />'; ?>
@@ -109,20 +116,20 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
                 <br/>
                 <?php if ($emailErr) echo '<span class="errorMessage">' . $emailErr . '</span><br />'; ?>
                 <br/>
-                <label for="pass"><?=$tr["PASSWORD"]?></label><br/>
+                <label for="pass"><?= $tr["PASSWORD"] ?></label><br/>
                 <input type="password" name="pass" id="pass" maxlength="100" title="<?= $tr["ERR_PASSWORD_LENGTH"] ?>">
                 <br/><br/>
-                <label for="pass"><?=$tr["PASSWORD_AGAIN"]?></label><br/>
+                <label for="pass"><?= $tr["PASSWORD_AGAIN"] ?></label><br/>
                 <input type="password" id="pass_again" maxlength="100">
                 <br/>
 
                 <div id="pass_mismatch" style="display: none;"><span class="errorMessage"
-                                                                     id="pass_mismatch"><?=$tr["PASS_NOT_MATCH"]?></span>
+                                                                     id="pass_mismatch"><?= $tr["PASS_NOT_MATCH"] ?></span>
                     <br/></div>
                 <?php if ($passwordErr) echo '<span class="errorMessage">' . $passwordErr . '</span><br />'; ?>
                 <br/>
-                <label for="pass"><?=$tr["CAPTCHA"]?></label><br/>
-                <?=print_captcha()?>
+                <label for="pass"><?= $tr["CAPTCHA"] ?></label><br/>
+                <?= print_captcha() ?>
                 <?php if ($captchaErr) echo '<span class="errorMessage">' . $captchaErr . '</span><br />'; ?>
                 <br/>
                 <br/>

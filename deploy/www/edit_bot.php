@@ -28,14 +28,14 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
             $mimeType = $finfo->file($_FILES["codefile"]["tmp_name"]);
             if (strpos($mimeType, "text/") !== 0)
                 $fileErr = $tr["ERR_CODEFILE"];
-            else if ($_FILES["codefile"]["size"] < 7)
-                $fileErr = $tr["ERR_CODE_EMPTY"];
+            else if ($_FILES["codefile"]["size"] < BOT_CODE_MIN)
+                $fileErr = $tr["ERR_CODE_SHORT"];
         } else
             die("File upload error: " . $_FILES["codefile"]["error"]);
 
     } else if (isset($_POST["code"])) {
-        if (strlen(isset($_POST["code"]) < BOT_CODE_MIN))
-            $fileErr = $tr["ERR_CODE_EMPTY"];
+        if (strlen($_POST["code"]) < BOT_CODE_MIN)
+            $fileErr = $tr["ERR_CODE_SHORT"];
         else
             $code = $_POST["code"];
     }
@@ -46,7 +46,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
         die("Invalid request");
 
     if ($fileErr == "" && $codeErr == "" && $nameErr == "") {
-        //update database
+        //update bots table
         SQL("UPDATE bots SET name = ?, lastChangeTime = NOW(), code_lang = ?, state = 'processing'
               WHERE id = ?", $name, $lang, $id);
 
@@ -68,6 +68,9 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
         for ($i = 0; $i < count($leaderBoardTables); $i++) {
             SQL("DELETE FROM ".$leaderBoardTables[$i]["tableName"]." WHERE botID = ?", $id);
         }
+
+        //remove bot from games_by_bots
+        SQL("DELETE FROM games_by_bots WHERE botID = ?", $id);
 
         header('Location: ../my_bots.php');
     }
@@ -115,6 +118,9 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
 <div id="main">
     <h2><?=$tr["EDIT_BOT"]?></h2>
 
+    <?= $nameErr ? '<span class="errorMessage">' . $nameErr . '</span><br />' : '' ?>
+    <?= $codeErr ? '<span class="errorMessage">' . $codeErr . '</span><br />' : '' ?>
+    <?= $fileErr ? '<span class="errorMessage">' . $fileErr . '</span><br />' : '' ?>
     <p>
 
     <form action="<?= $_SERVER["PHP_SELF"] . "?id=" . $id ?>" method="post" id="botform" enctype="multipart/form-data">
@@ -131,21 +137,19 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
             </select>
         </div>
         <br/>
-        <?=$nameErr ? '<span class="errorMessage">' . $nameErr . '</span><br />' : ''?>
         <br/>
 
         <div class="codeWrapper">
             <label for="code"><?=$tr["INSERT_CODE"]?></label><br/>
             <textarea cols="80" rows="20" name="code" id="code" style="display: block"
                       wrap="off" autofocus><?= $code ?></textarea>
-            <?= $codeErr ? '<span class="errorMessage">' . $codeErr . '</span><br />' : '' ?>
         </div>
         <br/>
         <label for="codefile"><?=$tr["CHOOSE_FILE_TO"]?></label><br/>
         <input name="codefile" id="codefile" type="file">
         <br/>
-        <?php if ($fileErr) echo '<span class="errorMessage">' . $fileErr . '</span><br />'; ?>
         <br/>
+        <input type="button" onclick="window.history.back()" class="disabledButton button" value="<?= $tr["CANCEL"] ?>">
         <input type="button" onclick="saveAsk(this.form)" class="button" value="<?= $tr["SAVE"] ?>">
     </form>
     </p>
