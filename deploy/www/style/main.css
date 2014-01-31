@@ -324,24 +324,40 @@ input[type=submit].button, input[type=button].button {
     background-image: url("../images/icons.png");
     background-position: -59px 0;
 }
+
 .showGameIcon {
     background-image: url("../images/icons.png");
     background-position: -86px 0;
 }
 
+.loadingIcon {
+    background-image: url("../images/loading.gif");
+    background-position: -1px 0;
+}
+
 .messageBox {
     display: block;
     position: fixed;
-    top: 20px;
+    top: 0px;
     left: 50%;
     margin-left: -150px;
     width: 300px;
-    border: 2px solid #494949;
-    color: #000000;
-    background-color: white;
+    background-color: #ededed;
+    box-shadow: 0 0 10px rgba(32, 32, 32, 0.5);
     padding: 10px;
-    text-align: center;
+}
+
+.messageBox p
+{
+    color: #000000;
     font-size: 1.2em;
+    text-align: center;
+    text-shadow: 1px 1px #ffffff;
+}
+
+.messageBoxBottom {
+    width: 100%;
+    text-align: right;
 }
 
 .basicContainer {
@@ -427,4 +443,16 @@ div[id^="lb"] {
 
 .ui-tooltip {
     max-width: 700px;
+}
+
+/* leanModal messagebox fullscreen*/
+#lean_overlay {
+    position: fixed;
+    z-index:100;
+    top: 0px;
+    left: 0px;
+    height:100%;
+    width:100%;
+    background: #000;
+    display: none;
 }

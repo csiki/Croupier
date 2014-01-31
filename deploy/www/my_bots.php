@@ -36,9 +36,20 @@ function getBotInfos()
             $row.slideDown(200);
         }
 
-        function deleteBotAsk(id) {
+        function deleteBotAsk(element, id) {
             if (messageBoxAsk('<?=$tr["DELETE_BOT_CONF"]?>'))
+            {
+                addLoading(element)
                 deleteBot(id);
+            }
+        }
+
+        function addLoading(element)
+        {
+            var $e = $(element);
+            $e.empty();
+            var $loading = $('<div class="icon loadingIcon" ></div>');
+            $loading.appendTo($e);
         }
 
         function deleteBot(id) {
@@ -55,6 +66,7 @@ function getBotInfos()
                                         $(this).closest('tr').remove();
                                     });
                             });
+                        messageBox("Bot deleted");
                     }
                 }
             }
@@ -67,9 +79,9 @@ function getBotInfos()
 <?php include "php/header.php"; ?>
 <div id="main">
     <h2><?=$tr["MY_BOTS"]?></h2>
-
     <div class="basicContainer">
         <a href="add_bot.php" class="button" style="margin-bottom: 20px"><?=$tr["NEW_BOT"]?></a>
+        <a onclick="messageBox('Bot deleted', 'ok');">deleted</a>
         <table id="manageBotsTable">
             <thead>
             <tr>
@@ -93,7 +105,7 @@ function getBotInfos()
                     .'<div class="icon playedGamesIcon" title="' . $tr["PLAYED_GAMES"]. '"></div></td>';
                 echo '<td style="cursor:pointer" onclick="document.location = \'edit_bot.php?id=' . $rows[$i]["id"] . '\';">
                     <div class="icon editIcon" title="' . $tr["EDIT_BOT"] . '"></div></td>';
-                echo '<td style="cursor:pointer" onclick="deleteBotAsk(' . $rows[$i]["id"] . ')">'
+                echo '<td style="cursor:pointer" onclick="deleteBotAsk(this, ' . $rows[$i]["id"] . ')">'
                     .'<div class="icon deleteIcon" title="' . $tr["DELETE_BOT"] . '"></div></td>';
                 echo '</tr>';
             }

@@ -13,6 +13,15 @@ abstract class Severity
     const DEBUG = 6; //none
 };
 
+$severityColors = array(
+    0 => "#000000",
+    1 => "#CC0000",
+    2 => "#FF8200",
+    3 => "#E6E7FF",
+    4 => "#f3f3ff",
+    5 => "#FFFFFF"
+);
+
 $orig_msg = array("receiveCard", "fold", "check", "call", "raise");
 $hun_msg = array("Kapott kártya", "Eldobás", "Passzolás", "Megadás", "Emelés");
 
@@ -63,7 +72,6 @@ if (isset($_GET["gameID"]) && is_numeric($_GET["gameID"]) && isset($_GET["botID"
                     <th>#</th>
                     <th>Who</th>
                     <th>What</th>
-                    <th>Severity</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -82,11 +90,7 @@ if (isset($_GET["gameID"]) && is_numeric($_GET["gameID"]) && isset($_GET["botID"
                         continue;
 
                     //calculate color for each severity
-                    if ($event->logger == 0)
-                        $rgb = "#E6E7FF";
-                    else
-                        $rgb = "#FFFF" . dechex(170 / 6 * $event->severity);
-
+                    $rgb = $severityColors[(int)$event->severity];
                     echo '<tr style="background-color: ' . $rgb . '; '
                         . ($event->logger == $botID ? 'font-weight:700; ' : '') . '">';
                     echo '<td>' . $i . '</td>';
@@ -98,7 +102,6 @@ if (isset($_GET["gameID"]) && is_numeric($_GET["gameID"]) && isset($_GET["botID"
                         echo '<td>' . 'bot ' . $event->logger . '</td>';
                     $i++;
                     echo '<td>' . str_replace($orig_msg, $hun_msg, $event->msg) . '</td>';
-                    echo '<td>' . $event->severity . '</td>';
                     echo '</tr>';
                 }
                 ?>

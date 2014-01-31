@@ -16,8 +16,7 @@ function sendForm(form, password) {
     form.submit();
 }
 
-function getAJAX()
-{
+function getAJAX() {
     var xmlhttp;
     if (window.XMLHttpRequest)
         xmlhttp = new XMLHttpRequest();
@@ -30,17 +29,58 @@ function messageBoxAsk(text) {
     return confirm(text);
 }
 
-function messageBox(text) {
-    var $mbox = $('<div class="messageBox"/>');
-    $mbox.html(text);
-    $mbox.hide();
-    $mbox.appendTo($("body").first());
-    $mbox.fadeTo(1, 0).show().animate({
-        top: "+=20",
-        opacity: 1.0
-    }, 1000).delay(3000).fadeOut(600, function () {
+function messageBox(text, messageBoxType) {
+    if (arguments.length == 2) {
+        switch (messageBoxType) {
+            case "ok":
+                var $mbox = $('<div class="messageBox"/>');
+                var $p = $('<p>' + text + '</p>);');
+                $mbox.append($p);
+                var $rightDiv = $('<div class="messageBoxBottom" />');
+                $mbox.append($rightDiv);
+                var $okButton = $('<a class="button">Ok</a>');
+                $okButton.click(hideMessageBox);
+                $rightDiv.append($okButton);
+
+                var overlay = $("<div id='lean_overlay'></div>");
+
+                $("body").first().append($mbox);
+                $mbox.css('top', -$mbox.outerHeight() - 10);
+                $mbox.animate({
+                    top: "0"
+                }, 800, "easeOutExpo");
+                /*$mbox.animate({top: -$mbox.outerHeight() - 10}, 400, "linear", function () {
+                    $(this).remove();
+                });*/
+                break;
+            case "yesno":
+                $mbox.animate({
+                    top: "0"
+                }, 400, "easeOutExpo").delay(3000).animate({top: -$mbox.outerHeight() - 10}, 400, "linear", function () {
+                    $(this).remove();
+                });
+                break;
+        }
+    }
+    else {
+        var $mbox = $('<div class="messageBox"/>');
+        $mbox.html(text);
+        $mbox.appendTo($("body").first());
+        $mbox.css('top', -$mbox.outerHeight() - 10);
+        $mbox.animate({
+            top: "0"
+        }, 400, "easeOutExpo").delay(3000).animate({top: -$mbox.outerHeight() - 10}, 400, "linear", function () {
             $(this).remove();
         });
+    }
+}
+
+function hideMessageBox()
+{
+    var $mbox = $('.messageBox');
+    $mbox.animate({top: -$mbox.outerHeight() - 10}, 300, "linear", function () {
+        $mbox.remove();
+    });
 }
 
 function getQueryParams(qs) {

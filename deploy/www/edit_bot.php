@@ -1,7 +1,7 @@
 <?php
 include "php/include.php";
 needLogin();
-$codeErr = $fileErr = $nameErr = "";
+$errors = array();
 $name = $code = $lang = $orig = $id = "";
 if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
     $id = $_GET["id"];
@@ -18,7 +18,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
     if (isset($_POST["name"]) && !empty($_POST["name"]))
         $name = $_POST["name"];
     if (SQL("SELECT * FROM bots WHERE name = ? AND id != ?", $name, $id) != null)
-        $nameErr = $tr["ERR_NAME_CONFLICT"];
+        $errors[] = $tr["ERR_NAME_CONFLICT"];
 
     $codeFileUpload = isset($_FILES["codefile"]) && $_FILES["codefile"]["error"] != UPLOAD_ERR_NO_FILE;
     if ($codeFileUpload) {
@@ -27,15 +27,15 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
             $finfo = new finfo(FILEINFO_MIME_TYPE);
             $mimeType = $finfo->file($_FILES["codefile"]["tmp_name"]);
             if (strpos($mimeType, "text/") !== 0)
-                $fileErr = $tr["ERR_CODEFILE"];
+                $errors[] = $tr["ERR_CODEFILE"];
             else if ($_FILES["codefile"]["size"] < BOT_CODE_MIN)
-                $fileErr = $tr["ERR_CODE_SHORT"];
+                $errors[] = $tr["ERR_CODE_SHORT"];
         } else
             die("File upload error: " . $_FILES["codefile"]["error"]);
 
     } else if (isset($_POST["code"])) {
         if (strlen($_POST["code"]) < BOT_CODE_MIN)
-            $fileErr = $tr["ERR_CODE_SHORT"];
+            $errors[] = $tr["ERR_CODE_SHORT"];
         else
             $code = $_POST["code"];
     }
@@ -45,7 +45,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
     else
         die("Invalid request");
 
-    if ($fileErr == "" && $codeErr == "" && $nameErr == "") {
+    if (count($errors) == 0) {
         //update bots table
         SQL("UPDATE bots SET name = ?, lastChangeTime = NOW(), code_lang = ?, state = 'processing'
               WHERE id = ?", $name, $lang, $id);
@@ -118,9 +118,11 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
 <div id="main">
     <h2><?=$tr["EDIT_BOT"]?></h2>
 
-    <?= $nameErr ? '<span class="errorMessage">' . $nameErr . '</span><br />' : '' ?>
-    <?= $codeErr ? '<span class="errorMessage">' . $codeErr . '</span><br />' : '' ?>
-    <?= $fileErr ? '<span class="errorMessage">' . $fileErr . '</span><br />' : '' ?>
+    <?php
+    foreach ($errors as $error) {
+        echo '<span class="errorMessage">' . $error . '</span><br />';
+    }
+    ?>
     <p>
 
     <form action="<?= $_SERVER["PHP_SELF"] . "?id=" . $id ?>" method="post" id="botform" enctype="multipart/form-data">

@@ -1,18 +1,18 @@
 <?php
 include "php/include.php";
 needLogin();
-$codeErr = $fileErr = $bruteErr = "";
-$name = $code = $lang = $nameErr = "";
+$errors = array();
+$name = $code = $lang = "";
 if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
     $res = SQL("SHOW TABLE STATUS LIKE 'bots'");
     $id = $res[0]["Auto_increment"];
     if (isset($_POST["name"]) && !empty($_POST["name"])) {
-        if(!sanityCheck($_POST['name'], 'string', 5, 30))
-            $nameErr = $tr["ERR_BOTNAME_LENGTH"];
+        if (!sanityCheck($_POST['name'], 'string', 5, 30))
+            $errors[] = $tr["ERR_BOTNAME_LENGTH"];
         else if (!checkBotname($_POST['name']))
-            $nameErr = $tr["ERR_BOTNAME_FORMAT"];
-        else  if (SQL("SELECT 1 FROM bots WHERE name = ?", $name) != null)
-            $nameErr = $tr["ERR_NAME_CONFLICT"];
+            $errors[] = $tr["ERR_BOTNAME_FORMAT"];
+        else if (SQL("SELECT 1 FROM bots WHERE name = ?", $name) != null)
+            $errors[] = $tr["ERR_NAME_CONFLICT"];
         else
             $name = xssafe($_POST['name']);
     } else
@@ -24,15 +24,15 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
             $finfo = new finfo(FILEINFO_MIME_TYPE);
             $mimeType = $finfo->file($_FILES["codefile"]["tmp_name"]);
             if (strpos($mimeType, "text/") !== 0)
-                $fileErr = $tr["ERR_CODEFILE"];
+                $errors[] = $tr["ERR_CODEFILE"];
             else if ($_FILES["codefile"]["size"] < BOT_CODE_MIN)
-                $fileErr = $tr["ERR_CODE_SHORT"];
+                $errors[] = $tr["ERR_CODE_SHORT"];
         } else
             die("File upload error: " . $_FILES["codefile"]["error"]);
 
     } else if (isset($_POST["code"])) {
         if (strlen($_POST["code"]) < BOT_CODE_MIN)
-            $fileErr = $tr["ERR_CODE_SHORT"];
+            $errors[] = $tr["ERR_CODE_SHORT"];
         else
             $code = $_POST["code"];
     }
@@ -41,50 +41,42 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
         $lang = $_POST["lang"];
     else
         die("Invalid request");
-
-    if ($fileErr == "" && $codeErr == "" && $nameErr == "") {
-        //check brute force
-        if (!check_brute("addBot", 30, 3600)) {
-            $bruteErr = $tr["ERR_ADDBOT_BRUTE"];
-        }
-        else
-        {
-            //update database
-            SQL("INSERT INTO bots (id, accountID, name, lastChangeTime, code_lang, state)
+    if (!check_brute("addBot", 30, 3600)) {
+        $bruteErr = $tr["ERR_ADDBOT_BRUTE"];
+    } else if (count($errors) == 0) {
+        //update database
+        SQL("INSERT INTO bots (id, accountID, name, lastChangeTime, code_lang, state)
               VALUES (NULL, ?, ?, NOW(), ?, 'processing')", $_SESSION["accountID"], $name, $lang);
 
-            //create bot folder
-            $ret = mkdir(_BOT_AI_RELATIVE_PATH_ . $id);
-            chmod(_BOT_AI_RELATIVE_PATH_ . $id, 0770);
-            if ($ret === false)
-            {
+        //create bot folder
+        $ret = mkdir(_BOT_AI_RELATIVE_PATH_ . $id);
+        chmod(_BOT_AI_RELATIVE_PATH_ . $id, 0770);
+        if ($ret === false) {
+            SQL("DELETE FROM bots WHERE id = ?", $id); //remove db entry
+            die("Couldn't create folder for bot: " . $name);
+        }
+        //move or make file
+        if ($codeFileUpload) {
+            $tmp_name = $_FILES["codefile"]["tmp_name"];
+            $newFileName = _BOT_AI_RELATIVE_PATH_ . $id . "/" . $id;
+            move_uploaded_file($tmp_name, $newFileName);
+            chmod($newFileName, 0770);
+        } else {
+            $ret = file_put_contents(_BOT_AI_RELATIVE_PATH_ . $id . "/" . $id, $code);
+            chmod(_BOT_AI_RELATIVE_PATH_ . $id . "/" . $id, 0770);
+            if ($ret === false) {
                 SQL("DELETE FROM bots WHERE id = ?", $id); //remove db entry
-                die("Couldn't create folder for bot: " . $name);
+                rmdir(_BOT_AI_RELATIVE_PATH_ . $id); //remove folder
+                die("Couldn't write bot to file: " . $name);
             }
-            //move or make file
-            if ($codeFileUpload) {
-                $tmp_name = $_FILES["codefile"]["tmp_name"];
-                $newFileName = _BOT_AI_RELATIVE_PATH_ . $id . "/" . $id;
-                move_uploaded_file($tmp_name, $newFileName);
-                chmod($newFileName, 0770);
-            } else {
-                $ret = file_put_contents(_BOT_AI_RELATIVE_PATH_ . $id . "/" . $id, $code);
-                chmod(_BOT_AI_RELATIVE_PATH_ . $id . "/" . $id, 0770);
-                if ($ret === false)
-                {
-                    SQL("DELETE FROM bots WHERE id = ?", $id); //remove db entry
-                    rmdir(_BOT_AI_RELATIVE_PATH_ . $id); //remove folder
-                    die("Couldn't write bot to file: " . $name);
-                }
-            }
+        }
 
-            //update stats
-            SQL("INSERT INTO stat_bots_added (date, count)
+        //update stats
+        SQL("INSERT INTO stat_bots_added (date, count)
                 VALUES (CURRENT_DATE(), 1)
                 ON DUPLICATE KEY UPDATE date = VALUES(date), count = count + 1;");
 
-            header('Location: ../my_bots.php');
-        }
+        header('Location: ../my_bots.php');
     }
 }
 ?>
@@ -114,6 +106,15 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
                 form.submit();
         }
 
+        function cancelAsk() {
+            if (editor.getValue().length != 0 || $("#codefile").val().length != 0) {
+                if (messageBoxAsk('<?=$tr["CANCEL_BOT_CONF"]?>'))
+                    window.history.back();
+            }
+            else
+                window.history.back();
+        }
+
         function langChanged() {
             var v = $("#codeLang").val();
             if (v == "c++")
@@ -128,21 +129,22 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
 <body>
 <?php include "php/header.php"; ?>
 <div id="main">
-    <h2><?=$tr["NEW_BOT"]?></h2>
+    <h2><?= $tr["NEW_BOT"] ?></h2>
 
-    <?= $bruteErr ? '<span class="errorMessage">' . $bruteErr . '</span><br />': '' ?>
-    <?= $nameErr ? '<span class="errorMessage">' . $nameErr . '</span><br />' : ''?>
-    <?= $fileErr ? '<span class="errorMessage">' . $fileErr . '</span><br />' :  '' ?>
-    <?= $codeErr ? '<span class="errorMessage">' . $codeErr . '</span><br />' : '' ?>
+    <?php
+    foreach ($errors as $error) {
+        echo '<span class="errorMessage">' . $error . '</span><br />';
+    }
+    ?>
     <p>
 
     <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post" id="botform" enctype="multipart/form-data">
         <div style="display: inline-block">
-            <label for="name"><?=$tr["BOTNAME"]?></label><br/>
+            <label for="name"><?= $tr["BOTNAME"] ?></label><br/>
             <input name="name" id="name" type="text" value="<?= $name ?>" autofocus></div>
 
         <div style="display: inline-block; margin-left: 40px">
-            <label for="codeLang"><?=$tr["CODE_LANG"]?></label><br/>
+            <label for="codeLang"><?= $tr["CODE_LANG"] ?></label><br/>
             <select name="lang" id="codeLang" form="botform">
                 <option value="c++" <?php if ($lang == "c++") echo "selected"; ?>>C++</option>
                 <option value="java" <?php if ($lang == "java") echo "selected"; ?>>Java</option>
@@ -153,16 +155,16 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
         <br/>
 
         <div class="codeWrapper">
-            <label for="code"><?=$tr["INSERT_CODE"]?></label><br/>
+            <label for="code"><?= $tr["INSERT_CODE"] ?></label><br/>
             <textarea cols="80" rows="20" name="code" id="code" style="display: block"
                       wrap="off"><?php if (isset($_POST["code"])) echo $_POST["code"]; ?></textarea>
         </div>
         <br/>
-        <label for="codefile"><?=$tr["CHOOSE_FILE_TO"]?></label><br/>
+        <label for="codefile"><?= $tr["CHOOSE_FILE_TO"] ?></label><br/>
         <input name="codefile" id="codefile" type="file">
         <br/>
         <br/>
-        <input type="button" onclick="window.history.back()" class="disabledButton button" value="<?= $tr["CANCEL"] ?>">
+        <input type="button" onclick="cancelAsk()" class="disabledButton button" value="<?= $tr["CANCEL"] ?>">
         <input type="submit" class="button" value="<?= $tr["SAVE"] ?>">
     </form>
     </p>
