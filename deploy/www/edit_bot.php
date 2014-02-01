@@ -66,7 +66,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
         //remove bot from leaderboards
         $leaderBoardTables = SQL("SELECT tableName FROM leaderboards");
         for ($i = 0; $i < count($leaderBoardTables); $i++) {
-            SQL("DELETE FROM ".$leaderBoardTables[$i]["tableName"]." WHERE botID = ?", $id);
+            SQL("DELETE FROM " . $leaderBoardTables[$i]["tableName"] . " WHERE botID = ?", $id);
         }
 
         //remove bot from games_by_bots
@@ -98,8 +98,9 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
         }
 
         function saveAsk(form) {
-            if (messageBoxAsk('<?=$tr["SAVE_BOT_CONF"]?>'))
+            messageBoxAsk("<?=$tr["SAVE_BOT_CONF"]?>", function () {
                 form.submit();
+            });
         }
 
         function langChanged() {
@@ -116,7 +117,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
 <body>
 <?php include "php/header.php"; ?>
 <div id="main">
-    <h2><?=$tr["EDIT_BOT"]?></h2>
+    <h2><?= $tr["EDIT_BOT"] ?></h2>
 
     <?php
     foreach ($errors as $error) {
@@ -127,11 +128,11 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
 
     <form action="<?= $_SERVER["PHP_SELF"] . "?id=" . $id ?>" method="post" id="botform" enctype="multipart/form-data">
         <div style="display: inline-block">
-            <label for="name"><?=$tr["BOTNAME"]?></label><br/>
+            <label for="name"><?= $tr["BOTNAME"] ?></label><br/>
             <input name="name" id="name" type="text" value="<?= $name ?>"></div>
 
         <div style="display: inline-block; margin-left: 40px">
-            <label for="codeLang"><?=$tr["CODE_LANG"]?></label><br/>
+            <label for="codeLang"><?= $tr["CODE_LANG"] ?></label><br/>
             <select name="lang" id="codeLang" form="botform">
                 <option value="c++" <?php if ($lang == "c++") echo "selected"; ?>>C++</option>
                 <option value="java" <?php if ($lang == "java") echo "selected"; ?>>Java</option>
@@ -142,12 +143,12 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
         <br/>
 
         <div class="codeWrapper">
-            <label for="code"><?=$tr["INSERT_CODE"]?></label><br/>
+            <label for="code"><?= $tr["INSERT_CODE"] ?></label><br/>
             <textarea cols="80" rows="20" name="code" id="code" style="display: block"
                       wrap="off" autofocus><?= $code ?></textarea>
         </div>
         <br/>
-        <label for="codefile"><?=$tr["CHOOSE_FILE_TO"]?></label><br/>
+        <label for="codefile"><?= $tr["CHOOSE_FILE_TO"] ?></label><br/>
         <input name="codefile" id="codefile" type="file">
         <br/>
         <br/>

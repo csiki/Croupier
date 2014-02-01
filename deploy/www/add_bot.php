@@ -102,15 +102,16 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
         }
 
         function saveAsk(form) {
-            if (messageBoxAsk('<?=$tr["SAVE_BOT_CONF"]?>'))
+            messageBoxAsk('<?=$tr["SAVE_BOT_CONF"]?>', function () {
                 form.submit();
+            });
         }
 
         function cancelAsk() {
-            if (editor.getValue().length != 0 || $("#codefile").val().length != 0) {
-                if (messageBoxAsk('<?=$tr["CANCEL_BOT_CONF"]?>'))
+            if (editor.getValue().length != 0 || $("#codefile").val().length != 0)
+                messageBoxAsk("<?=$tr["CANCEL_BOT_CONF"]?>", function () {
                     window.history.back();
-            }
+                });
             else
                 window.history.back();
         }

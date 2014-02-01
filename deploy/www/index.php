@@ -36,14 +36,16 @@ if ($items == null)
             echo '</div>';
         }
         echo '</div>';
-        echo '<div id="postsNavigator">';
-        if ($currentPage != 0)
-            echo '<a class="postsNavigatorButton" href="' . $_SERVER["PHP_SELF"] . '?page=' . ($currentPage - 1) .
-                '">' . $tr["NEWER_PAGES"] . '</a>';
-        if ($currentPage != $lastPage)
-            echo '<a class="postsNavigatorButton" style="right:0px;" href="' . $_SERVER["PHP_SELF"] . '?page=' .
-                ($currentPage + 1) . '">' . $tr["OLDER_PAGES"] . '</a>';
-        echo '</div>';
+        if ($itemTotal > $itemsPerPage) {
+            echo '<div id="postsNavigator">';
+            if ($currentPage != 0)
+                echo '<a class="postsNavigatorButton" href="' . $_SERVER["PHP_SELF"] . '?page=' . ($currentPage - 1) .
+                    '">' . $tr["NEWER_PAGES"] . '</a>';
+            if ($currentPage != $lastPage)
+                echo '<a class="postsNavigatorButton" style="right:0px;" href="' . $_SERVER["PHP_SELF"] . '?page=' .
+                    ($currentPage + 1) . '">' . $tr["OLDER_PAGES"] . '</a>';
+            echo '</div>';
+        }
         ?>
     </div>
 </div>

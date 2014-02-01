@@ -11,6 +11,7 @@ function getBotInfos()
     }
     return array();
 }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -37,15 +38,13 @@ function getBotInfos()
         }
 
         function deleteBotAsk(element, id) {
-            if (messageBoxAsk('<?=$tr["DELETE_BOT_CONF"]?>'))
-            {
+            messageBoxAsk('<?=$tr["DELETE_BOT_CONF"]?>', function () {
                 addLoading(element)
                 deleteBot(id);
-            }
+            });
         }
 
-        function addLoading(element)
-        {
+        function addLoading(element) {
             var $e = $(element);
             $e.empty();
             var $loading = $('<div class="icon loadingIcon" ></div>');
@@ -73,23 +72,27 @@ function getBotInfos()
             xmlhttp.open("GET", "delete_bot.php?botID=" + id, true);
             xmlhttp.send();
         }
+
+        function ok() {
+            alert("df");
+        }
     </script>
 </head>
 <body>
 <?php include "php/header.php"; ?>
 <div id="main">
-    <h2><?=$tr["MY_BOTS"]?></h2>
+    <h2><?= $tr["MY_BOTS"] ?></h2>
+
     <div class="basicContainer">
-        <a href="add_bot.php" class="button" style="margin-bottom: 20px"><?=$tr["NEW_BOT"]?></a>
-        <a onclick="messageBox('Bot deleted', 'ok');">deleted</a>
+        <a href="add_bot.php" class="button" style="margin-bottom: 20px"><?= $tr["NEW_BOT"] ?></a>
         <table id="manageBotsTable">
             <thead>
             <tr>
-                <th style="width: 150px"><?=$tr["NAME"]?></th>
-                <th style="width: 150px"><?=$tr["DATE_TIME"]?></th>
-                <th style="width: 80px"><?=$tr["CODE_LANG"]?></th>
-                <th style="width: 80px"><?=$tr["STATE"]?></th>
-                <th colspan="3"><?=$tr["OPERATIONS"]?></th>
+                <th style="width: 150px"><?= $tr["NAME"] ?></th>
+                <th style="width: 150px"><?= $tr["DATE_TIME"] ?></th>
+                <th style="width: 80px"><?= $tr["CODE_LANG"] ?></th>
+                <th style="width: 80px"><?= $tr["STATE"] ?></th>
+                <th colspan="3"><?= $tr["OPERATIONS"] ?></th>
             </tr>
             </thead>
             <tbody>
@@ -102,11 +105,11 @@ function getBotInfos()
                 echo '<td>' . $rows[$i]["code_lang"] . '</td>';
                 echo '<td>' . $rows[$i]["state"] . '</td>';
                 echo '<td style="cursor:pointer" onclick="document.location = \'played_games.php?botID=' . $rows[$i]["id"] . '\';">'
-                    .'<div class="icon playedGamesIcon" title="' . $tr["PLAYED_GAMES"]. '"></div></td>';
+                    . '<div class="icon playedGamesIcon" title="' . $tr["PLAYED_GAMES"] . '"></div></td>';
                 echo '<td style="cursor:pointer" onclick="document.location = \'edit_bot.php?id=' . $rows[$i]["id"] . '\';">
                     <div class="icon editIcon" title="' . $tr["EDIT_BOT"] . '"></div></td>';
                 echo '<td style="cursor:pointer" onclick="deleteBotAsk(this, ' . $rows[$i]["id"] . ')">'
-                    .'<div class="icon deleteIcon" title="' . $tr["DELETE_BOT"] . '"></div></td>';
+                    . '<div class="icon deleteIcon" title="' . $tr["DELETE_BOT"] . '"></div></td>';
                 echo '</tr>';
             }
             ?>

@@ -73,7 +73,7 @@ body {
     margin-right: auto;
     max-width: 1000px;
     background-color: #ffffff;
-    min-height: 800px;
+    min-height: 840px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.196);
 }
 
@@ -345,6 +345,7 @@ input[type=submit].button, input[type=button].button {
     background-color: #ededed;
     box-shadow: 0 0 10px rgba(32, 32, 32, 0.5);
     padding: 10px;
+    z-index: 11000;
 }
 
 .messageBox p
@@ -356,8 +357,20 @@ input[type=submit].button, input[type=button].button {
 }
 
 .messageBoxBottom {
-    width: 100%;
+    margin-top: 30px;
     text-align: right;
+}
+
+#messageboxOverlay {
+    position: fixed;
+    z-index:100;
+    top: 0px;
+    left: 0px;
+    height:100%;
+    width:100%;
+    background: #000;
+    display: block;
+    opacity: 0;
 }
 
 .basicContainer {
@@ -443,16 +456,4 @@ div[id^="lb"] {
 
 .ui-tooltip {
     max-width: 700px;
-}
-
-/* leanModal messagebox fullscreen*/
-#lean_overlay {
-    position: fixed;
-    z-index:100;
-    top: 0px;
-    left: 0px;
-    height:100%;
-    width:100%;
-    background: #000;
-    display: none;
 }

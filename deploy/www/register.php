@@ -6,29 +6,29 @@ if ($loggedin) {
     header('Location: summary.php');
     exit();
 }
-$nameErr = $passwordErr = $emailErr = $captchaErr = "";
+$errors = array();
 $name = $email = "";
 if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pSize'])) {
     if (!isset($_POST['name']) || !sanityCheck($_POST['name'], 'string', 3, 25))
-        $nameErr = $tr["ERR_USERNAME_LENGTH"];
+        $errors[] = $tr["ERR_USERNAME_LENGTH"];
     else if (SQL("SELECT 1 FROM accounts WHERE username = ?;", $_POST['name']) != null)
-        $nameErr = $tr["ERR_USERNAME_EXITS"];
+        $errors[] = $tr["ERR_USERNAME_EXITS"];
     else if (!checkUsername($_POST['name']))
-        $nameErr = $tr["ERR_USERNAME_FORMAT"];
+        $errors[] = $tr["ERR_USERNAME_FORMAT"];
     else
         $name = xssafe($_POST['name']);
 
     if (!isset($_POST['email']) || !sanityCheck($_POST['email'], 'string', 7, 50) || !checkEmail($_POST['email']))
-        $emailErr = $tr["ERR_EMAIL"];
+        $errors[] = $tr["ERR_EMAIL"];
     else
         $email = $_POST['email'];
 
     if (!isset($_POST['pSize']) || !sanityCheck($_POST['pSize'], 'numeric', 0, 3)) {
-        $passwordErr = $tr["ERR_PASSWORD_LENGTH"];
+        $errors[] = $tr["ERR_PASSWORD_LENGTH"];
     } else {
         $pSize = intval($_POST['pSize']);
         if ($pSize < 6 || $pSize > 100)
-            $passwordErr = $tr["ERR_PASSWORD_LENGTH"];
+            $errors[] = $tr["ERR_PASSWORD_LENGTH"];
         else
             $password = $_POST['p'];
     }
@@ -40,8 +40,8 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
 
     if (!$cap->is_valid)
         $captchaErr = $tr["ERR_CAPTCHA"];
-
-    if ($nameErr == "" && $passwordErr == "" && $emailErr == "" && $captchaErr == "") {
+    $errors[] = "A regisztráció még nem nyílt meg!";
+    if (count($errors) == 0) {
         $random_salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
         // Create salted password (Careful not to over season)
         $password = hash('sha512', $password . $random_salt);
@@ -101,6 +101,11 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
         echo sprintf($tr["REGISTER_THANKS"], $_GET["email"]);
     else {
         ?>
+        <?php
+        foreach ($errors as $error) {
+            echo '<span class="errorMessage">' . $error . '</span><br />';
+        }
+        ?>
         <div class="formDiv">
             <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post" id="register_form" autocomplete="off">
                 <label for="name"><?= $tr["USERNAME"] ?></label><br/>
@@ -108,13 +113,11 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
                        title="<?= $tr["ERR_USERNAME_FORMAT"] ?>"
                        value="<?= isset($_POST["name"]) ? $_POST["name"] : "" ?>">
                 <br/>
-                <?php if ($nameErr) echo '<span class="errorMessage">' . $nameErr . '</span><br />'; ?>
                 <br/>
                 <label for="email">Email</label><br/>
                 <input type="text" name="email" id="email" maxlength="50"
                        value="<?= isset($_POST["email"]) ? $_POST["email"] : "" ?>">
                 <br/>
-                <?php if ($emailErr) echo '<span class="errorMessage">' . $emailErr . '</span><br />'; ?>
                 <br/>
                 <label for="pass"><?= $tr["PASSWORD"] ?></label><br/>
                 <input type="password" name="pass" id="pass" maxlength="100" title="<?= $tr["ERR_PASSWORD_LENGTH"] ?>">
@@ -126,11 +129,9 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
                 <div id="pass_mismatch" style="display: none;"><span class="errorMessage"
                                                                      id="pass_mismatch"><?= $tr["PASS_NOT_MATCH"] ?></span>
                     <br/></div>
-                <?php if ($passwordErr) echo '<span class="errorMessage">' . $passwordErr . '</span><br />'; ?>
                 <br/>
                 <label for="pass"><?= $tr["CAPTCHA"] ?></label><br/>
                 <?= print_captcha() ?>
-                <?php if ($captchaErr) echo '<span class="errorMessage">' . $captchaErr . '</span><br />'; ?>
                 <br/>
                 <br/>
                 <input type="button" value="<?= $tr["REGISTER"] ?>" class="button" id="submitButton">

@@ -25,59 +25,76 @@ function getAJAX() {
     return xmlhttp;
 }
 
-function messageBoxAsk(text) {
-    return confirm(text);
+function messageBoxAsk(text, callback) {
+    messageBox(text, "yesno", callback);
 }
 
-function messageBox(text, messageBoxType) {
-    if (arguments.length == 2) {
+function messageBox(text, messageBoxType, callback) {
+
+    var $body = $("body").first();
+
+    var $mbox = $('<div class="messageBox"/>');
+    var $p = $('<p>' + text + '</p>);');
+    $mbox.append($p);
+    if (arguments.length >= 2) {
+
+        if($("#messageboxOverlay").length == 0)
+        {
+            var $overlay = $("<div id='messageboxOverlay' />");
+            $body.append($overlay);
+            $overlay.fadeTo(200, 0.5);
+        }
+
         switch (messageBoxType) {
             case "ok":
-                var $mbox = $('<div class="messageBox"/>');
-                var $p = $('<p>' + text + '</p>);');
-                $mbox.append($p);
                 var $rightDiv = $('<div class="messageBoxBottom" />');
                 $mbox.append($rightDiv);
                 var $okButton = $('<a class="button">Ok</a>');
-                $okButton.click(hideMessageBox);
+                $okButton.click(function(){
+                    hideMessageBox($mbox);
+                });
                 $rightDiv.append($okButton);
-
-                var overlay = $("<div id='lean_overlay'></div>");
-
-                $("body").first().append($mbox);
-                $mbox.css('top', -$mbox.outerHeight() - 10);
-                $mbox.animate({
-                    top: "0"
-                }, 800, "easeOutExpo");
-                /*$mbox.animate({top: -$mbox.outerHeight() - 10}, 400, "linear", function () {
-                    $(this).remove();
-                });*/
                 break;
             case "yesno":
-                $mbox.animate({
-                    top: "0"
-                }, 400, "easeOutExpo").delay(3000).animate({top: -$mbox.outerHeight() - 10}, 400, "linear", function () {
-                    $(this).remove();
+                var $rightDiv = $('<div class="messageBoxBottom" />');
+                $mbox.append($rightDiv);
+                var $noButton = $('<a class="button">No</a>');
+                $noButton.click(function(){
+                    hideMessageBox($mbox);
                 });
+                $rightDiv.append($noButton);
+                var $yesButton = $('<a class="button" style="margin-left: 10px">Yes</a>');
+                $yesButton.click(function(){
+                    hideMessageBox($mbox);
+                    callback();
+                });
+                $rightDiv.append($yesButton);
                 break;
         }
-    }
-    else {
-        var $mbox = $('<div class="messageBox"/>');
-        $mbox.html(text);
-        $mbox.appendTo($("body").first());
+
+        $body.append($mbox);
         $mbox.css('top', -$mbox.outerHeight() - 10);
         $mbox.animate({
             top: "0"
-        }, 400, "easeOutExpo").delay(3000).animate({top: -$mbox.outerHeight() - 10}, 400, "linear", function () {
+        }, 800, "easeOutExpo");
+    }
+    else {
+        $body.append($mbox);
+        $mbox.css('top', -$mbox.outerHeight() - 10);
+        $mbox.animate({
+            top: "0"
+        }, 800, "easeOutExpo").delay(3000).animate({top: -$mbox.outerHeight() - 10}, 300, "linear", function () {
             $(this).remove();
         });
     }
 }
 
-function hideMessageBox()
-{
-    var $mbox = $('.messageBox');
+function hideMessageBox($mbox) {
+    if ($('.messageBox').length == 1) {
+        $("#messageboxOverlay").fadeOut(200, function () {
+            $("#messageboxOverlay").remove();
+        });
+    }
     $mbox.animate({top: -$mbox.outerHeight() - 10}, 300, "linear", function () {
         $mbox.remove();
     });
