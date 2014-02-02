@@ -42,7 +42,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
     else
         die("Invalid request");
     if (!check_brute("addBot", 30, 3600)) {
-        $bruteErr = $tr["ERR_ADDBOT_BRUTE"];
+        $errors[] = $tr["ERR_ADDBOT_BRUTE"];
     } else if (count($errors) == 0) {
         //update database
         SQL("INSERT INTO bots (id, accountID, name, lastChangeTime, code_lang, state)
@@ -101,15 +101,9 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
             langChanged();
         }
 
-        function saveAsk(form) {
-            messageBoxAsk('<?=$tr["SAVE_BOT_CONF"]?>', function () {
-                form.submit();
-            });
-        }
-
         function cancelAsk() {
             if (editor.getValue().length != 0 || $("#codefile").val().length != 0)
-                messageBoxAsk("<?=$tr["CANCEL_BOT_CONF"]?>", function () {
+                messageBoxYesNo("<?=$tr["CANCEL_BOT_CONF"]?>", "<?=$tr["YES"]?>", "<?=$tr["NO"]?>", function () {
                     window.history.back();
                 });
             else

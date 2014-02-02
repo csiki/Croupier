@@ -1,4 +1,4 @@
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `accounts` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
 
 INSERT INTO `accounts` (`id`, `username`, `email`, `password`, `salt`, `activated`, `admin`, `lastOnline`, `lang`) VALUES
-(1, 'asd', 'asd', '21e3c338909de5e62f19fa82b0fc3757e648d6f2c36023255bd153c346afc6de6a270a92caefdeca58f0d86e50a892a05a2adb1d09855ae74695a4dd97d31c30', '5cc0da5be3d8d1b6b162cfce1dd43b3d23d3b7c7bfeb727e4f4ecfa429906b233ff342d2d84111e2eab1ee4e2a451f0cc6853e1c05ea2f84d330bbcee1c75dcf', 1, 1, '2014-01-28 19:33:20', 'hu'),
+(1, 'asd', 'asd', '21e3c338909de5e62f19fa82b0fc3757e648d6f2c36023255bd153c346afc6de6a270a92caefdeca58f0d86e50a892a05a2adb1d09855ae74695a4dd97d31c30', '5cc0da5be3d8d1b6b162cfce1dd43b3d23d3b7c7bfeb727e4f4ecfa429906b233ff342d2d84111e2eab1ee4e2a451f0cc6853e1c05ea2f84d330bbcee1c75dcf', 1, 1, '2014-02-01 16:25:44', 'en'),
 (2, 'lol', 'lol1', '76f857bbca73a650d211eb2c0c0dc1db282a158111265d68cb16522f880bbb21da688adca02d70cf9abd41e1eea29496d7dddb71402696e5058e2085f7b1c26d', 'c0c7a6d690e8b5ae4352247da7c1609388db2fb2e961e08a75b310565561e3f009ab9d8c6970bb1a59a743af9cbd5e5c021e19989470e1785b71b1cc5bf11ea0', 1, 1, '2013-10-05 20:14:50', 'hu'),
 (4, 'lolasd2', 'lol@lol.com', '7df9393aeccdd01c924a39c365ddb08b779d6c65bdf318da15c975156597752d19044dd985d8dd49da34537d4542f82208d2892a777234741de65a0513379c7b', '499cfd4c562d7416e127489611700a08d8671f584e8897760e7b854ad0e1ae0498b6c1217595d218550692d8b9793360877446519105f051a222c0ccc1a65964', 1, 0, '2013-10-18 14:54:50', 'en'),
 (5, 'Kulabá', 'sheeeeet@poo.com', 'b1e94bdca8dee012ee0d693ac391e54ebbb54a76530311f34f56a520d6d039bcd7a64deb55cc3c08adf1dfb3191198171bf912be90b9733f1eed4a66ceb655de', '53ef30496db23850d28b072737fc710a10f2567679864899b279790452aa8e1c742150560ba6879715092c5e08d70d347894f4825806a48ee4c6ec498f6bfbd5', 0, 0, '0000-00-00 00:00:00', ''),
@@ -47,14 +47,12 @@ CREATE TABLE IF NOT EXISTS `bots` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`),
   KEY `accountID` (`accountID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=139 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=132 ;
 
 INSERT INTO `bots` (`id`, `accountID`, `name`, `lastChangeTime`, `code_lang`, `state`, `ErrorText`) VALUES
 (129, 1, 'Unnamed bot 129', '2014-01-28 15:45:36', 'c++', 'processing', ''),
 (130, 1, 'probot', '2013-10-22 22:42:37', 'c++', 'ok', ''),
-(131, 1, 'pusztito', '2013-10-22 22:42:48', 'c++', 'ok', ''),
-(132, 1, 'xcvcv', '2013-10-22 22:43:00', 'c++', 'ok', ''),
-(133, 1, 'sfdsdf', '2013-11-12 23:07:10', 'c++', 'processing', '');
+(131, 1, 'pusztito', '2013-10-22 22:42:48', 'c++', 'ok', '');
 
 CREATE TABLE IF NOT EXISTS `brute_force` (
   `id` varchar(8) NOT NULL,
@@ -64,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `brute_force` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `brute_force` (`id`, `action`, `expires`) VALUES
-('NGI4NGIx', 'login', '2014-01-28 19:37:30');
+('NGI4NGIx', 'login', '2014-02-01 16:28:46');
 
 CREATE TABLE IF NOT EXISTS `games` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -77,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `games` (
   `endTime` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 
 INSERT INTO `games` (`id`, `checked`, `leaderboard`, `rules`, `log`, `result`, `startTime`, `endTime`) VALUES
 (1, 0, 'leaderboard1', 'lol.txt', '1.log', '1.xml', '2013-10-22 22:35:25', '2013-10-22 22:25:25'),
@@ -111,8 +109,7 @@ CREATE TABLE IF NOT EXISTS `leaderboard1` (
 
 INSERT INTO `leaderboard1` (`botID`, `score`, `win`, `loose`) VALUES
 (130, 0, 0, 0),
-(131, 0, 0, 0),
-(132, 0, 0, 0);
+(131, 0, 0, 0);
 
 CREATE TABLE IF NOT EXISTS `leaderboard2` (
   `botID` int(11) NOT NULL,
@@ -143,38 +140,12 @@ CREATE TABLE IF NOT EXISTS `news_posts` (
   `date` datetime NOT NULL,
   `content` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=47 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=48 ;
 
 INSERT INTO `news_posts` (`id`, `title`, `author`, `date`, `content`) VALUES
-(1, 'The croupierweb is online!', 'Admin', '2013-09-29 20:38:06', '<h3>Hello!</h3>\r\n<br />\r\nHappy to announce, this is the very first post!!4!4!!'),
-(2, 'aaaa', 'sdf', '2013-09-29 20:48:18', 'akfmlkfmsdlfmsdlmfsdlkfslksmflksmflksmflsmdlfksf'),
-(3, 'aaaa', 'sdf', '2013-09-29 20:49:05', 'akfmlkfmsdlfmsdlmfsdlkfslksmflksmflksmflsmdlfksf'),
-(4, 'aaaa', 'sdf', '2013-09-29 20:49:05', 'akfmlkfmsdlfmsdlmfsdlkfslksmflksmflksmflsmdlfksf'),
-(5, 'aaaa', 'sdf', '2013-09-29 20:49:05', 'akfmlkfmsdlfmsdlmfsdlkfslksmflksmflksmflsmdlfksf'),
-(6, 'aaaa', 'sdf', '2013-09-29 20:49:05', 'akfmlkfmsdlfmsdlmfsdlkfslksmflksmflksmflsmdlfksf'),
-(7, 'aaaa', 'sdf', '2013-09-29 20:49:05', 'akfmlkfmsdlfmsdlmfsdlkfslksmflksmflksmflsmdlfksf'),
-(8, 'aaaa', 'sdf', '2013-09-29 20:49:05', 'akfmlkfmsdlfmsdlmfsdlkfslksmflksmflksmflsmdlfksf'),
-(9, 'aaaa', 'sdf', '2013-09-29 20:49:06', 'akfmlkfmsdlfmsdlmfsdlkfslksmflksmflksmflsmdlfksf'),
-(10, 'aaaa', 'sdf', '2013-09-29 20:49:06', 'akfmlkfmsdlfmsdlmfsdlkfslksmflksmflksmflsmdlfksf'),
-(11, 'aaaa', 'sdf', '2013-09-29 20:49:06', 'akfmlkfmsdlfmsdlmfsdlkfslksmflksmflksmflsmdlfksf'),
-(12, 'aaaa', 'sdf', '2013-09-29 20:49:06', 'akfmlkfmsdlfmsdlmfsdlkfslksmflksmflksmflsmdlfksf'),
-(13, 'aaaa', 'sdf', '2013-09-29 20:49:06', 'akfmlkfmsdlfmsdlmfsdlkfslksmflksmflksmflsmdlfksf'),
-(14, 'aaaa', 'sdf', '2013-09-29 20:49:06', 'akfmlkfmsdlfmsdlmfsdlkfslksmflksmflksmflsmdlfksf'),
-(15, 'aaaa', 'sdf', '2013-09-29 20:49:06', 'akfmlkfmsdlfmsdlmfsdlkfslksmflksmflksmflsmdlfksf'),
-(16, 'aaaa', 'sdf', '2013-09-29 20:49:06', 'akfmlkfmsdlfmsdlmfsdlkfslksmflksmflksmflsmdlfksf'),
-(17, 'aaaa', 'sdf', '2013-09-29 20:49:06', 'akfmlkfmsdlfmsdlmfsdlkfslksmflksmflksmflsmdlfksf'),
-(18, 'aaaa', 'sdf', '2013-09-29 20:49:06', 'akfmlkfmsdlfmsdlmfsdlkfslksmflksmflksmflsmdlfksf'),
-(19, 'aaaa', 'sdf', '2013-09-29 20:49:06', 'akfmlkfmsdlfmsdlmfsdlkfslksmflksmflksmflsmdlfksf'),
-(20, 'aaaa', 'sdf', '2013-09-29 20:49:06', 'akfmlkfmsdlfmsdlmfsdlkfslksmflksmflksmflsmdlfksf'),
-(21, 'aaaa', 'sdf', '2013-09-29 20:49:06', 'akfmlkfmsdlfmsdlmfsdlkfslksmflksmflksmflsmdlfksf'),
-(22, 'aaaa', 'sdf', '2013-09-29 20:49:06', 'akfmlkfmsdlfmsdlmfsdlkfslksmflksmflksmflsmdlfksf'),
-(23, 'aaaa', 'sdf', '2013-09-29 20:49:06', 'akfmlkfmsdlfmsdlmfsdlkfslksmflksmflksmflsmdlfksf'),
-(24, 'aaaa', 'sdf', '2013-09-29 20:49:07', 'akfmlkfmsdlfmsdlmfsdlkfslksmflksmflksmflsmdlfksf'),
-(25, 'aaaa', 'sdf', '2013-09-29 20:49:07', 'akfmlkfmsdlfmsdlmfsdlkfslksmflksmflksmflsmdlfksf'),
-(26, 'aaaa', 'sdf', '2013-09-29 20:49:07', 'akfmlkfmsdlfmsdlmfsdlkfslksmflksmflksmflsmdlfksf'),
-(27, 'aaaa', 'sdf', '2013-09-29 20:49:07', 'akfmlkfmsdlfmsdlmfsdlkfslksmflksmflksmflsmdlfksf'),
-(45, 'SEnd moooorrrreeee bots!', 'asd', '2013-10-19 16:27:04', 'Plese send more <b>BOOOOTSSSS</b>!'),
-(46, 'The site is under construction.', 'asd', '2013-11-10 14:44:22', 'The site is under construction.');
+(1, 'The croupierweb is online!', 'Admin', '2013-09-29 20:38:06', '<h3>Hello!</h3>'),
+(46, 'The site is under construction.', 'Admin', '2013-11-10 14:44:22', 'The site is under construction.'),
+(47, 'Manual', 'asd', '2014-02-01 16:25:41', 'A manual már elérhető <a href="docs/mi_dev/miDev.html">itt.</a>');
 
 CREATE TABLE IF NOT EXISTS `stat_accounts_added` (
   `date` date NOT NULL,
@@ -207,7 +178,9 @@ INSERT INTO `stat_bots_added` (`date`, `count`) VALUES
 ('2013-10-22', 22),
 ('2013-11-07', 2),
 ('2013-11-12', 1),
-('2014-01-27', 5);
+('2014-01-27', 5),
+('2014-01-28', 1),
+('2014-01-31', 3);
 
 CREATE TABLE IF NOT EXISTS `stat_pageload` (
   `date` date NOT NULL,
@@ -229,7 +202,9 @@ INSERT INTO `stat_pageload` (`date`, `count`) VALUES
 ('2013-11-15', 11),
 ('2014-01-16', 141),
 ('2014-01-27', 209),
-('2014-01-28', 181);
+('2014-01-28', 239),
+('2014-01-31', 153),
+('2014-02-01', 119);
 
 CREATE TABLE IF NOT EXISTS `strings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -237,7 +212,7 @@ CREATE TABLE IF NOT EXISTS `strings` (
   `language` varchar(5) NOT NULL,
   `text` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=175 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=177 ;
 
 INSERT INTO `strings` (`id`, `identifier`, `language`, `text`) VALUES
 (1, 'WEBPAGENAME', 'hu', 'Croupier poker AI'),
@@ -389,7 +364,9 @@ INSERT INTO `strings` (`id`, `identifier`, `language`, `text`) VALUES
 (171, 'ERR_BOTNAME_FORMAT', 'en', 'The bot name can only contain the following characters: a-z, A-Z, 0-9!'),
 (172, 'ERR_BOTNAME_FORMAT', 'hu', 'A bot neve csak a következő karaktereket tartalmazhatja: a-z, A-Z, 0-9!'),
 (173, 'LEADERBOARD', 'en', 'Leaderboard'),
-(174, 'LEADERBOARD', 'hu', 'Ranglista');
+(174, 'LEADERBOARD', 'hu', 'Ranglista'),
+(175, 'CANCEL_BOT_CONF', 'en', 'The bot won''t be saved.<br />Are you sure to cancel?'),
+(176, 'CANCEL_BOT_CONF', 'hu', 'A bot nem lesz mentve.<br />Biztos vagy benne, hogy visszalépsz?');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

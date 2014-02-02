@@ -25,76 +25,84 @@ function getAJAX() {
     return xmlhttp;
 }
 
-function messageBoxAsk(text, callback) {
-    messageBox(text, "yesno", callback);
+function messageBox(text) {
+    var $mbox = createBaseMessageBox(text);
+    $("body").first().append($mbox);
+    $mbox.css('top', -$mbox.outerHeight() - 10);
+    $mbox.animate({
+        top: "0"
+    }, 800, "easeOutExpo").delay(3000).animate({top: -$mbox.outerHeight() - 10}, 300, "linear", function () {
+        $(this).remove();
+    });
 }
 
-function messageBox(text, messageBoxType, callback) {
+function messageBoxOk(text, callback) {
+    var $mbox = createBaseMessageBox(text);
+    var $rightDiv = $('<div class="messageBoxBottom" />');
+    $mbox.append($rightDiv);
+    var $okButton = $('<a class="button">Ok</a>');
+    $okButton.click(function () {
+        hideMessageBox($mbox);
+    });
+    $rightDiv.append($okButton);
 
-    var $body = $("body").first();
+	showOverlay();
+    $("body").first().append($mbox);
+    $mbox.css('top', -$mbox.outerHeight() - 10);
+    $mbox.animate({
+        top: "0"
+    }, 800, "easeOutExpo");
+}
 
+function messageBoxYesNo(text, yes, no, callback) {
+    var $mbox = createBaseMessageBox(text);
+    var $rightDiv = $('<div class="messageBoxBottom" />');
+    $mbox.append($rightDiv);
+    var $noButton = $('<a class="button">' + no + '</a>');
+    $noButton.click(function () {
+        hideMessageBox($mbox);
+    });
+    $rightDiv.append($noButton);
+    var $yesButton = $('<a class="button" style="margin-left: 10px">' + yes + '</a>');
+    $yesButton.click(function () {
+        hideMessageBox($mbox);
+        callback();
+    });
+    $rightDiv.append($yesButton);
+
+	showOverlay();
+    $("body").first().append($mbox);
+    $mbox.css('top', -$mbox.outerHeight() - 10);
+    $mbox.animate({
+        top: "0"
+    }, 800, "easeOutExpo");
+}
+
+function createBaseMessageBox(text) {
     var $mbox = $('<div class="messageBox"/>');
     var $p = $('<p>' + text + '</p>);');
     $mbox.append($p);
-    if (arguments.length >= 2) {
+    return $mbox;
+}
 
-        if($("#messageboxOverlay").length == 0)
-        {
-            var $overlay = $("<div id='messageboxOverlay' />");
-            $body.append($overlay);
-            $overlay.fadeTo(200, 0.5);
-        }
-
-        switch (messageBoxType) {
-            case "ok":
-                var $rightDiv = $('<div class="messageBoxBottom" />');
-                $mbox.append($rightDiv);
-                var $okButton = $('<a class="button">Ok</a>');
-                $okButton.click(function(){
-                    hideMessageBox($mbox);
-                });
-                $rightDiv.append($okButton);
-                break;
-            case "yesno":
-                var $rightDiv = $('<div class="messageBoxBottom" />');
-                $mbox.append($rightDiv);
-                var $noButton = $('<a class="button">No</a>');
-                $noButton.click(function(){
-                    hideMessageBox($mbox);
-                });
-                $rightDiv.append($noButton);
-                var $yesButton = $('<a class="button" style="margin-left: 10px">Yes</a>');
-                $yesButton.click(function(){
-                    hideMessageBox($mbox);
-                    callback();
-                });
-                $rightDiv.append($yesButton);
-                break;
-        }
-
-        $body.append($mbox);
-        $mbox.css('top', -$mbox.outerHeight() - 10);
-        $mbox.animate({
-            top: "0"
-        }, 800, "easeOutExpo");
-    }
-    else {
-        $body.append($mbox);
-        $mbox.css('top', -$mbox.outerHeight() - 10);
-        $mbox.animate({
-            top: "0"
-        }, 800, "easeOutExpo").delay(3000).animate({top: -$mbox.outerHeight() - 10}, 300, "linear", function () {
-            $(this).remove();
-        });
+function showOverlay() {
+    if ($("#messageboxOverlay").length == 0) {
+        var $overlay = $("<div id='messageboxOverlay' />");
+        $("body").first().append($overlay);
+        $overlay.fadeTo(200, 0.5);
     }
 }
 
-function hideMessageBox($mbox) {
+function hideOverlay() {
     if ($('.messageBox').length == 1) {
         $("#messageboxOverlay").fadeOut(200, function () {
             $("#messageboxOverlay").remove();
         });
     }
+}
+
+function hideMessageBox($mbox) {
+    hideOverlay();
     $mbox.animate({top: -$mbox.outerHeight() - 10}, 300, "linear", function () {
         $mbox.remove();
     });

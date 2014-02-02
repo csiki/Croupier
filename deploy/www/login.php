@@ -5,29 +5,30 @@ if ($loggedin) {
     header('Location: summary.php');
     exit();
 }
-$error = $captchaErr = "";
+$errors = ""/* = array();*/
 $email = "";
 $showCapatcha = false;
 if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pSize'])) {
     //form validation
     //TODO:remove comment
     /*if (!isset($_POST['email']) || !sanityCheck($_POST['email'], 'string', 7, 50) || !checkEmail($_POST['email']))
-        $error = $tr["ERR_LOGIN"];
+        $errors[] = $tr["ERR_LOGIN"];
     else
         $email = $_POST['email'];
 
     if (!isset($_POST['pSize']) || !sanityCheck($_POST['pSize'], 'numeric', 0, 3)) {
-        $error = $tr["ERR_LOGIN"];
+        $errors[] = $tr["ERR_LOGIN"];
     } else {
         $pSize = intval($_POST['pSize']);
         if ($pSize < 6 || $pSize > 100)
-            $error = $tr["ERR_LOGIN"];
+            $errors[] = $tr["ERR_LOGIN"];
         else
             $password = $_POST['p'];
     }*/
     $email = $_POST['email'];
     $password = $_POST['p'];
     $captchaGet = false;
+    $captchaWrong = false;
     if (isset($_POST["recaptcha_challenge_field"]) && isset($_POST["recaptcha_challenge_field"])) {
         $captchaGet = true;
         $cap = recaptcha_check_answer("6Lev0-kSAAAAAKT9k5Ie0-1CWuxkywQmg2N8dNWr",
@@ -35,19 +36,20 @@ if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pSize'])) {
             $_POST["recaptcha_challenge_field"],
             $_POST["recaptcha_response_field"]);
         if (!$cap->is_valid) {
-            $captchaErr = $tr["ERR_CAPTCHA"];
+            $captchaWrong = true;
+            $errors[] = $tr["ERR_CAPTCHA"];
             $showCapatcha = true;
         }
     }
-    if ($error == "" && (($captchaGet && $captchaErr == "") || !$captchaGet)) {
+    if (count($errors) == 0 && (($captchaGet && !$captchaWrong) || !$captchaGet)) {
         if (!check_brute("login", 5, 300)) {
             $showCapatcha = true;
         } else {
             $res = SQL("SELECT id, username, password, salt, activated, lang FROM accounts WHERE email = ? LIMIT 1", $email);
             if (!$res)
-                $error = $tr["ERR_LOGIN"];
+                $errors[] = $tr["ERR_LOGIN"];
             else if ($res[0]["activated"] == 0)
-                $error = $tr["LOGIN_ACTIVATION_ERR"];
+                $errors[] = $tr["LOGIN_ACTIVATION_ERR"];
             else {
                 $password = hash('sha512', $password . $res[0]["salt"]); // hash the password with the unique salt.
                 if ($res[0]["password"] == $password) { // Check if the password in the database matches the password the user submitted.
@@ -61,7 +63,7 @@ if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pSize'])) {
                     header('Location: ../summary.php');
                     exit();
                 } else {
-                    $error = $tr["ERR_LOGIN"];
+                    $errors[] = $tr["ERR_LOGIN"];
                 }
             }
 
@@ -78,24 +80,27 @@ if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pSize'])) {
 <body>
 <?php include "php/header.php"; ?>
 <div id="main">
-    <h2><?=$tr["LOGIN"]?></h2>
+    <h2><?= $tr["LOGIN"] ?></h2>
 
     <div class="formDiv">
+        <?php
+        foreach ($errors as $error) {
+            echo '<span class="errorMessage">' . $error . '</span><br />';
+        }
+        ?>
         <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post" autocomplete="on">
             <label for="email">Email</label><br/>
             <input autocomplete="on" type="text" name="email" id="email" maxlength="50" value="<?= $email ?>">
             <br/>
             <br/>
-            <label for="pass"><?=$tr["PASSWORD"]?></label><br/>
+            <label for="pass"><?= $tr["PASSWORD"] ?></label><br/>
             <input autocomplete="on" type="password" name="pass" id="pass" maxlength="100">
             <br/>
-            <?php if ($error) echo '<span class="errorMessage">' . $error . '</span><br />'; ?>
             <br/>
             <?php
             if ($showCapatcha) {
                 echo '<label for="pass">' . $tr["CAPTCHA"] . '</label><br/>';
                 print_captcha();
-                if ($captchaErr) echo '<span class="errorMessage">' . $captchaErr . '</span><br />';
             }
             ?>
             <br/>

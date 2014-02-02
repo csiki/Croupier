@@ -98,9 +98,18 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
         }
 
         function saveAsk(form) {
-            messageBoxAsk("<?=$tr["SAVE_BOT_CONF"]?>", function () {
+            messageBoxYesNo("<?=$tr["SAVE_BOT_CONF"]?>", "<?=$tr["YES"]?>", "<?=$tr["NO"]?>", function () {
                 form.submit();
             });
+        }
+
+        function cancelAsk() {
+            if (editor.getValue().length != 0 || $("#codefile").val().length != 0)
+                messageBoxYesNo("<?=$tr["CANCEL_BOT_CONF"]?>", "<?=$tr["YES"]?>", "<?=$tr["NO"]?>", function () {
+                    window.history.back();
+                });
+            else
+                window.history.back();
         }
 
         function langChanged() {
@@ -152,7 +161,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
         <input name="codefile" id="codefile" type="file">
         <br/>
         <br/>
-        <input type="button" onclick="window.history.back()" class="disabledButton button" value="<?= $tr["CANCEL"] ?>">
+        <input type="button" onclick="cancelAsk()" class="disabledButton button" value="<?= $tr["CANCEL"] ?>">
         <input type="button" onclick="saveAsk(this.form)" class="button" value="<?= $tr["SAVE"] ?>">
     </form>
     </p>

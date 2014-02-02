@@ -1,7 +1,7 @@
 <?php
 include "php/include.php";
 needLogin();
-$passwordErr = $emailErr = "";
+$errors = array();
 $id = $name = $email = "";
 //propagate default values
 $id = $_SESSION["accountID"];
@@ -12,20 +12,20 @@ if ($emailRes != null)
 //set post values
 if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pSize'])) {
     if (!isset($_POST['email']) || !sanityCheck($_POST['email'], 'string', 7, 50) || !checkEmail($_POST['email']))
-        $emailErr = $tr["ERR_EMAIL"];
+        $errors[] = $tr["ERR_EMAIL"];
     else
         $email = $_POST['email'];
 
     if (!isset($_POST['pSize']) || !sanityCheck($_POST['pSize'], 'numeric', 0, 3)) {
-        $passwordErr = $tr["ERR_PASSWORD_LENGTH"];
+        $errors[] = $tr["ERR_PASSWORD_LENGTH"];
     } else {
         $pSize = intval($_POST['pSize']);
         if ($pSize < 6 || $pSize > 100)
-            $passwordErr = $tr["ERR_PASSWORD_LENGTH"];
+            $errors[] = $tr["ERR_PASSWORD_LENGTH"];
         else
             $password = $_POST['p'];
     }
-    if ($passwordErr == "" && $emailErr == "") {
+    if (count($errors) == 0) {
         $random_salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
         // Create salted password (Careful not to over season)
         $password = hash('sha512', $password . $random_salt);
@@ -67,6 +67,7 @@ if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pSize'])) {
                 hide: { duration: 100 }
             });
         });
+
         function checkMatch() {
             $("#pass_mismatch").hide();
             if ($("#pass_again").val() != $("#pass").val()) {
@@ -83,6 +84,11 @@ if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pSize'])) {
     <h2><?=$tr["EDIT_ACCOUNT"]?> - <?=$_SESSION["username"]?></h2>
 
     <div class="formDiv">
+        <?php
+        foreach ($errors as $error) {
+            echo '<span class="errorMessage">' . $error . '</span><br />';
+        }
+        ?>
         <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post">
             <label for="name"><?=$tr["NAME"]?></label><br/>
             <input type="text" name="name" id="name" maxlength="25" disabled="disabled"
@@ -93,7 +99,6 @@ if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pSize'])) {
             <input type="text" name="email" id="email" maxlength="50"
                    value="<?= $email ?>">
             <br/>
-            <?php if ($emailErr) echo '<span class="errorMessage">' . $emailErr . '</span><br />'; ?>
             <br/>
             <label for="pass"><?=$tr["PASSWORD"]?></label><br/>
             <input type="password" name="pass" id="pass" maxlength="100" title="<?=$tr["ERR_PASSWORD_LENGTH"]?>">
@@ -106,7 +111,6 @@ if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pSize'])) {
             <div id="pass_mismatch" style="display: none;">
                 <span class="errorMessage" id="pass_mismatch"><?=$tr["PASS_NOT_MATCH"]?></span>
                 <br/></div>
-            <?php if ($passwordErr) echo '<span class="errorMessage">' . $passwordErr . '</span><br />'; ?>
             <br/>
             <br/>
             <input type="button" onclick="window.history.back()" class="disabledButton button" value="<?= $tr["CANCEL"] ?>">

@@ -38,7 +38,7 @@ function getBotInfos()
         }
 
         function deleteBotAsk(element, id) {
-            messageBoxAsk('<?=$tr["DELETE_BOT_CONF"]?>', function () {
+            messageBoxYesNo("<?=$tr["DELETE_BOT_CONF"]?>", "<?=$tr["YES"]?>", "<?=$tr["NO"]?>", function () {
                 addLoading(element)
                 deleteBot(id);
             });
