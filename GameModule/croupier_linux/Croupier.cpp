@@ -141,9 +141,6 @@ int Croupier::nextActiveBot(int from) const
 */
 void Croupier::preflop()
 {
-	// log
-	this->log(Severity::NOTIFICATION, "preflop");
-
 	// force blinds
 	int botIndex = this->currentDealerIndex; // dealer
 
@@ -155,6 +152,9 @@ void Croupier::preflop()
 
 	// deal cards
 	this->dealing();
+
+    // log
+	this->log(Severity::NOTIFICATION, "preflop");
 
 	// broadcast
 	this->broadcast(BroadcastMessage::PREFLOP, 0, 0);

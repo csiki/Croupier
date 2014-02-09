@@ -6,7 +6,7 @@
 	<startingchips>1000</startingchips>
 	<maxnumofraises>1</maxnumofraises>
 	<numofrebuysallowed>1</numofrebuysallowed>
-	<rebuydeadline>15</rebuydeadline>
+	<rebuydeadline>35</rebuydeadline>
 	<bettingsystem>0</bettingsystem>
 	<blinds>
 		<small>
@@ -20,13 +20,13 @@
 			<blind>300</blind>
 		</big>
 		<shiftdeadlines>
-			<dl>2</dl>
-			<dl>5</dl>
+			<dl>20</dl>
+			<dl>35</dl>
 		</shiftdeadlines>
 	</blinds>
 	<botcalctime>
-		<time lang="0">1000</time>
-		<time lang="1">1000</time>
+		<time lang="0">2000</time>
+		<time lang="1">2000</time>
 		<time lang="2">0</time>
 		<time lang="3">0</time>
 		<time lang="4">0</time>

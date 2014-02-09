@@ -22,8 +22,12 @@ $severityColors = array(
     5 => "#FFFFFF"
 );
 
-$orig_msg = array("receiveCard", "fold", "check", "call", "raise");
-$hun_msg = array("Kapott kártya", "Eldobás", "Passzolás", "Megadás", "Emelés");
+$orig_msg = array("receiveCard", "fold", "check", "call", "raise",
+	"letsPoker", "rmDealerButton", "addDealerButton", "burn", "betRound", "quit", "flop", "turn", "river", "revealCards",
+	"collectCards", "roundStarted ", "roundEnded", "refreshBlinds", "showdown");
+$hun_msg = array("Kapott kártya", "Eldob", "Passzol", "Megad", "Emel"
+	"Indul a játék", "Dealer gombot eltávolítja", "Dealer gombot hozzáadja", "Éget", "Tét kör indul", "Kilép", "Flop:", "Turn:", "River:", "Kártyáit megmutatja:"
+	 "Kártyákat begyüjti", "Kör kezdődik #", "Véget ért a kör", "Vakok frissítése", "Showdown");
 
 $gameID = $botID = 0;
 $date = $botName = "";
