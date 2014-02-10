@@ -10,8 +10,13 @@ class Leaderboard
 	function __construct($leaderboard)
 	{
 		$this->tableName = $leaderboard["tableName"];
-		//$this->rulzFile = $leaderboard["rules"]; // TODO
+		$this->rulzName = $leaderboard["rules"];
 		$this->bots = SQL("SELECT botID, score, win, loose FROM ".$this->tableName." ORDER BY (win+loose)");
+	}
+	
+	public function getBotNum()
+	{
+		return count($bots);
 	}
 	
 	public function randMatchmaking($nGames, $nPlayers)
@@ -157,7 +162,7 @@ class Leaderboard
 		return $return_var;
 	}
 	
-	public function processResults($return_var)
+	protected function processResults($return_var)
 	{
 		if ($return_var == 4) // everything went alright
 		{
