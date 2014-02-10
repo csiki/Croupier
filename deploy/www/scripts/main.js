@@ -4,6 +4,7 @@ function sendForm(form, password) {
     p.name = "p";
     p.type = "hidden"
 
+    //need this, because password length is lost after encode
     var pSize = document.createElement("input");
     form.appendChild(pSize);
     pSize.name = "pSize";

@@ -18,14 +18,14 @@ function send_registered_email($name, $email)
     $from = "\"Croupier poker framework\" <" . _NOREPLY_EMAIL_ . ">";
     $headers = "From:" . $from;
     //store activation hash in db
-    echo $id."\n\n";
-    echo $registerHash."\n\n";
-    $res = SQL("INSERT INTO account_activation (id, hash, sendTime)
+    /*echo $id."\n\n";
+    echo $registerHash."\n\n";*/
+    SQL("INSERT INTO account_activation (id, hash, sendTime)
         VALUES (?, ?, NOW());", $id, $registerHash);
-    echo "\nSUBJECT:".$subject;
+    /*echo "\nSUBJECT:".$subject;
     echo "\nTO:".$to;
     echo "\nFROM:".$from;
     echo "\nMSG:".$message;
-    echo "\nHEADERS:".$headers;
+    echo "\nHEADERS:".$headers;*/
     //mail($to,$subject,$message,$headers);
 }
