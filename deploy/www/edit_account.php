@@ -10,17 +10,17 @@ $emailRes = SQL("SELECT email FROM accounts WHERE id = ?", $id);
 if ($emailRes != null)
     $email = $emailRes[0]["email"];
 //set post values
-if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pSize'])) {
+if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pLength'])) {
     if (!isset($_POST['email']) || !sanityCheck($_POST['email'], 'string', 7, 50) || !checkEmail($_POST['email']))
         $errors[] = $tr["ERR_EMAIL"];
     else
         $email = $_POST['email'];
 
-    if (!isset($_POST['pSize']) || !sanityCheck($_POST['pSize'], 'numeric', 0, 3)) {
+    if (!isset($_POST['pLength']) || !sanityCheck($_POST['pLength'], 'numeric', 0, 3)) {
         $errors[] = $tr["ERR_PASSWORD_LENGTH"];
     } else {
-        $pSize = intval($_POST['pSize']);
-        if ($pSize < 6 || $pSize > 100)
+        $pLength = intval($_POST['pLength']);
+        if ($pLength < 6 || $pLength > 100)
             $errors[] = $tr["ERR_PASSWORD_LENGTH"];
         else
             $password = $_POST['p'];

@@ -8,7 +8,7 @@ if ($loggedin) {
 }
 $errors = array();
 $name = $email = "";
-if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pSize'])) {
+if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pLength'])) {
     if (!isset($_POST['name']) || !sanityCheck($_POST['name'], 'string', 3, 25))
         $errors[] = $tr["ERR_USERNAME_LENGTH"];
     else if (SQL("SELECT 1 FROM accounts WHERE username = ?;", $_POST['name']) != null)
@@ -23,11 +23,11 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
     else
         $email = $_POST['email'];
 
-    if (!isset($_POST['pSize']) || !sanityCheck($_POST['pSize'], 'numeric', 0, 3)) {
+    if (!isset($_POST['pLength']) || !sanityCheck($_POST['pLength'], 'numeric', 0, 3)) {
         $errors[] = $tr["ERR_PASSWORD_LENGTH"];
     } else {
-        $pSize = intval($_POST['pSize']);
-        if ($pSize < 6 || $pSize > 100)
+        $pLength = intval($_POST['pLength']);
+        if ($pLength < 6 || $pLength > 100)
             $errors[] = $tr["ERR_PASSWORD_LENGTH"];
         else
             $password = $_POST['p'];
@@ -39,7 +39,7 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
         $_POST["recaptcha_response_field"]);
 
     if (!$cap->is_valid)
-        $captchaErr = $tr["ERR_CAPTCHA"];
+        $errors[] = $tr["ERR_CAPTCHA"];
     $errors[] = "A regisztráció még nem nyílt meg!";
     if (count($errors) == 0) {
         $random_salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));

@@ -5,25 +5,26 @@ if ($loggedin) {
     header('Location: summary.php');
     exit();
 }
-$errors = ""/* = array();*/
+$errors = array();
 $email = "";
-$showCapatcha = false;
-if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pSize'])) {
+$showCaptcha = false;
+if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pLength'])) {
     //form validation
     //TODO:remove comment
-    /*if (!isset($_POST['email']) || !sanityCheck($_POST['email'], 'string', 7, 50) || !checkEmail($_POST['email']))
+    /*
+    if (!isset($_POST['email']) || !sanityCheck($_POST['email'], 'string', 7, 50) || !checkEmail($_POST['email']))
         $errors[] = $tr["ERR_LOGIN"];
-    else
+    else {
         $email = $_POST['email'];
-
-    if (!isset($_POST['pSize']) || !sanityCheck($_POST['pSize'], 'numeric', 0, 3)) {
-        $errors[] = $tr["ERR_LOGIN"];
-    } else {
-        $pSize = intval($_POST['pSize']);
-        if ($pSize < 6 || $pSize > 100)
+        if (!isset($_POST['pLength']) || !sanityCheck($_POST['pLength'], 'numeric', 0, 3)) {
             $errors[] = $tr["ERR_LOGIN"];
-        else
-            $password = $_POST['p'];
+        } else {
+            $pLength = intval($_POST['pLength']);
+            if ($pLength < 6 || $pLength > 100)
+                $errors[] = $tr["ERR_LOGIN"];
+            else
+                $password = $_POST['p'];
+        }
     }*/
     $email = $_POST['email'];
     $password = $_POST['p'];
@@ -37,36 +38,42 @@ if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pSize'])) {
             $_POST["recaptcha_response_field"]);
         if (!$cap->is_valid) {
             $captchaWrong = true;
+            $showCaptcha = true;
             $errors[] = $tr["ERR_CAPTCHA"];
-            $showCapatcha = true;
         }
     }
-    if (count($errors) == 0 && (($captchaGet && !$captchaWrong) || !$captchaGet)) {
-        if (!check_brute("login", 5, 300)) {
-            $showCapatcha = true;
+
+    if ((count($errors) == 0) && (($captchaGet && !$captchaWrong) || !$captchaGet)) {
+        $res = SQL("SELECT id, username, password, salt, activated, lang FROM accounts WHERE email = ? LIMIT 1", $email);
+        if (!$res) {
+            $errors[] = $tr["ERR_LOGIN"];
+            if (!check_brute("login", 5, 300)) {
+                $showCaptcha = true; //show captcha after 5 try
+            }
+        } else if ($res[0]["activated"] == 0) {
+            $errors[] = $tr["LOGIN_ACTIVATION_ERR"];
+            if (!check_brute("login", 5, 300)) {
+                $showCaptcha = true; //show captcha after 5 try
+            }
         } else {
-            $res = SQL("SELECT id, username, password, salt, activated, lang FROM accounts WHERE email = ? LIMIT 1", $email);
-            if (!$res)
+            $password = hash('sha512', $password . $res[0]["salt"]); // hash the password with the unique salt.
+            if ($res[0]["password"] == $password) { // Check if the password in the database matches the password the user submitted.
+                // Password is correct!
+                clear_brute("login");
+                $user_browser = $_SERVER['HTTP_USER_AGENT']; // Get the user-agent string of the user.
+                $_SESSION['accountID'] = $res[0]["id"];
+                $_SESSION['username'] = $res[0]["username"];
+                $_SESSION["lang"] = $res[0]["lang"];
+                $_SESSION['gravatar'] = md5(strtolower($email));
+                $_SESSION['login_string'] = hash('sha512', $password . $user_browser . getenv("REMOTE_ADDR"));
+                header('Location: ../summary.php');
+                exit();
+            } else {
                 $errors[] = $tr["ERR_LOGIN"];
-            else if ($res[0]["activated"] == 0)
-                $errors[] = $tr["LOGIN_ACTIVATION_ERR"];
-            else {
-                $password = hash('sha512', $password . $res[0]["salt"]); // hash the password with the unique salt.
-                if ($res[0]["password"] == $password) { // Check if the password in the database matches the password the user submitted.
-                    // Password is correct!
-                    $user_browser = $_SERVER['HTTP_USER_AGENT']; // Get the user-agent string of the user.
-                    $_SESSION['accountID'] = $res[0]["id"];
-                    $_SESSION['username'] = $res[0]["username"];
-                    $_SESSION["lang"] = $res[0]["lang"];
-                    $_SESSION['gravatar'] = md5(strtolower($email));
-                    $_SESSION['login_string'] = hash('sha512', $password . $user_browser . getenv("REMOTE_ADDR"));
-                    header('Location: ../summary.php');
-                    exit();
-                } else {
-                    $errors[] = $tr["ERR_LOGIN"];
+                if (!check_brute("login", 5, 300)) {
+                    $showCaptcha = true; //show captcha after 5 try
                 }
             }
-
         }
     }
 }
@@ -98,7 +105,7 @@ if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pSize'])) {
             <br/>
             <br/>
             <?php
-            if ($showCapatcha) {
+            if ($showCaptcha) {
                 echo '<label for="pass">' . $tr["CAPTCHA"] . '</label><br/>';
                 print_captcha();
             }

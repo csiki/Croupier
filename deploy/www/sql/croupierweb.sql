@@ -21,20 +21,14 @@ CREATE TABLE IF NOT EXISTS `accounts` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
 
 INSERT INTO `accounts` (`id`, `username`, `email`, `password`, `salt`, `activated`, `admin`, `lastOnline`, `lang`) VALUES
-(1, 'asd', 'asd', '21e3c338909de5e62f19fa82b0fc3757e648d6f2c36023255bd153c346afc6de6a270a92caefdeca58f0d86e50a892a05a2adb1d09855ae74695a4dd97d31c30', '5cc0da5be3d8d1b6b162cfce1dd43b3d23d3b7c7bfeb727e4f4ecfa429906b233ff342d2d84111e2eab1ee4e2a451f0cc6853e1c05ea2f84d330bbcee1c75dcf', 1, 1, '2014-02-01 16:25:44', 'en'),
-(2, 'lol', 'lol1', '76f857bbca73a650d211eb2c0c0dc1db282a158111265d68cb16522f880bbb21da688adca02d70cf9abd41e1eea29496d7dddb71402696e5058e2085f7b1c26d', 'c0c7a6d690e8b5ae4352247da7c1609388db2fb2e961e08a75b310565561e3f009ab9d8c6970bb1a59a743af9cbd5e5c021e19989470e1785b71b1cc5bf11ea0', 1, 1, '2013-10-05 20:14:50', 'hu'),
-(4, 'lolasd2', 'lol@lol.com', '7df9393aeccdd01c924a39c365ddb08b779d6c65bdf318da15c975156597752d19044dd985d8dd49da34537d4542f82208d2892a777234741de65a0513379c7b', '499cfd4c562d7416e127489611700a08d8671f584e8897760e7b854ad0e1ae0498b6c1217595d218550692d8b9793360877446519105f051a222c0ccc1a65964', 1, 0, '2013-10-18 14:54:50', 'en'),
-(5, 'Kulabá', 'sheeeeet@poo.com', 'b1e94bdca8dee012ee0d693ac391e54ebbb54a76530311f34f56a520d6d039bcd7a64deb55cc3c08adf1dfb3191198171bf912be90b9733f1eed4a66ceb655de', '53ef30496db23850d28b072737fc710a10f2567679864899b279790452aa8e1c742150560ba6879715092c5e08d70d347894f4825806a48ee4c6ec498f6bfbd5', 0, 0, '0000-00-00 00:00:00', ''),
-(16, 'Ruzar', 'ruzar@mail.com', 'b64d9fa7773d8535b422cde6d79c6945edc4d4220b40cd24bac574c13a69300d6193bc510ae253bf4d5d4163ea0c542e679055d8b544c6d1a17c9e5949929a35', 'b1884c114492f68fbbefdffb144af2ad9ab2b800835ec090f3829ff0dfdebdd24dd77f3af44dc3f64f175ef5c3f8bc8ed50fde98ecc466eb7ee23a8d695c785c', 1, 0, '2013-11-08 14:17:13', 'hu');
+(1, 'asd', 'asd', '21e3c338909de5e62f19fa82b0fc3757e648d6f2c36023255bd153c346afc6de6a270a92caefdeca58f0d86e50a892a05a2adb1d09855ae74695a4dd97d31c30', '5cc0da5be3d8d1b6b162cfce1dd43b3d23d3b7c7bfeb727e4f4ecfa429906b233ff342d2d84111e2eab1ee4e2a451f0cc6853e1c05ea2f84d330bbcee1c75dcf', 1, 1, '2014-02-10 17:13:35', 'hu');
 
 CREATE TABLE IF NOT EXISTS `account_activation` (
   `id` int(11) NOT NULL,
   `hash` varchar(32) NOT NULL,
-  `sendTime` datetime NOT NULL
+  `sendTime` datetime NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO `account_activation` (`id`, `hash`, `sendTime`) VALUES
-(17, '3def184ad8f4755ff269862ea77393dd', '2013-11-10 11:47:22');
 
 CREATE TABLE IF NOT EXISTS `bots` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -49,20 +43,12 @@ CREATE TABLE IF NOT EXISTS `bots` (
   KEY `accountID` (`accountID`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=132 ;
 
-INSERT INTO `bots` (`id`, `accountID`, `name`, `lastChangeTime`, `code_lang`, `state`, `ErrorText`) VALUES
-(129, 1, 'Unnamed bot 129', '2014-01-28 15:45:36', 'c++', 'processing', ''),
-(130, 1, 'probot', '2013-10-22 22:42:37', 'c++', 'ok', ''),
-(131, 1, 'pusztito', '2013-10-22 22:42:48', 'c++', 'ok', '');
-
 CREATE TABLE IF NOT EXISTS `brute_force` (
   `id` varchar(8) NOT NULL,
   `action` varchar(30) NOT NULL,
   `expires` datetime NOT NULL,
   KEY `accountID` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO `brute_force` (`id`, `action`, `expires`) VALUES
-('NGI4NGIx', 'login', '2014-02-01 16:28:46');
 
 CREATE TABLE IF NOT EXISTS `games` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -76,19 +62,6 @@ CREATE TABLE IF NOT EXISTS `games` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
-
-INSERT INTO `games` (`id`, `checked`, `leaderboard`, `rules`, `log`, `result`, `startTime`, `endTime`) VALUES
-(1, 0, 'leaderboard1', 'lol.txt', '1.log', '1.xml', '2013-10-22 22:35:25', '2013-10-22 22:25:25'),
-(2, 0, 'leaderboard1', 'lol.txt', '2.log', '2.xml', '2013-10-22 22:39:28', '2013-10-22 22:29:28'),
-(3, 1, 'leaderboard1', 'lol.txt', 'testlog.xml', '3.xml', '2013-10-22 22:41:06', '2013-10-22 22:31:06'),
-(4, 0, 'leaderboard1', 'testrules.xml', '4.log', '4.xml', '2013-10-22 22:47:00', '2013-10-22 22:37:00'),
-(5, 0, 'leaderboard1', 'testrules.xml', '5.log', '5.xml', '2013-10-22 22:47:01', '2013-10-22 22:37:01'),
-(6, 0, 'leaderboard2', 'testrules.xml', '6.log', '6.xml', '2013-10-22 22:50:19', '2013-10-22 22:40:19'),
-(7, 0, 'leaderboard2', 'testrules.xml', '7.log', '7.xml', '2013-10-22 22:50:42', '2013-10-22 22:40:42'),
-(8, 0, 'leaderboard2', 'testrules.xml', '8.log', '8.xml', '2013-10-22 22:50:44', '2013-10-22 22:40:44'),
-(9, 0, 'leaderboard2', 'testrules.xml', '9.log', '9.xml', '2013-10-22 22:56:50', '2013-10-22 22:46:50'),
-(10, 0, 'leaderboard2', 'testrules.xml', '10.log', '10.xml', '2013-10-22 22:58:12', '2013-10-22 22:48:12'),
-(11, 0, 'leaderboard2', 'testrules.xml', '11.log', '11.xml', '2013-10-22 22:58:49', '2013-10-22 22:48:49');
 
 CREATE TABLE IF NOT EXISTS `games_by_bots` (
   `gameID` int(11) NOT NULL,
@@ -106,10 +79,6 @@ CREATE TABLE IF NOT EXISTS `leaderboard1` (
   PRIMARY KEY (`botID`),
   UNIQUE KEY `botId` (`botID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO `leaderboard1` (`botID`, `score`, `win`, `loose`) VALUES
-(130, 0, 0, 0),
-(131, 0, 0, 0);
 
 CREATE TABLE IF NOT EXISTS `leaderboard2` (
   `botID` int(11) NOT NULL,
@@ -168,20 +137,6 @@ CREATE TABLE IF NOT EXISTS `stat_bots_added` (
   PRIMARY KEY (`date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `stat_bots_added` (`date`, `count`) VALUES
-('2013-09-29', 3),
-('2013-10-01', 0),
-('2013-10-04', 3),
-('2013-10-05', 3),
-('2013-10-19', 2),
-('2013-10-21', 1),
-('2013-10-22', 22),
-('2013-11-07', 2),
-('2013-11-12', 1),
-('2014-01-27', 5),
-('2014-01-28', 1),
-('2014-01-31', 3);
-
 CREATE TABLE IF NOT EXISTS `stat_pageload` (
   `date` date NOT NULL,
   `count` int(11) NOT NULL,
@@ -204,7 +159,9 @@ INSERT INTO `stat_pageload` (`date`, `count`) VALUES
 ('2014-01-27', 209),
 ('2014-01-28', 239),
 ('2014-01-31', 153),
-('2014-02-01', 119);
+('2014-02-01', 119),
+('2014-02-02', 111),
+('2014-02-10', 10);
 
 CREATE TABLE IF NOT EXISTS `strings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -212,7 +169,7 @@ CREATE TABLE IF NOT EXISTS `strings` (
   `language` varchar(5) NOT NULL,
   `text` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=177 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=181 ;
 
 INSERT INTO `strings` (`id`, `identifier`, `language`, `text`) VALUES
 (1, 'WEBPAGENAME', 'hu', 'Croupier poker AI'),
@@ -291,8 +248,8 @@ INSERT INTO `strings` (`id`, `identifier`, `language`, `text`) VALUES
 (96, 'EDIT_BOT', 'hu', 'Bot szerkesztése'),
 (97, 'SAVE', 'en', 'Save'),
 (98, 'SAVE', 'hu', 'Mentés'),
-(99, 'SAVE_BOT_CONF', 'en', 'Are you sure to save?\\nYour bot will be removed from the leaderboards. You can add it again later.'),
-(100, 'SAVE_BOT_CONF', 'hu', 'Biztos vagy benne, hogy mented?\\nA botod el lesz távolítva a ranglistákról. Később újból hozzáadhatod.'),
+(99, 'SAVE_BOT_CONF', 'en', 'Are you sure to save?<br />Your bot will be removed from the leaderboards. You can add it again later.'),
+(100, 'SAVE_BOT_CONF', 'hu', 'Biztos vagy benne, hogy mented?<br />A botod el lesz távolítva a ranglistákról. Később újból hozzáadhatod.'),
 (101, 'ACCOUNT_SAVED', 'en', 'Your changes have been saved.'),
 (102, 'ACCOUNT_SAVED', 'hu', 'A változtatásaid elmentve.'),
 (103, 'OPERATIONS', 'en', 'Operations'),
@@ -366,7 +323,11 @@ INSERT INTO `strings` (`id`, `identifier`, `language`, `text`) VALUES
 (173, 'LEADERBOARD', 'en', 'Leaderboard'),
 (174, 'LEADERBOARD', 'hu', 'Ranglista'),
 (175, 'CANCEL_BOT_CONF', 'en', 'The bot won''t be saved.<br />Are you sure to cancel?'),
-(176, 'CANCEL_BOT_CONF', 'hu', 'A bot nem lesz mentve.<br />Biztos vagy benne, hogy visszalépsz?');
+(176, 'CANCEL_BOT_CONF', 'hu', 'A bot nem lesz mentve.<br />Biztos vagy benne, hogy visszalépsz?'),
+(177, 'YES', 'en', 'Yes'),
+(178, 'YES', 'hu', 'Igen'),
+(179, 'NO', 'en', 'No'),
+(180, 'NO', 'hu', 'Nem');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

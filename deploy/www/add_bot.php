@@ -125,7 +125,6 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
 <?php include "php/header.php"; ?>
 <div id="main">
     <h2><?= $tr["NEW_BOT"] ?></h2>
-
     <?php
     foreach ($errors as $error) {
         echo '<span class="errorMessage">' . $error . '</span><br />';

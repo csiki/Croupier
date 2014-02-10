@@ -78,7 +78,6 @@ function xssafe($data, $encoding = 'UTF-8')
     return htmlspecialchars($data, ENT_QUOTES | ENT_HTML401, $encoding);
 }
 
-
 function check_brute($action, $max_count, $deltaTime)
 {
     $login_string = "";
@@ -89,15 +88,25 @@ function check_brute($action, $max_count, $deltaTime)
     SQL("DELETE FROM brute_force WHERE expires < NOW()");
     $id = substr(base64_encode(sha1($ip . $login_string)), 0, 8);
     $result = SQL("SELECT COUNT(*) FROM brute_force WHERE action = ? AND id = ?", $action, $id);
-    if ($result[0]["COUNT(*)"] > $max_count)
+    if ($result[0]["COUNT(*)"] >= $max_count)
         return false;
     else {
         $date = new DateTime();
         $date->add(new DateInterval('PT' . $deltaTime . 'S'));
-        $res = SQL("INSERT INTO brute_force (id, action, expires) VALUES (?, ?, ?)", $id, $action,
+        SQL("INSERT INTO brute_force (id, action, expires) VALUES (?, ?, ?)", $id, $action,
             $date->format("Y-m-d H:i:s"));
     }
     return true;
+}
+
+function clear_brute($action)
+{
+    $login_string = "";
+    if (isset($_SESSION['login_string']))
+        $login_string = $_SESSION['login_string'];
+    $ip = $_SERVER['REMOTE_ADDR'];
+    $id = substr(base64_encode(sha1($ip . $login_string)), 0, 8);
+    SQL("DELETE FROM brute_force WHERE action = ? AND id = ?", $action, $id);
 }
 
 function print_captcha()
