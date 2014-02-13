@@ -66,20 +66,20 @@ if ($botsUnchecked != null)
 
 						if ($alrighty) {
 							SQL("UPDATE bots SET state='ok' WHERE id=" . $botid);
-							SQL("UPDATE bots SET runerror='0' WHERE id=" . $botid);
+							SQL("UPDATE bots SET runError='0' WHERE id=" . $botid);
 						} else {
 							SQL("UPDATE bots SET state='runtime' WHERE id=" . $botid);
-							SQL("UPDATE bots SET runerror='" . $gameid . "' WHERE id=" . $botid);
+							SQL("UPDATE bots SET runError='" . $gameid . "' WHERE id=" . $botid);
 						}
 					}
 				} else {
 					SQL("UPDATE bots SET state='runtime' WHERE id=" . $botid);
-					SQL("UPDATE bots SET runerror='" . $gameid . "' WHERE id=" . $botid);
+					SQL("UPDATE bots SET runError='" . $gameid . "' WHERE id=" . $botid);
 				}
 			}
 		}
 		else {
 			SQL("UPDATE bots SET state='compilation' WHERE id=" . $botid);
-			SQL("UPDATE bots SET comperror='" . $output . "' WHERE id=" . $botid);
+			SQL("UPDATE bots SET compError='" . $output . "' WHERE id=" . $botid);
 		}
 	}
