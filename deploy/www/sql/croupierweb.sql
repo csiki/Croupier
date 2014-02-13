@@ -37,11 +37,19 @@ CREATE TABLE IF NOT EXISTS `bots` (
   `lastChangeTime` datetime NOT NULL,
   `code_lang` enum('c++','java','c#') NOT NULL,
   `state` enum('processing','ok','runtime','compilation') NOT NULL,
-  `ErrorText` varchar(50) NOT NULL,
+  `compError` TEXT,
+  `runError` int(12),
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`),
   KEY `accountID` (`accountID`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=132 ;
+
+CREATE TABLE IF NOT EXISTS `rank_yesterday` (
+  `botID` int(11) NOT NULL,
+  `rank` int(12) NOT NULL,
+  `score` float NOT NULL,
+  PRIMARY KEY (`botID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `brute_force` (
   `id` varchar(8) NOT NULL,
