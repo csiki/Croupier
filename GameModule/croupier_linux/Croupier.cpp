@@ -270,7 +270,7 @@ void Croupier::handOutPot(int winnerIndex)
 {
 	// log
 	std::string msg = "handOutPot 1,"; // 1 is the number of winners
-	msg += std::to_string(winnerIndex);
+	msg += this->bots[winnerIndex]->getName();
 	this->log(Severity::NOTIFICATION, msg);
 
 	BotHandler* winner = this->bots[winnerIndex];
@@ -296,7 +296,7 @@ void Croupier::handOutPot(int numOfWinners, int* winnersIndex)
 	for (size_t i = 0; i < numOfWinners; ++i)
 	{
 		msg += ',';
-		msg += std::to_string(winnersIndex[i]);
+		msg += this->bots[winnersIndex[i]]->getName();
 	}
 	this->log(Severity::NOTIFICATION, msg);
 
@@ -510,7 +510,7 @@ void Croupier::determineWinners(int& numOfWinners, int** winnersIndex)
 	for (size_t i = 0; i < numOfWinners; ++i)
 	{
 		msg += ',';
-		msg += std::to_string((*winnersIndex)[i]);
+		msg += this->bots[((*winnersIndex)[i])]->getName();
 	}
 	this->log(Severity::NOTIFICATION, msg);
 
