@@ -1,11 +1,30 @@
+-- phpMyAdmin SQL Dump
+-- version 4.1.6
+-- http://www.phpmyadmin.net
+--
+-- Hoszt: 127.0.0.1
+-- Létrehozás ideje: 2014. Feb 14. 00:03
+-- Szerver verzió: 5.6.15-log
+-- PHP verzió: 5.5.8
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
 
+--
+-- Adatbázis: `croupierweb`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `accounts`
+--
 
 CREATE TABLE IF NOT EXISTS `accounts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -18,10 +37,20 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `lastOnline` datetime NOT NULL,
   `lang` varchar(5) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- A tábla adatainak kiíratása `accounts`
+--
 
 INSERT INTO `accounts` (`id`, `username`, `email`, `password`, `salt`, `activated`, `admin`, `lastOnline`, `lang`) VALUES
-(1, 'asd', 'asd', '21e3c338909de5e62f19fa82b0fc3757e648d6f2c36023255bd153c346afc6de6a270a92caefdeca58f0d86e50a892a05a2adb1d09855ae74695a4dd97d31c30', '5cc0da5be3d8d1b6b162cfce1dd43b3d23d3b7c7bfeb727e4f4ecfa429906b233ff342d2d84111e2eab1ee4e2a451f0cc6853e1c05ea2f84d330bbcee1c75dcf', 1, 1, '2014-02-10 17:13:35', 'hu');
+(1, 'asd', 'asd', '21e3c338909de5e62f19fa82b0fc3757e648d6f2c36023255bd153c346afc6de6a270a92caefdeca58f0d86e50a892a05a2adb1d09855ae74695a4dd97d31c30', '5cc0da5be3d8d1b6b162cfce1dd43b3d23d3b7c7bfeb727e4f4ecfa429906b233ff342d2d84111e2eab1ee4e2a451f0cc6853e1c05ea2f84d330bbcee1c75dcf', 1, 1, '2014-02-14 00:00:10', 'hu');
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `account_activation`
+--
 
 CREATE TABLE IF NOT EXISTS `account_activation` (
   `id` int(11) NOT NULL,
@@ -30,6 +59,12 @@ CREATE TABLE IF NOT EXISTS `account_activation` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `bots`
+--
+
 CREATE TABLE IF NOT EXISTS `bots` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `accountID` int(12) NOT NULL,
@@ -37,11 +72,25 @@ CREATE TABLE IF NOT EXISTS `bots` (
   `lastChangeTime` datetime NOT NULL,
   `code_lang` enum('c++','java','c#') NOT NULL,
   `state` enum('processing','ok','runtime','compilation') NOT NULL,
-  `ErrorText` varchar(50) NOT NULL,
+  `compError` text NOT NULL,
+  `runError` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`),
   KEY `accountID` (`accountID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=132 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- A tábla adatainak kiíratása `bots`
+--
+
+INSERT INTO `bots` (`id`, `accountID`, `name`, `lastChangeTime`, `code_lang`, `state`, `compError`, `runError`) VALUES
+(1, 1, 'cccccccccccc', '2014-02-13 23:34:36', 'c++', 'ok', '', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `brute_force`
+--
 
 CREATE TABLE IF NOT EXISTS `brute_force` (
   `id` varchar(8) NOT NULL,
@@ -49,6 +98,19 @@ CREATE TABLE IF NOT EXISTS `brute_force` (
   `expires` datetime NOT NULL,
   KEY `accountID` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- A tábla adatainak kiíratása `brute_force`
+--
+
+INSERT INTO `brute_force` (`id`, `action`, `expires`) VALUES
+('ZWIzNTgz', 'addBot', '2014-02-14 00:34:36');
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `games`
+--
 
 CREATE TABLE IF NOT EXISTS `games` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -61,15 +123,31 @@ CREATE TABLE IF NOT EXISTS `games` (
   `endTime` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `games_by_bots`
+--
 
 CREATE TABLE IF NOT EXISTS `games_by_bots` (
   `gameID` int(11) NOT NULL,
   `botID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- A tábla adatainak kiíratása `games_by_bots`
+--
+
 INSERT INTO `games_by_bots` (`gameID`, `botID`) VALUES
 (3, 129);
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `leaderboard1`
+--
 
 CREATE TABLE IF NOT EXISTS `leaderboard1` (
   `botID` int(11) NOT NULL,
@@ -80,6 +158,41 @@ CREATE TABLE IF NOT EXISTS `leaderboard1` (
   UNIQUE KEY `botId` (`botID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- A tábla adatainak kiíratása `leaderboard1`
+--
+
+INSERT INTO `leaderboard1` (`botID`, `score`, `win`, `loose`) VALUES
+(1, 50, 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `leaderboard1_yesterday`
+--
+
+CREATE TABLE IF NOT EXISTS `leaderboard1_yesterday` (
+  `botID` int(11) NOT NULL,
+  `score` float NOT NULL,
+  `win` int(11) NOT NULL,
+  `loose` int(11) NOT NULL,
+  PRIMARY KEY (`botID`),
+  UNIQUE KEY `botId` (`botID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- A tábla adatainak kiíratása `leaderboard1_yesterday`
+--
+
+INSERT INTO `leaderboard1_yesterday` (`botID`, `score`, `win`, `loose`) VALUES
+(1, 0, 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `leaderboard2`
+--
+
 CREATE TABLE IF NOT EXISTS `leaderboard2` (
   `botID` int(11) NOT NULL,
   `score` float NOT NULL,
@@ -88,6 +201,27 @@ CREATE TABLE IF NOT EXISTS `leaderboard2` (
   PRIMARY KEY (`botID`),
   UNIQUE KEY `botId` (`botID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `leaderboard2_yesterday`
+--
+
+CREATE TABLE IF NOT EXISTS `leaderboard2_yesterday` (
+  `botID` int(11) NOT NULL,
+  `score` float NOT NULL,
+  `win` int(11) NOT NULL,
+  `loose` int(11) NOT NULL,
+  PRIMARY KEY (`botID`),
+  UNIQUE KEY `botId` (`botID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `leaderboards`
+--
 
 CREATE TABLE IF NOT EXISTS `leaderboards` (
   `tableName` varchar(20) NOT NULL,
@@ -98,9 +232,19 @@ CREATE TABLE IF NOT EXISTS `leaderboards` (
   UNIQUE KEY `id` (`tableName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- A tábla adatainak kiíratása `leaderboards`
+--
+
 INSERT INTO `leaderboards` (`tableName`, `rules`, `activated`, `lastRefresh`) VALUES
 ('leaderboard1', 'testrules.xml', 1, '2013-10-22 23:19:21'),
 ('leaderboard2', 'testrules.xml', 1, '2013-10-22 22:47:01');
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `news_posts`
+--
 
 CREATE TABLE IF NOT EXISTS `news_posts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -111,16 +255,30 @@ CREATE TABLE IF NOT EXISTS `news_posts` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=48 ;
 
+--
+-- A tábla adatainak kiíratása `news_posts`
+--
+
 INSERT INTO `news_posts` (`id`, `title`, `author`, `date`, `content`) VALUES
 (1, 'The croupierweb is online!', 'Admin', '2013-09-29 20:38:06', '<h3>Hello!</h3>'),
 (46, 'The site is under construction.', 'Admin', '2013-11-10 14:44:22', 'The site is under construction.'),
 (47, 'Manual', 'asd', '2014-02-01 16:25:41', 'A manual már elérhető <a href="docs/mi_dev/miDev.html">itt.</a>');
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `stat_accounts_added`
+--
 
 CREATE TABLE IF NOT EXISTS `stat_accounts_added` (
   `date` date NOT NULL,
   `count` int(11) NOT NULL,
   PRIMARY KEY (`date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- A tábla adatainak kiíratása `stat_accounts_added`
+--
 
 INSERT INTO `stat_accounts_added` (`date`, `count`) VALUES
 ('2013-10-02', 2),
@@ -131,17 +289,41 @@ INSERT INTO `stat_accounts_added` (`date`, `count`) VALUES
 ('2013-11-08', 3),
 ('2013-11-10', 1);
 
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `stat_bots_added`
+--
+
 CREATE TABLE IF NOT EXISTS `stat_bots_added` (
   `date` date NOT NULL,
   `count` int(11) NOT NULL,
   PRIMARY KEY (`date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- A tábla adatainak kiíratása `stat_bots_added`
+--
+
+INSERT INTO `stat_bots_added` (`date`, `count`) VALUES
+('2014-02-10', 1),
+('2014-02-13', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `stat_pageload`
+--
+
 CREATE TABLE IF NOT EXISTS `stat_pageload` (
   `date` date NOT NULL,
   `count` int(11) NOT NULL,
   PRIMARY KEY (`date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- A tábla adatainak kiíratása `stat_pageload`
+--
 
 INSERT INTO `stat_pageload` (`date`, `count`) VALUES
 ('2013-10-19', 263),
@@ -161,7 +343,15 @@ INSERT INTO `stat_pageload` (`date`, `count`) VALUES
 ('2014-01-31', 153),
 ('2014-02-01', 119),
 ('2014-02-02', 111),
-('2014-02-10', 10);
+('2014-02-10', 19),
+('2014-02-13', 43),
+('2014-02-14', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `strings`
+--
 
 CREATE TABLE IF NOT EXISTS `strings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -170,6 +360,10 @@ CREATE TABLE IF NOT EXISTS `strings` (
   `text` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=181 ;
+
+--
+-- A tábla adatainak kiíratása `strings`
+--
 
 INSERT INTO `strings` (`id`, `identifier`, `language`, `text`) VALUES
 (1, 'WEBPAGENAME', 'hu', 'Croupier poker AI'),
