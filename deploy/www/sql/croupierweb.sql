@@ -93,6 +93,13 @@ INSERT INTO `bots` (`id`, `accountID`, `name`, `lastChangeTime`, `code_lang`, `s
 -- Tábla szerkezet ehhez a táblához `brute_force`
 --
 
+CREATE TABLE IF NOT EXISTS `rank_yesterday` (
+  `botID` int(11) NOT NULL,
+  `rank` int(12) NOT NULL,
+  `score` float NOT NULL,
+  PRIMARY KEY (`botID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE IF NOT EXISTS `brute_force` (
   `id` varchar(8) NOT NULL,
   `action` varchar(30) NOT NULL,
