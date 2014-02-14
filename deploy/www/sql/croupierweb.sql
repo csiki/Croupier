@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Hoszt: 127.0.0.1
--- Létrehozás ideje: 2014. Feb 14. 00:03
+-- Létrehozás ideje: 2014. Feb 14. 11:34
 -- Szerver verzió: 5.6.15-log
 -- PHP verzió: 5.5.8
 
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `accounts` (
 --
 
 INSERT INTO `accounts` (`id`, `username`, `email`, `password`, `salt`, `activated`, `admin`, `lastOnline`, `lang`) VALUES
-(1, 'asd', 'asd', '21e3c338909de5e62f19fa82b0fc3757e648d6f2c36023255bd153c346afc6de6a270a92caefdeca58f0d86e50a892a05a2adb1d09855ae74695a4dd97d31c30', '5cc0da5be3d8d1b6b162cfce1dd43b3d23d3b7c7bfeb727e4f4ecfa429906b233ff342d2d84111e2eab1ee4e2a451f0cc6853e1c05ea2f84d330bbcee1c75dcf', 1, 1, '2014-02-14 00:00:10', 'hu');
+(1, 'asd', 'asd', '21e3c338909de5e62f19fa82b0fc3757e648d6f2c36023255bd153c346afc6de6a270a92caefdeca58f0d86e50a892a05a2adb1d09855ae74695a4dd97d31c30', '5cc0da5be3d8d1b6b162cfce1dd43b3d23d3b7c7bfeb727e4f4ecfa429906b233ff342d2d84111e2eab1ee4e2a451f0cc6853e1c05ea2f84d330bbcee1c75dcf', 1, 1, '2014-02-14 11:33:24', 'en');
 
 -- --------------------------------------------------------
 
@@ -77,14 +77,15 @@ CREATE TABLE IF NOT EXISTS `bots` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`),
   KEY `accountID` (`accountID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- A tábla adatainak kiíratása `bots`
 --
 
 INSERT INTO `bots` (`id`, `accountID`, `name`, `lastChangeTime`, `code_lang`, `state`, `compError`, `runError`) VALUES
-(1, 1, 'cccccccccccc', '2014-02-13 23:34:36', 'c++', 'ok', '', 0);
+(1, 1, 'cccccccccccc', '2014-02-13 23:34:36', 'c++', 'ok', '', 0),
+(2, 1, 'ddfdfdfdf', '2014-02-14 11:31:23', 'c++', 'ok', '', 0);
 
 -- --------------------------------------------------------
 
@@ -104,7 +105,8 @@ CREATE TABLE IF NOT EXISTS `brute_force` (
 --
 
 INSERT INTO `brute_force` (`id`, `action`, `expires`) VALUES
-('ZWIzNTgz', 'addBot', '2014-02-14 00:34:36');
+('ZWIzNTgz', 'addBot', '2014-02-14 12:31:17'),
+('ZWIzNTgz', 'addBot', '2014-02-14 12:31:23');
 
 -- --------------------------------------------------------
 
@@ -163,7 +165,8 @@ CREATE TABLE IF NOT EXISTS `leaderboard1` (
 --
 
 INSERT INTO `leaderboard1` (`botID`, `score`, `win`, `loose`) VALUES
-(1, 50, 0, 0);
+(1, 50, 0, 0),
+(2, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -185,7 +188,8 @@ CREATE TABLE IF NOT EXISTS `leaderboard1_yesterday` (
 --
 
 INSERT INTO `leaderboard1_yesterday` (`botID`, `score`, `win`, `loose`) VALUES
-(1, 0, 0, 0);
+(1, 0, 0, 0),
+(2, 200, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -307,7 +311,8 @@ CREATE TABLE IF NOT EXISTS `stat_bots_added` (
 
 INSERT INTO `stat_bots_added` (`date`, `count`) VALUES
 ('2014-02-10', 1),
-('2014-02-13', 1);
+('2014-02-13', 1),
+('2014-02-14', 1);
 
 -- --------------------------------------------------------
 
@@ -345,7 +350,7 @@ INSERT INTO `stat_pageload` (`date`, `count`) VALUES
 ('2014-02-02', 111),
 ('2014-02-10', 19),
 ('2014-02-13', 43),
-('2014-02-14', 1);
+('2014-02-14', 23);
 
 -- --------------------------------------------------------
 
@@ -359,7 +364,7 @@ CREATE TABLE IF NOT EXISTS `strings` (
   `language` varchar(5) NOT NULL,
   `text` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=181 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=183 ;
 
 --
 -- A tábla adatainak kiíratása `strings`
@@ -521,7 +526,9 @@ INSERT INTO `strings` (`id`, `identifier`, `language`, `text`) VALUES
 (177, 'YES', 'en', 'Yes'),
 (178, 'YES', 'hu', 'Igen'),
 (179, 'NO', 'en', 'No'),
-(180, 'NO', 'hu', 'Nem');
+(180, 'NO', 'hu', 'Nem'),
+(181, 'SUMMARY_LATEST_CHANGES', 'en', 'Your bots'' latest rankings'),
+(182, 'SUMMARY_LATEST_CHANGES', 'hu', 'A botjaid legutóbbi helyezési');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -173,7 +173,7 @@ function needLogin()
 {
     global $loggedin;
     if (!$loggedin) {
-        header('Location: ./');
+        header('Location: ./login.php');
         exit();
     }
 }

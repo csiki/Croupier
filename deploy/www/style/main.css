@@ -335,6 +335,16 @@ input[type=submit].button, input[type=button].button {
     background-position: -1px 0;
 }
 
+.upArrowIcon {
+    background-image: url("../images/icons.png");
+    background-position: -116px 0;
+}
+
+.downArrowIcon {
+    background-image: url("../images/icons.png");
+    background-position: -147px 0;
+}
+
 .messageBox {
     display: block;
     position: fixed;
