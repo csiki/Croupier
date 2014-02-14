@@ -1,6 +1,5 @@
 <?php
 include "php/include.php";
-include "get_leaderboard.php";
 needLogin();
 
 function getBotInfos($lb)
