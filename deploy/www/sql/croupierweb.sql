@@ -535,7 +535,9 @@ INSERT INTO `strings` (`id`, `identifier`, `language`, `text`) VALUES
 (179, 'NO', 'en', 'No'),
 (180, 'NO', 'hu', 'Nem'),
 (181, 'SUMMARY_LATEST_CHANGES', 'en', 'Your bots'' latest rankings'),
-(182, 'SUMMARY_LATEST_CHANGES', 'hu', 'A botjaid legutóbbi helyezési');
+(182, 'SUMMARY_LATEST_CHANGES', 'hu', 'A botjaid legutóbbi helyezési'),
+(183, 'LAST_EDIT', 'en', 'Last edited'),
+(184, 'LAST_EDIT', 'hu', 'Szerkesztve');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

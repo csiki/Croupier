@@ -89,7 +89,7 @@ function getBotInfos()
             <thead>
             <tr>
                 <th style="width: 150px"><?= $tr["NAME"] ?></th>
-                <th style="width: 150px"><?= $tr["DATE_TIME"] ?></th>
+                <th style="width: 150px"><?= $tr["LAST_EDIT"] ?></th>
                 <th style="width: 80px"><?= $tr["CODE_LANG"] ?></th>
                 <th style="width: 80px"><?= $tr["STATE"] ?></th>
                 <th colspan="3"><?= $tr["OPERATIONS"] ?></th>
