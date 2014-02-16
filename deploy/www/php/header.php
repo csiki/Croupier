@@ -2,11 +2,12 @@
     <div id="topmenu">
         <ul>
             <?php
-            echo '<li><a href="./">' . $tr["MAIN"] . '</a></li>';
+            echo '<li><a href="/">' . $tr["MAIN"] . '</a></li>';
             if ($loggedin) {
                 echo '<li><a href="summary.php">' . $tr["SUMMARY"] . '</a></li>';
                 echo '<li><a href="my_bots.php">' . $tr["MY_BOTS"] . '</a></li>';
                 echo '<li><a href="leaderboards.php">' . $tr["LEADERBOARDS"] . '</a></li>';
+                echo '<li><a href="docs/mi_dev/miDev.html">' . $tr["HELP"] . '</a></li>';
                 if ($admin)
                     echo '<li><a href="admin.php">Admin</a></li>';
             } else {

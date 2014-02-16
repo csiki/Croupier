@@ -1,5 +1,5 @@
 <?php
-include "connect_db.php";
+require "connect_db.php";
 function import_file($filename){
     if ($file = file_get_contents($filename)){
         foreach(explode(";", $file) as $query){

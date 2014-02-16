@@ -1,25 +1,12 @@
 <?php
-include "php/include.php";
+require_once "php/include.php";
 needLogin();
-
-function getBotInfos($lb)
-{
-    if ($result = SQL("SELECT bots.id, bots.name, bots.state,
-                        (SELECT EXISTS(SELECT * FROM " . $lb . " WHERE botID = bots.id)) as participated
-                        FROM bots
-                        WHERE bots.accountID = ?", $_SESSION["accountID"])
-    ) {
-        if ($result != null)
-            return $result;
-    }
-    return array();
-}
 
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <?php include "php/head.php"; ?>
+    <?php require "php/head.php"; ?>
     <script>
         $(function () {
             $(".leaderboardsMenuElement").on("click", menuElementClicked);
@@ -63,7 +50,7 @@ function getBotInfos($lb)
                     complete.call();
                 }
             }
-            xmlhttp.open("GET", "participate_bot.php?leaderBoard=" + lb + "&botID=" + id + "&action=" + (isAdd ? "1" : "0"), true);
+            xmlhttp.open("GET", "participate_bot.php?leaderboard=" + lb + "&botID=" + id + "&action=" + (isAdd ? "1" : "0"), true);
             xmlhttp.send();
         }
 
@@ -71,11 +58,11 @@ function getBotInfos($lb)
             var $lb = $(element).parents("[id^='lb-']");
             var $ptd = $(element).parent();
             $(element).hide();
-            $ptd.children(".loading").show();
+            $ptd.children(".loadingIcon").show();
             participate_bot($lb.attr('id').substr(3), id, false,
                 function () {
                     $ptd.children(".participate").show();
-                    $ptd.children(".loading").hide();
+                    $ptd.children(".loadingIcon").hide();
                     updateLeaderboard($lb);
                 });
         }
@@ -84,10 +71,10 @@ function getBotInfos($lb)
             var $lb = $(element).parents("[id^='lb-']");
             var $ptd = $(element).parent();
             $(element).hide();
-            $ptd.children(".loading").show();
+            $ptd.children(".loadingIcon").show();
             participate_bot($lb.attr('id').substr(3), id, true, function () {
                 $ptd.children(".backtrack").show();
-                $ptd.children(".loading").hide();
+                $ptd.children(".loadingIcon").hide();
                 updateLeaderboard($lb);
             });
         }
@@ -113,17 +100,18 @@ function getBotInfos($lb)
     </script>
 </head>
 <body>
-<?php include "php/header.php"; ?>
+<?php require "php/header.php"; ?>
 <div id="main">
-    <h2><?=$tr["LEADERBOARDS"]?></h2>
-        <div id="leaderboardsMenu">
-            <?php
-            $leaderboards = SQL("SELECT tableName from leaderboards");
-            for ($i = 0; $i < count($leaderboards); $i++) {
-                echo '<div class="leaderboardsMenuElement">';
-                echo '<span>' . $leaderboards[$i]["tableName"] . '</span>';
-                echo '<ul>';
-                echo '<li>
+    <h2><?= $tr["LEADERBOARDS"] ?></h2>
+
+    <div id="leaderboardsMenu">
+        <?php
+        $leaderboards = SQL("SELECT tableName from leaderboards");
+        foreach ($leaderboards as $leaderboard) {
+            echo '<div class="leaderboardsMenuElement">';
+            echo '<span>' . $leaderboard["tableName"] . '</span>';
+            echo '<ul>';
+            echo '<li>
                     Itt
                     </li>
                     <li>
@@ -132,20 +120,20 @@ function getBotInfos($lb)
                     <li>
                     szabályok
                     </li>';
-                echo '</ul>';
-                echo '</div>';
-            }
-            ?>
+            echo '</ul>';
+            echo '</div>';
+        }
+        ?>
 
-        </div>
-            <?php
-            for ($i = 0; $i < count($leaderboards); $i++) {
-                echo '<div id="lb-' . ($i + 1) . '">';
-                echo '<div class="backToMenu"><a class="button">' . $tr["BACK"] . '</a></div>';
-                echo '<h2 class="leaderboardTitle">'. $leaderboards[$i]["tableName"] .'</h2>';
-                echo '<div class="basicContainer">';
-                echo '<div class="leaderboard">
-                <h3>'.$tr["PARTICIPATED_BOTS"].'</h3>
+    </div>
+    <?php
+    for ($i = 0; $i < count($leaderboards); $i++) {
+        echo '<div id="lb-' . ($i + 1) . '">';
+        echo '<div class="backToMenu"><a class="button">' . $tr["BACK"] . '</a></div>';
+        echo '<h2 class="leaderboardTitle">' . $leaderboards[$i]["tableName"] . '</h2>';
+        echo '<div class="basicContainer">';
+        echo '<div class="leaderboard">
+                <h3>' . $tr["PARTICIPATED_BOTS"] . '</h3>
                 <table>
                     <thead>
                     <tr>
@@ -155,10 +143,10 @@ function getBotInfos($lb)
                     </tr>
                     </thead>
                     <tbody>';
-                echo '</tbody></table>
+        echo '</tbody></table>
                 </div>
                 <div class="botsOwned">
-                    <h3>'.$tr["MY_BOTS"].'</h3>
+                    <h3>' . $tr["MY_BOTS"] . '</h3>
                     <table>
                         <thead>
                         <tr>
@@ -168,28 +156,44 @@ function getBotInfos($lb)
                         </tr>
                         </thead>
                         <tbody>';
-                $rows = getBotInfos($leaderboards[$i]["tableName"]);
-                for ($j = 0; $j < count($rows); $j++) {
-                    echo '<tr>';
-                    echo '<td>' . $rows[$j]["name"] . '</td>';
-                    echo '<td>' . $rows[$j]["state"] . '</td>';
-                    echo '<td>';
-                    echo '<a href="javascript:;" ' . ($rows[$j]["participated"] == '1' ? '' : 'style="display:none"') . ' class="button backtrack" onclick="backtrack(this, ' . $rows[$j]["id"] . ')">' . $tr["BACKTRACK"] . '</a>';
-                    echo '<a class="button disabledButton" ' . ($rows[$j]["participated"] != '1' && ($rows[$j]["state"] != "ok") ? '' : 'style="display:none"') . '>' . $tr["PARTICIPATE"] . '</a>';
-                    echo '<a class="button disabledButton loading" style="display:none">' . $tr["PROCESSING"] . '</a>';
-                    echo '<a href="javascript:;" ' . ($rows[$j]["participated"] != '1' && ($rows[$j]["state"] == "ok") ? '' : 'style="display:none"') . 'class="button participate" onclick="participate(this, ' . $rows[$j]["id"] . ')">' . $tr["PARTICIPATE"] . '</a>';
-                    echo '</td>';
-                    echo '</tr>';
-                }
-                echo '</tbody>
-                    </table>
+        $bots = SQL("SELECT bots.id, bots.name, bots.state,
+                        (SELECT EXISTS(SELECT * FROM " . $leaderboards[$i]["tableName"] . " WHERE botID = bots.id)) as participated
+                        FROM bots
+                        WHERE bots.accountID = ?", $_SESSION["accountID"]);
+        if ($bots == null)
+            $bots = array();
+        foreach ($bots as $bot) {
+            echo '<tr data-valid="' . ($bot["state"] == "ok")
+                . '" data-participated="' . ($bot["participated"]) . '">';
+            echo '<td>' . $bot["name"] . '</td>';
+            echo '<td>' . $bot["state"] . '</td>';
+            echo '<td style="text-align: center">';
+            echo '<a class="button backtrack"' .
+                ($bot["participated"] == '1' ? '' : 'style="display:none"') .
+                ' onclick="backtrack(this, ' . $bot["id"] . ')">' . $tr["BACKTRACK"] .
+                '</a>';
+            echo '<a class="button disabledButton" ' .
+                ($bot["participated"] != '1' && ($bot["state"] != "ok") ? '' : 'style="display:none"') . '>' .
+                $tr["PARTICIPATE"] .
+                '</a>';
+            echo '<div class="icon loadingIcon" style="display: none"></div>';
+            echo '<a class="button participate"' .
+                ($bot["participated"] != '1' && ($bot["state"] == "ok") ? '' : ' style="display:none"') .
+                ' onclick="participate(this, ' . $bot["id"] . ')">' .
+                $tr["PARTICIPATE"] .
+                '</a>';
+            echo '</td>';
+            echo '</tr>';
+        }
+        echo '</tbody>
+                </table>
                 </div>';
-                echo '</div></div>';
-            }
-            ?>
-    </div>
+        echo '</div></div>';
+    }
+    ?>
+</div>
 <footer>
-    <?php include "php/footer.php"; ?>
+    <?php require "php/footer.php"; ?>
 </footer>
 </body>
 </html>

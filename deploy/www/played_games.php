@@ -1,11 +1,11 @@
 <?php
-include "php/include.php";
+require_once "php/include.php";
 needLogin();
 $botID = 0;
 $botName = "";
-if (isset($_GET["botID"]) && is_numeric($_GET["botID"])) {
-    $botID = $_GET["botID"];
-    $bot = SQL("SELECT name FROM bots WHERE accountID = ? AND id = ?", $_SESSION["accountID"], $botID);
+if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
+    $botID = $_GET["id"];
+    $bot = SQL("SELECT name FROM bots WHERE id = ? AND (accountID = ? OR ?)",$botID, $_SESSION["accountID"], $admin);
     if ($bot == null)
         die("Invalid request");
     $botName = $bot[0]["name"];
@@ -15,7 +15,7 @@ if (isset($_GET["botID"]) && is_numeric($_GET["botID"])) {
 <!DOCTYPE html>
 <html>
 <head>
-    <?php include "php/head.php"; ?>
+    <?php require "php/head.php"; ?>
     <script>
         $(function () {
             if ($("#manageBotsTable tbody tr").length == 0) {
@@ -32,7 +32,7 @@ if (isset($_GET["botID"]) && is_numeric($_GET["botID"])) {
     </script>
 </head>
 <body>
-<?php include "php/header.php"; ?>
+<?php require "php/header.php"; ?>
 <div id="main">
     <h2>
         <?php
@@ -70,7 +70,7 @@ if (isset($_GET["botID"]) && is_numeric($_GET["botID"])) {
     </div>
 </div>
 <footer>
-    <?php include "php/footer.php"; ?>
+    <?php require "php/footer.php"; ?>
 </footer>
 </body>
 </html>

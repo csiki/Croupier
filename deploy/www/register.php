@@ -1,5 +1,5 @@
 <?php
-include "php/include.php";
+require_once "php/include.php";
 require_once('php/recaptchalib.php');
 require_once('php/email.php');
 if ($loggedin) {
@@ -22,7 +22,6 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
         $errors[] = $tr["ERR_EMAIL"];
     else
         $email = $_POST['email'];
-
     if (!isset($_POST['pLength']) || !sanityCheck($_POST['pLength'], 'numeric', 0, 3)) {
         $errors[] = $tr["ERR_PASSWORD_LENGTH"];
     } else {
@@ -40,7 +39,7 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
 
     if (!$cap->is_valid)
         $errors[] = $tr["ERR_CAPTCHA"];
-    $errors[] = "A regisztráció még nem nyílt meg!";
+    //$errors[] = "A regisztráció még nem nyílt meg!";
     if (count($errors) == 0) {
         $random_salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
         // Create salted password (Careful not to over season)
@@ -52,15 +51,14 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
         SQL("INSERT INTO stat_accounts_added (date, count)
             VALUES (CURRENT_DATE(), 1)
             ON DUPLICATE KEY UPDATE date = VALUES(date), count = count + 1;");
-
-        header('Location: ../register.php?success=1&email=' . $email);
+        //header('Location: ../register.php?success=1&email=' . $email);
     }
 }
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <?php include "php/head.php"; ?>
+    <?php require "php/head.php"; ?>
     <script type="text/javascript" src="scripts/sha512.js"></script>
     <script>
         $(function () {
@@ -93,7 +91,7 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
 
 </head>
 <body>
-<?php include "php/header.php"; ?>
+<?php require "php/header.php"; ?>
 <div id="main">
     <h2><?php print($tr["REG_ACCOUNT_TITLE"]); ?></h2>
     <?php
@@ -134,7 +132,8 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
                 <?= print_captcha() ?>
                 <br/>
                 <br/>
-                <input type="button" value="<?= $tr["REGISTER"] ?>" class="button" id="submitButton">
+                <input type="button" value="<?= $tr["REGISTER"] ?>" class="button" id="submitButton"
+                       onclick="sendForm(this.form, this.form.pass);">
             </form>
         </div>
     <?php
@@ -142,7 +141,7 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
     ?>
 </div>
 <footer>
-    <?php include "php/footer.php"; ?>
+    <?php require "php/footer.php"; ?>
 </footer>
 </body>
 </html>

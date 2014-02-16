@@ -1,8 +1,8 @@
 <?php
-include "php/include.php";
+require_once "php/include.php";
 needLogin();
 if (!$admin) {
-    header('Location: ./');
+    header('Location: /');
     exit();
 }
 if (isset($_POST["title"]) || isset($_POST["content"])) {

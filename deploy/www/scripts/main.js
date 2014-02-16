@@ -1,19 +1,15 @@
 function sendForm(form, password) {
-    var p = document.createElement("input");
-    form.appendChild(p);
-    p.name = "p";
-    p.type = "hidden"
+    var $pass = $('<input name="p" type="hidden"/>');
+    $(form).append($pass);
 
     //need this, because password length is lost after encode
-    var pSize = document.createElement("input");
-    form.appendChild(pSize);
-    pSize.name = "pSize";
-    pSize.type = "hidden"
-    pSize.value = password.value.length;
+
+    var $pLength = $('<input name="pLength" type="hidden" />');
+    $pLength.val(password.value.length);
+    $(form).append($pLength);
 
     var shaObj = new jsSHA(password.value, "TEXT");
-    p.value = shaObj.getHash("SHA-512", "HEX");
-    password.value = "";
+    $pass.val(shaObj.getHash("SHA-512", "HEX"));
     form.submit();
 }
 
@@ -24,6 +20,13 @@ function getAJAX() {
     else
         xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
     return xmlhttp;
+}
+
+function createBaseMessageBox(text) {
+    var $mbox = $('<div class="messageBox"/>');
+    var $p = $('<p>' + text + '</p>);');
+    $mbox.append($p);
+    return $mbox;
 }
 
 function messageBox(text) {
@@ -39,6 +42,7 @@ function messageBox(text) {
 
 function messageBoxOk(text, callback) {
     var $mbox = createBaseMessageBox(text);
+    $mbox.attr('data-modal', true);
     var $rightDiv = $('<div class="messageBoxBottom" />');
     $mbox.append($rightDiv);
     var $okButton = $('<a class="button">Ok</a>');
@@ -47,7 +51,7 @@ function messageBoxOk(text, callback) {
     });
     $rightDiv.append($okButton);
 
-	showOverlay();
+    showOverlay();
     $("body").first().append($mbox);
     $mbox.css('top', -$mbox.outerHeight() - 10);
     $mbox.animate({
@@ -57,6 +61,7 @@ function messageBoxOk(text, callback) {
 
 function messageBoxYesNo(text, yes, no, callback) {
     var $mbox = createBaseMessageBox(text);
+    $mbox.attr('data-modal', true);
     var $rightDiv = $('<div class="messageBoxBottom" />');
     $mbox.append($rightDiv);
     var $noButton = $('<a class="button">' + no + '</a>');
@@ -71,19 +76,12 @@ function messageBoxYesNo(text, yes, no, callback) {
     });
     $rightDiv.append($yesButton);
 
-	showOverlay();
+    showOverlay();
     $("body").first().append($mbox);
     $mbox.css('top', -$mbox.outerHeight() - 10);
     $mbox.animate({
         top: "0"
     }, 800, "easeOutExpo");
-}
-
-function createBaseMessageBox(text) {
-    var $mbox = $('<div class="messageBox"/>');
-    var $p = $('<p>' + text + '</p>);');
-    $mbox.append($p);
-    return $mbox;
 }
 
 function showOverlay() {
@@ -95,7 +93,12 @@ function showOverlay() {
 }
 
 function hideOverlay() {
-    if ($('.messageBox').length == 1) {
+    var $numModals = 0;
+    $('.messageBox').each(function (i) {
+        if ($(this).attr('data-modal'))
+            $numModals++;
+    });
+    if ($numModals == 1) {
         $("#messageboxOverlay").fadeOut(200, function () {
             $("#messageboxOverlay").remove();
         });
@@ -120,4 +123,10 @@ function getQueryParams(qs) {
             = decodeURIComponent(tokens[2]);
     }
     return params;
+}
+
+function addLoading(element) {
+    var $e = $(element);
+    $e.empty();
+    $e.append($('<div class="icon loadingIcon" ></div>'));
 }

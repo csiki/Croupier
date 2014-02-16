@@ -1,5 +1,5 @@
 <?php
-include "php/include.php";
+require_once "php/include.php";
 $currentPage = 0;
 $itemsPerPage = 10;
 if (isset($_GET["page"]) && !empty($_GET["page"]) && is_numeric($_GET["page"]))
@@ -18,10 +18,10 @@ if ($items == null)
 <!DOCTYPE html>
 <html>
 <head>
-    <?php include "php/head.php"; ?>
+    <?php require "php/head.php"; ?>
 </head>
 <body>
-<?php include "php/header.php"; ?>
+<?php require "php/header.php"; ?>
 <div id="main">
     <h2>Croupier poker AI</h2>
 
@@ -50,7 +50,7 @@ if ($items == null)
     </div>
 </div>
 <footer>
-    <?php include "php/footer.php"; ?>
+    <?php require "php/footer.php"; ?>
 </footer>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <?php
-include "php/include.php";
+require_once "php/include.php";
 if (isset($_GET["lang"]) && isValidLang($_GET["lang"])) {
     $_SESSION["lang"] = $_GET["lang"];
     if ($loggedin)

@@ -1,5 +1,5 @@
 <?php
-include "connect_db.php";
-include "functions.php";
+require "connect_db.php";
+require "functions.php";
 
 SQL("UPDATE bots SET state = 'ok'");

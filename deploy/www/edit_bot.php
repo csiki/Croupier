@@ -1,5 +1,5 @@
 <?php
-include "php/include.php";
+require_once "php/include.php";
 needLogin();
 $errors = array();
 $name = $code = $lang = $orig = $id = "";
@@ -79,7 +79,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
 <!DOCTYPE html>
 <html>
 <head>
-    <?php include "php/head.php"; ?>
+    <?php require "php/head.php"; ?>
     <script type="text/javascript" src="scripts/codemirror-compressed.js"></script>
     <script type="text/javascript" src="scripts/matchbrackets.js"></script>
     <script type="text/javascript" src="scripts/clike.js"></script>
@@ -124,7 +124,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
     </script>
 </head>
 <body>
-<?php include "php/header.php"; ?>
+<?php require "php/header.php"; ?>
 <div id="main">
     <h2><?= $tr["EDIT_BOT"] ?></h2>
 
@@ -167,7 +167,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
     </p>
 </div>
 <footer>
-    <?php include "php/footer.php"; ?>
+    <?php require "php/footer.php"; ?>
 </footer>
 </body>
 </html>

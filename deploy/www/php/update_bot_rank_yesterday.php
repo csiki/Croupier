@@ -1,9 +1,9 @@
 <?php
-include "connect_db.php";
-include "functions.php";
+require "connect_db.php";
+require "functions.php";
 
 /*
-rank_yesterday tábla:
+rank_yesterday tï¿½bla:
 	botID, rank, score
 */
 

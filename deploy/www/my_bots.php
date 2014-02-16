@@ -1,22 +1,11 @@
 <?php
-include "php/include.php";
+require_once "php/include.php";
 needLogin();
-function getBotInfos()
-{
-    if ($result = SQL("SELECT id, name, lastChangeTime, code_lang, state
-    FROM bots WHERE accountID = ?", $_SESSION["accountID"])
-    ) {
-        if ($result != null)
-            return $result;
-    }
-    return array();
-}
-
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <?php include "php/head.php"; ?>
+    <?php require "php/head.php"; ?>
     <script>
         $(function () {
             $("#manageBotsTable tbody tr").on('remove', function () {
@@ -44,13 +33,6 @@ function getBotInfos()
             });
         }
 
-        function addLoading(element) {
-            var $e = $(element);
-            $e.empty();
-            var $loading = $('<div class="icon loadingIcon" ></div>');
-            $loading.appendTo($e);
-        }
-
         function deleteBot(id) {
             var xmlhttp = getAJAX();
             xmlhttp.onreadystatechange = function () {
@@ -65,26 +47,21 @@ function getBotInfos()
                                         $(this).closest('tr').remove();
                                     });
                             });
-                        messageBox("Bot deleted");
                     }
                 }
             }
             xmlhttp.open("GET", "delete_bot.php?botID=" + id, true);
             xmlhttp.send();
         }
-
-        function ok() {
-            alert("df");
-        }
     </script>
 </head>
 <body>
-<?php include "php/header.php"; ?>
+<?php require "php/header.php"; ?>
 <div id="main">
     <h2><?= $tr["MY_BOTS"] ?></h2>
 
     <div class="basicContainer">
-        <a href="add_bot.php" class="button" style="margin-bottom: 20px"><?= $tr["NEW_BOT"] ?></a>
+        <a href="add_bot.php" class="button" style="margin-bottom: 20px"><?= $tr["CREATE_BOT"] ?></a>
         <table id="manageBotsTable">
             <thead>
             <tr>
@@ -97,18 +74,21 @@ function getBotInfos()
             </thead>
             <tbody>
             <?php
-            $rows = getBotInfos();
-            for ($i = 0; $i < count($rows); $i++) {
-                echo '<tr id="bot' . $rows[$i]["id"] . '" >';
-                echo '<td>' . $rows[$i]["name"] . '</td>';
-                echo '<td>' . $rows[$i]["lastChangeTime"] . '</td>';
-                echo '<td>' . $rows[$i]["code_lang"] . '</td>';
-                echo '<td>' . $rows[$i]["state"] . '</td>';
-                echo '<td style="cursor:pointer" onclick="document.location = \'played_games.php?botID=' . $rows[$i]["id"] . '\';">'
+            $bots = SQL("SELECT id, name, lastChangeTime, code_lang, state
+                        FROM bots WHERE accountID = ?", $_SESSION["accountID"]);
+            if ($bots == null)
+                $bots = array();
+            foreach($bots as $bot) {
+                echo '<tr id="bot' . $bot["id"] . '" >';
+                echo '<td>' . $bot["name"] . '</td>';
+                echo '<td>' . $bot["lastChangeTime"] . '</td>';
+                echo '<td>' . $bot["code_lang"] . '</td>';
+                echo '<td>' . $bot["state"] . '</td>';
+                echo '<td style="cursor:pointer" onclick="document.location = \'played_games.php?id=' . $bot["id"] . '\';">'
                     . '<div class="icon playedGamesIcon" title="' . $tr["PLAYED_GAMES"] . '"></div></td>';
-                echo '<td style="cursor:pointer" onclick="document.location = \'edit_bot.php?id=' . $rows[$i]["id"] . '\';">
+                echo '<td style="cursor:pointer" onclick="document.location = \'edit_bot.php?id=' . $bot["id"] . '\';">
                     <div class="icon editIcon" title="' . $tr["EDIT_BOT"] . '"></div></td>';
-                echo '<td style="cursor:pointer" onclick="deleteBotAsk(this, ' . $rows[$i]["id"] . ')">'
+                echo '<td style="cursor:pointer" onclick="deleteBotAsk(this, ' . $bot["id"] . ')">'
                     . '<div class="icon deleteIcon" title="' . $tr["DELETE_BOT"] . '"></div></td>';
                 echo '</tr>';
             }
@@ -118,7 +98,7 @@ function getBotInfos()
     </div>
 </div>
 <footer>
-    <?php include "php/footer.php"; ?>
+    <?php require "php/footer.php"; ?>
 </footer>
 </body>
 </html>

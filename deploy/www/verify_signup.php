@@ -1,5 +1,5 @@
 <?php
-include "php/include.php";
+require_once "php/include.php";
 if ($loggedin) {
     header('Location: summary.php');
     exit();
@@ -35,17 +35,17 @@ else
 <!DOCTYPE html>
 <html>
 <head>
-    <?php include "php/head.php"; ?>
+    <?php require "php/head.php"; ?>
     <script type="text/javascript" src="scripts/sha512.js"></script>
 </head>
 <body>
-<?php include "php/header.php"; ?>
+<?php require "php/header.php"; ?>
 <div id="main">
     <h2><?php print($tr["REG_ACCOUNT_TITLE"]); ?></h2>
     <?=$message?>
 </div>
 <footer>
-    <?php include "php/footer.php"; ?>
+    <?php require "php/footer.php"; ?>
 </footer>
 </body>
 </html>

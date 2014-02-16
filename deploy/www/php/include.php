@@ -2,8 +2,8 @@
 $loggedin = false;
 $admin = false;
 $tr = NULL;
-include "connect_db.php";
-include "functions.php";
+require "connect_db.php";
+require "functions.php";
 sec_session_start();
 initTranslate($mysqli);
 login_check($loggedin, $admin);

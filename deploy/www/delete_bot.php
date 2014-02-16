@@ -1,8 +1,11 @@
 <?php
-include "php/include.php";
+require_once "php/include.php";
+require_once "php/leaderboard.php";
 needLogin();
+
 if (isset($_GET["botID"]) && is_numeric($_GET["botID"])) {
-    $res = SQL("DELETE FROM bots WHERE accountID = ? AND id = ?", $_SESSION["accountID"], $_GET["botID"]);
+    $botID = $_GET["botID"];
+    $res = SQL("DELETE FROM bots WHERE accountID = ? AND id = ?", $_SESSION["accountID"], $botID);
     if ($res == null) //not found botID
     {
         echo "0";
@@ -11,9 +14,10 @@ if (isset($_GET["botID"]) && is_numeric($_GET["botID"])) {
 
     SQL("DELETE FROM games_by_bots WHERE botID = ?", $_GET["botID"]);
 
-    $leaderboards = SQL("SELECT tableName FROM leaderboards");
+    $leaderboards = SQL("SELECT * FROM leaderboards");
     foreach ($leaderboards as $leaderboard) {
-        SQL("DELETE FROM ". $leaderboard["tableName"] ." WHERE botID = ?", $_GET["botID"]);
+        $loaded_leaderboard = new Leaderboard($leaderboard);
+        $loaded_leaderboard->removeBot($botID);
     }
 
     $files = glob(_BOT_AI_RELATIVE_PATH_ . $_GET["botID"] . "/" . '*', GLOB_MARK);

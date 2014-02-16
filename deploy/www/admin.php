@@ -1,5 +1,5 @@
 <?php
-include "php/include.php";
+require_once "php/include.php";
 needLogin();
 if (!$admin) {
     header('Location: ./');
@@ -10,7 +10,7 @@ if (!$admin) {
 <!DOCTYPE html>
 <html>
 <head>
-    <?php include "php/head.php"; ?>
+    <?php require "php/head.php"; ?>
     <link rel="stylesheet" href="../style/admin.css">
     <link rel="stylesheet" href="../style/codemirror.css">
     <link rel="stylesheet" href="../style/codemirror-neat-modified.css">
@@ -111,114 +111,119 @@ if (!$admin) {
     </script>
 </head>
 <body>
-<?php include "php/header.php"; ?>
+<?php require "php/header.php"; ?>
 <div id="main">
     <h1>Admin</h1>
 
-    <div class="basicContainer">
-        <h2>New post</h2>
+    <h2>New post</h2>
 
-        <div id="post">
-            <label for="title">Title</label><br/>
-            <input name="title" id="title" type="text" value="" autofocus>
-            <br/>
-            <label for="content">Content (html)</label><br/>
-            <textarea cols="80" rows="20" name="content" id="content"></textarea>
-            <br/><br/>
-            <input type="submit" class="button" value="Post" id="postButton">
-            <span id="postMessage"></span>
-        </div>
-        <div id="postPreview"></div>
-        <h2>Charts</h2>
-
-
-        <select id="chartSelector">
-            <option value="chart1">Added bots</option>
-            <option value="chart2">Registered users</option>
-            <option value="chart3">Pageloads</option>
-        </select>
+    <div id="post">
+        <label for="title">Title</label><br/>
+        <input name="title" id="title" type="text" value="" autofocus>
         <br/>
-        <br/>
-
-        <div id="visualization" style="width: 500px; height: 400px;"></div>
-
-        <h2>Accounts</h2>
-
-        <table>
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>IsAdmin</th>
-                <th>Last Online</th>
-                <th>Language</th>
-                <th>BotCount</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php
-            $botsRes = SQL("SELECT accountID FROM bots");
-            $bots = array();
-            for ($i = 0; $i < count($botsRes); $i++) {
-                if (!isset($bots[$botsRes[$i]["accountID"]]))
-                    $bots[$botsRes[$i]["accountID"]] = 0;
-                $bots[$botsRes[$i]["accountID"]]++;
-            }
-            $acc = SQL("SELECT id, username, email, admin, lastOnline, lang FROM accounts");
-            for ($i = 0; $i < count($acc); $i++) {
-                echo '<tr>';
-                echo '<td>' . $acc[$i]["id"] . '</td>';
-                echo '<td>' . $acc[$i]["username"] . '</td>';
-                echo '<td>' . $acc[$i]["email"] . '</td>';
-                echo '<td>' . $acc[$i]["admin"] . '</td>';
-                echo '<td>' . $acc[$i]["lastOnline"] . '</td>';
-                echo '<td>' . $acc[$i]["lang"] . '</td>';
-                echo '<td>' . (isset($bots[$acc[$i]["id"]]) ? $bots[$acc[$i]["id"]] : "0") . '</td>';
-                echo '</tr>';
-            }
-            ?>
-            </tbody>
-        </table>
-
-        <h2>Bots</h2>
-
-        <table>
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Owner</th>
-                <th>Last Changed</th>
-                <th>CodeLang</th>
-                <th>State</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php
-            $accRes = SQL("SELECT id, username FROM accounts");
-            $acc = array();
-            for ($i = 0; $i < count($accRes); $i++) {
-                $acc[$accRes[$i]["id"]] = $accRes[$i]["username"];
-            }
-            $bots = SQL("SELECT id, accountID, name, lastChangeTime, code_lang, state FROM bots");
-            for ($i = 0; $i < count($bots); $i++) {
-                echo '<tr>';
-                echo '<td>' . $bots[$i]["id"] . '</td>';
-                echo '<td>' . $bots[$i]["name"] . '</td>';
-                echo '<td>' . $acc[$bots[$i]["accountID"]] . '</td>';
-                echo '<td>' . $bots[$i]["lastChangeTime"] . '</td>';
-                echo '<td>' . $bots[$i]["code_lang"] . '</td>';
-                echo '<td>' . $bots[$i]["state"] . '</td>';
-                echo '</tr>';
-            }
-            ?>
-            </tbody>
-        </table>
+        <label for="content">Content (html)</label><br/>
+        <textarea cols="80" rows="20" name="content" id="content"></textarea>
+        <br/><br/>
+        <input type="submit" class="button" value="Post" id="postButton">
+        <span id="postMessage"></span>
     </div>
+    <div id="postPreview"></div>
+
+    <br/>
+
+    <h2>Charts</h2>
+    <select id="chartSelector">
+        <option value="chart1">Added bots</option>
+        <option value="chart2">Registered users</option>
+        <option value="chart3">Pageloads</option>
+    </select>
+    <br/>
+    <br/>
+
+    <div id="visualization" style="width: 500px; height: 400px;"></div>
+
+    <h2>Accounts</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>IsAdmin</th>
+            <th>Last Online</th>
+            <th>Language</th>
+            <th>BotCount</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        $botsRes = SQL("SELECT accountID FROM bots");
+        $bots = array();
+        for ($i = 0; $i < count($botsRes); $i++) {
+            if (!isset($bots[$botsRes[$i]["accountID"]]))
+                $bots[$botsRes[$i]["accountID"]] = 0;
+            $bots[$botsRes[$i]["accountID"]]++;
+        }
+        $acc = SQL("SELECT id, username, email, admin, lastOnline, lang FROM accounts");
+        for ($i = 0; $i < count($acc); $i++) {
+            echo '<tr>';
+            echo '<td>' . $acc[$i]["id"] . '</td>';
+            echo '<td>' . $acc[$i]["username"] . '</td>';
+            echo '<td>' . $acc[$i]["email"] . '</td>';
+            echo '<td>' . $acc[$i]["admin"] . '</td>';
+            echo '<td>' . $acc[$i]["lastOnline"] . '</td>';
+            echo '<td>' . $acc[$i]["lang"] . '</td>';
+            echo '<td>' . (isset($bots[$acc[$i]["id"]]) ? $bots[$acc[$i]["id"]] : "0") . '</td>';
+            echo '</tr>';
+        }
+        ?>
+        </tbody>
+    </table>
+    <br/>
+
+    <h2>Bots</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Owner</th>
+            <th>Last Changed</th>
+            <th>CodeLang</th>
+            <th>State</th>
+            <th colspan="2"><?= $tr["OPERATIONS"] ?></th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        $accRes = SQL("SELECT id, username FROM accounts");
+        $acc = array();
+        for ($i = 0; $i < count($accRes); $i++) {
+            $acc[$accRes[$i]["id"]] = $accRes[$i]["username"];
+        }
+        $bots = SQL("SELECT id, accountID, name, lastChangeTime, code_lang, state FROM bots");
+        for ($i = 0; $i < count($bots); $i++) {
+            echo '<tr>';
+            echo '<td>' . $bots[$i]["id"] . '</td>';
+            echo '<td>' . $bots[$i]["name"] . '</td>';
+            echo '<td>' . $acc[$bots[$i]["accountID"]] . '</td>';
+            echo '<td>' . $bots[$i]["lastChangeTime"] . '</td>';
+            echo '<td>' . $bots[$i]["code_lang"] . '</td>';
+            echo '<td>' . $bots[$i]["state"] . '</td>';
+            echo '<td style="cursor:pointer" onclick="document.location = \'played_games.php?id=' . $bots[$i]["id"] . '\';">'
+                . '<div class="icon playedGamesIcon" title="' . $tr["PLAYED_GAMES"] . '"></div></td>';
+            echo '<td style="cursor:pointer" onclick="document.location = \'show_bot.php?id=' . $bots[$i]["id"] . '\';">
+                    <div class="icon editIcon" title="Show bot"></div></td>';
+            echo '</tr>';
+        }
+        ?>
+        </tbody>
+    </table>
 </div>
 <footer>
-    <?php include "php/footer.php"; ?>
+    <?php require "php/footer.php"; ?>
 </footer>
 </body>
 </html>

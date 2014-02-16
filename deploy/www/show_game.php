@@ -1,5 +1,5 @@
 <?php
-include "php/include.php";
+require_once "php/include.php";
 needLogin();
 
 abstract class Severity
@@ -25,8 +25,8 @@ $severityColors = array(
 $orig_msg = array("receiveCard", "fold", "check", "call", "raise",
 	"letsPoker", "rmDealerButton", "addDealerButton", "burn", "betRound", "quit", "flop", "turn", "river", "revealCards",
 	"collectCards", "roundStarted ", "roundEnded", "refreshBlinds", "showdown");
-$hun_msg = array("Kapott kártya", "Eldob", "Passzol", "Megad", "Emel"
-	"Indul a játék", "Dealer gombot eltávolítja", "Dealer gombot hozzáadja", "Éget", "Tét kör indul", "Kilép", "Flop:", "Turn:", "River:", "Kártyáit megmutatja:"
+$hun_msg = array("Kapott kártya", "Eldob", "Passzol", "Megad", "Emel",
+	"Indul a játék", "Dealer gombot eltávolítja", "Dealer gombot hozzáadja", "Éget", "Tét kör indul", "Kilép", "Flop:", "Turn:", "River:", "Kártyáit megmutatja:",
 	 "Kártyákat begyüjti", "Kör kezdődik #", "Véget ért a kör", "Vakok frissítése", "Showdown");
 
 $gameID = $botID = 0;
@@ -41,7 +41,7 @@ if (isset($_GET["gameID"]) && is_numeric($_GET["gameID"]) && isset($_GET["botID"
     $logFile = _LOG_RELATIVE_PATH_ . $log[0]["log"];
     $date = $log[0]["endTime"];
     //check bot exits
-    $bot = SQL("SELECT name FROM bots WHERE accountID = ? AND id = ?", $_SESSION["accountID"], $botID);
+    $bot = SQL("SELECT name FROM bots WHERE id = ? AND (accountID = ? OR ?)",$botID, $_SESSION["accountID"], $admin);
     if ($bot == null)
         die("Invalid request");
     $botName = $bot[0]["name"];
@@ -54,10 +54,10 @@ if (isset($_GET["gameID"]) && is_numeric($_GET["gameID"]) && isset($_GET["botID"
 <!DOCTYPE html>
 <html>
 <head>
-    <?php include "php/head.php"; ?>
+    <?php require "php/head.php"; ?>
 </head>
 <body>
-<?php include "php/header.php"; ?>
+<?php require "php/header.php"; ?>
 <div id="main">
     <h2>
         <?php
@@ -66,7 +66,6 @@ if (isset($_GET["gameID"]) && is_numeric($_GET["gameID"]) && isset($_GET["botID"
     </h2>
 
     <div class="basicContainer">
-
         <?php
         if (file_exists($logFile)) {
             ?>
@@ -119,7 +118,7 @@ if (isset($_GET["gameID"]) && is_numeric($_GET["gameID"]) && isset($_GET["botID"
     </div>
 </div>
 <footer>
-    <?php include "php/footer.php"; ?>
+    <?php require "php/footer.php"; ?>
 </footer>
 </body>
 </html>

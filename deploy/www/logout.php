@@ -1,5 +1,5 @@
 <?php
-include 'php/functions.php';
+require 'php/functions.php';
 sec_session_start();
 $sName = session_name();
 $_SESSION = array();
@@ -9,4 +9,4 @@ setcookie($sName, false);
 unset($_COOKIE[$sName]);
 
 session_destroy();
-header('Location: ./');
+header('Location: /');
