@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Hoszt: 127.0.0.1
--- Létrehozás ideje: 2014. Feb 16. 13:12
+-- Létrehozás ideje: 2014. Feb 16. 23:50
 -- Szerver verzió: 5.6.15-log
 -- PHP verzió: 5.5.8
 
@@ -23,6 +23,30 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Tábla szerkezet ehhez a táblához `account_activation`
+--
+
+CREATE TABLE IF NOT EXISTS `account_activation` (
+  `id` int(11) NOT NULL,
+  `hash` varchar(32) NOT NULL,
+  `sendTime` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- A tábla adatainak kiíratása `account_activation`
+--
+
+INSERT INTO `account_activation` (`id`, `hash`, `sendTime`) VALUES
+(2, '7a53928fa4dd31e82c6ef826f341daec', '2014-02-16 22:05:24'),
+(3, '1c383cd30b7c298ab50293adfecb7b18', '2014-02-16 22:07:51'),
+(4, 'bf62768ca46b6c3b5bea9515d1a1fc45', '2014-02-16 22:11:41'),
+(5, 'bc6dc48b743dc5d013b1abaebd2faed2', '2014-02-16 22:13:23'),
+(6, '3416a75f4cea9109507cacd8e2f2aefc', '2014-02-16 22:19:08');
+
+-- --------------------------------------------------------
+
+--
 -- Tábla szerkezet ehhez a táblához `accounts`
 --
 
@@ -37,27 +61,15 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `lastOnline` datetime NOT NULL,
   `lang` varchar(5) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- A tábla adatainak kiíratása `accounts`
 --
 
 INSERT INTO `accounts` (`id`, `username`, `email`, `password`, `salt`, `activated`, `admin`, `lastOnline`, `lang`) VALUES
-(1, 'asd', 'asd', '21e3c338909de5e62f19fa82b0fc3757e648d6f2c36023255bd153c346afc6de6a270a92caefdeca58f0d86e50a892a05a2adb1d09855ae74695a4dd97d31c30', '5cc0da5be3d8d1b6b162cfce1dd43b3d23d3b7c7bfeb727e4f4ecfa429906b233ff342d2d84111e2eab1ee4e2a451f0cc6853e1c05ea2f84d330bbcee1c75dcf', 1, 1, '2014-02-16 13:08:34', 'en');
-
--- --------------------------------------------------------
-
---
--- Tábla szerkezet ehhez a táblához `account_activation`
---
-
-CREATE TABLE IF NOT EXISTS `account_activation` (
-  `id` int(11) NOT NULL,
-  `hash` varchar(32) NOT NULL,
-  `sendTime` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+(1, 'asd', 'asd', '21e3c338909de5e62f19fa82b0fc3757e648d6f2c36023255bd153c346afc6de6a270a92caefdeca58f0d86e50a892a05a2adb1d09855ae74695a4dd97d31c30', '5cc0da5be3d8d1b6b162cfce1dd43b3d23d3b7c7bfeb727e4f4ecfa429906b233ff342d2d84111e2eab1ee4e2a451f0cc6853e1c05ea2f84d330bbcee1c75dcf', 1, 1, '2014-02-16 23:04:30', 'en'),
+(6, 'Ruzar', 'Ruzar', '631ce324071f247bab54ca709c72b62d5e6e285934ff88fb3c97505c23f95209d1653b5f8a6347e34a31863fe1dd81e980ab93e0e52e372e7fafdc9b8a7ad4cf', 'dad3f47dcb628484dac22e2812fc256b9062cd9dd735e51ed2a77bbd3dae7ea9e298bf5108bbc49cd6cfa4c8e2be30a3269b7c6a3c75cfe23f02f7b6eb70688b', 1, 0, '2014-02-16 23:40:41', 'hu');
 
 -- --------------------------------------------------------
 
@@ -77,14 +89,16 @@ CREATE TABLE IF NOT EXISTS `bots` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`),
   KEY `accountID` (`accountID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- A tábla adatainak kiíratása `bots`
 --
 
 INSERT INTO `bots` (`id`, `accountID`, `name`, `lastChangeTime`, `code_lang`, `state`, `compError`, `runError`) VALUES
-(4, 1, 'wsswsws', '2014-02-16 13:08:22', 'c++', 'processing', '', 0);
+(5, 1, 'dsdsddsd', '2014-02-16 18:08:23', 'c++', 'ok', '', 0),
+(6, 1, 'cdcdc', '2014-02-16 19:06:45', 'c++', 'processing', '', 0),
+(7, 1, 'xcxcc', '2014-02-16 19:07:02', 'c++', 'ok', '', 0);
 
 -- --------------------------------------------------------
 
@@ -98,16 +112,6 @@ CREATE TABLE IF NOT EXISTS `brute_force` (
   `expires` datetime NOT NULL,
   KEY `accountID` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- A tábla adatainak kiíratása `brute_force`
---
-
-INSERT INTO `brute_force` (`id`, `action`, `expires`) VALUES
-('ZWIzNTgz', 'addBot', '2014-02-16 14:06:51'),
-('ZWIzNTgz', 'addBot', '2014-02-16 14:06:58'),
-('ZWIzNTgz', 'addBot', '2014-02-16 14:07:04'),
-('ZWIzNTgz', 'addBot', '2014-02-16 14:08:22');
 
 -- --------------------------------------------------------
 
@@ -161,6 +165,13 @@ CREATE TABLE IF NOT EXISTS `leaderboard1` (
   UNIQUE KEY `botId` (`botID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- A tábla adatainak kiíratása `leaderboard1`
+--
+
+INSERT INTO `leaderboard1` (`botID`, `score`, `win`, `loose`) VALUES
+(5, 500, 0, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -181,8 +192,7 @@ CREATE TABLE IF NOT EXISTS `leaderboard1_yesterday` (
 --
 
 INSERT INTO `leaderboard1_yesterday` (`botID`, `score`, `win`, `loose`) VALUES
-(1, 0, 0, 0),
-(2, 200, 0, 0);
+(5, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -284,7 +294,8 @@ INSERT INTO `stat_accounts_added` (`date`, `count`) VALUES
 ('2013-10-07', 2),
 ('2013-11-06', 1),
 ('2013-11-08', 3),
-('2013-11-10', 1);
+('2013-11-10', 1),
+('2014-02-16', 5);
 
 -- --------------------------------------------------------
 
@@ -306,7 +317,7 @@ INSERT INTO `stat_bots_added` (`date`, `count`) VALUES
 ('2014-02-10', 1),
 ('2014-02-13', 1),
 ('2014-02-14', 1),
-('2014-02-16', 1);
+('2014-02-16', 4);
 
 -- --------------------------------------------------------
 
@@ -345,7 +356,7 @@ INSERT INTO `stat_pageload` (`date`, `count`) VALUES
 ('2014-02-10', 19),
 ('2014-02-13', 43),
 ('2014-02-14', 46),
-('2014-02-16', 26);
+('2014-02-16', 343);
 
 -- --------------------------------------------------------
 
@@ -359,7 +370,7 @@ CREATE TABLE IF NOT EXISTS `strings` (
   `language` varchar(5) NOT NULL,
   `text` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=183 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=189 ;
 
 --
 -- A tábla adatainak kiíratása `strings`
@@ -382,8 +393,8 @@ INSERT INTO `strings` (`id`, `identifier`, `language`, `text`) VALUES
 (18, 'REGISTER', 'hu', 'Regisztrálás'),
 (19, 'REGISTER_THANKS', 'en', 'Thank you for registering! We''ve sent an email to %s. Open it up to activate your account.'),
 (20, 'REGISTER_THANKS', 'hu', 'Köszönjük a regisztrációt! Küldtünk egy megerősítő e-mailt. Nyisd meg, hogy aktiváld a fiókod.'),
-(21, 'NEW_BOT', 'en', 'New bot'),
-(22, 'NEW_BOT', 'hu', 'Új bot'),
+(21, 'CREATE_BOT', 'en', 'Create bot'),
+(22, 'CREATE_BOT', 'hu', 'Új bot készítése'),
 (23, 'MY_BOTS', 'en', 'My bots'),
 (24, 'MY_BOTS', 'hu', 'Saját botok'),
 (25, 'NAME', 'en', 'Name'),
@@ -525,7 +536,11 @@ INSERT INTO `strings` (`id`, `identifier`, `language`, `text`) VALUES
 (181, 'SUMMARY_LATEST_CHANGES', 'en', 'Your bots'' latest rankings'),
 (182, 'SUMMARY_LATEST_CHANGES', 'hu', 'A botjaid legutóbbi helyezési'),
 (183, 'LAST_EDIT', 'en', 'Last edited'),
-(184, 'LAST_EDIT', 'hu', 'Szerkesztve');
+(184, 'LAST_EDIT', 'hu', 'Szerkesztve'),
+(185, 'SUMMARY_NO_BOTS', 'en', 'You don''t have any bots.'),
+(186, 'SUMMARY_NO_BOTS', 'hu', 'Még nincsenek botjaid.'),
+(187, 'HELP', 'en', 'Help'),
+(188, 'HELP', 'hu', 'Segítség');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
