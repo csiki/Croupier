@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Hoszt: 127.0.0.1
--- Létrehozás ideje: 2014. Feb 16. 23:50
+-- Létrehozás ideje: 2014. Feb 17. 15:41
 -- Szerver verzió: 5.6.15-log
 -- PHP verzió: 5.5.8
 
@@ -19,6 +19,33 @@ SET time_zone = "+00:00";
 --
 -- Adatbázis: `croupierweb`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `accounts`
+--
+
+CREATE TABLE IF NOT EXISTS `accounts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(30) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `password` varchar(128) NOT NULL,
+  `salt` varchar(128) NOT NULL,
+  `activated` tinyint(1) NOT NULL,
+  `admin` tinyint(1) NOT NULL,
+  `lastOnline` datetime NOT NULL,
+  `lang` varchar(5) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+
+--
+-- A tábla adatainak kiíratása `accounts`
+--
+
+INSERT INTO `accounts` (`id`, `username`, `email`, `password`, `salt`, `activated`, `admin`, `lastOnline`, `lang`) VALUES
+(1, 'asd', 'asd', '21e3c338909de5e62f19fa82b0fc3757e648d6f2c36023255bd153c346afc6de6a270a92caefdeca58f0d86e50a892a05a2adb1d09855ae74695a4dd97d31c30', '5cc0da5be3d8d1b6b162cfce1dd43b3d23d3b7c7bfeb727e4f4ecfa429906b233ff342d2d84111e2eab1ee4e2a451f0cc6853e1c05ea2f84d330bbcee1c75dcf', 1, 1, '2014-02-17 15:39:45', 'en'),
+(6, 'Ruzar', 'Ruzar', '631ce324071f247bab54ca709c72b62d5e6e285934ff88fb3c97505c23f95209d1653b5f8a6347e34a31863fe1dd81e980ab93e0e52e372e7fafdc9b8a7ad4cf', 'dad3f47dcb628484dac22e2812fc256b9062cd9dd735e51ed2a77bbd3dae7ea9e298bf5108bbc49cd6cfa4c8e2be30a3269b7c6a3c75cfe23f02f7b6eb70688b', 1, 0, '2014-02-16 23:40:41', 'hu');
 
 -- --------------------------------------------------------
 
@@ -47,33 +74,6 @@ INSERT INTO `account_activation` (`id`, `hash`, `sendTime`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `accounts`
---
-
-CREATE TABLE IF NOT EXISTS `accounts` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(30) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `password` varchar(128) NOT NULL,
-  `salt` varchar(128) NOT NULL,
-  `activated` tinyint(1) NOT NULL,
-  `admin` tinyint(1) NOT NULL,
-  `lastOnline` datetime NOT NULL,
-  `lang` varchar(5) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
-
---
--- A tábla adatainak kiíratása `accounts`
---
-
-INSERT INTO `accounts` (`id`, `username`, `email`, `password`, `salt`, `activated`, `admin`, `lastOnline`, `lang`) VALUES
-(1, 'asd', 'asd', '21e3c338909de5e62f19fa82b0fc3757e648d6f2c36023255bd153c346afc6de6a270a92caefdeca58f0d86e50a892a05a2adb1d09855ae74695a4dd97d31c30', '5cc0da5be3d8d1b6b162cfce1dd43b3d23d3b7c7bfeb727e4f4ecfa429906b233ff342d2d84111e2eab1ee4e2a451f0cc6853e1c05ea2f84d330bbcee1c75dcf', 1, 1, '2014-02-16 23:04:30', 'en'),
-(6, 'Ruzar', 'Ruzar', '631ce324071f247bab54ca709c72b62d5e6e285934ff88fb3c97505c23f95209d1653b5f8a6347e34a31863fe1dd81e980ab93e0e52e372e7fafdc9b8a7ad4cf', 'dad3f47dcb628484dac22e2812fc256b9062cd9dd735e51ed2a77bbd3dae7ea9e298bf5108bbc49cd6cfa4c8e2be30a3269b7c6a3c75cfe23f02f7b6eb70688b', 1, 0, '2014-02-16 23:40:41', 'hu');
-
--- --------------------------------------------------------
-
---
 -- Tábla szerkezet ehhez a táblához `bots`
 --
 
@@ -89,16 +89,15 @@ CREATE TABLE IF NOT EXISTS `bots` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`),
   KEY `accountID` (`accountID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
 
 --
 -- A tábla adatainak kiíratása `bots`
 --
 
 INSERT INTO `bots` (`id`, `accountID`, `name`, `lastChangeTime`, `code_lang`, `state`, `compError`, `runError`) VALUES
-(5, 1, 'dsdsddsd', '2014-02-16 18:08:23', 'c++', 'ok', '', 0),
-(6, 1, 'cdcdc', '2014-02-16 19:06:45', 'c++', 'processing', '', 0),
-(7, 1, 'xcxcc', '2014-02-16 19:07:02', 'c++', 'ok', '', 0);
+(8, 1, 'asdfg', '2014-02-17 15:39:29', 'c++', 'processing', '', 0),
+(9, 1, 'inter', '2014-02-17 15:39:43', 'c++', 'processing', '', 0);
 
 -- --------------------------------------------------------
 
@@ -112,6 +111,14 @@ CREATE TABLE IF NOT EXISTS `brute_force` (
   `expires` datetime NOT NULL,
   KEY `accountID` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- A tábla adatainak kiíratása `brute_force`
+--
+
+INSERT INTO `brute_force` (`id`, `action`, `expires`) VALUES
+('ZWIzNTgz', 'addBot', '2014-02-17 16:39:29'),
+('ZWIzNTgz', 'addBot', '2014-02-17 16:39:43');
 
 -- --------------------------------------------------------
 
@@ -143,13 +150,6 @@ CREATE TABLE IF NOT EXISTS `games_by_bots` (
   `botID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- A tábla adatainak kiíratása `games_by_bots`
---
-
-INSERT INTO `games_by_bots` (`gameID`, `botID`) VALUES
-(3, 129);
-
 -- --------------------------------------------------------
 
 --
@@ -165,13 +165,6 @@ CREATE TABLE IF NOT EXISTS `leaderboard1` (
   UNIQUE KEY `botId` (`botID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- A tábla adatainak kiíratása `leaderboard1`
---
-
-INSERT INTO `leaderboard1` (`botID`, `score`, `win`, `loose`) VALUES
-(5, 500, 0, 0);
-
 -- --------------------------------------------------------
 
 --
@@ -186,13 +179,6 @@ CREATE TABLE IF NOT EXISTS `leaderboard1_yesterday` (
   PRIMARY KEY (`botID`),
   UNIQUE KEY `botId` (`botID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- A tábla adatainak kiíratása `leaderboard1_yesterday`
---
-
-INSERT INTO `leaderboard1_yesterday` (`botID`, `score`, `win`, `loose`) VALUES
-(5, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -317,7 +303,8 @@ INSERT INTO `stat_bots_added` (`date`, `count`) VALUES
 ('2014-02-10', 1),
 ('2014-02-13', 1),
 ('2014-02-14', 1),
-('2014-02-16', 4);
+('2014-02-16', 4),
+('2014-02-17', 2);
 
 -- --------------------------------------------------------
 
@@ -356,7 +343,8 @@ INSERT INTO `stat_pageload` (`date`, `count`) VALUES
 ('2014-02-10', 19),
 ('2014-02-13', 43),
 ('2014-02-14', 46),
-('2014-02-16', 343);
+('2014-02-16', 343),
+('2014-02-17', 10);
 
 -- --------------------------------------------------------
 

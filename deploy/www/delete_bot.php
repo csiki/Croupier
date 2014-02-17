@@ -8,7 +8,7 @@ if (isset($_GET["botID"]) && is_numeric($_GET["botID"])) {
     $res = SQL("DELETE FROM bots WHERE accountID = ? AND id = ?", $_SESSION["accountID"], $botID);
     if ($res == null) //not found botID
     {
-        echo "0";
+        echo "1";
         exit();
     }
 
@@ -20,11 +20,7 @@ if (isset($_GET["botID"]) && is_numeric($_GET["botID"])) {
         $loaded_leaderboard->removeBot($botID);
     }
 
-    $files = glob(_BOT_AI_RELATIVE_PATH_ . $_GET["botID"] . "/" . '*', GLOB_MARK);
-    foreach ($files as $file) {
-        $s = unlink($file);
-    }
-    rmdir(_BOT_AI_RELATIVE_PATH_ . $_GET["botID"] . "/");
+    unlink(_BOT_AI_RELATIVE_PATH_ . $_SESSION['accountID'] . "/" . $botID . ".cpp");
     echo "1";
 } else
     echo "0";

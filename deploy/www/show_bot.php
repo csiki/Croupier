@@ -7,11 +7,11 @@ if (!$admin) {
 }
 if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
     $id = $_GET["id"];
-    $orig = SQL("SELECT name, code_lang FROM bots WHERE id = ?;", $id);
+    $orig = SQL("SELECT name, code_lang, accountID FROM bots WHERE id = ?;", $id);
     if ($orig == null)
         die("Invalid Request");
     $name = $orig[0]["name"];
-    $code = file_get_contents(_BOT_AI_RELATIVE_PATH_ . $id . "/" . $id);
+    $code = file_get_contents(_BOT_AI_RELATIVE_PATH_ . $orig[0]["accountID"] . "/" . $id.".cpp");
     $lang = $orig[0]["code_lang"];
 } else {
     die("Invalid request");

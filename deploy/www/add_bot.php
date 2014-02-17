@@ -48,25 +48,29 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
         SQL("INSERT INTO bots (id, accountID, name, lastChangeTime, code_lang, state)
               VALUES (NULL, ?, ?, NOW(), ?, 'processing')", $_SESSION["accountID"], $name, $lang);
 
-        //create bot folder
-        $ret = mkdir(_BOT_AI_RELATIVE_PATH_ . $id);
-        chmod(_BOT_AI_RELATIVE_PATH_ . $id, 0770);
-        if ($ret === false) {
-            SQL("DELETE FROM bots WHERE id = ?", $id); //remove db entry
-            die("Couldn't create folder for bot: " . $name);
+        //create account folder if not exits
+        $dir = _BOT_AI_RELATIVE_PATH_ . $_SESSION['accountID'] . '/';
+        if (!is_dir($dir)) {
+            $ret = true;
+            $ret = mkdir($dir);
+            chmod($dir, 0770);
+            if ($ret === false) {
+                SQL("DELETE FROM bots WHERE id = ?", $id); //remove db entry
+                die("Couldn't create folder for bot: " . $name);
+            }
         }
         //move or make file
         if ($codeFileUpload) {
             $tmp_name = $_FILES["codefile"]["tmp_name"];
-            $newFileName = _BOT_AI_RELATIVE_PATH_ . $id . "/" . $id;
+            $newFileName = $dir . $id. ".cpp";
             move_uploaded_file($tmp_name, $newFileName);
             chmod($newFileName, 0770);
         } else {
-            $ret = file_put_contents(_BOT_AI_RELATIVE_PATH_ . $id . "/" . $id, $code);
-            chmod(_BOT_AI_RELATIVE_PATH_ . $id . "/" . $id, 0770);
+            $fileName = $dir . $id . ".cpp";
+            $ret = file_put_contents($fileName, $code);
+            chmod($fileName, 0770);
             if ($ret === false) {
                 SQL("DELETE FROM bots WHERE id = ?", $id); //remove db entry
-                rmdir(_BOT_AI_RELATIVE_PATH_ . $id); //remove folder
                 die("Couldn't write bot to file: " . $name);
             }
         }

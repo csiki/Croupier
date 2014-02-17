@@ -9,7 +9,7 @@ if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
     if ($orig == null)
         die("Invalid Request");
     $name = $orig[0]["name"];
-    $code = file_get_contents(_BOT_AI_RELATIVE_PATH_ . $id . "/" . $id);
+    $code = file_get_contents(_BOT_AI_RELATIVE_PATH_ . $_SESSION["accountID"] . "/" . $id.".cpp");
     $lang = $orig[0]["code_lang"];
 } else {
     die("Invalid request");
@@ -50,15 +50,17 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
         SQL("UPDATE bots SET name = ?, lastChangeTime = NOW(), code_lang = ?, state = 'processing'
               WHERE id = ?", $name, $lang, $id);
 
+        $fileName = _BOT_AI_RELATIVE_PATH_ . $_SESSION["accountID"] . "/" . $id.".cpp";
+
         //remove previous file
-        unlink(_BOT_AI_RELATIVE_PATH_ . $id . "/" . $id);
+        unlink($fileName);
 
         //move or overwrite file
         if ($codeFileUpload) {
             $tmp_name = $_FILES["codefile"]["tmp_name"];
-            move_uploaded_file($tmp_name, _BOT_AI_RELATIVE_PATH_ . $id . "/" . $id);
+            move_uploaded_file($tmp_name, $fileName);
         } else {
-            $ret = file_put_contents(_BOT_AI_RELATIVE_PATH_ . $id . "/" . $id, $code);
+            $ret = file_put_contents($fileName, $code);
             if ($ret === false)
                 die("Couldn't write bot to file: " . $id);
         }

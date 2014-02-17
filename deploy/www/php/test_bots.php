@@ -11,9 +11,22 @@ if ($botsUnchecked != null)
 		
 		// compile
 		$src = "../../data/bots/" . $accountid . "/" . $botid;
-		exec("../../exec/compileSO.sh ".$src.".cpp ".$src, $output, $return_val); // compileSO indítása
-		$output = string_replace("'", '"', $output);
-		
+        $descriptorspec = array(
+            0 => array("pipe", "r"), //stdin
+            1 => array("pipe", "w"), //stdout
+            2 => array("pipe", "w") //stderr
+        );
+        $command = "sh ../../exec/compileSO.sh ".$src.".cpp ".$src;
+        $process = proc_open($command, $descriptorspec, $pipes, dirname(__FILE__), null);// compileSO indítása
+        if (is_resource($process)) {
+            fclose($pipes[0]);
+            $stdout = stream_get_contents($pipes[1]);
+            fclose($pipes[1]);
+            $stderr = stream_get_contents($pipes[2]);
+            fclose($pipes[2]);
+            $return_val = proc_close($process);
+        }
+        $stderr = str_replace("'", '"', $stderr); //TODO: Ez minek?
 		if ($return_val == 0) // non-zero returnnél van para
 		{
 			// get gameid
@@ -21,8 +34,7 @@ if ($botsUnchecked != null)
 			VALUES(0, 'test', 'testrules.xml', '', '', 0, 0)");
 			$gameid = $mysqli->insert_id;
 			$resultname = $logname = $gameid . '.xml';
-			SQL("UPDATE games SET log='$logname', result='$resultname'
-			WHERE id=" . $gameid);
+			SQL("UPDATE games SET log = ? , result = ? WHERE id = ?", $logname, $resultname, $gameid);
 
 			$name = $bot['name'];
 			$lang = $bot['code_lang'];
@@ -30,23 +42,35 @@ if ($botsUnchecked != null)
 			$ktables = array();
 			$testcase = 0;
 
-			$output = array();
-			$return_val = 0;
 			$args = $accountid . ' ' . $botid . ' ' . $testcase . ' ' . $gameid . ' ' .
 				$name . ' ' . $src . ' ' . $lang . ' ' . $numofktables . ' ' . explode(' ', $ktables);
-			exec("../../exec/bottester $args", $output, $return_val);
+            $process = proc_open("../../exec/bottester $args", $descriptorspec, $pipes, dirname(__FILE__), null);// compileSO indítása
+            if (is_resource($process)) {
+                fclose($pipes[0]);
+                $stdout = stream_get_contents($pipes[1]);
+                fclose($pipes[1]);
+                $stderr = stream_get_contents($pipes[2]);
+                fclose($pipes[2]);
+                $return_val = proc_close($process);
+            }
 			echo $return_val;
 			if ($return_val == 0) {
 				// run gamemodule
 				$command = "../../exec/gamemodule " . $gameid;
-				$output = "";
+                $stderr = "";
 				$return_val = 0;
 
-				SQL("UPDATE games SET startTime='" . time() . "'
-				WHERE id=" . $this->gameid);
-				exec($command, $output, $return_val);
-				SQL("UPDATE games SET endTime='" . time() . "'
-				WHERE id=" . $this->gameid);
+				SQL("UPDATE games SET startTime = ? WHERE id = ?", time(),  $this->gameid);
+                $process = proc_open($command, $descriptorspec, $pipes, dirname(__FILE__), null);// compileSO indítása
+                if (is_resource($process)) {
+                    fclose($pipes[0]);
+                    $stdout = stream_get_contents($pipes[1]);
+                    fclose($pipes[1]);
+                    $stderr = stream_get_contents($pipes[2]);
+                    fclose($pipes[2]);
+                    $return_val = proc_close($process);
+                }
+				SQL("UPDATE games SET endTime = ? WHERE id = ?", time(), $this->gameid);
 
 				if ($return_val == 4) // everything went alright
 				{
@@ -65,21 +89,17 @@ if ($botsUnchecked != null)
 						}
 
 						if ($alrighty) {
-							SQL("UPDATE bots SET state='ok' WHERE id=" . $botid);
-							SQL("UPDATE bots SET runError='0' WHERE id=" . $botid);
+							SQL("UPDATE bots SET state = 'ok', runError = '0' WHERE id = ?", $botid);
 						} else {
-							SQL("UPDATE bots SET state='runtime' WHERE id=" . $botid);
-							SQL("UPDATE bots SET runError='" . $gameid . "' WHERE id=" . $botid);
+							SQL("UPDATE bots SET state = 'runtime', runError = ? WHERE id = ?", $gameid,  $botid);
 						}
 					}
 				} else {
-					SQL("UPDATE bots SET state='runtime' WHERE id=" . $botid);
-					SQL("UPDATE bots SET runError='" . $gameid . "' WHERE id=" . $botid);
+					SQL("UPDATE bots SET state='runtime', runError = ? WHERE id = ?", $gameid, $botid);
 				}
 			}
 		}
 		else {
-			SQL("UPDATE bots SET state='compilation' WHERE id=" . $botid);
-			SQL("UPDATE bots SET compError='" . $output . "' WHERE id=" . $botid);
+			SQL("UPDATE bots SET state = 'compilation', compError = ? WHERE id = ?", $stderr, $botid);
 		}
 	}

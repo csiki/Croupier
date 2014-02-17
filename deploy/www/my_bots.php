@@ -74,16 +74,21 @@ needLogin();
             </thead>
             <tbody>
             <?php
-            $bots = SQL("SELECT id, name, lastChangeTime, code_lang, state
+            $bots = SQL("SELECT id, name, lastChangeTime, code_lang, state, compError, runError
                         FROM bots WHERE accountID = ?", $_SESSION["accountID"]);
             if ($bots == null)
                 $bots = array();
             foreach($bots as $bot) {
+                $state = $bot["state"];
+                if($bot["state"] == 'compilation')
+                {
+                    $state = "<a href=\"javascript:;\" onclick=\"messageBoxOk('".htmlspecialchars($bot["compError"])."');\">".$bot["state"]."</a>";
+                }
                 echo '<tr id="bot' . $bot["id"] . '" >';
                 echo '<td>' . $bot["name"] . '</td>';
                 echo '<td>' . $bot["lastChangeTime"] . '</td>';
                 echo '<td>' . $bot["code_lang"] . '</td>';
-                echo '<td>' . $bot["state"] . '</td>';
+                echo '<td>' . $state . '</td>';
                 echo '<td style="cursor:pointer" onclick="document.location = \'played_games.php?id=' . $bot["id"] . '\';">'
                     . '<div class="icon playedGamesIcon" title="' . $tr["PLAYED_GAMES"] . '"></div></td>';
                 echo '<td style="cursor:pointer" onclick="document.location = \'edit_bot.php?id=' . $bot["id"] . '\';">

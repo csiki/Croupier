@@ -144,11 +144,23 @@ class Leaderboard
 
         // run gamemodule
         $command = "../exec/gamemodule " . $this->gameid;
-        $output = "";
-        $return_var = 0;
-        exec($command, $output, $return_var);
+        $return_val = 0;
+        $descriptorspec = array(
+            0 => array("pipe", "r"), //stdin
+            1 => array("pipe", "w"), //stdout
+            2 => array("pipe", "w") //stderr
+        );
+        $process = proc_open($command, $descriptorspec, $pipes, dirname(__FILE__), null);// compileSO indítása
+        if (is_resource($process)) {
+            fclose($pipes[0]);
+            $stdout = stream_get_contents($pipes[1]);
+            fclose($pipes[1]);
+            $stderr = stream_get_contents($pipes[2]);
+            fclose($pipes[2]);
+            $return_val = proc_close($process);
+        }
 
-        return $return_var;
+        return $return_val;
     }
 
     protected function processResults($return_var)
