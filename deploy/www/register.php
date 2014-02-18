@@ -39,7 +39,7 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
 
     if (!$cap->is_valid)
         $errors[] = $tr["ERR_CAPTCHA"];
-    //$errors[] = "A regisztráció még nem nyílt meg!";
+    $errors[] = "A regisztráció még nem nyílt meg!";
     if (count($errors) == 0) {
         $random_salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
         // Create salted password (Careful not to over season)
@@ -51,7 +51,7 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
         SQL("INSERT INTO stat_accounts_added (date, count)
             VALUES (CURRENT_DATE(), 1)
             ON DUPLICATE KEY UPDATE date = VALUES(date), count = count + 1;");
-        //header('Location: ../register.php?success=1&email=' . $email);
+        header('Location: ../register.php?success=1&email=' . $email);
     }
 }
 ?>

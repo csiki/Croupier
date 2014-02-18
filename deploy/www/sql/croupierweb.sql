@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Hoszt: 127.0.0.1
--- Létrehozás ideje: 2014. Feb 17. 15:41
+-- Létrehozás ideje: 2014. Feb 18. 17:52
 -- Szerver verzió: 5.6.15-log
 -- PHP verzió: 5.5.8
 
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `accounts` (
 --
 
 INSERT INTO `accounts` (`id`, `username`, `email`, `password`, `salt`, `activated`, `admin`, `lastOnline`, `lang`) VALUES
-(1, 'asd', 'asd', '21e3c338909de5e62f19fa82b0fc3757e648d6f2c36023255bd153c346afc6de6a270a92caefdeca58f0d86e50a892a05a2adb1d09855ae74695a4dd97d31c30', '5cc0da5be3d8d1b6b162cfce1dd43b3d23d3b7c7bfeb727e4f4ecfa429906b233ff342d2d84111e2eab1ee4e2a451f0cc6853e1c05ea2f84d330bbcee1c75dcf', 1, 1, '2014-02-17 15:39:45', 'en'),
+(1, 'asd', 'asd', '21e3c338909de5e62f19fa82b0fc3757e648d6f2c36023255bd153c346afc6de6a270a92caefdeca58f0d86e50a892a05a2adb1d09855ae74695a4dd97d31c30', '5cc0da5be3d8d1b6b162cfce1dd43b3d23d3b7c7bfeb727e4f4ecfa429906b233ff342d2d84111e2eab1ee4e2a451f0cc6853e1c05ea2f84d330bbcee1c75dcf', 1, 1, '2014-02-18 17:52:26', 'hu'),
 (6, 'Ruzar', 'Ruzar', '631ce324071f247bab54ca709c72b62d5e6e285934ff88fb3c97505c23f95209d1653b5f8a6347e34a31863fe1dd81e980ab93e0e52e372e7fafdc9b8a7ad4cf', 'dad3f47dcb628484dac22e2812fc256b9062cd9dd735e51ed2a77bbd3dae7ea9e298bf5108bbc49cd6cfa4c8e2be30a3269b7c6a3c75cfe23f02f7b6eb70688b', 1, 0, '2014-02-16 23:40:41', 'hu');
 
 -- --------------------------------------------------------
@@ -96,8 +96,8 @@ CREATE TABLE IF NOT EXISTS `bots` (
 --
 
 INSERT INTO `bots` (`id`, `accountID`, `name`, `lastChangeTime`, `code_lang`, `state`, `compError`, `runError`) VALUES
-(8, 1, 'asdfg', '2014-02-17 15:39:29', 'c++', 'processing', '', 0),
-(9, 1, 'inter', '2014-02-17 15:39:43', 'c++', 'processing', '', 0);
+(8, 1, 'asdfg', '2014-02-18 17:52:06', 'c++', 'processing', '', 0),
+(9, 1, 'inter', '2014-02-18 17:52:25', 'c++', 'processing', '54564564', 0);
 
 -- --------------------------------------------------------
 
@@ -180,6 +180,13 @@ CREATE TABLE IF NOT EXISTS `leaderboard1_yesterday` (
   UNIQUE KEY `botId` (`botID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- A tábla adatainak kiíratása `leaderboard1_yesterday`
+--
+
+INSERT INTO `leaderboard1_yesterday` (`botID`, `score`, `win`, `loose`) VALUES
+(8, 0, 0, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -217,21 +224,61 @@ CREATE TABLE IF NOT EXISTS `leaderboard2_yesterday` (
 --
 
 CREATE TABLE IF NOT EXISTS `leaderboards` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `tableName` varchar(20) NOT NULL,
+  `friendlyName` varchar(30) NOT NULL,
   `rules` varchar(50) NOT NULL,
   `activated` tinyint(1) NOT NULL,
   `lastRefresh` datetime NOT NULL,
-  PRIMARY KEY (`tableName`),
-  UNIQUE KEY `id` (`tableName`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `picture` varchar(30) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- A tábla adatainak kiíratása `leaderboards`
 --
 
-INSERT INTO `leaderboards` (`tableName`, `rules`, `activated`, `lastRefresh`) VALUES
-('leaderboard1', 'testrules.xml', 1, '2013-10-22 23:19:21'),
-('leaderboard2', 'testrules.xml', 1, '2013-10-22 22:47:01');
+INSERT INTO `leaderboards` (`id`, `tableName`, `friendlyName`, `rules`, `activated`, `lastRefresh`, `picture`) VALUES
+(1, 'leaderboard1', 'Leaderboard 1', 'testrules.xml', 1, '2013-10-22 23:19:21', ''),
+(2, 'leaderboard2', 'Leaderboard 2', 'testrules.xml', 1, '2013-10-22 22:47:01', ''),
+(3, 'leaderboard_texas1', 'Texas1', 'texas1.xml', 1, '0000-00-00 00:00:00', 'texas1.png');
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `leaderboard_texas1`
+--
+
+CREATE TABLE IF NOT EXISTS `leaderboard_texas1` (
+  `botID` int(11) NOT NULL,
+  `score` float NOT NULL,
+  `win` int(11) NOT NULL,
+  `loose` int(11) NOT NULL,
+  PRIMARY KEY (`botID`),
+  UNIQUE KEY `botId` (`botID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `leaderboard_texas1_yesterday`
+--
+
+CREATE TABLE IF NOT EXISTS `leaderboard_texas1_yesterday` (
+  `botID` int(11) NOT NULL,
+  `score` float NOT NULL,
+  `win` int(11) NOT NULL,
+  `loose` int(11) NOT NULL,
+  PRIMARY KEY (`botID`),
+  UNIQUE KEY `botId` (`botID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- A tábla adatainak kiíratása `leaderboard_texas1_yesterday`
+--
+
+INSERT INTO `leaderboard_texas1_yesterday` (`botID`, `score`, `win`, `loose`) VALUES
+(8, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -344,7 +391,8 @@ INSERT INTO `stat_pageload` (`date`, `count`) VALUES
 ('2014-02-13', 43),
 ('2014-02-14', 46),
 ('2014-02-16', 343),
-('2014-02-17', 10);
+('2014-02-17', 15),
+('2014-02-18', 326);
 
 -- --------------------------------------------------------
 
@@ -358,7 +406,7 @@ CREATE TABLE IF NOT EXISTS `strings` (
   `language` varchar(5) NOT NULL,
   `text` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=189 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=205 ;
 
 --
 -- A tábla adatainak kiíratása `strings`
@@ -450,9 +498,9 @@ INSERT INTO `strings` (`id`, `identifier`, `language`, `text`) VALUES
 (105, 'SCORE', 'en', 'Score'),
 (106, 'SCORE', 'hu', 'Pontok'),
 (107, 'PARTICIPATE', 'en', 'Participate'),
-(108, 'PARTICIPATE', 'hu', 'Nevezés'),
-(109, 'BACKTRACK', 'en', 'Backtrack'),
-(110, 'BACKTRACK', 'hu', 'Visszalépés'),
+(108, 'PARTICIPATE', 'hu', 'Nevez'),
+(109, 'WITHDRAW', 'en', 'Withdraw'),
+(110, 'WITHDRAW', 'hu', 'Visszalép'),
 (111, 'PROCESSING', 'en', 'Processing...'),
 (112, 'PROCESSING', 'hu', 'Feldolgozás...'),
 (113, 'DELETE_BOT', 'en', 'Delete bot'),
@@ -528,7 +576,23 @@ INSERT INTO `strings` (`id`, `identifier`, `language`, `text`) VALUES
 (185, 'SUMMARY_NO_BOTS', 'en', 'You don''t have any bots.'),
 (186, 'SUMMARY_NO_BOTS', 'hu', 'Még nincsenek botjaid.'),
 (187, 'HELP', 'en', 'Help'),
-(188, 'HELP', 'hu', 'Segítség');
+(188, 'HELP', 'hu', 'Segítség'),
+(189, 'HELP_MAIN', 'en', 'You can find the poker bot programming documentation <a href="%s">here.</a>'),
+(190, 'HELP_MAIN', 'hu', '<a href="%s">Itt</a> találhatod meg a poker bot programozás dokumentációját.'),
+(191, 'STATE_OK', 'en', 'works'),
+(192, 'STATE_OK', 'hu', 'működik'),
+(193, 'STATE_PROCESSING', 'en', 'compiling'),
+(194, 'STATE_PROCESSING', 'hu', 'fordítás'),
+(195, 'STATE_RUNTIME', 'en', 'runtime error'),
+(196, 'STATE_RUNTIME', 'hu', 'futtatásidejű hiba'),
+(197, 'STATE_COMPILATION', 'en', 'compilation error'),
+(198, 'STATE_COMPILATION', 'hu', 'fordításidejű hiba'),
+(199, 'KNOWLEDGE_ALLOWED', 'en', 'Knowladge database: %s'),
+(200, 'KNOWLEDGE_ALLOWED', 'hu', 'Permanens adatbázis: %s'),
+(201, 'STARTING_CHIPS', 'hu', 'Kezdető zseton: %s'),
+(202, 'STARTING_CHIPS', 'en', 'Starting chips: %s'),
+(203, 'MAX_NUM_OF_RAISES', 'hu', 'Maximális emelés: %s'),
+(204, 'MAX_NUM_OF_RAISES', 'en', 'Max raises: %s');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

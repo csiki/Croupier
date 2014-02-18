@@ -48,6 +48,7 @@ function messageBoxOk(text, callback) {
     var $okButton = $('<a class="button">Ok</a>');
     $okButton.click(function () {
         hideMessageBox($mbox);
+        callback();
     });
     $rightDiv.append($okButton);
 

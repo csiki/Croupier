@@ -68,7 +68,7 @@ needLogin();
                 <th style="width: 150px"><?= $tr["NAME"] ?></th>
                 <th style="width: 150px"><?= $tr["LAST_EDIT"] ?></th>
                 <th style="width: 80px"><?= $tr["CODE_LANG"] ?></th>
-                <th style="width: 80px"><?= $tr["STATE"] ?></th>
+                <th style="width: 120px"><?= $tr["STATE"] ?></th>
                 <th colspan="3"><?= $tr["OPERATIONS"] ?></th>
             </tr>
             </thead>
@@ -79,16 +79,27 @@ needLogin();
             if ($bots == null)
                 $bots = array();
             foreach($bots as $bot) {
-                $state = $bot["state"];
-                if($bot["state"] == 'compilation')
+                $stateColumn = "";
+                switch($bot["state"])
                 {
-                    $state = "<a href=\"javascript:;\" onclick=\"messageBoxOk('".htmlspecialchars($bot["compError"])."');\">".$bot["state"]."</a>";
+                    case 'ok':
+                        $stateColumn = $tr["STATE_OK"];
+                        break;
+                    case 'processing':
+                        $stateColumn = $tr["STATE_PROCESSING"];
+                        break;
+                    case 'compilation':
+                        $stateColumn = "<a href=\"show_compileError.php?botID=" . $bot["id"] . "\">".$tr["STATE_COMPILATION"]."</a>";
+                        break;
+                    case 'runtime':
+                        $stateColumn = $tr["STATE_RUNTIME"];
+                        break;
                 }
                 echo '<tr id="bot' . $bot["id"] . '" >';
                 echo '<td>' . $bot["name"] . '</td>';
                 echo '<td>' . $bot["lastChangeTime"] . '</td>';
                 echo '<td>' . $bot["code_lang"] . '</td>';
-                echo '<td>' . $state . '</td>';
+                echo '<td>' . $stateColumn . '</td>';
                 echo '<td style="cursor:pointer" onclick="document.location = \'played_games.php?id=' . $bot["id"] . '\';">'
                     . '<div class="icon playedGamesIcon" title="' . $tr["PLAYED_GAMES"] . '"></div></td>';
                 echo '<td style="cursor:pointer" onclick="document.location = \'edit_bot.php?id=' . $bot["id"] . '\';">

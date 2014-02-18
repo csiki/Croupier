@@ -3,6 +3,7 @@ define("BOT_CODE_MIN", "60");
 define("_BOT_AI_RELATIVE_PATH_", "../data/bots/");
 define("_GAME_DATA_RELATIVE_PATH_", "../data/games/");
 define("_LOG_RELATIVE_PATH_", "../data/logs/");
+define("_RULES_RELATIVE_PATH_", "../data/rules/");
 define("_RESULTS_RELATIVE_PATH_", "../data/results/");
 
 function sec_session_start()

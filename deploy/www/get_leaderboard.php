@@ -1,23 +1,27 @@
 <?php
 include_once "php/include.php";
 needLogin();
-function getLeaderBoard($lb)
+function getLeaderboardForUser($lbID)
 {
-    $lbName = "leaderboard" . $lb;
-    if ($result = SQL("SELECT bots.name, accounts.username, " . $lbName . ".score
-                        FROM bots, " . $lbName . ", accounts
-                        WHERE " . $lbName . ".botID = bots.id
-                        AND accounts.id = bots.accountID
-                        ORDER BY " . $lbName . ".score DESC")
-    ) {
-        if ($result != null)
-            return $result;
+    $leaderboard = SQL("SELECT tableName FROM leaderboards WHERE id = ?", $lbID);
+    if($leaderboard == null)
+    {
+        return null;
     }
-    return array();
+
+   $result = SQL("SELECT bots.name, accounts.username, " . $leaderboard[0]["tableName"] . ".score
+                        FROM bots, " . $leaderboard[0]["tableName"] . ", accounts
+                        WHERE " . $leaderboard[0]["tableName"] . ".botID = bots.id
+                        AND accounts.id = bots.accountID
+                        ORDER BY " . $leaderboard[0]["tableName"] . ".score DESC");
+
+    return $result;
 }
 
-if(isset($_GET["leaderBoard"]) && is_numeric($_GET["leaderBoard"]))
+if(isset($_GET["leaderboardID"]) && is_numeric($_GET["leaderboardID"]))
 {
-    echo json_encode(getLeaderBoard($_GET["leaderBoard"]));
+    echo json_encode(getLeaderboardForUser($_GET["leaderboardID"]));
 }
+else
+    echo 'null';
 ?>

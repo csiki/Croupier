@@ -12,7 +12,7 @@ needLogin();
             $(".leaderboardsMenuElement").on("click", menuElementClicked);
             $(".backToMenu a").on("click", backToMenuClicked);
 
-            $("[id^='lb-']").each(function () {
+            $(".leaderboardContainer").each(function () {
                 updateLeaderboard($(this));
             });
         });
@@ -33,33 +33,29 @@ needLogin();
 
         function menuElementClicked() {
             $("#leaderboardsMenu").fadeOut(300);
-            //$("#leaderboardContainer").fadeIn(300);
-            $("#lb-" + ($("#leaderboardsMenu div").index($(this)) + 1)).delay(290).fadeIn(300);
+            $("#lb" + $(this).attr('id').substr(6)).delay(290).fadeIn(300);
         }
 
         function backToMenuClicked() {
-            $("[id^='lb-']").fadeOut(300);
-            //$("#leaderboardContainer").fadeOut(300);
+            $(this).parents(".leaderboardContainer").fadeOut(300);
             $("#leaderboardsMenu").delay(290).fadeIn(300);
         }
 
         function participate_bot(lb, id, isAdd, complete) {
-            var xmlhttp = getAJAX(); //TODO rewrite this to JQuery
-            xmlhttp.onreadystatechange = function () {
-                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                    complete.call();
-                }
-            }
-            xmlhttp.open("GET", "participate_bot.php?leaderboard=" + lb + "&botID=" + id + "&action=" + (isAdd ? "1" : "0"), true);
-            xmlhttp.send();
+            $.ajax({
+                url: "participate_bot.php",
+                data: { leaderboardID: lb, botID: id, action: (isAdd ? "1" : "0")}
+            }).done(function (msg) {
+                complete();
+            });
         }
 
-        function backtrack(element, id) {
-            var $lb = $(element).parents("[id^='lb-']");
+        function withdraw(element, id) {
+            var $lb = $(element).parents(".leaderboardContainer");
             var $ptd = $(element).parent();
             $(element).hide();
             $ptd.children(".loadingIcon").show();
-            participate_bot($lb.attr('id').substr(3), id, false,
+            participate_bot($lb.attr('id').substr(2), id, false,
                 function () {
                     $ptd.children(".participate").show();
                     $ptd.children(".loadingIcon").hide();
@@ -68,12 +64,12 @@ needLogin();
         }
 
         function participate(element, id) {
-            var $lb = $(element).parents("[id^='lb-']");
+            var $lb = $(element).parents(".leaderboardContainer");
             var $ptd = $(element).parent();
             $(element).hide();
             $ptd.children(".loadingIcon").show();
-            participate_bot($lb.attr('id').substr(3), id, true, function () {
-                $ptd.children(".backtrack").show();
+            participate_bot($lb.attr('id').substr(2), id, true, function () {
+                $ptd.children(".withdraw").show();
                 $ptd.children(".loadingIcon").hide();
                 updateLeaderboard($lb);
             });
@@ -82,20 +78,22 @@ needLogin();
         function updateLeaderboard(tab) {
             var $tbody = $(tab).find(".leaderboard table tbody");
             setTableLoading($tbody);
-            $.getJSON("get_leaderboard.php",
-                { leaderBoard: $(tab).attr('id').substr(3) },
-                function (data) {
-                    if (data.length != 0) {
-                        $tbody.html("");
-                        $.each(data, function (i, val) {
-                            $("<tr/>", {
-                                html: "<td>" + val.name + "</td><td>" + val.username + "</td><td>" + val.score + "</td>"
-                            }).appendTo($tbody);
-                        });
-                    }
-                    else
-                        setTableEmpty($tbody);
-                });
+            $.ajax({
+                url: "get_leaderboard.php",
+                data: { leaderboardID: $(tab).attr('id').substr(2) },
+                dataType: "json"
+            }).done(function (data) {
+                if (data != null) {
+                    $tbody.html("");
+                    $.each(data, function (i, val) {
+                        $("<tr/>", {
+                            html: "<td>" + val.name + "</td><td>" + val.username + "</td><td>" + val.score + "</td>"
+                        }).appendTo($tbody);
+                    });
+                }
+                else
+                    setTableEmpty($tbody);
+            });
         }
     </script>
 </head>
@@ -106,20 +104,18 @@ needLogin();
 
     <div id="leaderboardsMenu">
         <?php
-        $leaderboards = SQL("SELECT tableName from leaderboards");
+        $leaderboards = SQL("SELECT id, tableName, friendlyName, rules, picture FROM leaderboards WHERE activated = 1");
         foreach ($leaderboards as $leaderboard) {
-            echo '<div class="leaderboardsMenuElement">';
-            echo '<span>' . $leaderboard["tableName"] . '</span>';
+            $image = empty($leaderboard["picture"]) ? '' : "style=\"background-image:url('images/".$leaderboard["picture"]."')\"";
+            echo '<div class="leaderboardsMenuElement" id="lbMenu' . $leaderboard["id"] . '"'.
+                $image.'>';
+            echo '<span>' . $leaderboard["friendlyName"] . '</span>';
             echo '<ul>';
-            echo '<li>
-                    Itt
-                    </li>
-                    <li>
-                    lesznek a
-                    </li>
-                    <li>
-                    szabályok
-                    </li>';
+            $rulesFilename = _RULES_RELATIVE_PATH_ . $leaderboard["rules"];
+            $xmlRoot = simplexml_load_file($rulesFilename);
+            echo '<li>' . sprintf($tr["KNOWLEDGE_ALLOWED"], ($xmlRoot->knowledgeuseallowed ? $tr["YES"] : $tr["NO"])) . '</li>';
+            echo '<li>' . sprintf($tr["STARTING_CHIPS"], $xmlRoot->startingchips) . '</li>';
+            echo '<li>' . sprintf($tr["MAX_NUM_OF_RAISES"], $xmlRoot->maxnumofraises) . '</li>';
             echo '</ul>';
             echo '</div>';
         }
@@ -127,10 +123,10 @@ needLogin();
 
     </div>
     <?php
-    for ($i = 0; $i < count($leaderboards); $i++) {
-        echo '<div id="lb-' . ($i + 1) . '">';
+    foreach ($leaderboards as $leaderboard) {
+        echo '<div class="leaderboardContainer" id="lb' . $leaderboard["id"] . '">';
         echo '<div class="backToMenu"><a class="button">' . $tr["BACK"] . '</a></div>';
-        echo '<h2 class="leaderboardTitle">' . $leaderboards[$i]["tableName"] . '</h2>';
+        echo '<h2 class="leaderboardTitle">' . $leaderboard["friendlyName"] . '</h2>';
         echo '<div class="basicContainer">';
         echo '<div class="leaderboard">
                 <h3>' . $tr["PARTICIPATED_BOTS"] . '</h3>
@@ -157,7 +153,7 @@ needLogin();
                         </thead>
                         <tbody>';
         $bots = SQL("SELECT bots.id, bots.name, bots.state,
-                        (SELECT EXISTS(SELECT * FROM " . $leaderboards[$i]["tableName"] . " WHERE botID = bots.id)) as participated
+                        (SELECT EXISTS(SELECT * FROM " . $leaderboard["tableName"] . " WHERE botID = bots.id)) as participated
                         FROM bots
                         WHERE bots.accountID = ?", $_SESSION["accountID"]);
         if ($bots == null)
@@ -166,11 +162,26 @@ needLogin();
             echo '<tr data-valid="' . ($bot["state"] == "ok")
                 . '" data-participated="' . ($bot["participated"]) . '">';
             echo '<td>' . $bot["name"] . '</td>';
-            echo '<td>' . $bot["state"] . '</td>';
+            switch($bot["state"])
+            {
+                case 'ok':
+                    $stateColumn = $tr["STATE_OK"];
+                    break;
+                case 'processing':
+                    $stateColumn = $tr["STATE_PROCESSING"];
+                    break;
+                case 'compilation':
+                    $stateColumn = $tr["STATE_COMPILATION"];
+                    break;
+                case 'runtime':
+                    $stateColumn = $tr["STATE_RUNTIME"];
+                    break;
+            }
+            echo '<td>' . $stateColumn . '</td>';
             echo '<td style="text-align: center">';
-            echo '<a class="button backtrack"' .
+            echo '<a class="button withdraw"' .
                 ($bot["participated"] == '1' ? '' : 'style="display:none"') .
-                ' onclick="backtrack(this, ' . $bot["id"] . ')">' . $tr["BACKTRACK"] .
+                ' onclick="withdraw(this, ' . $bot["id"] . ')">' . $tr["WITHDRAW"] .
                 '</a>';
             echo '<a class="button disabledButton" ' .
                 ($bot["participated"] != '1' && ($bot["state"] != "ok") ? '' : 'style="display:none"') . '>' .
