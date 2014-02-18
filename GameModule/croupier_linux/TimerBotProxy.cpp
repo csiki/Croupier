@@ -18,7 +18,7 @@ bool TimerBotProxy::isInTime(std::atomic_bool& exited)
 		{
 			return true;
 		}
-		std::this_thread::sleep_for(std::chrono::milliseconds(20));
+		std::this_thread::sleep_for(std::chrono::milliseconds(2));
 		auto now = std::chrono::high_resolution_clock::now();
 		dur = duration_cast<milliseconds>(now - start).count();
 	}

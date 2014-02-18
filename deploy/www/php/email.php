@@ -27,5 +27,5 @@ function send_registered_email($name, $email)
     echo "\nFROM:".$from;
     echo "\nMSG:".$message;
     echo "\nHEADERS:".$headers;*/
-    //mail($to,$subject,$message,$headers);
+    mail($to,$subject,$message,$headers);
 }
