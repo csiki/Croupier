@@ -1,6 +1,8 @@
 #if !defined(_BOTINFO_H)
 #define _BOTINFO_H
 
+#include <string>
+#include <list>
 #include "Card.h"
 #include "Emotion.h"
 #include "BotLanguage.h"

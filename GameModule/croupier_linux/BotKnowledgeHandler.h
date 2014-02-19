@@ -1,6 +1,7 @@
 #if !defined(_BOTKNOWLEDGEHANDLER_H)
 #define _BOTKNOWLEDGEHANDLER_H
 
+#include <vector>
 #include "KnowledgeTable.h"
 #include "KnowledgeDataType.h"
 #include "KnowledgeTableXMLHandler.h"
