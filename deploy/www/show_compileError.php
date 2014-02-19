@@ -4,8 +4,8 @@ needLogin();
 $botID = 0;
 if (isset($_GET["botID"]) && is_numeric($_GET["botID"])) {
     $botID = $_GET["botID"];
-    $bot = SQL("SELECT name, compError FROM bots WHERE id = ? AND accountID = ? AND state = 'compilation'",
-        $botID, $_SESSION["accountID"]);
+    $bot = SQL("SELECT name, compError FROM bots WHERE id = ? AND (accountID = ? OR ?) AND state = 'compilation'",
+        $botID, $_SESSION["accountID"], $admin);
     if ($bot == null)
         die("Invalid request");
     $botName = $bot[0]["name"];
