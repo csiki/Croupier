@@ -12,20 +12,21 @@ if ($botsUnchecked != null)
             continue;
 		
 		/// compile
-		$src = "../../data/bots/" . $accountid . "/" . $botid.".cpp";
-        $dest = "../../data/bots/" . $accountid . "/" . $botid;
+		$dest = "../../data/bots/" . $accountid . "/" . $botid;
+		$src = $dest . '.cpp';
+		$src_tmp = $dest . '_tmp.cpp';
 		
 		// concat create & destroy
 		$create_destroy_typedefs = "\n" . 'extern "C" Bot* create(BotCommunicator* communicator, int id, std::string name, BotLanguage lang){return new ConcreteBot(communicator, id, name, lang);}extern "C" void destroy(Bot* bot){delete bot;}';
-        file_put_contents($src, $create_destroy_typedefs, FILE_APPEND | LOCK_EX);
+        file_put_contents($src_tmp, file_get_contents($src) . $create_destroy_typedefs, LOCK_EX);
 
         $descriptorspec = array(
-            0 => array("pipe", "r"), //stdin
-            1 => array("pipe", "w"), //stdout
-            2 => array("pipe", "w") //stderr
+            0 => array("pipe", "r"), // stdin
+            1 => array("pipe", "w"), // stdout
+            2 => array("pipe", "w") // stderr
         );
-        $command = "sh ../../exec/compileSO.sh ".$src . " " .$dest;
-        $process = proc_open($command, $descriptorspec, $pipes, dirname(__FILE__), null);// compileSO indítása
+        $command = "sh ../../exec/compileSO.sh " . $src_tmp . " " . $dest;
+        $process = proc_open($command, $descriptorspec, $pipes, dirname(__FILE__), null); // compileSO indítása
         if (is_resource($process)) {
             fclose($pipes[0]);
             $stdout = stream_get_contents($pipes[1]);
@@ -34,7 +35,7 @@ if ($botsUnchecked != null)
             fclose($pipes[2]);
             $return_val = proc_close($process);
         }
-        $stderr = str_replace("'", '"', $stderr); //TODO: Ez minek?
+        $stderr = str_replace("'", '"', $stderr);
 		if ($return_val == 0) // non-zero returnnél van para
 		{
 			// get gameid
@@ -49,10 +50,11 @@ if ($botsUnchecked != null)
 			$numofktables = 0; // for simplicity
 			$ktables = array();
 			$testcase = 0;
-
+			
+			// test bot
 			$args = $accountid . ' ' . $botid . ' ' . $testcase . ' ' . $gameid . ' ' .
-				$name . ' ' . $src . ' ' . $lang . ' ' . $numofktables . ' ' . explode(' ', $ktables);
-            $process = proc_open("../../exec/bottester $args", $descriptorspec, $pipes, dirname(__FILE__), null);// compileSO indítása
+				$name . ' ' . $dest . ' ' . $lang . ' ' . $numofktables . ' ' . explode(' ', $ktables);
+            $process = proc_open("../../exec/bottester $args", $descriptorspec, $pipes, dirname(__FILE__), null);
             if (is_resource($process)) {
                 fclose($pipes[0]);
                 $stdout = stream_get_contents($pipes[1]);
