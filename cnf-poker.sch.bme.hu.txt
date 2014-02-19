@@ -1,0 +1,24 @@
+-----BEGIN NEW CERTIFICATE REQUEST-----
+[ req ]
+default_bits = 2048
+prompt = no
+encrypt_key = no
+default_md = sha1
+distinguished_name = dn
+req_extensions = v3_req
+
+[ dn ]
+C = HU
+L = Budapest
+S = Pest
+O = Budapesti Muszaki es Gazdasagtudomanyi Egyetem
+OU = Croupier Poker Framework
+CN = www.poker.sch.bme.hu
+
+[ v3_req ]
+subjectAltName          = @alt_names
+
+[ alt_names ]
+DNS.1 = www.poker.sch.bme.hu
+DNS.2 = poker.sch.bme.hu
+-----END NEW CERTIFICATE REQUEST-----
