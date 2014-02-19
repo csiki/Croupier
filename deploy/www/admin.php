@@ -205,13 +205,29 @@ if (!$admin) {
         }
         $bots = SQL("SELECT id, accountID, name, lastChangeTime, code_lang, state FROM bots");
         for ($i = 0; $i < count($bots); $i++) {
+            $stateColumn = "";
+            switch($bots[$i]["state"])
+            {
+                case 'ok':
+                    $stateColumn = $tr["STATE_OK"];
+                    break;
+                case 'processing':
+                    $stateColumn = $tr["STATE_PROCESSING"];
+                    break;
+                case 'compilation':
+                    $stateColumn = "<a href=\"show_compileError.php?botID=" . $bots[$i]["id"] . "\">".$tr["STATE_COMPILATION"]."</a>";
+                    break;
+                case 'runtime':
+                    $stateColumn = $tr["STATE_RUNTIME"];
+                    break;
+            }
             echo '<tr>';
             echo '<td>' . $bots[$i]["id"] . '</td>';
             echo '<td>' . $bots[$i]["name"] . '</td>';
             echo '<td>' . $acc[$bots[$i]["accountID"]] . '</td>';
             echo '<td>' . $bots[$i]["lastChangeTime"] . '</td>';
             echo '<td>' . $bots[$i]["code_lang"] . '</td>';
-            echo '<td>' . $bots[$i]["state"] . '</td>';
+            echo '<td>' . $stateColumn . '</td>';
             echo '<td style="cursor:pointer" onclick="document.location = \'played_games.php?id=' . $bots[$i]["id"] . '\';">'
                 . '<div class="icon playedGamesIcon" title="' . $tr["PLAYED_GAMES"] . '"></div></td>';
             echo '<td style="cursor:pointer" onclick="document.location = \'show_bot.php?id=' . $bots[$i]["id"] . '\';">

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 include_once("connect_db.php");
 include_once("functions.php");
 
@@ -8,20 +8,23 @@ if ($botsUnchecked != null)
 
         $accountid = $bot['accountID'];
         $botid = $bot['id'];
+        if($bot['code_lang'] != 'c++')
+            continue;
 		
 		/// compile
-		$src = "../../data/bots/" . $accountid . "/" . $botid;
+		$src = "../../data/bots/" . $accountid . "/" . $botid.".cpp";
+        $dest = "../../data/bots/" . $accountid . "/" . $botid;
 		
 		// concat create & destroy
 		$create_destroy_typedefs = "\n" . 'extern "C" Bot* create(BotCommunicator* communicator, int id, std::string name, BotLanguage lang){return new ConcreteBot(communicator, id, name, lang);}extern "C" void destroy(Bot* bot){delete bot;}';
-		file_put_contents($src.'.cpp', $create_destroy_typedefs, FILE_APPEND | LOCK_EX);
-		
+        file_put_contents($src, $create_destroy_typedefs, FILE_APPEND | LOCK_EX);
+
         $descriptorspec = array(
             0 => array("pipe", "r"), //stdin
             1 => array("pipe", "w"), //stdout
             2 => array("pipe", "w") //stderr
         );
-        $command = "sh ../../exec/compileSO.sh ".$src.".cpp ".$src;
+        $command = "sh ../../exec/compileSO.sh ".$src . " " .$dest;
         $process = proc_open($command, $descriptorspec, $pipes, dirname(__FILE__), null);// compileSO indítása
         if (is_resource($process)) {
             fclose($pipes[0]);
