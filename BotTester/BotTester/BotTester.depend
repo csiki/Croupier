@@ -46,7 +46,7 @@
 	"BotData.h"
 	<vector>
 
-1335939550 
+1384113253 
 
 1384113175 f:\csiki\programing\c++\main\croupier\bottester\bottester\botdata.h
 	"BotLanguage.h"
@@ -101,8 +101,6 @@
 	<new>
 	<stdint.h>
 
-1384113253 
-
 1384113897 source:f:\csiki\programing\c++\main\croupier\bottester\bottester\botdata.cpp
 	"BotData.h"
 
@@ -122,4 +120,89 @@
 	<string>
 
 1390668951 /home/csiki/croupier/BotTester/BotTester/BotLanguage.h
+
+1390668951 source:/home/csiki/croupier/BotTester/BotTester/BotDataXMLHandler.cpp
+	"BotDataXMLHandler.h"
+	<list>
+
+1390668951 /home/csiki/croupier/BotTester/BotTester/BotDataXMLHandler.h
+	"BotData.h"
+	"pugixml.hpp"
+
+1390668951 /home/csiki/croupier/BotTester/BotTester/pugixml.hpp
+	"pugiconfig.hpp"
+	<stddef.h>
+	<exception>
+	<iterator>
+	<iosfwd>
+	<string>
+
+1390668951 /home/csiki/croupier/BotTester/BotTester/pugiconfig.hpp
+
+1390668951 source:/home/csiki/croupier/BotTester/BotTester/ConcreteTest.cpp
+	"ConcreteTest.h"
+	"BotState.h"
+	"TestBotDataRetreiver.h"
+	"BotDataXMLHandler.h"
+	"GameDataXMLHandler.h"
+	<string>
+
+1390668951 /home/csiki/croupier/BotTester/BotTester/ConcreteTest.h
+	"Test.h"
+	"BotState.h"
+
+1390668951 /home/csiki/croupier/BotTester/BotTester/Test.h
+	"BotState.h"
+	"BotData.h"
+
+1390668951 /home/csiki/croupier/BotTester/BotTester/BotState.h
+
+1390668951 /home/csiki/croupier/BotTester/BotTester/TestBotDataRetreiver.h
+	"BotData.h"
+
+1390668951 /home/csiki/croupier/BotTester/BotTester/GameDataXMLHandler.h
+	"GameData.h"
+	"BotLanguage.h"
+	"BotDataXMLHandler.h"
+	"pugixml.hpp"
+
+1390668951 /home/csiki/croupier/BotTester/BotTester/GameData.h
+	"BotData.h"
+	<vector>
+
+1390668951 source:/home/csiki/croupier/BotTester/BotTester/GameData.cpp
+	"GameData.h"
+
+1390668951 source:/home/csiki/croupier/BotTester/BotTester/GameDataXMLHandler.cpp
+	"GameDataXMLHandler.h"
+
+1390668951 source:/home/csiki/croupier/BotTester/BotTester/pugixml.cpp
+	"pugixml.hpp"
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<assert.h>
+	<wchar.h>
+	<math.h>
+	<float.h>
+	<setjmp.h>
+	<istream>
+	<ostream>
+	<string>
+	<new>
+	<stdint.h>
+
+1390668951 source:/home/csiki/croupier/BotTester/BotTester/TestBotDataRetreiver.cpp
+	"TestBotDataRetreiver.h"
+
+1390668951 source:/home/csiki/croupier/BotTester/BotTester/Tester.cpp
+	"Tester.h"
+	"BotState.h"
+
+1390668951 /home/csiki/croupier/BotTester/BotTester/Tester.h
+	"Test.h"
+	"Tester.h"
+	"ConcreteTest.h"
+	"BotData.h"
+	<map>
 

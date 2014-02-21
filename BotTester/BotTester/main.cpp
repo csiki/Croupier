@@ -23,9 +23,10 @@ int main(int argc, char* argv[])
     BotLanguage lang = static_cast<BotLanguage> (atoi(argv[7]));
     int numOfKnowledgeTables = atoi(argv[8]);
 
+    int* knowledgeTables = nullptr;
     if (numOfKnowledgeTables > 0)
     {
-        int* knowledgeTables = new int[numOfKnowledgeTables];
+        knowledgeTables = new int[numOfKnowledgeTables];
         for (size_t i = 0; i < numOfKnowledgeTables; ++i)
         {
             knowledgeTables[i] = atoi(argv[9 + i]);
