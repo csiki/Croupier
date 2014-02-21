@@ -18,7 +18,6 @@ if ($botsUnchecked != null)
 
         //copy soruce
         copy($src, $src_tmp);
-        exit();
 
         // concat create & destroy
         $create_destroy_typedefs = "\n" . 'extern "C" Bot* create(BotCommunicator* communicator, int id, std::string name, BotLanguage lang){return new ConcreteBot(communicator, id, name, lang);}extern "C" void destroy(Bot* bot){delete bot;}';
