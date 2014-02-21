@@ -8,17 +8,21 @@ if ($botsUnchecked != null)
 
         $accountid = $bot['accountID'];
         $botid = $bot['id'];
-        if($bot['code_lang'] != 'c++')
+        if ($bot['code_lang'] != 'c++')
             continue;
-		
-		/// compile
-		$dest = "../../data/bots/" . $accountid . "/" . $botid;
-		$src = $dest . '.cpp';
-		$src_tmp = $dest . '_tmp.cpp';
-		
-		// concat create & destroy
-		$create_destroy_typedefs = "\n" . 'extern "C" Bot* create(BotCommunicator* communicator, int id, std::string name, BotLanguage lang){return new ConcreteBot(communicator, id, name, lang);}extern "C" void destroy(Bot* bot){delete bot;}';
-        file_put_contents($src_tmp, file_get_contents($src) . $create_destroy_typedefs, LOCK_EX);
+
+        /// compile
+        $dest = "../../data/bots/" . $accountid . "/" . $botid;
+        $src = $dest . '.cpp';
+        $src_tmp = $dest . '_tmp.cpp';
+
+        //copy soruce
+        copy($src, $src_tmp);
+        exit();
+
+        // concat create & destroy
+        $create_destroy_typedefs = "\n" . 'extern "C" Bot* create(BotCommunicator* communicator, int id, std::string name, BotLanguage lang){return new ConcreteBot(communicator, id, name, lang);}extern "C" void destroy(Bot* bot){delete bot;}';
+        file_put_contents($src_tmp, $create_destroy_typedefs, FILE_APPEND | LOCK_EX);
 
         $descriptorspec = array(
             0 => array("pipe", "r"), // stdin
@@ -35,25 +39,24 @@ if ($botsUnchecked != null)
             fclose($pipes[2]);
             $return_val = proc_close($process);
         }
-        $stderr = str_replace("'", '"', $stderr);
-		if ($return_val == 0) // non-zero returnnél van para
-		{
-			// get gameid
-			SQL("INSERT INTO games(checked, leaderboard, rules, log, result, startTime, endTime)
+        if ($return_val == 0) // non-zero returnnél van para
+        {
+            // get gameid
+            SQL("INSERT INTO games(checked, leaderboard, rules, log, result, startTime, endTime)
 			VALUES(0, 'test', 'testrules.xml', '', '', 0, 0)");
-			$gameid = $mysqli->insert_id;
-			$resultname = $logname = $gameid . '.xml';
-			SQL("UPDATE games SET log = ? , result = ? WHERE id = ?", $logname, $resultname, $gameid);
+            $gameid = $mysqli->insert_id;
+            $resultname = $logname = $gameid . '.xml';
+            SQL("UPDATE games SET log = ? , result = ? WHERE id = ?", $logname, $resultname, $gameid);
 
-			$name = $bot['name'];
-			$lang = $bot['code_lang'];
-			$numofktables = 0; // for simplicity
-			$ktables = array();
-			$testcase = 0;
-			
-			// test bot
-			$args = $accountid . ' ' . $botid . ' ' . $testcase . ' ' . $gameid . ' ' .
-				$name . ' ' . $dest . ' ' . $lang . ' ' . $numofktables . ' ' . explode(' ', $ktables);
+            $name = $bot['name'];
+            $lang = $bot['code_lang'];
+            $numofktables = 0; // for simplicity
+            $ktables = array();
+            $testcase = 0;
+
+            // test bot
+            $args = $accountid . ' ' . $botid . ' ' . $testcase . ' ' . $gameid . ' ' .
+                $name . ' ' . $dest . ' ' . $lang . ' ' . $numofktables . ' ' . explode(' ', $ktables);
             $process = proc_open("../../exec/bottester $args", $descriptorspec, $pipes, dirname(__FILE__), null);
             if (is_resource($process)) {
                 fclose($pipes[0]);
@@ -63,15 +66,15 @@ if ($botsUnchecked != null)
                 fclose($pipes[2]);
                 $return_val = proc_close($process);
             }
-			echo $return_val;
-			if ($return_val == 0) {
-				// run gamemodule
-				$command = "../../exec/gamemodule " . $gameid;
+            echo $return_val;
+            if ($return_val == 0) {
+                // run gamemodule
+                $command = "../../exec/gamemodule " . $gameid;
                 $stderr = "";
-				$return_val = 0;
+                $return_val = 0;
 
-				SQL("UPDATE games SET startTime = ? WHERE id = ?", time(),  $this->gameid);
-                $process = proc_open($command, $descriptorspec, $pipes, dirname(__FILE__), null);// compileSO indítása
+                SQL("UPDATE games SET startTime = ? WHERE id = ?", time(), $this->gameid);
+                $process = proc_open($command, $descriptorspec, $pipes, dirname(__FILE__), null); // compileSO indítása
                 if (is_resource($process)) {
                     fclose($pipes[0]);
                     $stdout = stream_get_contents($pipes[1]);
@@ -80,36 +83,35 @@ if ($botsUnchecked != null)
                     fclose($pipes[2]);
                     $return_val = proc_close($process);
                 }
-				SQL("UPDATE games SET endTime = ? WHERE id = ?", time(), $this->gameid);
+                SQL("UPDATE games SET endTime = ? WHERE id = ?", time(), $this->gameid);
 
-				if ($return_val == 4) // everything went alright
-				{
-					// still need to iterate through log,
-					// to check if there's any warning or error on the tested bot
-					$alrighty = true;
-					if (file_exists('../../data/logs/' . $gameid . '.xml')) {
-						$xml = simplexml_load_file('../../data/logs/' . $gameid . '.xml');
+                if ($return_val == 4) // everything went alright
+                {
+                    // still need to iterate through log,
+                    // to check if there's any warning or error on the tested bot
+                    $alrighty = true;
+                    if (file_exists('../../data/logs/' . $gameid . '.xml')) {
+                        $xml = simplexml_load_file('../../data/logs/' . $gameid . '.xml');
 
-						foreach ($xml->log->event as $event) {
-							if ((int)$event->logger == $botid && $event->severity == 1) {
-								// error found
-								$alrighty = false;
-								break;
-							}
-						}
+                        foreach ($xml->log->event as $event) {
+                            if ((int)$event->logger == $botid && $event->severity == 1) {
+                                // error found
+                                $alrighty = false;
+                                break;
+                            }
+                        }
 
-						if ($alrighty) {
-							SQL("UPDATE bots SET state = 'ok', runError = '0' WHERE id = ?", $botid);
-						} else {
-							SQL("UPDATE bots SET state = 'runtime', runError = ? WHERE id = ?", $gameid,  $botid);
-						}
-					}
-				} else {
-					SQL("UPDATE bots SET state='runtime', runError = ? WHERE id = ?", $gameid, $botid);
-				}
-			}
-		}
-		else {
-			SQL("UPDATE bots SET state = 'compilation', compError = ? WHERE id = ?", $stderr, $botid);
-		}
-	}
+                        if ($alrighty) {
+                            SQL("UPDATE bots SET state = 'ok', runError = '0' WHERE id = ?", $botid);
+                        } else {
+                            SQL("UPDATE bots SET state = 'runtime', runError = ? WHERE id = ?", $gameid, $botid);
+                        }
+                    }
+                } else {
+                    SQL("UPDATE bots SET state='runtime', runError = ? WHERE id = ?", $gameid, $botid);
+                }
+            }
+        } else {
+            SQL("UPDATE bots SET state = 'compilation', compError = ? WHERE id = ?", $stderr, $botid);
+        }
+    }

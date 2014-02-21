@@ -15,6 +15,10 @@ needLogin();
             $(".leaderboardContainer").each(function () {
                 updateLeaderboard($(this));
             });
+            $(".botsOwned table").each(function () {
+                if($(this).("tbody tr").length == 0)
+                    setTableEmpty($(this));
+            });
         });
 
         function setTableEmpty($tbody) {
