@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Hoszt: 127.0.0.1
--- Létrehozás ideje: 2014. Feb 18. 17:52
+-- Létrehozás ideje: 2014. Feb 21. 20:42
 -- Szerver verzió: 5.6.15-log
 -- PHP verzió: 5.5.8
 
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `accounts` (
 --
 
 INSERT INTO `accounts` (`id`, `username`, `email`, `password`, `salt`, `activated`, `admin`, `lastOnline`, `lang`) VALUES
-(1, 'asd', 'asd', '21e3c338909de5e62f19fa82b0fc3757e648d6f2c36023255bd153c346afc6de6a270a92caefdeca58f0d86e50a892a05a2adb1d09855ae74695a4dd97d31c30', '5cc0da5be3d8d1b6b162cfce1dd43b3d23d3b7c7bfeb727e4f4ecfa429906b233ff342d2d84111e2eab1ee4e2a451f0cc6853e1c05ea2f84d330bbcee1c75dcf', 1, 1, '2014-02-18 17:52:26', 'hu'),
+(1, 'asd', 'asd', '21e3c338909de5e62f19fa82b0fc3757e648d6f2c36023255bd153c346afc6de6a270a92caefdeca58f0d86e50a892a05a2adb1d09855ae74695a4dd97d31c30', '5cc0da5be3d8d1b6b162cfce1dd43b3d23d3b7c7bfeb727e4f4ecfa429906b233ff342d2d84111e2eab1ee4e2a451f0cc6853e1c05ea2f84d330bbcee1c75dcf', 1, 1, '2014-02-21 20:42:33', 'en'),
 (6, 'Ruzar', 'Ruzar', '631ce324071f247bab54ca709c72b62d5e6e285934ff88fb3c97505c23f95209d1653b5f8a6347e34a31863fe1dd81e980ab93e0e52e372e7fafdc9b8a7ad4cf', 'dad3f47dcb628484dac22e2812fc256b9062cd9dd735e51ed2a77bbd3dae7ea9e298bf5108bbc49cd6cfa4c8e2be30a3269b7c6a3c75cfe23f02f7b6eb70688b', 1, 0, '2014-02-16 23:40:41', 'hu');
 
 -- --------------------------------------------------------
@@ -81,6 +81,7 @@ CREATE TABLE IF NOT EXISTS `bots` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `accountID` int(12) NOT NULL,
   `name` varchar(30) NOT NULL,
+  `className` varchar(60) NOT NULL,
   `lastChangeTime` datetime NOT NULL,
   `code_lang` enum('c++','java','c#') NOT NULL,
   `state` enum('processing','ok','runtime','compilation') NOT NULL,
@@ -89,15 +90,15 @@ CREATE TABLE IF NOT EXISTS `bots` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`),
   KEY `accountID` (`accountID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
 --
 -- A tábla adatainak kiíratása `bots`
 --
 
-INSERT INTO `bots` (`id`, `accountID`, `name`, `lastChangeTime`, `code_lang`, `state`, `compError`, `runError`) VALUES
-(8, 1, 'asdfg', '2014-02-18 17:52:06', 'c++', 'processing', '', 0),
-(9, 1, 'inter', '2014-02-18 17:52:25', 'c++', 'processing', '54564564', 0);
+INSERT INTO `bots` (`id`, `accountID`, `name`, `className`, `lastChangeTime`, `code_lang`, `state`, `compError`, `runError`) VALUES
+(8, 1, 'asdfg', '', '2014-02-18 17:52:06', 'c++', 'processing', '', 0),
+(9, 1, 'inter', '', '2014-02-18 17:52:25', 'c++', 'processing', '54564564', 0);
 
 -- --------------------------------------------------------
 
@@ -117,8 +118,10 @@ CREATE TABLE IF NOT EXISTS `brute_force` (
 --
 
 INSERT INTO `brute_force` (`id`, `action`, `expires`) VALUES
-('ZWIzNTgz', 'addBot', '2014-02-17 16:39:29'),
-('ZWIzNTgz', 'addBot', '2014-02-17 16:39:43');
+('ZWIzNTgz', 'addBot', '2014-02-21 21:27:07'),
+('ZWIzNTgz', 'addBot', '2014-02-21 21:28:20'),
+('ZWIzNTgz', 'addBot', '2014-02-21 21:29:13'),
+('ZWIzNTgz', 'addBot', '2014-02-21 21:29:38');
 
 -- --------------------------------------------------------
 
@@ -351,7 +354,8 @@ INSERT INTO `stat_bots_added` (`date`, `count`) VALUES
 ('2014-02-13', 1),
 ('2014-02-14', 1),
 ('2014-02-16', 4),
-('2014-02-17', 2);
+('2014-02-17', 2),
+('2014-02-21', 1);
 
 -- --------------------------------------------------------
 
@@ -392,7 +396,8 @@ INSERT INTO `stat_pageload` (`date`, `count`) VALUES
 ('2014-02-14', 46),
 ('2014-02-16', 343),
 ('2014-02-17', 15),
-('2014-02-18', 326);
+('2014-02-18', 326),
+('2014-02-21', 28);
 
 -- --------------------------------------------------------
 
@@ -406,7 +411,7 @@ CREATE TABLE IF NOT EXISTS `strings` (
   `language` varchar(5) NOT NULL,
   `text` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=205 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=209 ;
 
 --
 -- A tábla adatainak kiíratása `strings`
@@ -592,7 +597,11 @@ INSERT INTO `strings` (`id`, `identifier`, `language`, `text`) VALUES
 (201, 'STARTING_CHIPS', 'hu', 'Kezdető zseton: %s'),
 (202, 'STARTING_CHIPS', 'en', 'Starting chips: %s'),
 (203, 'MAX_NUM_OF_RAISES', 'hu', 'Maximális emelés: %s'),
-(204, 'MAX_NUM_OF_RAISES', 'en', 'Max raises: %s');
+(204, 'MAX_NUM_OF_RAISES', 'en', 'Max raises: %s'),
+(205, 'BOTCLASSNAME', 'en', 'Bot class name'),
+(206, 'BOTCLASSNAME', 'hu', 'Bot class név'),
+(207, 'ERR_BOTCLASSNAME_LENGTH', 'en', 'Bot class name must be between 1 and 60 characters!'),
+(208, 'ERR_BOTCLASSNAME_LENGTH', 'hu', 'A bot class nevének 1 és 60 karakter között kell lennie!');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

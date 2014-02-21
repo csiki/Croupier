@@ -2,7 +2,7 @@
 require_once "php/include.php";
 needLogin();
 $errors = array();
-$name = $code = $lang = $orig = $id = "";
+$name = $className = $code = $lang = $orig = $id = "";
 if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
     $id = $_GET["id"];
     $orig = SQL("SELECT name, code_lang FROM bots WHERE accountID = ? AND id = ?;", $_SESSION["accountID"], $id);
@@ -19,6 +19,13 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
         $name = $_POST["name"];
     if (SQL("SELECT * FROM bots WHERE name = ? AND id != ?", $name, $id) != null)
         $errors[] = $tr["ERR_NAME_CONFLICT"];
+
+    if (isset($_POST["className"]) && !empty($_POST["className"])) {
+        if (!sanityCheck($_POST['className'], 'string', 1, 60))
+            $errors[] = $tr["ERR_BOTCLASSNAME_LENGTH"];
+        else
+            $className = $_POST['className'];
+    }
 
     $codeFileUpload = isset($_FILES["codefile"]) && $_FILES["codefile"]["error"] != UPLOAD_ERR_NO_FILE;
     if ($codeFileUpload) {
@@ -47,8 +54,8 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
 
     if (count($errors) == 0) {
         //update bots table
-        SQL("UPDATE bots SET name = ?, lastChangeTime = NOW(), code_lang = ?, state = 'processing'
-              WHERE id = ?", $name, $lang, $id);
+        SQL("UPDATE bots SET name = ?, className = ?, lastChangeTime = NOW(), code_lang = ?, state = 'processing'
+              WHERE id = ?", $name, $className, $lang, $id);
 
         $fileName = _BOT_AI_RELATIVE_PATH_ . $_SESSION["accountID"] . "/" . $id.".cpp";
 

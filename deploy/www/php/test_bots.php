@@ -5,9 +5,10 @@ include_once("functions.php");
 $botsUnchecked = SQL("SELECT * FROM bots WHERE state = 'processing'");
 if ($botsUnchecked != null)
     foreach ($botsUnchecked as $bot) {
-
+        set_time_limit(30);
         $accountid = $bot['accountID'];
         $botid = $bot['id'];
+        $botClassName = $bot['className'];
         if ($bot['code_lang'] != 'c++')
             continue;
 
@@ -20,9 +21,14 @@ if ($botsUnchecked != null)
         copy($src, $src_tmp);
 
         // concat create & destroy
-        $create_destroy_typedefs = "\n" . 'extern "C" Bot* create(BotCommunicator* communicator, int id, std::string name, BotLanguage lang){return new ConcreteBot(communicator, id, name, lang);}extern "C" void destroy(Bot* bot){delete bot;}';
+        $create_destroy_typedefs = "\n" . 'extern "C" Bot* create(';
+        $create_destroy_typedefs .= 'BotCommunicator* communicator, int id, std::string name, BotLanguage lang)';
+        $create_destroy_typedefs .= '{return new '. $botClassName .'(communicator, id, name, lang);}';
+        $create_destroy_typedefs .= 'extern "C" void destroy(Bot* bot){delete bot;}';
+
         file_put_contents($src_tmp, $create_destroy_typedefs, FILE_APPEND | LOCK_EX);
 
+        set_time_limit(10);
         $descriptorspec = array(
             0 => array("pipe", "r"), // stdin
             1 => array("pipe", "w"), // stdout
@@ -55,7 +61,7 @@ if ($botsUnchecked != null)
 
             // test bot
             $args = $accountid . ' ' . $botid . ' ' . $testcase . ' ' . $gameid . ' ' .
-                $name . ' ' . $dest . ' ' . $lang . ' ' . $numofktables . ' ' . explode(' ', $ktables);
+                $name . ' ' . $dest . ' ' . $lang . ' ' . $numofktables . ' ' . implode(' ', $ktables);
             $process = proc_open("../../exec/bottester $args", $descriptorspec, $pipes, dirname(__FILE__), null);
             if (is_resource($process)) {
                 fclose($pipes[0]);
@@ -65,7 +71,9 @@ if ($botsUnchecked != null)
                 fclose($pipes[2]);
                 $return_val = proc_close($process);
             }
-            echo $return_val;
+            echo "stdout" . $stdout . "\n";
+            echo "stderr" . $stderr . "\n";
+            echo "bottester returned: " . $return_val . "\n";
             if ($return_val == 0) {
                 // run gamemodule
                 $command = "../../exec/gamemodule " . $gameid;
@@ -82,6 +90,10 @@ if ($botsUnchecked != null)
                     fclose($pipes[2]);
                     $return_val = proc_close($process);
                 }
+
+                echo "stdout" . $stdout . "\n";
+                echo "stderr" . $stderr . "\n";
+                echo "gamemodule returned: " . $return_val . "\n";
                 SQL("UPDATE games SET endTime = ? WHERE id = ?", time(), $this->gameid);
 
                 if ($return_val == 4) // everything went alright

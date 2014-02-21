@@ -2,7 +2,7 @@
 require_once "php/include.php";
 needLogin();
 $errors = array();
-$name = $code = $lang = "";
+$name = $className = $code = $lang = "";
 if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
     $res = SQL("SHOW TABLE STATUS LIKE 'bots'");
     $id = $res[0]["Auto_increment"];
@@ -17,6 +17,15 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
             $name = xssafe($_POST['name']);
     } else
         $name = $tr["UNNAMED_BOT"] . " " . $id;
+
+    if (isset($_POST["className"]) && !empty($_POST["className"])) {
+        if (!sanityCheck($_POST['className'], 'string', 1, 60))
+            $errors[] = $tr["ERR_BOTCLASSNAME_LENGTH"];
+        else
+            $className = $_POST['className'];
+    } else
+        $errors[] = $tr["ERR_BOTCLASSNAME_LENGTH"];
+
     $codeFileUpload = isset($_FILES["codefile"]) && $_FILES["codefile"]["error"] != UPLOAD_ERR_NO_FILE;
     if ($codeFileUpload) {
         if ($_FILES["codefile"]["error"] == UPLOAD_ERR_OK) {
@@ -45,8 +54,8 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
         $errors[] = $tr["ERR_ADDBOT_BRUTE"];
     } else if (count($errors) == 0) {
         //update database
-        SQL("INSERT INTO bots (id, accountID, name, lastChangeTime, code_lang, state)
-              VALUES (NULL, ?, ?, NOW(), ?, 'processing')", $_SESSION["accountID"], $name, $lang);
+        SQL("INSERT INTO bots (id, accountID, name, className, lastChangeTime, code_lang, state)
+              VALUES (NULL, ?, ?, ?, NOW(), ?, 'processing')", $_SESSION["accountID"], $name, $className, $lang);
 
         //create account folder if not exits
         $dir = _BOT_AI_RELATIVE_PATH_ . $_SESSION['accountID'] . '/';
@@ -139,7 +148,13 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
     <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post" id="botform" enctype="multipart/form-data">
         <div style="display: inline-block">
             <label for="name"><?= $tr["BOTNAME"] ?></label><br/>
-            <input name="name" id="name" type="text" value="<?= $name ?>" autofocus></div>
+            <input name="name" id="name" type="text" value="<?= $name ?>" autofocus>
+        </div>
+
+        <div style="display: inline-block; margin-left: 40px">
+            <label for="name"><?= $tr["BOTCLASSNAME"] ?></label><br/>
+            <input name="className" id="className" type="text" value="<?= $className ?>">
+        </div>
 
         <div style="display: inline-block; margin-left: 40px">
             <label for="codeLang"><?= $tr["CODE_LANG"] ?></label><br/>
