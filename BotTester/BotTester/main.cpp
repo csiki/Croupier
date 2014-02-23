@@ -8,7 +8,7 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-    if (argc < 4)
+    if (argc < 8)
     {
         return -1;
     }
@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
 
     if (numOfKnowledgeTables > 0)
     {
-        delete [] knowledgeTables;
+        //delete [] knowledgeTables;
     }
 
     return 0;

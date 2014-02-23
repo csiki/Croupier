@@ -31,7 +31,7 @@ public:
 	{
 	    if (numOfKnowledgeTables > 0)
         {
-            delete [] this->knowledgeTables;
+            //delete [] this->knowledgeTables;
         }
 	}
 };

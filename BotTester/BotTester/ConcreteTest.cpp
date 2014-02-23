@@ -25,8 +25,8 @@ void ConcreteTest::initGame(BotData* toTest, int gameid)
     xmlpath += ".xml";
     GameDataXMLHandler::saveXML(&gamedata, xmlpath);
 
-    //delete shybot;
-    //delete aggbot;
-    //delete normalbot;
+    delete shybot;
+    delete aggbot;
+    delete normalbot;
 }
 
