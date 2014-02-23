@@ -206,3 +206,9 @@
 	"BotData.h"
 	<map>
 
+1393188106 source:/home/csiki/croupier/BotTester/BotTester/main.cpp
+	<iostream>
+	<stdlib.h>
+	"Tester.h"
+	"BotData.h"
+
