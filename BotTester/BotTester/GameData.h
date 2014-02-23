@@ -25,7 +25,7 @@ public:
 	{
 		for (size_t i = 0; i < bots.size(); ++i)
 		{
-			delete bots.at(i);
+			//delete bots[i]; // utalom a C++-t
 		}
 	}
 

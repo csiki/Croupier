@@ -115,7 +115,7 @@
 1390668951 source:/home/csiki/croupier/BotTester/BotTester/BotData.cpp
 	"BotData.h"
 
-1390668951 /home/csiki/croupier/BotTester/BotTester/BotData.h
+1393193027 /home/csiki/croupier/BotTester/BotTester/BotData.h
 	"BotLanguage.h"
 	<string>
 
@@ -139,7 +139,7 @@
 
 1390668951 /home/csiki/croupier/BotTester/BotTester/pugiconfig.hpp
 
-1390668951 source:/home/csiki/croupier/BotTester/BotTester/ConcreteTest.cpp
+1393189966 source:/home/csiki/croupier/BotTester/BotTester/ConcreteTest.cpp
 	"ConcreteTest.h"
 	"BotState.h"
 	"TestBotDataRetreiver.h"
@@ -166,7 +166,7 @@
 	"BotDataXMLHandler.h"
 	"pugixml.hpp"
 
-1390668951 /home/csiki/croupier/BotTester/BotTester/GameData.h
+1393194278 /home/csiki/croupier/BotTester/BotTester/GameData.h
 	"BotData.h"
 	<vector>
 
@@ -199,10 +199,16 @@
 	"Tester.h"
 	"BotState.h"
 
-1390668951 /home/csiki/croupier/BotTester/BotTester/Tester.h
+1393190801 /home/csiki/croupier/BotTester/BotTester/Tester.h
 	"Test.h"
 	"Tester.h"
 	"ConcreteTest.h"
 	"BotData.h"
 	<map>
+
+1393193030 source:/home/csiki/croupier/BotTester/BotTester/main.cpp
+	<iostream>
+	<stdlib.h>
+	"Tester.h"
+	"BotData.h"
 

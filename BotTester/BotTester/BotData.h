@@ -29,7 +29,10 @@ public:
 
 	virtual ~BotData()
 	{
-		delete [] this->knowledgeTables;
+	    if (numOfKnowledgeTables > 0)
+        {
+            delete [] this->knowledgeTables;
+        }
 	}
 };
 
