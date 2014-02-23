@@ -18,7 +18,7 @@ foreach($leaderboards as $leaderboard)
 function update_leaderboard($leaderboard)
 {
 	$loaded_leaderboard = new Leaderboard($leaderboard);
-	$loaded_leaderboard->randMatchmaking($leaderboard->getBotNum(), 2);
-	$loaded_leaderboard->randMatchmaking($leaderboard->getBotNum(), 4);
-	$loaded_leaderboard->randMatchmaking($leaderboard->getBotNum(), 8);
+	$loaded_leaderboard->randMatchmaking($loaded_leaderboard->getBotNum(), 2);
+	$loaded_leaderboard->randMatchmaking($loaded_leaderboard->getBotNum(), 4);
+	$loaded_leaderboard->randMatchmaking($loaded_leaderboard->getBotNum(), 8);
 }

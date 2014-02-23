@@ -16,7 +16,7 @@ needLogin();
                 updateLeaderboard($(this));
             });
             $(".botsOwned table").each(function () {
-                if($(this).("tbody tr").length == 0)
+                if($(this).find("tbody tr").length == 0)
                     setTableEmpty($(this));
             });
         });

@@ -119,21 +119,22 @@ class Leaderboard
             $botElement->addChild("id", $bot["botID"]);
             $botElement->addChild("playerid", $botdata[0]["accountID"]);
             $botElement->addChild("name", $botdata[0]["name"]);
-            $botElement->addChild("src", $botdata[0]["src"]);
+            $botElement->addChild("src", "../../data/bots/" . $botdata[0]["accountID"] . "/" . $bot["botID"]);
             $botElement->addChild("lang", getCodeLangID($botdata[0]["code_lang"]));
             $botElement->addChild("credit", 2000); // 2000 konstans !!!
 
             // knowledge tables
             $ktablesElement = $botElement->addChild("knowledgetables");
             $ktables = array();
-            $ktables = SQL("SELECT id FROM knowledge WHERE ownerID=" . $botdata[0]["accountID"] . " AND used=1");
-            if (!empty($ktables)) {
+            /*
+            $ktables = SQL("SELECT id FROM knowledge WHERE ownerID = ? AND used = 1", $botdata[0]["accountID"]);
+            if ($ktables != null) {
                 foreach ($ktables as $ktable) {
                     $ktablesElement->addChild("tableid", $ktable);
                 }
-            }
+            }*/
         }
-        $gameXML = "../data/games/" . $this->gameid . ".xml";
+        $gameXML = "../../data/games/" . $this->gameid . ".xml";
 
         //write to file formatted
         $dom = new DOMDocument('1.0');
@@ -143,7 +144,7 @@ class Leaderboard
         $dom->save($gameXML);
 
         // run gamemodule
-        $command = "../exec/gamemodule " . $this->gameid;
+        $command = "../../exec/gamemodule " . $this->gameid;
         $return_val = 0;
         $descriptorspec = array(
             0 => array("pipe", "r"), //stdin
@@ -159,6 +160,9 @@ class Leaderboard
             fclose($pipes[2]);
             $return_val = proc_close($process);
         }
+        echo "stdout" . $stdout . "\n";
+        echo "stderr" . $stderr . "\n";
+        echo "bottester returned: " . $return_val . "\n";
 
         return $return_val;
     }
@@ -185,7 +189,8 @@ class Leaderboard
             }
 
             // update scores
-            $Rw = SQL("SELECT score FROM " . $this->tableName . " WHERE botID=$winnerid")[0]["score"];
+            $res = SQL("SELECT score FROM " . $this->tableName . " WHERE botID=$winnerid");
+            $Rw = $res[0]["score"];
             $Rwdiff = 0;
             foreach ($result->results->bot as $botres) {
                 if ($winnerid != $botres->botid) {
@@ -200,9 +205,10 @@ class Leaderboard
 
     protected function updateScores($winnerid, $looserid)
     {
-        $Rw = SQL("SELECT score FROM " . $this->tableName . " WHERE botID=$winnerid")[0]["score"];
-        $Rl = SQL("SELECT score FROM " . $this->tableName . " WHERE botID=$looserid")[0]["score"];
-
+        $res = SQL("SELECT score FROM " . $this->tableName . " WHERE botID=$winnerid");
+        $Rw = $res[0]["score"];
+        $res = SQL("SELECT score FROM " . $this->tableName . " WHERE botID=$looserid");
+        $Rl = $res[0]["score"];
         $Rwdiff = 0;
         if ($Rw > 0 && $Rl > 0) {
             // elo rating system: http://en.wikipedia.org/wiki/Elo_rating_system#Mathematical_details

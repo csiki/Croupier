@@ -80,7 +80,7 @@ if ($botsUnchecked != null)
                 $stderr = "";
                 $return_val = 0;
 
-                SQL("UPDATE games SET startTime = ? WHERE id = ?", time(), $this->gameid);
+                SQL("UPDATE games SET startTime = ? WHERE id = ?", time(), $gameid);
                 $process = proc_open($command, $descriptorspec, $pipes, dirname(__FILE__), null); // compileSO indítása
                 if (is_resource($process)) {
                     fclose($pipes[0]);
