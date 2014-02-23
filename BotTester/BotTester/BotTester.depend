@@ -166,7 +166,7 @@
 	"BotDataXMLHandler.h"
 	"pugixml.hpp"
 
-1393193241 /home/csiki/croupier/BotTester/BotTester/GameData.h
+1393193735 /home/csiki/croupier/BotTester/BotTester/GameData.h
 	"BotData.h"
 	<vector>
 
@@ -206,7 +206,7 @@
 	"BotData.h"
 	<map>
 
-1393190034 source:/home/csiki/croupier/BotTester/BotTester/main.cpp
+1393193030 source:/home/csiki/croupier/BotTester/BotTester/main.cpp
 	<iostream>
 	<stdlib.h>
 	"Tester.h"
