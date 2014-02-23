@@ -18,8 +18,8 @@ int main(int argc, char* argv[])
     int botid = atoi(argv[2]);
     int testcase = atoi(argv[3]);
     int gameid = atoi(argv[4]);
-    const char* name = argv[5];
-    const char* src = argv[6];
+    std::string name = argv[5];
+    std::string src = argv[6];
     BotLanguage lang = static_cast<BotLanguage> (atoi(argv[7]));
     int numOfKnowledgeTables = atoi(argv[8]);
 
@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
         }
     }
 
-    BotData botdata(botid, accountid, std::string(name), std::string(src), 1000, lang,
+    BotData botdata(botid, accountid, name, src, 1000, lang,
 		numOfKnowledgeTables, knowledgeTables);
 
     Tester tester;
