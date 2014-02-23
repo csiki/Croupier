@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
 
     if (numOfKnowledgeTables > 0)
     {
-        //delete [] knowledgeTables;
+        delete [] knowledgeTables;
     }
 
     return 0;
