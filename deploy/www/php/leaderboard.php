@@ -119,7 +119,7 @@ class Leaderboard
             $botElement->addChild("id", $bot["botID"]);
             $botElement->addChild("playerid", $botdata[0]["accountID"]);
             $botElement->addChild("name", $botdata[0]["name"]);
-            $botElement->addChild("src", "../../data/bots/" . $botdata[0]["accountID"] . "/" . $bot["botID"]);
+            $botElement->addChild("src", "../data/bots/" . $botdata[0]["accountID"] . "/" . $bot["botID"]);
             $botElement->addChild("lang", getCodeLangID($botdata[0]["code_lang"]));
             $botElement->addChild("credit", 2000); // 2000 konstans !!!
 
@@ -141,10 +141,10 @@ class Leaderboard
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput = true;
         $dom->loadXML($xmlRoot->asXML());
-        $dom->save($gameXML);
+        echo "\n" . $dom->save($gameXML) . "bytes\n";
 
         // run gamemodule
-        $command = "../../exec/gamemodule " . $this->gameid;
+        $command = "../../exec/gamemodule " . "../data/games/" . $this->gameid;
         $return_val = 0;
         $descriptorspec = array(
             0 => array("pipe", "r"), //stdin
