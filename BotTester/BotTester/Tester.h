@@ -25,7 +25,7 @@ public:
     {
         for (std::map<int, Test*>::iterator it = tests.begin(); it != tests.end(); ++it)
         {
-            //delete it->second;
+            delete it->second;
         }
     }
 
