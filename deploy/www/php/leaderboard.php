@@ -105,6 +105,7 @@ class Leaderboard
         $xmlRoot = new SimpleXMLElement('<?xml version="1.0"?><game></game>');
         $xmlRoot->addChild("id", $this->gameid);
         $xmlRoot->addChild("log", $logname);
+        $xmlRoot->addChild("rules", $this->rulzName);
         $xmlRoot->addChild("results", $resultname);
         $botsElement = $xmlRoot->addChild("bots");
 
@@ -119,7 +120,7 @@ class Leaderboard
             $botElement->addChild("id", $bot["botID"]);
             $botElement->addChild("playerid", $botdata[0]["accountID"]);
             $botElement->addChild("name", $botdata[0]["name"]);
-            $botElement->addChild("src", "../data/bots/" . $botdata[0]["accountID"] . "/" . $bot["botID"]);
+            $botElement->addChild("src", $botdata[0]["accountID"] . "/" . $bot["botID"]);
             $botElement->addChild("lang", getCodeLangID($botdata[0]["code_lang"]));
             $botElement->addChild("credit", 2000); // 2000 konstans !!!
 
@@ -144,14 +145,14 @@ class Leaderboard
         echo "\n" . $dom->save($gameXML) . "bytes\n";
 
         // run gamemodule
-        $command = "../../exec/gamemodule " . "../data/games/" . $this->gameid;
+        $command = "./gamemodule " . $this->gameid;
         $return_val = 0;
         $descriptorspec = array(
             0 => array("pipe", "r"), //stdin
             1 => array("pipe", "w"), //stdout
             2 => array("pipe", "w") //stderr
         );
-        $process = proc_open($command, $descriptorspec, $pipes, dirname(__FILE__), null);// compileSO indítása
+        $process = proc_open($command, $descriptorspec, $pipes, "../../exec", null);// compileSO indítása
         if (is_resource($process)) {
             fclose($pipes[0]);
             $stdout = stream_get_contents($pipes[1]);
@@ -162,7 +163,7 @@ class Leaderboard
         }
         echo "stdout" . $stdout . "\n";
         echo "stderr" . $stderr . "\n";
-        echo "bottester returned: " . $return_val . "\n";
+        echo "gamemodule returned: " . $return_val . "\n";
 
         return $return_val;
     }
@@ -173,14 +174,13 @@ class Leaderboard
         {
             // read results xml
             try {
-                $result = new SimpleXMLElement("../data/results/" . $this->gameid . '.xml');
+                $result = new SimpleXMLElement("../../data/results/" . $this->gameid . '.xml', 0, true);
             } catch (Exception $e) {
                 return;
             }
-
             // find winner
             $winnerid = 0;
-            foreach ($result->results->bot as $botres) {
+            foreach ($result->bot as $botres) {
                 if ($botres->kickatround == 0) // winner
                 {
                     $winnerid = $botres->botid;
@@ -192,7 +192,7 @@ class Leaderboard
             $res = SQL("SELECT score FROM " . $this->tableName . " WHERE botID=$winnerid");
             $Rw = $res[0]["score"];
             $Rwdiff = 0;
-            foreach ($result->results->bot as $botres) {
+            foreach ($result->bot as $botres) {
                 if ($winnerid != $botres->botid) {
                     $Rwdiff += $this->updateScores($winnerid, $botres->botid);
                 }
