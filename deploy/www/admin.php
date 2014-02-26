@@ -130,7 +130,14 @@ if (!$admin) {
     <div id="postPreview"></div>
 
     <br/>
+    <br/>
+    <h2>Operations</h2>
 
+    <input type="button" class="button" onclick="$.ajax('admin_run.php?action=update_leaderboards');" value="Update LBs" />
+    <input type="button" class="button" onclick="$.ajax('admin_run.php?action=test_bots');" value="Test bots"/>
+
+    <br/>
+    <br/>
     <h2>Charts</h2>
     <select id="chartSelector">
         <option value="chart1">Added bots</option>
@@ -232,6 +239,36 @@ if (!$admin) {
                 . '<div class="icon playedGamesIcon" title="' . $tr["PLAYED_GAMES"] . '"></div></td>';
             echo '<td style="cursor:pointer" onclick="document.location = \'show_bot.php?id=' . $bots[$i]["id"] . '\';">
                     <div class="icon editIcon" title="Show bot"></div></td>';
+            echo '</tr>';
+        }
+        ?>
+        </tbody>
+    </table>
+    <br/>
+
+    <h2>Leaderboards</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Table name</th>
+            <th>Friendly name</th>
+            <th>Rules</th>
+            <th>Activated</th>
+            <th>Last update</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        $lbs = SQL("SELECT * FROM leaderboards");
+        for ($i = 0; $i < count($lbs); $i++) {
+            echo '<tr>';
+            echo '<td>' . $lbs[$i]["id"] . '</td>';
+            echo '<td>' . $lbs[$i]["tableName"] . '</td>';
+            echo '<td>' . $lbs[$i]["friendlyName"] . '</td>';
+            echo '<td>' . $lbs[$i]["rules"] . '</td>';
+            echo '<td>' . $lbs[$i]["activated"] . '</td>';
+            echo '<td>' . $lbs[$i]["lastRefresh"] . '</td>';
             echo '</tr>';
         }
         ?>

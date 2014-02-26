@@ -12,6 +12,7 @@ foreach($leaderboards as $leaderboard)
 	if ($i == $num_of_leaderboards_to_update)
 		break;
 	update_leaderboard($leaderboard);
+    SQL("UPDATE leaderboards SET lastRefresh = NOW() WHERE id = ?", $leaderboard['id']);
 	++$i;
 }
 
