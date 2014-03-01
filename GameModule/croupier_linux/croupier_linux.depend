@@ -102,7 +102,7 @@
 	"BotData.h"
 	"stdafx.h"
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/KnowledgeTable.h
+1393699950 /home/csiki/croupier/GameModule/croupier_linux/KnowledgeTable.h
 	"KnowledgeDataType.h"
 
 1390668951 /home/csiki/croupier/GameModule/croupier_linux/KnowledgeTableXMLHandler.h
@@ -204,7 +204,7 @@
 	"stdafx.h"
 	"BotManager.h"
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/BotManager.h
+1393699976 /home/csiki/croupier/GameModule/croupier_linux/BotManager.h
 	"BotCommunicator.h"
 	"BotHandler.h"
 	"Logger.h"
@@ -381,7 +381,7 @@
 	"pugixml.hpp"
 	"Results.h"
 
-1390842957 source:/home/csiki/croupier/GameModule/croupier_linux/GameOwner.cpp
+1393360169 source:/home/csiki/croupier/GameModule/croupier_linux/GameOwner.cpp
 	"stdafx.h"
 	"GameOwner.h"
 	"Card.h"

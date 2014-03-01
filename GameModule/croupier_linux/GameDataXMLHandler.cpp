@@ -8,7 +8,6 @@ GameData* GameDataXMLHandler::loadXML(std::string xmlPath)
 	// load file, check if file exists
 	pugi::xml_document doc;
 	pugi::xml_parse_result result = doc.load_file(xmlPath.c_str());
-	std::cerr << xmlPath;
 
 	GameData* gameData = nullptr;
 	if (result)
