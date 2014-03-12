@@ -205,8 +205,6 @@ table td, table th {
 }
 
 input[type=submit].button, input[type=button].button {
-    height: 30px;
-    padding: 0px;
     margin: 0px;
 }
 
@@ -215,9 +213,7 @@ input[type=submit].button, input[type=button].button {
     background-color: #545cfe;
     border: 1px solid #000000;
     color: #FFFFFF;
-    width: 112px;
-    height: 28px;
-    line-height: 28px;
+    padding: 6px 10px;
     font-size: 13px;
     text-align: center;
     text-decoration: none;

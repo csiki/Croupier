@@ -51,21 +51,29 @@ if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
             </thead>
             <tbody>
             <?php
-                $games = SQL("SELECT gameID FROM games_by_bots WHERE botID = ?", $botID);
-                for ($i = 0; $i < count($games); $i++) {
-                    $gameDate = SQL("SELECT leaderboard, endTime FROM games WHERE id = ? AND checked = 1
-                    ORDER BY endTime DESC", $games[$i]["gameID"]);
-					if ($gameDate != null)
+                $gameIDs = SQL("SELECT gameID FROM games_by_bots WHERE botID = ?", $botID);
+                for ($i = 0; $i < count($gameIDs); $i++) {
+                    $game = SQL("SELECT id, leaderboard, endTime FROM games WHERE id = ? AND checked = 1",
+                        $gameIDs[$i]["gameID"]);
+					if ($game != null)
 					{
-						echo '<tr>';
-						echo '<td>' . $gameDate[0]["endTime"] . '</td>';
-						echo '<td>' . $gameDate[0]["leaderboard"] . '</td>';
-						echo '<td style="cursor:pointer" onclick="document.location = \'show_game.php'
-							. '?botID='. $botID
-							. '&gameID='. $games[$i]["gameID"]
-							. '\';"><div class="icon showGameIcon" title="' .$tr["SHOW"] . '"></div></td>';
-						echo '</tr>';
+                        $games[] = $game[0];
 					}
+                }
+                usort($games, function($a, $b) {
+                    return $a['endTime'] < $b['endTime'];
+                });
+                for($i = 0; $i < count($games); $i++)
+                {
+                    $lb = SQL("SELECT friendlyName FROM leaderboards WHERE tableName = ?", $games[$i]["leaderboard"]);
+                    echo '<tr>';
+                    echo '<td>' . $games[$i]["endTime"] . '</td>';
+                    echo '<td>' . $lb[0]["friendlyName"] . '</td>';
+                    echo '<td style="cursor:pointer" onclick="document.location = \'show_game.php'
+                        . '?botID='. $botID
+                        . '&gameID='. $games[$i]["id"]
+                        . '\';"><div class="icon showGameIcon" title="' .$tr["SHOW"] . '"></div></td>';
+                    echo '</tr>';
                 }
             ?>
             </tbody>

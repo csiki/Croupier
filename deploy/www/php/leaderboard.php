@@ -95,7 +95,7 @@ class Leaderboard
         // insert database row into games
         // and retreive the id of thr row
         SQL("INSERT INTO games(checked, leaderboard, rules, log, result, startTime, endTime)
-			VALUES(0, '" . $this->tableName . "', '" . $this->rulzName . "', '', '', 0, 0)");
+			VALUES(0, '" . $this->tableName . "', '" . $this->rulzName . "', '', '', NOW(), 0)");
         $this->gameid = $mysqli->insert_id;
         $resultname = $logname = $this->gameid . '.xml';
         SQL("UPDATE games SET log='$logname', result='$resultname'
@@ -172,6 +172,7 @@ class Leaderboard
     {
         if ($return_var == 4) // everything went alright
         {
+            SQL("UPDATE games SET endTime = NOW() WHERE id = " . $this->gameid);
             // read results xml
             try {
                 $result = new SimpleXMLElement("../../data/results/" . $this->gameid . '.xml', 0, true);
