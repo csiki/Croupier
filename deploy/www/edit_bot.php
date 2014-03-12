@@ -5,10 +5,11 @@ $errors = array();
 $name = $className = $code = $lang = $orig = $id = "";
 if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
     $id = $_GET["id"];
-    $orig = SQL("SELECT name, code_lang FROM bots WHERE accountID = ? AND id = ?;", $_SESSION["accountID"], $id);
+    $orig = SQL("SELECT name, className, code_lang FROM bots WHERE accountID = ? AND id = ?;", $_SESSION["accountID"], $id);
     if ($orig == null)
         die("Invalid Request");
     $name = $orig[0]["name"];
+    $className = $orig[0]["className"];
     $code = file_get_contents(_BOT_AI_RELATIVE_PATH_ . $_SESSION["accountID"] . "/" . $id.".cpp");
     $lang = $orig[0]["code_lang"];
 } else {
@@ -150,11 +151,16 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
             <input name="name" id="name" type="text" value="<?= $name ?>"></div>
 
         <div style="display: inline-block; margin-left: 40px">
+            <label for="name"><?= $tr["BOTCLASSNAME"] ?></label><br/>
+            <input name="className" id="className" type="text" value="<?= $className ?>">
+        </div>
+
+        <div style="display: inline-block; margin-left: 40px">
             <label for="codeLang"><?= $tr["CODE_LANG"] ?></label><br/>
             <select name="lang" id="codeLang" form="botform">
                 <option value="c++" <?php if ($lang == "c++") echo "selected"; ?>>C++</option>
-                <option value="java" <?php if ($lang == "java") echo "selected"; ?>>Java</option>
-                <option value="c#" <?php if ($lang == "c#") echo "selected"; ?>>C#</option>
+<!--                <option value="java" --><?php //if ($lang == "java") echo "selected"; ?><!-->Java</option>-->
+<!--                <option value="c#" --><?php //if ($lang == "c#") echo "selected"; ?><!-->C#</option>-->
             </select>
         </div>
         <br/>

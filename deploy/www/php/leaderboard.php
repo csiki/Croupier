@@ -188,7 +188,7 @@ class Leaderboard
                 }
             }
 
-            // update scores
+            // looser score update
             $res = SQL("SELECT score FROM " . $this->tableName . " WHERE botID=$winnerid");
             $Rw = $res[0]["score"];
             $Rwdiff = 0;
@@ -197,9 +197,13 @@ class Leaderboard
                     $Rwdiff += $this->updateScores($winnerid, $botres->botid);
                 }
             }
-
+			
+			// winner score update
             $Rw += $Rwdiff;
             SQL("UPDATE " . $this->tableName . " SET score=$Rw WHERE botID=$winnerid");
+			
+			// update check
+			SQL("UPDATE games SET checked = 1 WHERE id = " . $this->gameid);
         }
     }
 

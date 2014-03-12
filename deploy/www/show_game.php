@@ -37,19 +37,19 @@ if (isset($_GET["gameID"]) && is_numeric($_GET["gameID"]) && isset($_GET["botID"
     //check game exits
     $log = SQL("SELECT endTime, log FROM games WHERE id = ? AND checked = 1", $gameID);
     if ($log == null)
-        die("Invalid request");
+        die("Invalid request - :D");
     $logFile = _LOG_RELATIVE_PATH_ . $log[0]["log"];
     $date = $log[0]["endTime"];
     //check bot exits
     $bot = SQL("SELECT name FROM bots WHERE id = ? AND (accountID = ? OR ?)",$botID, $_SESSION["accountID"], $admin);
     if ($bot == null)
-        die("Invalid request");
+        die("Invalid request - :|");
     $botName = $bot[0]["name"];
     //check if bot is participated in the game
     if (SQL("SELECT gameID FROM games_by_bots WHERE botID = ? AND gameID = ?", $botID, $gameID) == null)
-        die("Invalid request");
+        die("Invalid request - :(");
 } else
-    die("Invalid request");
+    die("Invalid request - :'(");
 ?>
 <!DOCTYPE html>
 <html>

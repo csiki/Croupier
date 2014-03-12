@@ -55,14 +55,17 @@ if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
                 for ($i = 0; $i < count($games); $i++) {
                     $gameDate = SQL("SELECT leaderboard, endTime FROM games WHERE id = ? AND checked = 1
                     ORDER BY endTime DESC", $games[$i]["gameID"]);
-                    echo '<tr>';
-                    echo '<td>' . $gameDate[0]["endTime"] . '</td>';
-                    echo '<td>' . $gameDate[0]["leaderboard"] . '</td>';
-                    echo '<td style="cursor:pointer" onclick="document.location = \'show_game.php'
-                        . '?botID='. $botID
-                        . '&gameID='. $games[$i]["gameID"]
-                        . '\';"><div class="icon showGameIcon" title="' .$tr["SHOW"] . '"></div></td>';
-                    echo '</tr>';
+					if ($gameDate != null)
+					{
+						echo '<tr>';
+						echo '<td>' . $gameDate[0]["endTime"] . '</td>';
+						echo '<td>' . $gameDate[0]["leaderboard"] . '</td>';
+						echo '<td style="cursor:pointer" onclick="document.location = \'show_game.php'
+							. '?botID='. $botID
+							. '&gameID='. $games[$i]["gameID"]
+							. '\';"><div class="icon showGameIcon" title="' .$tr["SHOW"] . '"></div></td>';
+						echo '</tr>';
+					}
                 }
             ?>
             </tbody>
