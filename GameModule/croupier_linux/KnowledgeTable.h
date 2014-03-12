@@ -66,9 +66,9 @@ public:
 						delete d;
 						break;
 					}
-					default:
+					default: ;
 						// error occured
-						delete data[i][j];
+						//delete data[i][j];
 				}
 			}
 		}

@@ -99,9 +99,21 @@ void BotManager::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize
 		// quit bot
 		this->quit();
 	}
+	catch (std::exception& e)
+	{
+	    // log
+	    std::string msg = "exceptionThrown ";
+	    msg += std::to_string(this->getID());
+	    msg += ",";
+	    msg += std::to_string(this->bot->getID());
+	    msg += ",";
+		msg += e.what();
+
+		// quit bot
+		this->quit();
+	}
 
 	this->talkToken = false;
-	// idõmérés vége
 }
 
 // botinfo
