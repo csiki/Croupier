@@ -73,8 +73,8 @@ if (isset($_GET["gameID"]) && is_numeric($_GET["gameID"]) && isset($_GET["botID"
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Who</th>
-                    <th>What</th>
+                    <th><?=$tr["NAME"]?></th>
+                    <th><?=$tr["ACTIVITY"]?></th>
                 </tr>
                 </thead>
                 <tbody>
