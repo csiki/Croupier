@@ -66,9 +66,12 @@ public:
 						delete d;
 						break;
 					}
-					default: ;
-						// error occured
-						//delete data[i][j];
+					default:
+					{
+						// error occured, def int
+						int* d = (int*) data[i][j];
+						delete d;
+					}
 				}
 			}
 		}
