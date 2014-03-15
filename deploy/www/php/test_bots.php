@@ -62,7 +62,7 @@ if ($botsUnchecked != null)
             // test bot
             $args = $accountid . ' ' . $botid . ' ' . $testcase . ' ' . $gameid . ' ' .
                 $name . ' ' . $dest . ' ' . $lang . ' ' . $numofktables . ' ' . implode(' ', $ktables);
-            $process = proc_open("../../exec/bottester $args", $descriptorspec, $pipes, dirname(__FILE__), null);
+            $process = proc_open("./bottester $args", $descriptorspec, $pipes, "../../exec/", null);
             if (is_resource($process)) {
                 fclose($pipes[0]);
                 $stdout = stream_get_contents($pipes[1]);
@@ -76,12 +76,12 @@ if ($botsUnchecked != null)
             echo "bottester returned: " . $return_val . "\n";
             if ($return_val == 0) {
                 // run gamemodule
-                $command = "../../exec/gamemodule " . $gameid;
+                $command = "./gamemodule " . $gameid;
                 $stderr = "";
                 $return_val = 0;
 
                 SQL("UPDATE games SET startTime = ? WHERE id = ?", time(), $gameid);
-                $process = proc_open($command, $descriptorspec, $pipes, dirname(__FILE__), null); // compileSO indítása
+                $process = proc_open($command, $descriptorspec, $pipes, "../../exec/", null); // compileSO indítása
                 if (is_resource($process)) {
                     fclose($pipes[0]);
                     $stdout = stream_get_contents($pipes[1]);
@@ -94,7 +94,7 @@ if ($botsUnchecked != null)
                 echo "stdout" . $stdout . "\n";
                 echo "stderr" . $stderr . "\n";
                 echo "gamemodule returned: " . $return_val . "\n";
-                SQL("UPDATE games SET endTime = ? WHERE id = ?", time(), $this->gameid);
+                SQL("UPDATE games SET endTime = ? WHERE id = ?", time(), $gameid);
 
                 if ($return_val == 4) // everything went alright
                 {
@@ -103,8 +103,7 @@ if ($botsUnchecked != null)
                     $alrighty = true;
                     if (file_exists('../../data/logs/' . $gameid . '.xml')) {
                         $xml = simplexml_load_file('../../data/logs/' . $gameid . '.xml');
-
-                        foreach ($xml->log->event as $event) {
+                        foreach ($xml->event as $event) {
                             if ((int)$event->logger == $botid && $event->severity == 1) {
                                 // error found
                                 $alrighty = false;

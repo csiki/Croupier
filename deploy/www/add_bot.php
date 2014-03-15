@@ -160,8 +160,8 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
             <label for="codeLang"><?= $tr["CODE_LANG"] ?></label><br/>
             <select name="lang" id="codeLang" form="botform">
                 <option value="c++" <?php if ($lang == "c++") echo "selected"; ?>>C++</option>
-                <option value="java" <?php if ($lang == "java") echo "selected"; ?>>Java</option>
-                <option value="c#" <?php if ($lang == "c#") echo "selected"; ?>>C#</option>
+<!--                <option value="java" --><?php //if ($lang == "java") echo "selected"; ?><!-->Java</option>-->
+<!--                <option value="c#" --><?php //if ($lang == "c#") echo "selected"; ?><!-->C#</option>-->
             </select>
         </div>
         <br/>

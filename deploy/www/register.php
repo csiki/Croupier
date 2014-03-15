@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once "php/include.php";
 require_once('php/recaptchalib.php');
 require_once('php/email.php');

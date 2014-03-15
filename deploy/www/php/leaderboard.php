@@ -48,10 +48,10 @@ class Leaderboard
             // find players accorording to their weights (how much they've played already)
             $b = 0;
             $r = 0;
-            $i = 0;
+            $i2 = 0;
             $weight = 0;
             $nBotsMultipleSelected = 0;
-            while ($b < count($this->bots) && $r < $nPlayers) {
+            while ($b < $this->getBotNum() && $r < $nPlayers) {
                 if ($this->bots[$b]["win"] + $this->bots[$b]["loose"] != 0)
                     $weight += 1.0 / ($this->bots[$b]["win"] + $this->bots[$b]["loose"]);
                 else $weight += 1.0;
@@ -61,26 +61,25 @@ class Leaderboard
                     ++$r;
 
                     // if a player selected more than once, we random another later
-                    $i = $r;
-                    if ($i < $nPlayers) {
-                        while ($i < $nPlayers && $randomWeights[$i] < $weight) {
+                    $i2 = $r;
+                    if ($i2 < $nPlayers) {
+                        while ($i2 < $nPlayers && $randomWeights[$i2] < $weight) {
                             ++$nBotsMultipleSelected;
-                            ++$i;
+                            ++$i2;
                         }
                     }
-                    $r = $i;
+                    $r = $i2;
                 }
                 ++$b;
             }
 
             // add alternatives for previously multiple selected bots
             $tmpbot = array();
-            for ($i = 0; $i < $nBotsMultipleSelected; ++$i) {
+            for ($i3 = 0; $i3 < $nBotsMultipleSelected; ++$i3) {
                 do {
                     $tmpbot = $this->bots[mt_rand(0, count($this->bots) - 1)];
                 } while (in_array($players, $tmpbot));
             }
-
             // play match
             $return_var = $this->playMatch($players);
 
@@ -95,7 +94,7 @@ class Leaderboard
         // insert database row into games
         // and retreive the id of thr row
         SQL("INSERT INTO games(checked, leaderboard, rules, log, result, startTime, endTime)
-			VALUES(0, '" . $this->tableName . "', '" . $this->rulzName . "', '', '', 0, 0)");
+			VALUES(0, '" . $this->tableName . "', '" . $this->rulzName . "', '', '', NOW(), 0)");
         $this->gameid = $mysqli->insert_id;
         $resultname = $logname = $this->gameid . '.xml';
         SQL("UPDATE games SET log='$logname', result='$resultname'
@@ -172,6 +171,7 @@ class Leaderboard
     {
         if ($return_var == 4) // everything went alright
         {
+            SQL("UPDATE games SET endTime = NOW() WHERE id = " . $this->gameid);
             // read results xml
             try {
                 $result = new SimpleXMLElement("../../data/results/" . $this->gameid . '.xml', 0, true);
@@ -203,7 +203,7 @@ class Leaderboard
             SQL("UPDATE " . $this->tableName . " SET score=$Rw WHERE botID=$winnerid");
 			
 			// update check
-			SQL("UPDATE games SET check = 1 WHERE gameid = " . $this->gameid);
+			SQL("UPDATE games SET checked = 1 WHERE id = " . $this->gameid);
         }
     }
 
