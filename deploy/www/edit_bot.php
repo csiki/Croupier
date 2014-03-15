@@ -97,7 +97,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
     <link rel="stylesheet" href="style/codemirror-neat-modified.css">
     <script type="text/javascript">
         var editor = null;
-        window.onload = function () {
+        $(function () {
             editor = CodeMirror.fromTextArea($("#code").get(0), {
                 lineNumbers: true,
                 matchBrackets: true,
@@ -105,7 +105,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
             });
             $("#codeLang").on("change", langChanged);
             langChanged();
-        }
+        });
 
         function saveAsk(form) {
             messageBoxYesNo("<?=$tr["SAVE_BOT_CONF"]?>", "<?=$tr["YES"]?>", "<?=$tr["NO"]?>", function () {
@@ -168,7 +168,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
 
         <div class="codeWrapper">
             <label for="code"><?= $tr["INSERT_CODE"] ?></label><br/>
-            <textarea cols="80" rows="20" name="code" id="code" style="display: block"
+            <textarea name="code" id="code" style="display: block"
                       wrap="off" autofocus><?= $code ?></textarea>
         </div>
         <br/>

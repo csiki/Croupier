@@ -4,6 +4,6 @@
     2013 © Croupier poker framework
     <br/>
     <?php
-    echo sprintf($tr["FOOTER_TEXT"], '<a href="mailto:croupier@poker.sch.bme.hu">croupier@poker.sch.bme.hu</a>');
+    echo sprintf($tr["FOOTER_TEXT"], '<a href="mailto:poker.platus@gmail.com">poker.platus@gmail.com</a>');
     ?>
 </div>

@@ -74,7 +74,7 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
                 position: {
                     my: "center bottom-20",
                     at: "right top"
-                    },
+                },
                 show: { duration: 100 },
                 hide: { duration: 100 }
             });
@@ -99,12 +99,14 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
         echo sprintf($tr["REGISTER_THANKS"], $_GET["email"]);
     else {
         ?>
-        <?php
-        foreach ($errors as $error) {
-            echo '<span class="errorMessage">' . $error . '</span><br />';
-        }
-        ?>
         <div class="formDiv">
+            <?php
+            foreach ($errors as $error) {
+                echo '<span class="errorMessage">' . $error . '</span><br />';
+            }
+            if(count($errors) > 0)
+                echo "<br />";
+            ?>
             <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post" id="register_form" autocomplete="off">
                 <label for="name"><?= $tr["USERNAME"] ?></label><br/>
                 <input type="text" name="name" id="name" maxlength="25"
