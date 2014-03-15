@@ -406,7 +406,7 @@ input[type=submit].button, input[type=button].button {
 
 .leaderboardsMenuElement {
     width: 250px;
-    height: 130px;
+    height: 180px;
     border: 4px solid black;
     display: inline-block;
     margin: 20px;
@@ -424,6 +424,7 @@ input[type=submit].button, input[type=button].button {
     color: white;
     display: block;
     padding-bottom: 3px;
+    font-weight: bold;
 }
 
 .leaderboardsMenuElement ul {
@@ -431,7 +432,7 @@ input[type=submit].button, input[type=button].button {
     text-shadow: 2px 2px 2px black;
     position: absolute;
     right: 0;
-    margin: 5px;
+    margin: 0 5px 0 5px;
     list-style: none;
     text-align: right;
 }

@@ -24,15 +24,15 @@ $severityColors = array(
 
 $orig_msg = array("receiveCard", "fold", "check", "call", "raise",
 	"letsPoker", "rmDealerButton", "addDealerButton", "burn", "betRound", "quit", "dealing",
-    "preflop", "flop", "turn", "river", "revealCards",
+    "preflop", "flop", "turn", "river", "revealCards","handOutPot",
 	"collectCards", "roundStarted ", "roundEnded", "refreshBlinds", "showdown", "roundWinners");
 $hun_msg = array("Kapott kártya", "Eldob", "Passzol", "Megad", "Emel",
 	"Indul a játék", "Dealer gombot eltávolítja", "Dealer gombot hozzáadja", "Éget", "Tét kör indul", "Kilép",
-    "Osztás", "PreFlop", "Flop", "Turn:", "River:", "Kártyáit megmutatja:",
+    "Osztás", "PreFlop", "Flop", "Turn:", "River:", "Kártyáit megmutatja:", "Tétet vitte:",
 	 "Kártyákat begyüjti", "Kör kezdődik #", "Véget ért a kör", "Vakok frissítése", "Showdown", "Nyertesek a körben:");
 $en_msg = array("Receive Card", "Fold", "Check", "Call", "Raise",
     "Poker starts", "Dealer removes button", "Dealer adds button", "Burn", "Bet round starts", "Quit",
-    "Dealing", "PreFlop", "Flop", "Turn:", "River:", "Shows cards:",
+    "Dealing", "PreFlop", "Flop", "Turn:", "River:", "Shows cards:", "Pot taken by:",
     "Collects cards", "Round started #", "Round ended", "Refesh blinds", "Showdown", "Winners in round:");
 
 $gameID = $botID = 0;
@@ -119,22 +119,6 @@ if (isset($_GET["gameID"]) && is_numeric($_GET["gameID"]) && isset($_GET["botID"
 
                 </tbody>
             </table>
-            <?php
-            $log = simplexml_load_file($logFile);
-            $i = 1;
-            foreach ($log->event as $event) {
-                //skip hidden events
-                if ($event->severity == Severity::DEBUG
-                    || ($event->logger != $botID &&
-                        ($event->severity == Severity::ERROR
-                            || $event->severity == Severity::WARNING
-                            || $event->severity == Severity::VERBOSE)
-                    )
-                )
-                    continue;
-                echo "logger: " . $event->logger . ", " . $event->msg . "\n";
-            }
-            ?>
         <?php
         } else
             echo "Fatal error during game";
