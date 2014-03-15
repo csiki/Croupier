@@ -4,7 +4,7 @@
 	"AliveBotLoader.h"
 	"AliveBot.h"
 
-1390672673 /home/csiki/croupier/GameModule/croupier_linux/stdafx.h
+1394877660 /home/csiki/croupier/GameModule/croupier_linux/stdafx.h
 	<stdio.h>
 	<iostream>
 	<map>
@@ -102,7 +102,7 @@
 	"BotData.h"
 	"stdafx.h"
 
-1393699950 /home/csiki/croupier/GameModule/croupier_linux/KnowledgeTable.h
+1394877660 /home/csiki/croupier/GameModule/croupier_linux/KnowledgeTable.h
 	"KnowledgeDataType.h"
 
 1390668951 /home/csiki/croupier/GameModule/croupier_linux/KnowledgeTableXMLHandler.h
@@ -200,7 +200,7 @@
 	"stdafx.h"
 	"BotKnowledgeHandler.h"
 
-1390672678 source:/home/csiki/croupier/GameModule/croupier_linux/BotManager.cpp
+1393699996 source:/home/csiki/croupier/GameModule/croupier_linux/BotManager.cpp
 	"stdafx.h"
 	"BotManager.h"
 
@@ -323,7 +323,7 @@
 1390668951 /home/csiki/croupier/GameModule/croupier_linux/GameData.h
 	"BotData.h"
 
-1390668951 source:/home/csiki/croupier/GameModule/croupier_linux/GameDataXMLHandler.cpp
+1393361216 source:/home/csiki/croupier/GameModule/croupier_linux/GameDataXMLHandler.cpp
 	"stdafx.h"
 	"GameDataXMLHandler.h"
 

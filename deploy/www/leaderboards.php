@@ -120,6 +120,17 @@ needLogin();
             echo '<li>' . sprintf($tr["KNOWLEDGE_ALLOWED"], ($xmlRoot->knowledgeuseallowed ? $tr["YES"] : $tr["NO"])) . '</li>';
             echo '<li>' . sprintf($tr["STARTING_CHIPS"], $xmlRoot->startingchips) . '</li>';
             echo '<li>' . sprintf($tr["MAX_NUM_OF_RAISES"], $xmlRoot->maxnumofraises) . '</li>';
+            
+            $bettingsystem = 'NOLIMIT';
+            if ($xmlRoot->bettingsystem == 1)
+                $bettingsystem = 'FIXLIMIT';
+            else if ($xmlRoot->bettingsystem == 2)
+                $bettingsystem = 'POTLIMIT';
+            echo '<li>' . sprintf($tr["BETTING_SYSTEM"], $bettingsystem) . '</li>';
+            echo '<li>' . sprintf($tr["NUM_OF_REBUYS_ALLOWED"], $xmlRoot->numofrebuysallowed) . '</li>';
+            echo '<li>' . sprintf($tr["BOT_CALC_TIME"], $xmlRoot->botcalctime->time[0]) . '</li>'; // just CPP
+            echo '<li>' . sprintf($tr["TALK_ALLOWED"], ($xmlRoot->talkallowed ? $tr["YES"] : $tr["NO"])) . '</li>';
+            echo '<li>' . sprintf($tr["EMO_ALLOWED"], ($xmlRoot->emoallowed ? $tr["YES"] : $tr["NO"])) . '</li>';
             echo '</ul>';
             echo '</div>';
         }
