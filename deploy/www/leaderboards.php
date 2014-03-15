@@ -120,6 +120,17 @@ needLogin();
             echo '<li>' . sprintf($tr["KNOWLEDGE_ALLOWED"], ($xmlRoot->knowledgeuseallowed ? $tr["YES"] : $tr["NO"])) . '</li>';
             echo '<li>' . sprintf($tr["STARTING_CHIPS"], $xmlRoot->startingchips) . '</li>';
             echo '<li>' . sprintf($tr["MAX_NUM_OF_RAISES"], $xmlRoot->maxnumofraises) . '</li>';
+            
+            $bettingsystem = 'NOLIMIT';
+            if ($xmlRoot->bettingsystem == 1)
+                $bettingsystem = 'FIXLIMIT';
+            else if ($xmlRoot->bettingsystem == 2)
+                $bettingsystem = 'POTLIMIT';
+            echo '<li>' . sprintf($tr["BETTING_SYSTEM"], $bettingsystem) . '</li>';
+            echo '<li>' . sprintf($tr["NUM_OF_REBUYS_ALLOWED"], $xmlRoot->numofrebuysallowed) . '</li>';
+            echo '<li>' . sprintf($tr["BOT_CALC_TIME"], $xmlRoot->botcalctime->time[0]) . '</li>'; // just CPP
+            echo '<li>' . sprintf($tr["TALK_ALLOWED"], ($xmlRoot->talkallowed ? $tr["YES"] : $tr["NO"])) . '</li>';
+            echo '<li>' . sprintf($tr["EMO_ALLOWED"], ($xmlRoot->emoallowed ? $tr["YES"] : $tr["NO"])) . '</li>';
             echo '</ul>';
             echo '</div>';
         }
@@ -137,7 +148,7 @@ needLogin();
                 <table>
                     <thead>
                     <tr>
-                        <th style="width: 150px">' . $tr["NAME"] . '</th>
+                        <th style="width: 200px">' . $tr["NAME"] . '</th>
                         <th style="width: 150px">' . $tr["OWNER"] . '</th>
                         <th style="width: 80px">' . $tr["SCORE"] . '</th>
                     </tr>
@@ -150,50 +161,28 @@ needLogin();
                     <table>
                         <thead>
                         <tr>
-                            <th style="width: 150px">' . $tr["NAME"] . '</th>
-                            <th style="width: 150px">' . $tr["STATE"] . '</th>
-                            <th style="width: 30px" colspan="2">' . $tr["OPERATIONS"] . '</th>
+                            <th style="width: 200px">' . $tr["NAME"] . '</th>
+                            <th style="width: 50px" colspan="2">' . $tr["OPERATIONS"] . '</th>
                         </tr>
                         </thead>
                         <tbody>';
-        $bots = SQL("SELECT bots.id, bots.name, bots.state,
+        $bots = SQL("SELECT bots.id, bots.name,
                         (SELECT EXISTS(SELECT * FROM " . $leaderboard["tableName"] . " WHERE botID = bots.id)) as participated
                         FROM bots
-                        WHERE bots.accountID = ?", $_SESSION["accountID"]);
+                        WHERE bots.accountID = ? AND bots.state='ok'", $_SESSION["accountID"]);
         if ($bots == null)
             $bots = array();
         foreach ($bots as $bot) {
-            echo '<tr data-valid="' . ($bot["state"] == "ok")
-                . '" data-participated="' . ($bot["participated"]) . '">';
+            echo '<tr data-participated="' . ($bot["participated"]) . '">';
             echo '<td>' . $bot["name"] . '</td>';
-            switch($bot["state"])
-            {
-                case 'ok':
-                    $stateColumn = $tr["STATE_OK"];
-                    break;
-                case 'processing':
-                    $stateColumn = $tr["STATE_PROCESSING"];
-                    break;
-                case 'compilation':
-                    $stateColumn = $tr["STATE_COMPILATION"];
-                    break;
-                case 'runtime':
-                    $stateColumn = $tr["STATE_RUNTIME"];
-                    break;
-            }
-            echo '<td>' . $stateColumn . '</td>';
             echo '<td style="text-align: center">';
             echo '<a class="button withdraw"' .
                 ($bot["participated"] == '1' ? '' : 'style="display:none"') .
                 ' onclick="withdraw(this, ' . $bot["id"] . ')">' . $tr["WITHDRAW"] .
                 '</a>';
-            echo '<a class="button disabledButton" ' .
-                ($bot["participated"] != '1' && ($bot["state"] != "ok") ? '' : 'style="display:none"') . '>' .
-                $tr["PARTICIPATE"] .
-                '</a>';
             echo '<div class="icon loadingIcon" style="display: none"></div>';
             echo '<a class="button participate"' .
-                ($bot["participated"] != '1' && ($bot["state"] == "ok") ? '' : ' style="display:none"') .
+                ($bot["participated"] != '1' ? '' : ' style="display:none"') .
                 ' onclick="participate(this, ' . $bot["id"] . ')">' .
                 $tr["PARTICIPATE"] .
                 '</a>';
