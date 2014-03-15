@@ -104,7 +104,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
     <link rel="stylesheet" href="style/codemirror-neat-modified.css">
     <script type="text/javascript">
         var editor = null;
-        window.onload = function () {
+        $(function () {
             editor = CodeMirror.fromTextArea($("#code").get(0), {
                 lineNumbers: true,
                 matchBrackets: true,
@@ -112,7 +112,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
             });
             $("#codeLang").on("change", langChanged);
             langChanged();
-        }
+        });
 
         function cancelAsk() {
             if (editor.getValue().length != 0 || $("#codefile").val().length != 0)
@@ -169,7 +169,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
 
         <div class="codeWrapper">
             <label for="code"><?= $tr["INSERT_CODE"] ?></label><br/>
-            <textarea cols="80" rows="20" name="code" id="code" style="display: block"
+            <textarea name="code" id="code" style="display: block"
                       wrap="off"><?php if (isset($_POST["code"])) echo $_POST["code"]; ?></textarea>
         </div>
         <br/>

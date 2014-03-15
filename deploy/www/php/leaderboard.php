@@ -160,8 +160,8 @@ class Leaderboard
             fclose($pipes[2]);
             $return_val = proc_close($process);
         }
-        echo "stdout" . $stdout . "\n";
-        echo "stderr" . $stderr . "\n";
+        echo "stdout". "\n". $stdout . "\n";
+        echo "stderr". "\n" . $stderr . "\n";
         echo "gamemodule returned: " . $return_val . "\n";
 
         return $return_val;
