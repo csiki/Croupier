@@ -27,7 +27,7 @@ if (isset($_GET["leaderboardID"]) && isset($_GET["botID"]) && isset($_GET["actio
             $loaded_leaderboard->addBot($botID);
         else
             $loaded_leaderboard->removeBot($botID);
-        echo "1";
+        echo '1';
     } else
         die("Invalid request");
 } else

@@ -52,18 +52,22 @@ if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
             <tbody>
             <?php
             $games = array();
-            $gameIDs = SQL("SELECT gameID FROM games_by_bots WHERE botID = ?", $botID);
+            
+            $games = SQL("SELECT games.id, games.leaderboard, games.endTime FROM games, games_by_bots
+                WHERE games.id = games_by_bots.gameID and games_by_bots.botID = ? ORDER BY games.endTime DESC LIMIT 0,20", $botID);
+            
+            /*$gameIDs = SQL("SELECT gameID FROM games_by_bots WHERE botID = ?", $botID);
             for ($i = 0; $i < count($gameIDs); $i++) {
-                $game = SQL("SELECT id, leaderboard, endTime FROM games WHERE id = ? AND checked = 1",
+                $game = SQL("SELECT id, leaderboard, endTime FROM games WHERE id = ? AND checked = 1 ORDER BY endTime DESC",
                     $gameIDs[$i]["gameID"]);
                 if ($game != null) {
                     $games[] = $game[0];
                 }
-            }
+            }*/
             if ($games != null) {
-                usort($games, function ($a, $b) {
+                /*usort($games, function ($a, $b) {
                     return $a['endTime'] < $b['endTime'];
-                });
+                });*/
                 for ($i = 0; $i < count($games); $i++) {
                     $lb = SQL("SELECT friendlyName FROM leaderboards WHERE tableName = ?", $games[$i]["leaderboard"]);
                     echo '<tr>';

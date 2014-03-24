@@ -1,5 +1,7 @@
 <?php
 
+define("INITIAL_SCORE", 1400);
+
 class Leaderboard
 {
     private $tableName;
@@ -141,6 +143,7 @@ class Leaderboard
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput = true;
         $dom->loadXML($xmlRoot->asXML());
+        echo "\n" . $dom->save($gameXML) . "bytes\n";
 
         // run gamemodule
         $command = "./gamemodule " . $this->gameid;
@@ -234,8 +237,8 @@ class Leaderboard
         $res = SQL("SELECT state FROM bots WHERE id = ?", $botID);
         if($res == null || $res[0]["state"] != "ok")
             die("Invalid request");
-        SQL("INSERT INTO ".$this->tableName." (botId) values(?)", $botID);
-        SQL("INSERT INTO ".$this->tableName."_yesterday"." (botId) values(?)", $botID);
+        SQL("INSERT INTO ".$this->tableName." (botId, score) values(?, ?)", $botID, INITIAL_SCORE);
+        SQL("INSERT INTO ".$this->tableName."_yesterday"." (botId, score) values(?, ?)", $botID, INITIAL_SCORE);
     }
 
     public function removeBot($botID)

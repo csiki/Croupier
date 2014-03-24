@@ -172,6 +172,7 @@ needLogin();
                         WHERE bots.accountID = ? AND bots.state='ok'", $_SESSION["accountID"]);
         if ($bots == null)
             $bots = array();
+            
         foreach ($bots as $bot) {
             echo '<tr data-participated="' . ($bot["participated"]) . '">';
             echo '<td>' . $bot["name"] . '</td>';
@@ -182,6 +183,11 @@ needLogin();
                 '</a>';
             echo '<div class="icon loadingIcon" style="display: none"></div>';
             echo '<a class="button participate"' .
+                ($bot["participated"] != '1' ? '' : ' style="display:none"') .
+                ' onclick="participate(this, ' . $bot["id"] . ')">' .
+                $tr["PARTICIPATE"] .
+                '</a>';
+            echo '<a class="button disabledButton"' . # INNEN CSINÁLD VAZZE
                 ($bot["participated"] != '1' ? '' : ' style="display:none"') .
                 ' onclick="participate(this, ' . $bot["id"] . ')">' .
                 $tr["PARTICIPATE"] .
