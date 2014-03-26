@@ -1,4 +1,4 @@
-<html>
+﻿<html>
 <head>
 	<title>Croupier MI fejlesztési útmutató</title>
 	<link rel="stylesheet" type="text/css" href="css/miDev.css" />
@@ -115,6 +115,7 @@
 </p>
 
 <pre class="brush: cpp">
+#include "Bot.h"
 class PeldaBot : public Bot // leöröklünk Bot osztályból, így felülírhatjuk a metódusait
 {
 public:
@@ -566,9 +567,6 @@ táblánk lesz.)
 </p>
 <pre class="brush: cpp">
 #include "Bot.h"
-#include "BotLanguage.h"
-#include "BettingSystem.h"
-#include "KnowledgeDataType.h"
 
 class PeldaBot : public Bot
 {
