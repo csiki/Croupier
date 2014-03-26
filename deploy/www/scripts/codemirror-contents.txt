@@ -1,0 +1,1 @@
+clike, css, htmlmixed, javascript, xml, matchbrackets

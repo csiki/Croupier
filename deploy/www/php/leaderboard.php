@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 define("INITIAL_SCORE", 1400);
 
@@ -143,7 +143,6 @@ class Leaderboard
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput = true;
         $dom->loadXML($xmlRoot->asXML());
-        echo "\n" . $dom->save($gameXML) . "bytes\n";
 
         // run gamemodule
         $command = "./gamemodule " . $this->gameid;
