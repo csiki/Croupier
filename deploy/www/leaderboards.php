@@ -57,25 +57,28 @@ needLogin();
         function withdraw(element, id) {
             var $lb = $(element).parents(".leaderboardContainer");
             var $ptd = $(element).parent();
+            $(element).parents("table").find(".disabledButton").hide();
+            $(element).parents("table").find(".loadingIcon").show();
             $(element).hide();
-            $ptd.children(".loadingIcon").show();
             participate_bot($lb.attr('id').substr(2), id, false,
                 function () {
-                    $ptd.children(".participate").show();
-                    $ptd.children(".loadingIcon").hide();
+                    $(element).parents("table").find(".loadingIcon").hide();
+                    $(element).parents("table").find(".participate").show();
                     updateLeaderboard($lb);
                 });
         }
 
         function participate(element, id) {
-            var $lb = $(element).parents(".leaderboardContainer");
+            var $lbc = $(element).parents(".leaderboardContainer");
+            $(element).parents("table").find(".participate").hide();
+            $(element).parents("table").find(".loadingIcon").show();
             var $ptd = $(element).parent();
-            $(element).hide();
-            $ptd.children(".loadingIcon").show();
-            participate_bot($lb.attr('id').substr(2), id, true, function () {
+            participate_bot($lbc.attr('id').substr(2), id, true, function () {
                 $ptd.children(".withdraw").show();
-                $ptd.children(".loadingIcon").hide();
-                updateLeaderboard($lb);
+                $(element).parents("table").find(".loadingIcon").hide();
+                $(element).parents("table").find(".disabledButton").show();
+                $ptd.children(".disabledButton").hide();
+                updateLeaderboard($lbc);
             });
         }
 
@@ -170,10 +173,14 @@ needLogin();
                         (SELECT EXISTS(SELECT * FROM " . $leaderboard["tableName"] . " WHERE botID = bots.id)) as participated
                         FROM bots
                         WHERE bots.accountID = ? AND bots.state='ok'", $_SESSION["accountID"]);
+        $participatedBots = SQL("SELECT COUNT(*) FROM bots, " . $leaderboard["tableName"] .
+            "  WHERE bots.accountID = ? AND bots.id = " . $leaderboard["tableName"] . ".botID", $_SESSION["accountID"]);
         if ($bots == null)
             $bots = array();
-            
-        foreach ($bots as $bot) {
+        $canParticipateAll = $participatedBots[0]["COUNT(*)"] == 0;
+
+        foreach ($bots as $bot)
+        {
             echo '<tr data-participated="' . ($bot["participated"]) . '">';
             echo '<td>' . $bot["name"] . '</td>';
             echo '<td style="text-align: center">';
@@ -183,13 +190,13 @@ needLogin();
                 '</a>';
             echo '<div class="icon loadingIcon" style="display: none"></div>';
             echo '<a class="button participate"' .
-                ($bot["participated"] != '1' ? '' : ' style="display:none"') .
+                ($canParticipateAll ? '' : ' style="display:none"') .
                 ' onclick="participate(this, ' . $bot["id"] . ')">' .
                 $tr["PARTICIPATE"] .
                 '</a>';
-            echo '<a class="button disabledButton"' . # INNEN CSINÁLD VAZZE
-                ($bot["participated"] != '1' ? '' : ' style="display:none"') .
-                ' onclick="participate(this, ' . $bot["id"] . ')">' .
+            echo '<a class="button disabledButton"' .
+                (!$canParticipateAll  && $bot["participated"] != '1'? '' : ' style="display:none"') .
+                '>' .
                 $tr["PARTICIPATE"] .
                 '</a>';
             echo '</td>';
