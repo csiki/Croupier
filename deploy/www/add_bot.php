@@ -98,8 +98,6 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
 <head>
     <?php require "php/head.php"; ?>
     <script type="text/javascript" src="scripts/codemirror-compressed.js"></script>
-    <script type="text/javascript" src="scripts/matchbrackets.js"></script>
-    <script type="text/javascript" src="scripts/clike.js"></script>
     <link rel="stylesheet" href="style/codemirror.css">
     <link rel="stylesheet" href="style/codemirror-neat-modified.css">
     <script type="text/javascript">

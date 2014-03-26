@@ -10,8 +10,6 @@ $email = "";
 $showCaptcha = false;
 if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pLength'])) {
     //form validation
-    //TODO:remove comment
-    /*
     if (!isset($_POST['email']) || !sanityCheck($_POST['email'], 'string', 7, 50) || !checkEmail($_POST['email']))
         $errors[] = $tr["ERR_LOGIN"];
     else {
@@ -25,7 +23,7 @@ if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pLength'])) {
             else
                 $password = $_POST['p'];
         }
-    }*/
+    }
     $email = $_POST['email'];
     $password = $_POST['p'];
     $captchaGet = false;

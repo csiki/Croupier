@@ -34,6 +34,32 @@ $en_msg = array("Receive Card", "Fold", "Check", "Call", "Raise",
     "Poker starts", "Dealer removes button", "Dealer adds button", "Burn", "Bet round starts", "Quit",
     "Dealing", "PreFlop", "Flop", "Turn:", "River:", "Shows cards:", "Pot taken by:",
     "Collects cards", "Round started #", "Round ended", "Refesh blinds", "Showdown", "Winners in round:");
+    
+// cards
+$cardnames = array();
+$cardpics = array();
+$suits = array("HEARTS", "DIAMONDS", "CLUBS", "SPADES", "NULL");
+$ranks = array("DEUCE of ", "THREE of ", "FOUR of ", "FIVE of ", "SIX of ", "SEVEN of ", "EIGHT of ",
+    "NINE of ", "TEN of ", "JACK of ", "QUEEN of ", "KING of ", "ACE of ", "NULL of ");
+$CWIDTH = 125;
+$CHEIGHT = 181; // in px
+
+for ($s = 0; $s < count($suits) - 1; ++$s) // null not included
+{
+    for ($r = 0; $r < count($ranks) - 1; ++$r)
+    {
+        $cname = $ranks[$r] . $suits[$s];
+        $margin = -$s * $CHEIGHT . 'px 0 0 ' . -$r * $CWIDTH . 'px';
+        $cropped_image = "<img src='images/cards.gif' alt='$cname' style='width:".$CWIDTH."px; height:".$CHEIGHT."px; margin: $margin;' />";
+        
+        array_push($cardnames, $cname);
+        array_push($cardpics, $cropped_image);
+    }
+}
+array_push($cardnames, 'NULL of NULL');
+array_push($cardpics, "<img src='images/cards.gif' alt='NO INFORMATION' style='width:".$CWIDTH."px; height:".$CHEIGHT."px;
+    margin: 724px 0 0 0;' />");
+
 
 $gameID = $botID = 0;
 $date = $botName = "";
@@ -43,7 +69,7 @@ if (isset($_GET["gameID"]) && is_numeric($_GET["gameID"]) && isset($_GET["botID"
     //check game exits
     $log = SQL("SELECT endTime, log FROM games WHERE id = ? AND checked = 1", $gameID);
     if ($log == null)
-        die("Invalid request");
+        die("Invalid request |||");
     $logFile = _LOG_RELATIVE_PATH_ . $log[0]["log"];
     $date = $log[0]["endTime"];
     //check bot exits
@@ -55,7 +81,7 @@ if (isset($_GET["gameID"]) && is_numeric($_GET["gameID"]) && isset($_GET["botID"
     if (SQL("SELECT gameID FROM games_by_bots WHERE botID = ? AND gameID = ?", $botID, $gameID) == null)
         die("Invalid request - bot not participated");
 } else
-    die("Invalid request");
+    die("Invalid request ----");
 ?>
 <!DOCTYPE html>
 <html>
@@ -109,10 +135,14 @@ if (isset($_GET["gameID"]) && is_numeric($_GET["gameID"]) && isset($_GET["botID"
                         echo '<td>' . $botName . '</td>';
                     else
                         echo '<td>' . 'bot ' . $event->logger . '</td>';
-                    if($_SESSION["lang"] == "hu")
-                        echo '<td>' . str_replace($orig_msg, $hun_msg, $event->msg) . '</td>';
-                    else if($_SESSION["lang"] == "en")
-                        echo '<td>' . str_replace($orig_msg, $en_msg, $event->msg) . '</td>';
+                       
+                    $msg = ($_SESSION["lang"] == "hu") ?
+                        str_replace($orig_msg, $hun_msg, $event->msg) :
+                        str_replace($orig_msg, $en_msg, $event->msg);
+                    
+                    $msg = str_replace($cardnames, $cardpics, $msg);
+                    
+                    echo '<td>' . $msg . '</td>';
                     echo '</tr>';
                 }
                 ?>

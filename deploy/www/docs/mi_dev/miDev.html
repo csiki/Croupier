@@ -232,7 +232,7 @@ public:
 
 		<tr><td class="important">virtual void <span class="important">step</span>();</td><td class="important"><span style="color:#f00;font-style:italic">Felszólítja</span> a botot, hogy lépjen.</td></tr>
 		<tr><td>virtual void <span class="important">rebuyOrLeave</span>();</td><td><span style="color:#f00;font-style:italic">Felszólítja</span> a botot, hogy vagy vásárolja vissza magát, vagy hagyja el a játékot.</td></tr>
-		<tr><td>virtual void <span class="important">leave</span>();</td><td><span style="color:#f00;font-style:italic">Felszólítja</span> a botot, hogy távozzon.</td></tr>
+		<tr><td>virtual void <span class="important">leave</span>();</td><td><span style="color:#f00;font-style:italic">Felszólítja</span> a botot, hogy távozzon, ha elfogyott a zsetonja, és nem is tudja magát visszavásárolni. Ebben a metódusban érdemes felszabadítani minden memóriát, minden erőforrást.</td></tr>
 
 		<tr><td>virtual void <span class="important">allined</span>(int botID, int amount);</td><td><span style="color:#5265f2;font-style:italic">Jelzi</span>, hogy a 'botID' azonosítójú bot all in-elt 'amount' összeget.</td></tr>
 		<tr><td>virtual void <span class="important">called</span>(int botID, int amount);</td><td><span style="color:#5265f2;font-style:italic">Jelzi</span>, hogy a 'botID' azonosítójú bot megadta a tétet 'amount' összeggel.</td></tr>

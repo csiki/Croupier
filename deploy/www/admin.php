@@ -5,20 +5,16 @@ if (!$admin) {
     header('Location: ./');
     exit();
 }
-
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <?php require "php/head.php"; ?>
-    <link rel="stylesheet" href="../style/admin.css">
-    <link rel="stylesheet" href="../style/codemirror.css">
-    <link rel="stylesheet" href="../style/codemirror-neat-modified.css">
-    <script type="text/javascript" src="../scripts/jsapi_google.js"></script>
-    <script type="text/javascript" src="../scripts/codemirror-compressed.js"></script>
-    <script type="text/javascript" src="../scripts/css.js"></script>
-    <script type="text/javascript" src="../scripts/xml.js"></script>
-    <script type="text/javascript" src="../scripts/javascript.js"></script>
+    <link rel="stylesheet" href="style/admin.css">
+    <link rel="stylesheet" href="style/codemirror.css">
+    <link rel="stylesheet" href="style/codemirror-neat-modified.css">
+    <script type="text/javascript" src="scripts/jsapi_google.js"></script>
+    <script type="text/javascript" src="scripts/codemirror-compressed.js"></script>
     <script>
         var editor;
         google.load('visualization', '1', {packages: ['corechart'], 'language': 'en'});

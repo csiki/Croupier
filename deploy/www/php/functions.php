@@ -132,7 +132,7 @@ function login_check(&$loggedin, &$admin)
 
         $result = SQL("SELECT password, admin FROM accounts WHERE id = ? LIMIT 1", $accountID);
         if ($result == null)
-            die("Invalid request"); //the id not exists in the db
+            die("Invalid request - wrong account id"); //the id not exists in the db
         $password = $result[0]["password"];
         $login_check = hash('sha512', $password . $user_browser . getenv("REMOTE_ADDR"));
         if ($login_check == $login_string) {

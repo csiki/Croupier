@@ -143,6 +143,8 @@ class Leaderboard
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput = true;
         $dom->loadXML($xmlRoot->asXML());
+        $dom->save($gameXML);
+        echo "Game xml created: $gameXML";
 
         // run gamemodule
         $command = "./gamemodule " . $this->gameid;
@@ -161,8 +163,8 @@ class Leaderboard
             fclose($pipes[2]);
             $return_val = proc_close($process);
         }
-        echo "stdout". "\n". $stdout . "\n";
-        echo "stderr". "\n" . $stderr . "\n";
+        echo "gamemodule stdout". "\n". $stdout . "\n";
+        echo "gamemodule stderr". "\n" . $stderr . "\n";
         echo "gamemodule returned: " . $return_val . "\n";
 
         return $return_val;
