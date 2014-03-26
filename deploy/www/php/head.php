@@ -5,3 +5,4 @@
     <script type="text/javascript" src="/scripts/jquery-latest.min.js"></script>
     <script type="text/javascript" src="/scripts/jquery-ui.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/style/main.css">
+    <link rel="icon" type="image/png" href="https://poker.sch.bme.hu/images/favicon.ico">
