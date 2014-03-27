@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once "php/include.php";
 needLogin();
 
@@ -49,16 +49,15 @@ for ($s = 0; $s < count($suits) - 1; ++$s) // null not included
     for ($r = 0; $r < count($ranks) - 1; ++$r)
     {
         $cname = $ranks[$r] . $suits[$s];
-        $margin = -$s * $CHEIGHT . 'px 0 0 ' . -$r * $CWIDTH . 'px';
-        $cropped_image = "<img src='images/cards.gif' alt='$cname' style='width:".$CWIDTH."px; height:".$CHEIGHT."px; margin: $margin;' />";
+        $margin = -$s * $CHEIGHT * 0.4 . 'px 0 0 ' . -$r * $CWIDTH * 0.4 . 'px';
+        $cropped_image = '<div style="width: 50px; height: 72px; overflow:hidden;"><img src="images/cards.png" alt="'.$cname.'" style="width:650px; height:362px; margin: '.$margin.'" /></div>';
         
         array_push($cardnames, $cname);
         array_push($cardpics, $cropped_image);
     }
 }
 array_push($cardnames, 'NULL of NULL');
-array_push($cardpics, "<img src='images/cards.gif' alt='NO INFORMATION' style='width:".$CWIDTH."px; height:".$CHEIGHT."px;
-    margin: 724px 0 0 0;' />");
+array_push($cardpics, '<div style="width: 50px; height: 72px; overflow:hidden;"><img src="images/cards.png" alt="NO INFORMATION" style="width:650px; height:362px; margin: 724px 0 0 0;" />');
 
 
 $gameID = $botID = 0;
