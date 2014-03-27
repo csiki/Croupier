@@ -154,7 +154,7 @@ class Leaderboard
             1 => array("pipe", "w"), //stdout
             2 => array("pipe", "w") //stderr
         );
-        $process = proc_open($command, $descriptorspec, $pipes, "../../exec", null);// compileSO indítása
+        $process = proc_open($command, $descriptorspec, $pipes, "../../exec", null); // compileSO indítása
         if (is_resource($process)) {
             fclose($pipes[0]);
             $stdout = stream_get_contents($pipes[1]);
@@ -163,8 +163,8 @@ class Leaderboard
             fclose($pipes[2]);
             $return_val = proc_close($process);
         }
-        echo "gamemodule stdout". "\n". $stdout . "\n";
-        echo "gamemodule stderr". "\n" . $stderr . "\n";
+        echo "gamemodule stdout" . "\n" . $stdout . "\n";
+        echo "gamemodule stderr" . "\n" . $stderr . "\n";
         echo "gamemodule returned: " . $return_val . "\n";
 
         return $return_val;
@@ -200,13 +200,13 @@ class Leaderboard
                     $Rwdiff += $this->updateScores($winnerid, $botres->botid);
                 }
             }
-			
-			// winner score update
+
+            // winner score update
             $Rw += $Rwdiff;
-            SQL("UPDATE " . $this->tableName . " SET score=$Rw WHERE botID=$winnerid");
-			
-			// update check
-			SQL("UPDATE games SET checked = 1 WHERE id = " . $this->gameid);
+            SQL("UPDATE " . $this->tableName . " SET score=? WHERE botID=?", $Rw, $winnerid);
+
+            // update check
+            SQL("UPDATE games SET checked = 1 WHERE id = " . $this->gameid);
         }
     }
 
@@ -236,18 +236,19 @@ class Leaderboard
     public function addBot($botID)
     {
         $res = SQL("SELECT state FROM bots WHERE id = ?", $botID);
-        if($res == null || $res[0]["state"] != "ok")
+        if ($res == null || $res[0]["state"] != "ok")
             die("Invalid request");
-        SQL("INSERT INTO ".$this->tableName." (botId, score) values(?, ?)", $botID, INITIAL_SCORE);
-        SQL("INSERT INTO ".$this->tableName."_yesterday"." (botId, score) values(?, ?)", $botID, INITIAL_SCORE);
+        SQL("INSERT INTO " . $this->tableName . " (botId, score) values(?, ?)", $botID, INITIAL_SCORE);
+        SQL("INSERT INTO " . $this->tableName . "_yesterday" . " (botId, score) values(?, ?)", $botID, INITIAL_SCORE);
     }
 
     public function removeBot($botID)
     {
-        SQL("DELETE FROM ".$this->tableName." WHERE botId = ?", $botID);
-        SQL("DELETE FROM ".$this->tableName."_yesterday"." WHERE botId = ?", $botID);
+        SQL("DELETE FROM " . $this->tableName . " WHERE botId = ?", $botID);
+        SQL("DELETE FROM " . $this->tableName . "_yesterday" . " WHERE botId = ?", $botID);
     }
 }
+
 ;
 
 ?>
