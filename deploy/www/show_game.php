@@ -113,6 +113,7 @@ if (isset($_GET["gameID"]) && is_numeric($_GET["gameID"]) && isset($_GET["botID"
                 <?php
                 $log = simplexml_load_file($logFile);
                 $i = 1;
+                $otherBots = array();
                 foreach ($log->event as $event) {
                     //skip hidden events
                     if ($event->severity == Severity::DEBUG
@@ -134,7 +135,17 @@ if (isset($_GET["gameID"]) && is_numeric($_GET["gameID"]) && isset($_GET["botID"
                     else if ($event->logger == $botID)
                         echo '<td>' . $botName . '</td>';
                     else
-                        echo '<td>' . 'bot ' . $event->logger . '</td>';
+                    {
+                        if(!array_key_exists((string)($event->logger), $otherBots))
+                        {
+                            $res = SQL("SELECT name FROM bots WHERE id = ?", (string)($event->logger));
+                            if($res != null)
+                                $otherBots[(string)($event->logger)] = $res[0]["name"];
+                            else
+                                $otherBots[$event->logger] = "bot " . (string)($event->logger);
+                        }
+                        echo '<td>' . $otherBots[(string)($event->logger)] . '</td>';
+                    }
                        
                     $msg = ($_SESSION["lang"] == "hu") ?
                         str_replace($orig_msg, $hun_msg, $event->msg) :
