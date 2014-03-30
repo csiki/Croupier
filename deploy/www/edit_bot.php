@@ -17,7 +17,7 @@ if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
 }
 if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])) {
     if (isset($_POST["name"]) && !empty($_POST["name"]))
-        $name = $_POST["name"];
+        $name = xssafe($_POST["name"]);
     if (SQL("SELECT * FROM bots WHERE name = ? AND id != ?", $name, $id) != null)
         $errors[] = $tr["ERR_NAME_CONFLICT"];
 

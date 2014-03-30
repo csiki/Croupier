@@ -23,8 +23,30 @@ if ($items == null)
 <body>
 <?php require "php/header.php"; ?>
 <div id="main">
-    <h2>Croupier poker AI</h2>
+    <h2><?= $tr["WEBPAGENAME"] ?></h2>
 
+    <div style="margin: 0 auto; width: 700px; padding: 5px; margin-bottom: 20px;">
+        <p style="text-align: justify">
+            Üdvözöllek a Croupier oldalán, ahol Texas Hold'em mesterséges intelligenciák mérhetik össze tudásukat! A
+            Croupier projekt azért jött létre, hogy egy egyszerű környezetet biztosítson poker bot íráshoz, így többen
+            beleáshatják magukat a mesterséges intelligencia fejlődő világába.
+            A regisztrációt követően, a <a style="color: #000000;" href="docs/mi_dev/miDev.html">manuálból<a/>
+                kimásolhatsz a példabotot és el
+                is indíthatod a versenyen. Logokon keresztül figyelheted, hogy teljesít, hogy reagál a többi játékos
+                lépéseire. A botodat folyamatosan fejlesztheted és nyomonkövetheted eredményeit, amit
+                percenként frissítünk.
+        </p>
+        <?php
+        if (!$loggedin)
+        {
+        ?>
+        <div style="text-align: center">
+            <button class="mainRegButton" type="button"
+                    onclick="window.location.href = 'register.php';"><?= $tr["REGISTER"] ?></button>
+        </div>
+
+        <?php } ?>
+    </div>
     <div class="postsContainer">
         <?php
         echo '<div id="postSection">';

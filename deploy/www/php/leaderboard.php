@@ -144,7 +144,7 @@ class Leaderboard
         $dom->formatOutput = true;
         $dom->loadXML($xmlRoot->asXML());
         $dom->save($gameXML);
-        echo "Game xml created: $gameXML";
+        echo "Game xml created: $gameXML\n";
 
         // run gamemodule
         $command = "./gamemodule " . $this->gameid;
