@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once "php/include.php";
 $currentPage = 0;
 $itemsPerPage = 10;
@@ -25,6 +25,10 @@ if ($items == null)
 <div id="main">
     <h2><?= $tr["WEBPAGENAME"] ?></h2>
 
+        <?php
+        if (!$loggedin)
+        {
+        ?>
     <div style="margin: 0 auto; width: 700px; padding: 5px; margin-bottom: 20px;">
         <p style="text-align: justify">
             Üdvözöllek a Croupier oldalán, ahol Texas Hold'em mesterséges intelligenciák mérhetik össze tudásukat! A
@@ -36,17 +40,13 @@ if ($items == null)
                 lépéseire. A botodat folyamatosan fejlesztheted és nyomonkövetheted eredményeit, amit
                 percenként frissítünk.
         </p>
-        <?php
-        if (!$loggedin)
-        {
-        ?>
         <div style="text-align: center">
             <button class="mainRegButton" type="button"
                     onclick="window.location.href = 'register.php';"><?= $tr["REGISTER"] ?></button>
         </div>
 
-        <?php } ?>
     </div>
+        <?php } ?>
     <div class="postsContainer">
         <?php
         echo '<div id="postSection">';

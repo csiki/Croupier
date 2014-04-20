@@ -50,14 +50,14 @@ for ($s = 0; $s < count($suits) - 1; ++$s) // null not included
     {
         $cname = $ranks[$r] . $suits[$s];
         $margin = -$s * $CHEIGHT * 0.4 . 'px 0 0 ' . -$r * $CWIDTH * 0.4 . 'px';
-        $cropped_image = '<div style="width: 50px; height: 72px; overflow:hidden;"><img src="images/cards.png" alt="'.$cname.'" style="width:650px; height:362px; margin: '.$margin.'" /></div>';
+        $cropped_image = '<div style="width: 50px; height: 72px; overflow:hidden; display:inline-block"><img src="images/cards.png" alt="'.$cname.'" style="width:650px; height:362px; margin: '.$margin.'" /></div>';
         
         array_push($cardnames, $cname);
         array_push($cardpics, $cropped_image);
     }
 }
 array_push($cardnames, 'NULL of NULL');
-array_push($cardpics, '<div style="width: 50px; height: 72px; overflow:hidden;"><img src="images/cards.png" alt="NO INFORMATION" style="width:650px; height:362px; margin: 724px 0 0 0;" />');
+array_push($cardpics, '<div style="width: 50px; height: 72px; overflow:hidden; display:inline-block"><img src="images/cards.png" alt="NO INFORMATION" style="width:650px; height:362px; margin: 724px 0 0 0;" />');
 
 
 $gameID = $botID = 0;

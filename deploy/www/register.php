@@ -46,7 +46,7 @@ if (isset($_POST['name']) || isset($_POST['email']) || isset($_POST['p']) || iss
         $password = hash('sha512', $password . $random_salt);
         SQL("INSERT INTO accounts (username, email, password, salt, lang)
         VALUES (?, ?, ?, ?, ?)", $name, $email, $password, $random_salt, $_SESSION["lang"]);
-        send_registered_email($name, $email);
+        sendRegisteredEmail($name, $email);
         //update stats
         SQL("INSERT INTO stat_accounts_added (date, count)
             VALUES (CURRENT_DATE(), 1)

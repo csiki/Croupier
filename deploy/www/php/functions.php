@@ -1,5 +1,6 @@
 <?php
-define("BOT_CODE_MIN", "60");
+define("BOT_CODE_MIN_LENGTH", "60");
+define("SESSION_TIMEOUT", "2000");
 define("_BOT_AI_RELATIVE_PATH_", "../data/bots/");
 define("_GAME_DATA_RELATIVE_PATH_", "../data/games/");
 define("_LOG_RELATIVE_PATH_", "../data/logs/");
@@ -10,11 +11,11 @@ function sec_session_start()
 {
     $session_name = 'crouper_s'; // Set a custom session name
     //TODO: set this to true
-    $secure = false; // Set to true if using https.
+    $secure = true; // Set to true if using https.
     $httponly = true; // This stops javascript being able to access the session id.
     ini_set('session.use_only_cookies', 1); // Forces sessions to only use cookies.
     $cookieParams = session_get_cookie_params();
-    session_set_cookie_params(1200, $cookieParams["path"], $cookieParams["domain"], $secure, $httponly);
+    session_set_cookie_params(SESSION_TIMEOUT, $cookieParams["path"], $cookieParams["domain"], $secure, $httponly);
     session_name($session_name); // Sets the session name to the one set above.
     session_start(); // Start the php session
     session_regenerate_id(); // regenerated the session, delete the old one.

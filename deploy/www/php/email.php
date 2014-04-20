@@ -1,8 +1,9 @@
 <?php
 require_once("include.php");
-define("_NOREPLY_EMAIL_", "noreply@poker.sch.bme.hu");
+define("NOREPLY_EMAIL", "noreply@poker.sch.bme.hu");
+define("FEEDBACK_EMAIL", "poker.platus@gmail.com");
 
-function send_registered_email($name, $email)
+function sendRegisteredEmail($name, $email)
 {
     global $tr;
     //get user id from db
@@ -15,7 +16,7 @@ function send_registered_email($name, $email)
     $registerHash = md5( rand(0,1000) );
     $registerLink = "http://poker.sch.bme.hu/verify_signup.php?email=".$to."&id=".$registerHash;
     $message = sprintf($tr["REGISTERED_EMAIL_MESSAGE"], $registerLink);
-    $from = "\"Croupier poker framework\" <" . _NOREPLY_EMAIL_ . ">";
+    $from = "\"Croupier poker framework\" <" . NOREPLY_EMAIL . ">";
     $headers = "From:" . $from;
     //store activation hash in db
     /*echo $id."\n\n";
@@ -27,5 +28,18 @@ function send_registered_email($name, $email)
     echo "\nFROM:".$from;
     echo "\nMSG:".$message;
     echo "\nHEADERS:".$headers;*/
+    mail($to,$subject,$message,$headers);
+}
+
+function sendFeedbackMail($title, $content)
+{
+    $res = SQL("SELECT email FROM accounts WHERE id = ?", $_SESSION['accountID']);
+    $email = $res[0]["email"];
+    $to = FEEDBACK_EMAIL;
+    $subject = "#FEEDBACK: $title";
+    $message = $_SESSION['username'] . " sent feedback.\nEmail addr: \n\n";
+    $message .= $content;
+    $from = "\"Croupier poker framework\" <" . NOREPLY_EMAIL . ">";
+    $headers = "From:" . $from;
     mail($to,$subject,$message,$headers);
 }

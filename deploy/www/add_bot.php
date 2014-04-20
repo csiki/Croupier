@@ -34,13 +34,13 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
             $mimeType = $finfo->file($_FILES["codefile"]["tmp_name"]);
             if (strpos($mimeType, "text/") !== 0)
                 $errors[] = $tr["ERR_CODEFILE"];
-            else if ($_FILES["codefile"]["size"] < BOT_CODE_MIN)
+            else if ($_FILES["codefile"]["size"] < BOT_CODE_MIN_LENGTH)
                 $errors[] = $tr["ERR_CODE_SHORT"];
         } else
             die("File upload error: " . $_FILES["codefile"]["error"]);
 
     } else if (isset($_POST["code"])) {
-        if (strlen($_POST["code"]) < BOT_CODE_MIN)
+        if (strlen($_POST["code"]) < BOT_CODE_MIN_LENGTH)
             $errors[] = $tr["ERR_CODE_SHORT"];
         else
             $code = $_POST["code"];
