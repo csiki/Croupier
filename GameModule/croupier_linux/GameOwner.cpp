@@ -8,6 +8,7 @@
 #include "TestBotShy.h"
 #include "AliveBot.h"
 #include <iostream>
+#include <exception>
 
 /** Saves the error message.
 */
@@ -76,7 +77,7 @@ void GameOwner::initialiseGame()
 		// load bot manager
 		this->botManagers[i] = new BotManager(
 			bkHandler, this->hostess, this->table,
-			this->rulz, this->broadcastStation, this->log, botdata->playerID,
+			this->rulz, this->broadcastStation, this->log, botdata->playerID, botdata->id,
 			this->rulz->getStartingChips(), botdata->credit - this->rulz->getStartingChips(), i);
 
 		// set botdata communicator

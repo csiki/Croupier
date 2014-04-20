@@ -43,11 +43,11 @@ private:
 public:
 	BotManager(BotKnowledgeHandler* bkHandler, Hostess* hostess, const Table* table,
 		const Rulz* rules, BroadcastStation* broadcastStation, Loggable* loggable,
-		int playerID, int chips, int reservedCredit, int nthAtTable) :
+		int playerID, int bodID, int chips, int reservedCredit, int nthAtTable) :
 			Entity(playerID),
-			BotCommunicator(playerID, broadcastStation, loggable, chips),
-			BotHandler(playerID, broadcastStation, loggable, chips),
-			BotInfo(playerID, broadcastStation, loggable, chips)
+			BotCommunicator(bodID, broadcastStation, loggable, chips),
+			BotHandler(bodID, broadcastStation, loggable, chips),
+			BotInfo(bodID, broadcastStation, loggable, chips)
 	{
 		this->bkHandler = bkHandler;
 		this->hostess = hostess;
