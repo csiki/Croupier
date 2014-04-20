@@ -12,12 +12,14 @@ public:
 	BotTimeExceededException(std::string inMethod)
 		: std::exception(), inMethod(inMethod) {}
 
+    ~BotTimeExceededException() noexcept {}
+
 	std::string whatMethod() const
 	{
 		return this->inMethod;
 	}
 
-	const char* what() const _GLIBCXX_USE_NOEXCEPT
+	const char* what() const noexcept
 	{
 	    return "Bot calculation time exceeded!";
 	}
