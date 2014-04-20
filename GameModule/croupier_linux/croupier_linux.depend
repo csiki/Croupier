@@ -1,10 +1,10 @@
 # depslib dependency file v1.0
-1390668951 source:/home/csiki/croupier/GameModule/croupier_linux/AliveBotLoader.cpp
+1397985820 source:/home/csiki/croupier/GameModule/croupier_linux/AliveBotLoader.cpp
 	"stdafx.h"
 	"AliveBotLoader.h"
 	"AliveBot.h"
 
-1394877660 /home/csiki/croupier/GameModule/croupier_linux/stdafx.h
+1397985821 /home/csiki/croupier/GameModule/croupier_linux/stdafx.h
 	<stdio.h>
 	<iostream>
 	<map>
@@ -25,21 +25,21 @@
 	<exception>
 	<ratio>
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/AliveBotLoader.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/AliveBotLoader.h
 	"BotLoader.h"
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/BotLoader.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/BotLoader.h
 	"Bot.h"
 	"Process.h"
 	"BotData.h"
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/Bot.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/Bot.h
 	"Comment.h"
 	"BotCommunicator.h"
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/Comment.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/Comment.h
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/BotCommunicator.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/BotCommunicator.h
 	"BotInfo.h"
 	"Comment.h"
 	"KnowledgeDataType.h"
@@ -49,7 +49,7 @@
 	"Emotion.h"
 	"HandRank.h"
 
-1393022816 /home/csiki/croupier/GameModule/croupier_linux/BotInfo.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/BotInfo.h
 	<string>
 	<list>
 	"Card.h"
@@ -59,41 +59,41 @@
 	"BroadcastMember.h"
 	"BroadcastStation.h"
 
-1390748028 /home/csiki/croupier/GameModule/croupier_linux/Card.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/Card.h
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/Emotion.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/Emotion.h
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/BotLanguage.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/BotLanguage.h
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/Logger.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/Logger.h
 	"BroadcastMember.h"
 	"Entity.h"
 	"Loggable.h"
 	"Severity.h"
 	"BroadcastMessage.h"
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/BroadcastMember.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/BroadcastMember.h
 	"Entity.h"
 	"BroadcastMessage.h"
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/Entity.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/Entity.h
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/BroadcastMessage.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/BroadcastMessage.h
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/Loggable.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/Loggable.h
 	"Event.h"
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/Event.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/Event.h
 	"Severity.h"
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/Severity.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/Severity.h
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/BroadcastStation.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/BroadcastStation.h
 	"BroadcastMessage.h"
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/KnowledgeDataType.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/KnowledgeDataType.h
 
-1393022816 /home/csiki/croupier/GameModule/croupier_linux/BotKnowledgeHandler.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/BotKnowledgeHandler.h
 	<vector>
 	"KnowledgeTable.h"
 	"KnowledgeDataType.h"
@@ -102,14 +102,14 @@
 	"BotData.h"
 	"stdafx.h"
 
-1394877660 /home/csiki/croupier/GameModule/croupier_linux/KnowledgeTable.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/KnowledgeTable.h
 	"KnowledgeDataType.h"
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/KnowledgeTableXMLHandler.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/KnowledgeTableXMLHandler.h
 	"KnowledgeTable.h"
 	"pugixml.hpp"
 
-1390668952 /home/csiki/croupier/GameModule/croupier_linux/pugixml.hpp
+1397985821 /home/csiki/croupier/GameModule/croupier_linux/pugixml.hpp
 	"pugiconfig.hpp"
 	<stddef.h>
 	<exception>
@@ -117,9 +117,9 @@
 	<iosfwd>
 	<string>
 
-1390668952 /home/csiki/croupier/GameModule/croupier_linux/pugiconfig.hpp
+1397985821 /home/csiki/croupier/GameModule/croupier_linux/pugiconfig.hpp
 
-1390668954 /home/csiki/croupier/GameModule/pugixml/pugixml.hpp
+1397985821 /home/csiki/croupier/GameModule/pugixml/pugixml.hpp
 	"pugiconfig.hpp"
 	<stddef.h>
 	<exception>
@@ -127,84 +127,84 @@
 	<iosfwd>
 	<string>
 
-1390668954 /home/csiki/croupier/GameModule/pugixml/pugiconfig.hpp
+1397985821 /home/csiki/croupier/GameModule/pugixml/pugiconfig.hpp
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/BotData.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/BotData.h
 	"BotLanguage.h"
 	"BotTimeExceededException.h"
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/BotTimeExceededException.h
+1397987091 /home/csiki/croupier/GameModule/croupier_linux/BotTimeExceededException.h
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/Table.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/Table.h
 	"BotInfo.h"
 	"Card.h"
 	"Rulz.h"
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/Rulz.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/Rulz.h
 	"BettingSystem.h"
 	"BotLanguage.h"
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/BettingSystem.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/BettingSystem.h
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/HandRank.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/HandRank.h
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/Process.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/Process.h
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/AliveBot.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/AliveBot.h
 	"Bot.h"
 	"BotLanguage.h"
 	"BettingSystem.h"
 
-1390668951 source:/home/csiki/croupier/GameModule/croupier_linux/Bot.cpp
+1397985820 source:/home/csiki/croupier/GameModule/croupier_linux/Bot.cpp
 	"stdafx.h"
 	"Bot.h"
 
-1390668951 source:/home/csiki/croupier/GameModule/croupier_linux/BotCommunicationTranslator.cpp
+1397985820 source:/home/csiki/croupier/GameModule/croupier_linux/BotCommunicationTranslator.cpp
 	"stdafx.h"
 	"BotCommunicationTranslator.h"
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/BotCommunicationTranslator.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/BotCommunicationTranslator.h
 	"Process.h"
 	"Comment.h"
 	"Card.h"
 	"Bot.h"
 
-1390668951 source:/home/csiki/croupier/GameModule/croupier_linux/BotCommunicator.cpp
+1397985820 source:/home/csiki/croupier/GameModule/croupier_linux/BotCommunicator.cpp
 	"stdafx.h"
 	"BotCommunicator.h"
 
-1390668951 source:/home/csiki/croupier/GameModule/croupier_linux/BotData.cpp
+1397985820 source:/home/csiki/croupier/GameModule/croupier_linux/BotData.cpp
 	"stdafx.h"
 	"BotData.h"
 
-1390668951 source:/home/csiki/croupier/GameModule/croupier_linux/BotDataXMLHandler.cpp
+1397985820 source:/home/csiki/croupier/GameModule/croupier_linux/BotDataXMLHandler.cpp
 	"stdafx.h"
 	"BotDataXMLHandler.h"
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/BotDataXMLHandler.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/BotDataXMLHandler.h
 	"BotData.h"
 	"pugixml.hpp"
 
-1390668951 source:/home/csiki/croupier/GameModule/croupier_linux/BotHandler.cpp
+1397985820 source:/home/csiki/croupier/GameModule/croupier_linux/BotHandler.cpp
 	"stdafx.h"
 	"BotHandler.h"
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/BotHandler.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/BotHandler.h
 	"BotInfo.h"
 
-1390668951 source:/home/csiki/croupier/GameModule/croupier_linux/BotInfo.cpp
+1397985820 source:/home/csiki/croupier/GameModule/croupier_linux/BotInfo.cpp
 	"stdafx.h"
 	"BotInfo.h"
 
-1390668951 source:/home/csiki/croupier/GameModule/croupier_linux/BotKnowledgeHandler.cpp
+1397985820 source:/home/csiki/croupier/GameModule/croupier_linux/BotKnowledgeHandler.cpp
 	"stdafx.h"
 	"BotKnowledgeHandler.h"
 
-1393699996 source:/home/csiki/croupier/GameModule/croupier_linux/BotManager.cpp
+1397985820 source:/home/csiki/croupier/GameModule/croupier_linux/BotManager.cpp
 	"stdafx.h"
 	"BotManager.h"
 
-1393699976 /home/csiki/croupier/GameModule/croupier_linux/BotManager.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/BotManager.h
 	"BotCommunicator.h"
 	"BotHandler.h"
 	"Logger.h"
@@ -221,7 +221,7 @@
 	"Comment.h"
 	"TimerBotProxy.h"
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/Hostess.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/Hostess.h
 	"BroadcastMember.h"
 	"Table.h"
 	"Rulz.h"
@@ -230,46 +230,46 @@
 	"HandRank.h"
 	"HandEvaluator.h"
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/HandEvaluator.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/HandEvaluator.h
 	"HandRank.h"
 	"Card.h"
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/TimerBotProxy.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/TimerBotProxy.h
 	"Bot.h"
 
-1390668951 source:/home/csiki/croupier/GameModule/croupier_linux/BroadcastMember.cpp
+1397985820 source:/home/csiki/croupier/GameModule/croupier_linux/BroadcastMember.cpp
 	"stdafx.h"
 	"BroadcastStation.h"
 	"BroadcastMember.h"
 
-1390668951 source:/home/csiki/croupier/GameModule/croupier_linux/BroadcastStation.cpp
+1397985820 source:/home/csiki/croupier/GameModule/croupier_linux/BroadcastStation.cpp
 	"stdafx.h"
 	"BroadcastStation.h"
 	"BroadcastMember.h"
 
-1390668951 source:/home/csiki/croupier/GameModule/croupier_linux/CBotLoader.cpp
+1397985820 source:/home/csiki/croupier/GameModule/croupier_linux/CBotLoader.cpp
 	"stdafx.h"
 	"CBotLoader.h"
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/CBotLoader.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/CBotLoader.h
 	"BotLoader.h"
 
-1390668951 source:/home/csiki/croupier/GameModule/croupier_linux/CSharpBotLoader.cpp
+1397985820 source:/home/csiki/croupier/GameModule/croupier_linux/CSharpBotLoader.cpp
 	"stdafx.h"
 	"CSharpBotLoader.h"
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/CSharpBotLoader.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/CSharpBotLoader.h
 	"BotLoader.h"
 
-1390748019 source:/home/csiki/croupier/GameModule/croupier_linux/Card.cpp
+1397985820 source:/home/csiki/croupier/GameModule/croupier_linux/Card.cpp
 	"stdafx.h"
 	"Card.h"
 
-1390668951 source:/home/csiki/croupier/GameModule/croupier_linux/CommonLispBotLoader.cpp
+1397985820 source:/home/csiki/croupier/GameModule/croupier_linux/CommonLispBotLoader.cpp
 	"stdafx.h"
 	"CommonLispBotLoader.h"
 
-1390668951 /home/csiki/croupier/GameModule/croupier_linux/CommonLispBotLoader.h
+1397985820 /home/csiki/croupier/GameModule/croupier_linux/CommonLispBotLoader.h
 	"BotLoader.h"
 
 1390668951 source:/home/csiki/croupier/GameModule/croupier_linux/CppBotLoader.cpp
