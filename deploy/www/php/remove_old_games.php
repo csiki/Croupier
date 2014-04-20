@@ -1,5 +1,6 @@
 <?php
-require_once("php/include.php");
+require_once("include.php");
+date_default_timezone_set("Europe/Budapest");
 $deltaDay = 6;
 $date = new DateTime();
 $date->sub(new DateInterval('P' . $deltaDay . 'D'));
