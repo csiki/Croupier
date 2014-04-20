@@ -68,7 +68,7 @@ if (isset($_GET["gameID"]) && is_numeric($_GET["gameID"]) && isset($_GET["botID"
     //check game exits
     $log = SQL("SELECT endTime, log FROM games WHERE id = ? AND checked = 1", $gameID);
     if ($log == null)
-        die("Invalid request |||");
+        die("Invalid request");
     $logFile = _LOG_RELATIVE_PATH_ . $log[0]["log"];
     $date = $log[0]["endTime"];
     //check bot exits
@@ -80,7 +80,7 @@ if (isset($_GET["gameID"]) && is_numeric($_GET["gameID"]) && isset($_GET["botID"
     if (SQL("SELECT gameID FROM games_by_bots WHERE botID = ? AND gameID = ?", $botID, $gameID) == null)
         die("Invalid request - bot not participated");
 } else
-    die("Invalid request ----");
+    die("Invalid request");
 ?>
 <!DOCTYPE html>
 <html>

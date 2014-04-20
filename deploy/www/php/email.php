@@ -36,10 +36,10 @@ function sendFeedbackMail($title, $content)
     $res = SQL("SELECT email FROM accounts WHERE id = ?", $_SESSION['accountID']);
     $email = $res[0]["email"];
     $to = FEEDBACK_EMAIL;
-    $subject = "#FEEDBACK: $title";
-    $message = $_SESSION['username'] . " sent feedback.\nEmail addr: \n\n";
+    $subject = "#FEEDBACK: ". $title;
+    $message = $_SESSION['username'] . " sent feedback.\nEmail: $email\n\n";
     $message .= $content;
-    $from = "\"Croupier poker framework\" <" . NOREPLY_EMAIL . ">";
+    $from = "\"Croupier feedback\" <" . NOREPLY_EMAIL . ">";
     $headers = "From:" . $from;
     mail($to,$subject,$message,$headers);
 }

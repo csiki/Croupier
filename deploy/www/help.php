@@ -9,10 +9,14 @@ needLogin();
     <script>
         $(function () {
             $("#sendFeedback").click(function(){
+                $("#sendFeedback").hide();
+                $("#sendFeedbackLoading").show();
                 $.post( "send_feedback.php", $( "#feedbackForm" ).serialize(), function( data ) {
                     messageBox(data);
                     $("#subject").val("");
                     $("#text").val("");
+                    $("#sendFeedbackLoading").hide();
+                    $("#sendFeedback").show();
                 }, "json");
             });
         });
@@ -41,6 +45,7 @@ needLogin();
                       wrap="off"></textarea>
         <br/>
         <input type="button" class="button" id="sendFeedback" value="<?= $tr["SEND_FEEDBACK"] ?>">
+        <div class="icon loadingIcon" id="sendFeedbackLoading" style="display: none"></div>
     </form>
 </div>
 <footer>
