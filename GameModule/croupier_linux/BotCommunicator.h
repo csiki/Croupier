@@ -21,7 +21,7 @@ public:
 	{}
 
 	// botmanager
-	Card getHand(int cardIndex) const;
+	Card getHand(size_t cardIndex) const;
 	void setEmotion(Emotion emotion);
 	virtual int getReservedCredit() const = 0;
 	virtual int getNumOfRebuys() const = 0;

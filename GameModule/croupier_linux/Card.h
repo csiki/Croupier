@@ -34,8 +34,8 @@ public:
     ACE = 14
   };
 
-	const Suit suit;
-	const Rank rank;
+	Suit suit;
+	Rank rank;
 
 	Card() : suit(Suit::NULLSUIT), rank(Rank::NULLRANK) {}
 	Card(int s, int r) : suit((Card::Suit)s), rank((Card::Rank)r) {}
@@ -48,7 +48,6 @@ public:
 	std::string toString() const;
 
 	static Card getNullCard();
-	static Card* getSharedNullCard();
 	static bool isNullCard(Card& card);
 	static Card getCardByVal(int val);
 

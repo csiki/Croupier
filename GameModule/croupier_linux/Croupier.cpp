@@ -23,14 +23,14 @@ bool Croupier::botComparatorByPot(int botIndex1, int botIndex2)
 
 /** Burn a card.
 */
-void Croupier::burn(Card* c)
+void Croupier::burn(const Card& c)
 {
 	// log
 	std::string msg = "burn ";
-	msg += c->toString();
+	msg += c.toString();
 	this->log(Severity::NOTIFICATION, msg);
 
-	this->burnt[this->numberOfBurntCards++] = c;
+	this->burnt.push_back(c);
 }
 
 /** Puts burnt cards, cards from the table, and hands back to deck.
@@ -41,18 +41,16 @@ void Croupier::collectCards()
 	this->log(Severity::NOTIFICATION, "collectCards");
 
 	// burnt cards
-	for (size_t i = 0; i < this->numberOfBurntCards; ++i)
+	while(!this->burnt.empty())
 	{
-		this->deck.push(this->burnt[i]);
-		this->burnt[i] = nullptr;
+	  this->deck.push(burnt.back());
+	  burnt.pop_back();
 	}
-	this->numberOfBurntCards = 0;
 
 	// cards from table
-	Card* c;
-	while ( (c = this->table->rmCard()) != nullptr )
+	while(this->table->getNumOfCards() > 0)
 	{
-		this->deck.push(c);
+	  this->deck.push(this->table->rmCard());
 	}
 
 	// hands
@@ -61,8 +59,8 @@ void Croupier::collectCards()
 		if (this->bots[i]->isInGame())
 		{
 			// if a bot is in game, then it must have cards
-			this->deck.push(this->bots[i]->takeHand(0));
-			this->deck.push(this->bots[i]->takeHand(1));
+			this->deck.push(this->bots[i]->takeHand());
+			this->deck.push(this->bots[i]->takeHand());
 		}
 	}
 }
@@ -172,20 +170,20 @@ void Croupier::flop()
 	this->burn(this->deck.pop());
 
 	// put 3 cards on table
-	Card* c1 = this->deck.pop();
-	Card* c2 = this->deck.pop();
-	Card* c3 = this->deck.pop();
+	Card c1 = this->deck.pop();
+	Card c2 = this->deck.pop();
+	Card c3 = this->deck.pop();
 	this->table->addCard(c1);
 	this->table->addCard(c2);
 	this->table->addCard(c3);
 
 	// log
 	std::string msg = "flop ";
-	msg += c1->toString();
+	msg += c1.toString();
 	msg += ',';
-	msg += c2->toString();
+	msg += c2.toString();
 	msg += ',';
-	msg += c3->toString();
+	msg += c3.toString();
 	this->log(Severity::NOTIFICATION, msg);
 
 	// broadcast
@@ -204,12 +202,12 @@ void Croupier::turn()
 	this->burn(this->deck.pop());
 
 	// put a card on table
-	Card* c = this->deck.pop();
+	Card c = this->deck.pop();
 	this->table->addCard(c);
 
 	// log
 	std::string msg = "turn ";
-	msg += c->toString();
+	msg += c.toString();
 	this->log(Severity::NOTIFICATION, msg);
 
 	// broadcast
@@ -228,12 +226,12 @@ void Croupier::river()
 	this->burn(this->deck.pop());
 
 	// put a card on table
-	Card* c = this->deck.pop();
+	Card c = this->deck.pop();
 	this->table->addCard(c);
 
 	// log
 	std::string msg = "river ";
-	msg += c->toString();
+	msg += c.toString();
 	this->log(Severity::NOTIFICATION, msg);
 
 	// broadcast
@@ -423,12 +421,12 @@ void Croupier::determineWinners(int& numOfWinners, int** winnersIndex)
 	}
 
 	// if showdown went down, and multiple bots stayed in round
-	const Card** tmpHand = new const Card*[7];
+	std::vector<Card> tmpHand(7);
 
 	// tmpHand array first five items are the cards on table
 	for (size_t i = 0; i < 5; ++i)
 	{
-		tmpHand[i] = this->table->getCard(i);
+	  tmpHand[i] = this->table->getCard(i);
 	}
 
 	// eval all hands in game, find hands with the (same) highest rank, compare them
@@ -480,9 +478,6 @@ void Croupier::determineWinners(int& numOfWinners, int** winnersIndex)
 		msg += this->bots[((*winnersIndex)[i])]->getName();
 	}
 	this->log(Severity::NOTIFICATION, msg);
-
-	// free shit
-	delete [] tmpHand;
 }
 
 /** Finds a bot's index in bots array by the given id.

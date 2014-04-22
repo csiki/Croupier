@@ -9,37 +9,28 @@
 class Deck
 {
 private:
-	std::vector<Card*> cards;
+	std::vector<Card> cards;
 
 public:
-	/** Constructor of Deck.
+	/*
 	 *  Fills deck with cards.
-	*/
+	 */
 	Deck()
 	{
 		for (size_t i = 1; i <= 4; ++i)
 		{
 			for (size_t j = 2; j <= 14; ++j)
 			{
-				this->cards.push_back(new Card(i, j));
+				this->cards.push_back(Card(i, j));
 			}
 		}
 	}
 
-	/** Destructor of Deck.
-	 *  Deletescards from deck.
-	*/
-	virtual ~Deck()
-	{
-		for (std::vector<Card*>::iterator it = cards.begin(); it != cards.end(); ++it)
-		{
-			delete *it;
-		}
-	}
+	virtual ~Deck() {}
 
 	int num() const;
-	Card* pop(); // UNIT done
-	void push(Card* c); // UNIT done
+	Card pop(); // UNIT done
+	void push(const Card& c); // UNIT done
 	void shuffle(); // UNIT done
 };
 

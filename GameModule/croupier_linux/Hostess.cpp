@@ -395,25 +395,19 @@ int Hostess::getNumOfBots(bool onlyInGame, bool onlyInRound) const
 
 /** Returns the highest rank of the bot's two cards combined with the cards on table.
 */
-HandRank Hostess::getBotHandRank(Card* botCard1, Card* botCard2) const
+HandRank Hostess::getBotHandRank(const std::vector<Card>& botCards) const
 {
-	const Card* cards[7];
+  std::vector<Card> cards;
 
-	// fill cards with bot's hand and the ones on table
-	int i;
-	for (i = 0; i < this->table->getNumOfCards(); ++i)
+	for (size_t i = 0; i < this->table->getNumOfCards(); ++i)
 	{
-		cards[i] = this->table->getCard(i);
+		cards.push_back(this->table->getCard(i));
 	}
-	cards[i++] = botCard1;
-	cards[i++] = botCard2;
 
-	// if there was not enough card (before showdown), fill the rest with nullcards
-	Card* nullCard = new Card();
-	for (; i < 7; ++i)
-	{
-		cards[i] = nullCard;
-	}
+	cards.push_back(botCards[0]);
+	cards.push_back(botCards[1]);
+
+	cards.resize(7); // Fill the rest of the places with null cards
 
 	return HandEvaluator::evalHandRank(cards);
 }

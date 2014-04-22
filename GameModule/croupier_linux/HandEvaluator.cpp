@@ -2,20 +2,19 @@
 #include "HandEvaluator.h"
 #include "HandRank.h"
 
-unsigned HandEvaluator::evalHandValue(const Card** cards)
+unsigned HandEvaluator::evalHandValue(const std::vector<Card>& cards)
 {
   return HandEvaluator::evalHand(cards).second;
 }
 
-HandRank HandEvaluator::evalHandRank(const Card** cards)
+HandRank HandEvaluator::evalHandRank(const std::vector<Card>& cards)
 {
   return HandEvaluator::evalHand(cards).first;
 }
 
-std::pair<HandRank, unsigned> HandEvaluator::eval5CardHand(const Card** cards)
+std::pair<HandRank, unsigned> HandEvaluator::eval5CardHand(const std::vector<Card>& cards)
 {
-  Histogram hist;
-  HandEvaluator::createHistogram(cards, hist);
+  Histogram hist = HandEvaluator::createHistogram(cards);
 
   HandRank rank = HandRank::HighCard;
   unsigned value = 0;
@@ -42,14 +41,14 @@ std::pair<HandRank, unsigned> HandEvaluator::eval5CardHand(const Card** cards)
   }
 
   bool isFlush = true, isStraight = true;
-  for(size_t i = 0; i < 5; ++i)
+  for(const Card& c : cards)
   {
-    if(cards[i]->suit == Card::NULLSUIT)
+    if(c.suit == Card::NULLSUIT)
     {
       isFlush = false;
       isStraight = false;
     }
-    else if(cards[i]->suit != cards[0]->suit)
+    else if(c.suit != cards.front().suit)
     {
       isFlush = false;
     }
@@ -99,20 +98,21 @@ std::pair<HandRank, unsigned> HandEvaluator::eval5CardHand(const Card** cards)
   return std::make_pair(rank, value);
 }
 
-std::pair<HandRank, unsigned> HandEvaluator::evalHand(const Card** cards)
+std::pair<HandRank, unsigned> HandEvaluator::evalHand(const std::vector<Card>& cards)
 {
-  const Card* tmpHand[5];
+  std::vector<Card> tmpHand;
   std::pair<HandRank, unsigned> bestValue(HandRank::None, 0), tmpValue;
+
   for(size_t s1 = 0; s1 < 7; ++s1)
   {
     for(size_t s2 = s1 + 1; s2 < 7; ++s2)
     {
-      for(size_t i = 0, x = 0; i < 7; ++i)
+      tmpHand.clear();
+      for(size_t i = 0; i < 7; ++i)
       {
         if(i != s1 && i != s2)
         {
-          tmpHand[x] = cards[i];
-          ++x;
+          tmpHand.push_back(cards[i]);
         }
       }
       tmpValue = HandEvaluator::eval5CardHand(tmpHand);
@@ -132,16 +132,17 @@ unsigned HandEvaluator::getValueFromHistogram(const Histogram& histogram)
   return value;
 }
 
-void HandEvaluator::createHistogram(const Card** cards, Histogram& hist)
+HandEvaluator::Histogram HandEvaluator::createHistogram(const std::vector<Card>& cards)
 {
-  for(size_t i = 0; i < 5; ++i)
+  Histogram hist;
+  for(const Card& c : cards)
   {
-    if(cards[i]->rank != Card::NULLRANK)
+    if(c.rank != Card::NULLRANK)
     {
       bool found = false;
       for(auto& it : hist)
       {
-        if(it.second == cards[i]->rank)
+        if(it.second == c.rank)
         {
           ++it.first;
           found = true;
@@ -150,9 +151,10 @@ void HandEvaluator::createHistogram(const Card** cards, Histogram& hist)
       }
       if(!found)
       {
-        hist.push_back(std::make_pair(1, cards[i]->rank));
+        hist.push_back(std::make_pair(1, c.rank));
       }
     }
   }
   std::sort(hist.begin(), hist.end(), std::greater<CountRankPair>());
+  return hist;
 }

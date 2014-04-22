@@ -70,8 +70,7 @@ public:
 	int getBotIndexByID(int botID) const;
 	int getNumOfBots(bool onlyInGame, bool onlyInRound) const;
 	int getCurrentRound() const;
-	HandRank getBotHandRank(Card* botCard1, Card* botCard2) const;
-
+	HandRank getBotHandRank(const std::vector<Card>& botCards) const;
 };
 
 #endif  //_HOSTESS_H

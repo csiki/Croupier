@@ -52,11 +52,11 @@ bool BotInfo::isInRound() const
 
 /** Checks a card of the AI's hand (without touching it).
 */
-Card BotInfo::lookAtHand(int cardIndex) const
+Card BotInfo::lookAtHand(size_t cardIndex) const
 {
-	if (this->cardsRevealed && cardIndex < 2 && cardIndex >= 0 && this->hand[cardIndex] != nullptr)
+	if (this->cardsRevealed && cardIndex < this->hand.size())
 	{
-		return *(this->hand[cardIndex]);
+		return this->hand[cardIndex];
 	}
 
 	return Card::getNullCard();

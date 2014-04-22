@@ -3,44 +3,42 @@
 
 /** Adds a card to the ones on table (flop, turn, river).
 */
-void Table::addCard(Card* c)
+void Table::addCard(const Card& c)
 {
-	this->cards[this->numOfCards++] = c;
+  this->cards.push_back(c);
 }
 
 /** Returns the number of cards on table (flop, turn, river).
 */
 int Table::getNumOfCards() const
 {
-	return this->numOfCards;
+	return this->cards.size();
 }
 
 /** Removes from table (if there's any flop, turn, river).
 */
-Card* Table::rmCard()
+Card Table::rmCard()
 {
-	if (numOfCards > 0)
+	if (!this->cards.empty())
 	{
-		--numOfCards;
-		Card* card = this->cards[numOfCards];
-		this->cards[numOfCards] = nullptr;
-
-		return card;
+		Card c = this->cards.back();
+		this->cards.pop_back();
+		return c;
 	}
 
-	return nullptr;
+	return Card::getNullCard();
 }
 
 /** Returns a card from table (flop, turn, river).
 */
-const Card* Table::getCard(int index) const
+Card Table::getCard(size_t index) const
 {
-	if (index >= 0 && index < this->numOfCards)
+	if (index < this->cards.size())
 	{
 		return this->cards[index];
 	}
 
-	return Card::getSharedNullCard();
+	return Card::getNullCard();
 }
 
 /** Returns a reference to a bot by its index (at table).

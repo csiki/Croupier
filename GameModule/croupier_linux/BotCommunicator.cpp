@@ -3,13 +3,12 @@
 
 /**	Returns one of AI's card in hand.
 */
-Card BotCommunicator::getHand(int cardIndex) const
+Card BotCommunicator::getHand(size_t cardIndex) const
 {
-	if (cardIndex >= 0 && cardIndex < 2 && this->hand[cardIndex] != nullptr)
+	if (cardIndex < this->hand.size())
 	{
-		return *this->hand[cardIndex];
+		return this->hand[cardIndex];
 	}
-
 	return Card::getNullCard();
 }
 

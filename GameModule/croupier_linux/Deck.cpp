@@ -10,16 +10,16 @@ int Deck::num() const
 
 /** Pop a card.
 */
-Card* Deck::pop()
+Card Deck::pop()
 {
-	Card* c = cards.back();
+	Card c = cards.back();
 	cards.pop_back();
 	return c;
 }
 
 /** Push a card to the deck.
 */
-void Deck::push(Card* c)
+void Deck::push(const Card& c)
 {
 	cards.push_back(c);
 }
@@ -28,5 +28,5 @@ void Deck::push(Card* c)
 */
 void Deck::shuffle()
 {
-	std::random_shuffle(cards.begin(), cards.end()); // using inner Fisher–Yates shuffle algorithm
+	std::random_shuffle(cards.begin(), cards.end()); // using inner Fisher-Yates shuffle algorithm
 }

@@ -19,14 +19,14 @@ public:
 		this->talkToken = false;
 	}
 
-    const Card* checkCard(int index);
+  Card checkCard(size_t index);
 	void addDealerButton();
 	void rmDealerButton();
 	void forceBlind(int blind);
-	void receiveCard(Card* c);
+	void receiveCard(const Card& c);
 	void receiveChips(int chipsAmount);
 	void revealCards();
-	Card* takeHand(int cardIndex);
+	Card takeHand();
 	int takePot(int amount = -1); // -1 default means all the pot
 	virtual void step() = 0;
 	virtual void leave() = 0;

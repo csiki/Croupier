@@ -187,7 +187,7 @@ std::string BotManager::getBotName(int botID) const
     if(bot != nullptr)
         return bot->getName();
     else
-        return false;
+        return "";
 }
 
 /** Returns if a specified AI is a dealer.
@@ -1056,7 +1056,7 @@ Card BotManager::getTableCard(int cardIndex) const
 	this->log(Severity::VERBOSE, msg);
 	this->critical_to_thread_cancel.store(false);
 
-	return *this->table->getCard(cardIndex);
+	return this->table->getCard(cardIndex);
 }
 
 /** Returns the amount of pot on table.
@@ -1260,9 +1260,9 @@ HandRank BotManager::getHandRank() const
 	this->log(Severity::VERBOSE, "getHandRank");
 	this->critical_to_thread_cancel.store(false);
 
-	if (this->hand[0] != nullptr) // has cards
+	if (this->hand.size() == 2) // has cards
 	{
-		return this->hostess->getBotHandRank(this->hand[0], this->hand[1]);
+		return this->hostess->getBotHandRank(this->hand);
 	}
 
 	return HandRank::None;

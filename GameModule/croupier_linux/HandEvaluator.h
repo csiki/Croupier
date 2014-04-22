@@ -12,7 +12,7 @@ class HandEvaluator
   /*
    * Create a (sorted) histogram from the specified 5 card hand
    */
-  static void createHistogram(const Card** cards, Histogram& hist);
+  static Histogram createHistogram(const std::vector<Card>& cards);
 
   /*
    * Calculate the value of the histogram
@@ -26,22 +26,22 @@ public:
 	 * Evaluate the value of the hand to a 32bit unsigned integer
 	 * Higher value means better hand and two hand have the same value if they are tied at the show down
 	 */
-	static unsigned evalHandValue(const Card** cards);
+	static unsigned evalHandValue(const std::vector<Card>& cards);
 
 	/*
 	 * Evaluate the rank of the hand
 	 */
-	static HandRank evalHandRank(const Card** cards);
+	static HandRank evalHandRank(const std::vector<Card>& cards);
 
 	/*
    * Calculate the rank and the value of a hand (7 cards)
    */
-  static std::pair<HandRank, unsigned> evalHand(const Card** cards);
+  static std::pair<HandRank, unsigned> evalHand(const std::vector<Card>& cards);
 
   /*
    * Calculate the rank and the value of a 5 card hand
    */
-  static std::pair<HandRank, unsigned> eval5CardHand(const Card** cards);
+  static std::pair<HandRank, unsigned> eval5CardHand(const std::vector<Card>& cards);
 };
 
 #endif  //_HANDEVALUATOR_H
