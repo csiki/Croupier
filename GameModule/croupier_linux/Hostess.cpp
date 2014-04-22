@@ -397,8 +397,7 @@ int Hostess::getNumOfBots(bool onlyInGame, bool onlyInRound) const
 */
 HandRank Hostess::getBotHandRank(Card* botCard1, Card* botCard2) const
 {
-	const Card** cards = new const Card*[7];
-	const Card** bestHand = new const Card*[5];
+	const Card* cards[7];
 
 	// fill cards with bot's hand and the ones on table
 	int i;
@@ -416,10 +415,5 @@ HandRank Hostess::getBotHandRank(Card* botCard1, Card* botCard2) const
 		cards[i] = nullCard;
 	}
 
-	HandRank tmpRank = HandEvaluator::evalHand(cards, bestHand);
-	
-	delete [] cards;
-	delete [] bestHand;
-
-	return tmpRank;
+	return HandEvaluator::evalHandRank(cards);
 }

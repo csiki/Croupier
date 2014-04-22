@@ -416,7 +416,7 @@ void Croupier::determineWinners(int& numOfWinners, int** winnersIndex)
 	if (numOfBotsInRound == 1)
 	{
 		numOfWinners = 1;
-		*winnersIndex = new int;
+		*winnersIndex = new int[1];
 		(*winnersIndex)[0] = tmpIfOneWinnerIndex;
 
 		return;
@@ -433,70 +433,37 @@ void Croupier::determineWinners(int& numOfWinners, int** winnersIndex)
 
 	// eval all hands in game, find hands with the (same) highest rank, compare them
 	// by iterating through inRound bots only once
-	std::list<int> *winners = new std::list<int>(); // storing (possible) winners' indexes
-	const Card** winnerBestHand = new const Card*[5];
-	const Card** tmpBestHand = new const Card*[5];
-	HandRank tmpRank;
-	HandRank winnerRank = HandRank::None;
-	int winnerIndex = -1;
-	int comparison;
+	std::list<int> winners;
 
+	unsigned bestHandValue = 0, tmpHandValue;
 	for (size_t i = 0; i < this->numOfBots; ++i)
-	{
-		if (this->bots[i]->isInRound())
-		{
-			// tmpHand array last 2 elements are the ones in the actual player's hand
-			tmpHand[5] = this->bots[i]->checkCard(0);
-			tmpHand[6] = this->bots[i]->checkCard(1);
+  {
+    if (this->bots[i]->isInRound())
+    {
+      // tmpHand array last 2 elements are the ones in the actual player's hand
+      tmpHand[5] = this->bots[i]->checkCard(0);
+      tmpHand[6] = this->bots[i]->checkCard(1);
 
-			tmpRank = HandEvaluator::evalHand(tmpHand, tmpBestHand);
-
-			if (winnerRank < tmpRank) // higher rank found
-			{
-				winnerRank = tmpRank;
-				winnerIndex = i;
-
-				winners->clear();
-				winners->push_back(i);
-
-				// winnerBestHand = tmpBestHand (copy)
-				for (size_t j = 0; j < 5; ++j)
-				{
-					winnerBestHand[j] = tmpBestHand[j];
-				}
-			}
-			else if (winnerRank == tmpRank)
-			{
-				// hand found with same HandRank
-				// compare bestHands to see which is higher
-				comparison = HandEvaluator::handComparator(
-					winnerRank, winnerBestHand, tmpBestHand);
-
-				if (comparison == -1) // winnerBestHand < tmpBestHand
-				{
-					winnerIndex = i;
-
-					// winnerBestHand = tmpBestHand (copy)
-					for (size_t j = 0; j < 5; ++j)
-					{
-						winnerBestHand[j] = tmpBestHand[j];
-					}
-				}
-				else if (comparison == 0) // winnerBestHand == tmpBestHand
-				{
-					// one more (possible) winner
-					winners->push_back(i);
-				}
-			}
-		}
-	}
+      tmpHandValue = HandEvaluator::evalHandValue(tmpHand);
+      if(tmpHandValue > bestHandValue)
+      {
+        bestHandValue = tmpHandValue;
+        winners.clear();
+        winners.push_back(i);
+      }
+      else if(tmpHandValue == bestHandValue)
+      {
+        winners.push_back(i);
+      }
+    }
+  }
 
 	// fill winnersIndex, declare numOfWinners
-	numOfWinners = winners->size();
+	numOfWinners = winners.size();
 	*winnersIndex = new int[numOfWinners];
 
 	int i = 0;
-	for (std::list<int>::iterator it = winners->begin(); it != winners->end(); ++it)
+	for (std::list<int>::iterator it = winners.begin(); it != winners.end(); ++it)
 	{
 		(*winnersIndex)[i++] = *it;
 	}
@@ -515,10 +482,7 @@ void Croupier::determineWinners(int& numOfWinners, int** winnersIndex)
 	this->log(Severity::NOTIFICATION, msg);
 
 	// free shit
-	delete winners;
 	delete [] tmpHand;
-	delete [] winnerBestHand;
-	delete [] tmpBestHand;
 }
 
 /** Finds a bot's index in bots array by the given id.

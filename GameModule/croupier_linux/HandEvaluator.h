@@ -4,17 +4,44 @@
 #include "HandRank.h"
 #include "Card.h"
 
-/**	Evaluates and compares hands.
-*/
 class HandEvaluator
 {
-private:
-	static HandRank evalFiveCards(const Card** cards);
+  typedef std::pair<size_t, Card::Rank> CountRankPair;
+  typedef std::vector<CountRankPair> Histogram;
+
+  /*
+   * Create a (sorted) histogram from the specified 5 card hand
+   */
+  static void createHistogram(const Card** cards, Histogram& hist);
+
+  /*
+   * Calculate the value of the histogram
+   * The histogram should be sorted based on the count and than the card rank, both decreasing
+   */
+  static unsigned getValueFromHistogram(const Histogram& histogram);
 
 public:
-	static HandRank evalHand(const Card** cards, const Card** bestHand); // UNIT done
-	static int handComparator(HandRank rank, const Card** bestHand1, const Card** bestHand2); // UNIT done
-	static bool cardComparatorByRank(const Card* c1, const Card* c2); // UNIT done
+
+	/*
+	 * Evaluate the value of the hand to a 32bit unsigned integer
+	 * Higher value means better hand and two hand have the same value if they are tied at the show down
+	 */
+	static unsigned evalHandValue(const Card** cards);
+
+	/*
+	 * Evaluate the rank of the hand
+	 */
+	static HandRank evalHandRank(const Card** cards);
+
+	/*
+   * Calculate the rank and the value of a hand (7 cards)
+   */
+  static std::pair<HandRank, unsigned> evalHand(const Card** cards);
+
+  /*
+   * Calculate the rank and the value of a 5 card hand
+   */
+  static std::pair<HandRank, unsigned> eval5CardHand(const Card** cards);
 };
 
 #endif  //_HANDEVALUATOR_H
