@@ -54,4 +54,6 @@ public:
     static Card nullCard;
 };
 
+std::ostream& operator<<(std::ostream& os, const Card& c);
+
 #endif  //_CARD_H

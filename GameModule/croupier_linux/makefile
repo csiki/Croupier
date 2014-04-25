@@ -46,7 +46,6 @@ SOURCES = \
 	./JavaBotLoader.cpp \
 	./KnowledgeTable.cpp \
 	./KnowledgeTableXMLHandler.cpp \
-	./Log.cpp \
 	./Logger.cpp \
 	./LogXMLHandler.cpp \
 	./LuaBotLoader.cpp \

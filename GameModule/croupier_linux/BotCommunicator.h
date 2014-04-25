@@ -16,8 +16,8 @@ class BotCommunicator : virtual public BotInfo
 {
 public:
 
-	BotCommunicator(int playerID, BroadcastStation* broadcastStation, Loggable* loggable, int chips) :
-		BotInfo(playerID, broadcastStation, loggable, chips), Entity(playerID)
+	BotCommunicator(int playerID, BroadcastStation* broadcastStation, int chips) :
+		BotInfo(playerID, broadcastStation, chips), Entity(playerID)
 	{}
 
 	// botmanager

@@ -45,7 +45,6 @@ void GameOwner::initialiseGame()
 	this->fillBotLoaders();
 
 	// create independent components
-	this->log = new Log();
 	std::string rulzPath = _RULZ_RELATIVE_PATH_;
 	rulzPath += this->gameData->rulzFileName;
 	this->rulz = RulzXMLHandler::loadXML(rulzPath);
@@ -59,7 +58,7 @@ void GameOwner::initialiseGame()
 	this->broadcastStation = new BroadcastStation;
 	this->table = new Table(this->numOfBots);
 	this->hostess = new Hostess(this->numOfBots, this->table, this->rulz, this->broadcastStation);
-	this->croupier = new Croupier(this->numOfBots, this->broadcastStation, this->log, this->rulz, this->table);
+	this->croupier = new Croupier(this->numOfBots, this->broadcastStation, this->rulz, this->table);
 
 	// load bots
 	for (size_t i = 0; i < this->numOfBots; ++i)
@@ -77,7 +76,7 @@ void GameOwner::initialiseGame()
 		// load bot manager
 		this->botManagers[i] = new BotManager(
 			bkHandler, this->hostess, this->table,
-			this->rulz, this->broadcastStation, this->log, botdata->playerID, botdata->id,
+			this->rulz, this->broadcastStation, botdata->playerID, botdata->id,
 			this->rulz->getStartingChips(), botdata->credit - this->rulz->getStartingChips(), i);
 
 		// set botdata communicator
@@ -130,7 +129,7 @@ void GameOwner::saveResults()
 	// save log
 	std::string logPath = _LOG_RELATIVE_PATH_;
 	logPath += this->gameData->logFileName;
-	LogXMLHandler::saveXML(this->log, logPath);
+	LogXMLHandler::saveXML(Logger::GetEvents(), logPath);
 
 	// save bot credits and the round when they fell out
 	Results* results = new Results(this->numOfBots);

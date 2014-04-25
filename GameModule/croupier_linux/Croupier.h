@@ -52,8 +52,8 @@ private:
 public:
 	/** Method to create Croupier, setting its attibrutes to default.
 	*/
-	Croupier(int numOfBots, BroadcastStation* broadcastStation, Loggable* loggable, const Rulz* rules, Table* table) :
-		BroadcastMember(0, broadcastStation), Logger(0, loggable), Entity(0)
+	Croupier(int numOfBots, BroadcastStation* broadcastStation, const Rulz* rules, Table* table) :
+		BroadcastMember(0, broadcastStation), Entity(0)
 	{
 		this->rules = rules;
 		this->table = table;

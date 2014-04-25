@@ -12,7 +12,7 @@
 
 /**	Interface for AIs to other AIs.
 */
-class BotInfo : public Logger, public BroadcastMember
+class BotInfo : public BroadcastMember
 {
 protected:
 	int chips;
@@ -26,8 +26,8 @@ protected:
 	Emotion emotion;
 public:
 
-	BotInfo(int playerID, BroadcastStation* broadcastStation, Loggable* loggable, int chips) :
-		Entity(playerID), BroadcastMember(playerID, broadcastStation), Logger(playerID, loggable)
+	BotInfo(int playerID, BroadcastStation* broadcastStation, int chips) :
+		Entity(playerID), BroadcastMember(playerID, broadcastStation)
 	{
 		this->chips = chips;
 		this->pot = 0;

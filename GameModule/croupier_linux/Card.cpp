@@ -108,3 +108,9 @@ Card Card::getCardByVal(int val)
 
 	return Card(s, r);
 }
+
+std::ostream& operator <<(std::ostream& os, const Card& c)
+{
+  os << c.toString();
+  return os;
+}

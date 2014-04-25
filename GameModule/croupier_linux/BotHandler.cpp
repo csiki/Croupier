@@ -52,11 +52,7 @@ void BotHandler::forceBlind(int blind)
 */
 void BotHandler::receiveCard(const Card& c)
 {
-	// log
-	std::string msg = "receiveCard ";
-	msg += c.toString();
-	this->log(Severity::VERBOSE, msg);
-
+	Logger::Log(this, Severity::VERBOSE, "receiveCard ", c);
 	this->hand.push_back(c);
 }
 
@@ -72,13 +68,7 @@ void BotHandler::receiveChips(int chipsAmount)
 void BotHandler::revealCards()
 {
 	this->cardsRevealed = true;
-
-	// log cards (as information)
-	std::string msg = "revealCards ";
-	msg += this->lookAtHand(0).toString();
-	msg += ",";
-	msg += this->lookAtHand(1).toString();
-	this->log(Severity::INFORMATION, msg);
+	Logger::Log(this, Severity::INFORMATION, "revealCards ", this->lookAtHand(0), ",", this->lookAtHand(1));
 }
 
 /**	Removes a card from AI's hand.

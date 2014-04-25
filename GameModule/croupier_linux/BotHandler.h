@@ -12,8 +12,8 @@ protected:
 	bool talkToken;
 public:
 
-	BotHandler(int playerID, BroadcastStation* broadcastStation, Loggable* loggable, int chips) :
-		BotInfo(playerID, broadcastStation, loggable, chips), Entity(playerID)
+	BotHandler(int playerID, BroadcastStation* broadcastStation, int chips) :
+		BotInfo(playerID, broadcastStation, chips), Entity(playerID)
 	{
 		this->stepToken = false;
 		this->talkToken = false;
