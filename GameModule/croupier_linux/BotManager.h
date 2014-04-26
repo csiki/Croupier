@@ -34,8 +34,7 @@ private:
 	const Rulz *rules;
 
 	/// Shared with TimerBotProxy
-	mutable std::atomic_bool critical_to_thread_cancel;
-	mutable std::atomic_bool timeout_occured;
+	mutable std::recursive_mutex manage_thread_mutex;
 
 	/// Bot's index at table
 	int nthAtTable;
@@ -59,8 +58,6 @@ public:
 		this->kickedAtRound = 0;
 		this->numOfRaises = 0;
 		this->bot = nullptr;
-		this->critical_to_thread_cancel.store(false);
-		this->timeout_occured.store(false);
 
 		// subscribe to BroadcastStation
 		this->subscribe();
