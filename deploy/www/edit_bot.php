@@ -1,5 +1,6 @@
 <?php
 require_once "php/include.php";
+require_once "php/leaderboard.php";
 needLogin();
 $errors = array();
 $name = $className = $code = $lang = $orig = $id = "";
@@ -10,14 +11,22 @@ if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
         die("Invalid Request");
     $name = $orig[0]["name"];
     $className = $orig[0]["className"];
-    $code = file_get_contents(_BOT_AI_RELATIVE_PATH_ . $_SESSION["accountID"] . "/" . $id.".cpp");
+    $code = file_get_contents(_BOT_AI_RELATIVE_PATH_ . $_SESSION["accountID"] . "/" . $id . ".cpp");
     $lang = $orig[0]["code_lang"];
 } else {
     die("Invalid request");
 }
 if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])) {
-    if (isset($_POST["name"]) && !empty($_POST["name"]))
-        $name = xssafe($_POST["name"]);
+    if (isset($_POST["name"]) && !empty($_POST["name"])) {
+        if (!sanityCheck($_POST['name'], 'string', 5, 30))
+            $errors[] = $tr["ERR_BOTNAME_LENGTH"];
+        else if (!checkBotname($_POST['name']))
+            $errors[] = $tr["ERR_BOTNAME_FORMAT"];
+        else if (SQL("SELECT 1 FROM bots WHERE name = ? AND accountID != ?", $name, $_SESSION["accountID"]) != null)
+            $errors[] = $tr["ERR_NAME_CONFLICT"];
+        else
+            $name = xssafe($_POST['name']);
+    }
     if (SQL("SELECT * FROM bots WHERE name = ? AND id != ?", $name, $id) != null)
         $errors[] = $tr["ERR_NAME_CONFLICT"];
 
@@ -58,7 +67,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
         SQL("UPDATE bots SET name = ?, className = ?, lastChangeTime = NOW(), code_lang = ?, state = 'processing'
               WHERE id = ?", $name, $className, $lang, $id);
 
-        $fileName = _BOT_AI_RELATIVE_PATH_ . $_SESSION["accountID"] . "/" . $id.".cpp";
+        $fileName = _BOT_AI_RELATIVE_PATH_ . $_SESSION["accountID"] . "/" . $id . ".cpp";
 
         //remove previous file
         unlink($fileName);
@@ -73,14 +82,11 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
                 die("Couldn't write bot to file: " . $id);
         }
 
-        //remove bot from leaderboards
+        //reset score
         $leaderBoardTables = SQL("SELECT tableName FROM leaderboards");
         for ($i = 0; $i < count($leaderBoardTables); $i++) {
-            SQL("DELETE FROM " . $leaderBoardTables[$i]["tableName"] . " WHERE botID = ?", $id);
+            SQL("UPDATE " . $leaderBoardTables[$i]["tableName"] . " SET score = ? WHERE botID = ?", INITIAL_SCORE, $id);
         }
-
-        //remove bot from games_by_bots
-        SQL("DELETE FROM games_by_bots WHERE botID = ?", $id);
 
         header('Location: ../my_bots.php');
     }
@@ -104,12 +110,6 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
             $("#codeLang").on("change", langChanged);
             langChanged();
         });
-
-        function saveAsk(form) {
-            messageBoxYesNo("<?=$tr["SAVE_BOT_CONF"]?>", "<?=$tr["YES"]?>", "<?=$tr["NO"]?>", function () {
-                form.submit();
-            });
-        }
 
         function cancelAsk() {
             if (editor.getValue().length != 0 || $("#codefile").val().length != 0)
@@ -157,8 +157,10 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
             <label for="codeLang"><?= $tr["CODE_LANG"] ?></label><br/>
             <select name="lang" id="codeLang" form="botform">
                 <option value="c++" <?php if ($lang == "c++") echo "selected"; ?>>C++</option>
-<!--                <option value="java" --><?php //if ($lang == "java") echo "selected"; ?><!-->Java</option>-->
-<!--                <option value="c#" --><?php //if ($lang == "c#") echo "selected"; ?><!-->C#</option>-->
+                <!--                <option value="java" --><?php //if ($lang == "java") echo "selected"; ?><!-->
+                Java</option>-->
+                <!--                <option value="c#" --><?php //if ($lang == "c#") echo "selected"; ?><!-->C#</option>
+                -->
             </select>
         </div>
         <br/>
@@ -175,7 +177,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
         <br/>
         <br/>
         <input type="button" onclick="cancelAsk()" class="disabledButton button" value="<?= $tr["CANCEL"] ?>">
-        <input type="button" onclick="saveAsk(this.form)" class="button" value="<?= $tr["SAVE"] ?>">
+        <input type="button" onclick="this.form.submit()" class="button" value="<?= $tr["SAVE"] ?>">
     </form>
     </p>
 </div>
