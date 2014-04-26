@@ -8,13 +8,16 @@ function getLeaderboardForUser($lbID)
     {
         return null;
     }
-
-   $result = SQL("SELECT bots.name, accounts.username, " . $leaderboard[0]["tableName"] . ".score
-                        FROM bots, " . $leaderboard[0]["tableName"] . ", accounts
-                        WHERE " . $leaderboard[0]["tableName"] . ".botID = bots.id
-                        AND accounts.id = bots.accountID
-                        ORDER BY " . $leaderboard[0]["tableName"] . ".score DESC");
-
+    $tableName = $leaderboard[0]["tableName"];
+   $result = SQL("SELECT name, username, score
+                        FROM bots
+                        INNER JOIN $tableName on $tableName.botID = bots.id
+                        INNER JOIN accounts on accounts.id = bots.accountID
+                        ORDER BY $tableName.score DESC");
+    for($i = 0; $i < count($result); $i++)
+    {
+        $result[$i]["score"] = number_format(floatval($result[$i]["score"]), 0, '', '');
+    }
     return $result;
 }
 
