@@ -45,7 +45,7 @@ public:
 		if (this->gameData == nullptr)
 		{
 		    this->errorOccured("Cannot load GameData instance from xml!");
-		    return;
+		    return; // TODO
 		}
 
 		this->numOfBots = gameData->getNumOfBots();

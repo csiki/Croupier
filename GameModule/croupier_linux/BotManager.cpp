@@ -108,9 +108,19 @@ void BotManager::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize
 	    msg += std::to_string(this->bot->getID());
 	    msg += ",";
 		msg += e.what();
+		this->log(Severity::ERROR, msg);
 
-		// quit bot
 		this->quit();
+	}
+	catch (...)
+	{
+	    std::string msg = "exceptionThrown ";
+	    msg += std::to_string(this->getID());
+	    msg += ",";
+	    msg += std::to_string(this->bot->getID());
+	    this->log(Severity::ERROR, msg);
+
+	    this->quit();
 	}
 
 	this->talkToken = false;
@@ -430,7 +440,7 @@ bool BotManager::canAllin() const
 			bs == BettingSystem::NOLIMIT
 			|| (bs == BettingSystem::FIXLIMIT && this->chips <= callAmountOfPlayer) // if fixlimit, allin is only possible, when chips <= call
 			|| (bs == BettingSystem::POTLIMIT && this->chips <= this->table->getPot() + callAmountOfPlayer) // if potlimit, it's max is the whole pot + player's call
-			);
+			); // TODO
 }
 
 /** Returns if call is a possible movement.
@@ -1789,6 +1799,31 @@ void BotManager::step()
 		this->fold();
 		this->quit();
 	}
+	catch (std::exception& e)
+	{
+	    // log
+	    std::string msg = "exceptionThrown ";
+	    msg += std::to_string(this->getID());
+	    msg += ",";
+	    msg += std::to_string(this->bot->getID());
+	    msg += ",";
+		msg += e.what();
+		this->log(Severity::ERROR, msg);
+
+        this->fold();
+		this->quit();
+	}
+	catch (...)
+	{
+	    std::string msg = "exceptionThrown ";
+	    msg += std::to_string(this->getID());
+	    msg += ",";
+	    msg += std::to_string(this->bot->getID());
+	    this->log(Severity::ERROR, msg);
+
+        this->fold();
+	    this->quit();
+	}
 
 	if (this->stepToken) // no step taken
 	{
@@ -1827,6 +1862,25 @@ void BotManager::leave()
 		msg += e.whatMethod();
 		this->log(Severity::ERROR, msg);
 	}
+	catch (std::exception& e)
+	{
+	    // log
+	    std::string msg = "exceptionThrown ";
+	    msg += std::to_string(this->getID());
+	    msg += ",";
+	    msg += std::to_string(this->bot->getID());
+	    msg += ",";
+		msg += e.what();
+		this->log(Severity::ERROR, msg);
+	}
+	catch (...)
+	{
+	    std::string msg = "exceptionThrown ";
+	    msg += std::to_string(this->getID());
+	    msg += ",";
+	    msg += std::to_string(this->bot->getID());
+	    this->log(Severity::ERROR, msg);
+	}
 
 	// broadcast left game
 	int msgdata = this->getID();
@@ -1853,7 +1907,32 @@ void BotManager::rebuyOrLeave()
 			msg += ",";
 			msg += e.whatMethod();
 			this->log(Severity::ERROR, msg);
+
+			this->quit();
 		}
+		catch (std::exception& e)
+        {
+            // log
+            std::string msg = "exceptionThrown ";
+            msg += std::to_string(this->getID());
+            msg += ",";
+            msg += std::to_string(this->bot->getID());
+            msg += ",";
+            msg += e.what();
+            this->log(Severity::ERROR, msg);
+
+            this->quit();
+        }
+        catch (...)
+        {
+            std::string msg = "exceptionThrown ";
+            msg += std::to_string(this->getID());
+            msg += ",";
+            msg += std::to_string(this->bot->getID());
+            this->log(Severity::ERROR, msg);
+
+            this->quit();
+        }
 	}
 }
 
