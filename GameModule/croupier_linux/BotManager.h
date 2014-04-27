@@ -44,7 +44,7 @@ public:
 	BotManager(BotKnowledgeHandler* bkHandler, Hostess* hostess, const Table* table,
 		const Rulz* rules, BroadcastStation* broadcastStation, Loggable* loggable,
 		int playerID, int bodID, int chips, int reservedCredit, int nthAtTable) :
-			Entity(playerID),
+			Entity(botID), // previously playerID
 			BotCommunicator(bodID, broadcastStation, loggable, chips),
 			BotHandler(bodID, broadcastStation, loggable, chips),
 			BotInfo(bodID, broadcastStation, loggable, chips)
