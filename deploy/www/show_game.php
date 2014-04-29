@@ -141,7 +141,7 @@ if (isset($_GET["gameID"]) && is_numeric($_GET["gameID"]) && isset($_GET["botID"
                             if($res != null)
                                 $otherBots[(string)($event->logger)] = $res[0]["name"];
                             else
-                                $otherBots[$event->logger] = "bot " . (string)($event->logger);
+                                $otherBots[(string)($event->logger)] = "bot " . (string)($event->logger);
                         }
                         echo '<td>' . $otherBots[(string)($event->logger)] . '</td>';
                     }

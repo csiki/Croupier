@@ -41,7 +41,7 @@ needLogin();
                     $up = $bots[$i]["score"] > $botsOld[$i]["score"];
                     $latestChanges .= '<tr>';
                     $latestChanges .= '<td><div class="icon ' . ($up ? 'upArrowIcon' : 'downArrowIcon') . '"></div></td>';
-                    $latestChanges .= "<td>" . $bots[$i]["score"] . "</td>";
+                    $latestChanges .= "<td>" . number_format($bots[$i]["score"], 0, '', '') . "</td>";
                     $latestChanges .= "<td>" . $bots[$i]["name"] . "</td>";
                     $latestChanges .= "<td>" . $lbName["tableName"] . "</td>";
                     $latestChanges .= "</tr>";

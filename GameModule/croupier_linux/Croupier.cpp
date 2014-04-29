@@ -390,7 +390,11 @@ void Croupier::determineWinners(int& numOfWinners, int** winnersIndex)
 	if (numOfBotsInRound == 1)
 	{
 		numOfWinners = 1;
+<<<<<<< HEAD
 		*winnersIndex = new int[1];
+=======
+		*winnersIndex = new int; // TODO
+>>>>>>> master
 		(*winnersIndex)[0] = tmpIfOneWinnerIndex;
 
 		return;
@@ -407,7 +411,18 @@ void Croupier::determineWinners(int& numOfWinners, int** winnersIndex)
 
 	// eval all hands in game, find hands with the (same) highest rank, compare them
 	// by iterating through inRound bots only once
+<<<<<<< HEAD
 	std::list<int> winners;
+=======
+	std::list<int> *winners = new std::list<int>(); // storing (possible) winners' indexes
+	// TODO
+	const Card** winnerBestHand = new const Card*[5];
+	const Card** tmpBestHand = new const Card*[5];
+	HandRank tmpRank;
+	HandRank winnerRank = HandRank::None;
+	int winnerIndex = -1;
+	int comparison;
+>>>>>>> master
 
 	unsigned bestHandValue = 0, tmpHandValue;
 	for (size_t i = 0; i < this->numOfBots; ++i)

@@ -34,19 +34,20 @@ private:
 	const Rulz *rules;
 
 	/// Shared with TimerBotProxy
-	mutable std::recursive_mutex manage_thread_mutex;
+	mutable std::atomic_bool critical_to_thread_cancel;
+	mutable std::atomic_bool timeout_occured;
 
 	/// Bot's index at table
 	int nthAtTable;
 
 public:
 	BotManager(BotKnowledgeHandler* bkHandler, Hostess* hostess, const Table* table,
-		const Rulz* rules, BroadcastStation* broadcastStation, int playerID, int bodID, int chips,
-		int reservedCredit, int nthAtTable) :
-			Entity(playerID),
-			BotCommunicator(bodID, broadcastStation, chips),
-			BotHandler(bodID, broadcastStation, chips),
-			BotInfo(bodID, broadcastStation, chips)
+		const Rulz* rules, BroadcastStation* broadcastStation, Loggable* loggable,
+		int playerID, int bodID, int chips, int reservedCredit, int nthAtTable) :
+			Entity(botID), // previously playerID
+			BotCommunicator(bodID, broadcastStation, loggable, chips),
+			BotHandler(bodID, broadcastStation, loggable, chips),
+			BotInfo(bodID, broadcastStation, loggable, chips)
 	{
 		this->bkHandler = bkHandler;
 		this->hostess = hostess;
@@ -58,6 +59,8 @@ public:
 		this->kickedAtRound = 0;
 		this->numOfRaises = 0;
 		this->bot = nullptr;
+		this->critical_to_thread_cancel.store(false);
+		this->timeout_occured.store(false);
 
 		// subscribe to BroadcastStation
 		this->subscribe();

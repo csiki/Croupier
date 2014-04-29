@@ -1,6 +1,6 @@
 <?php
 define("BOT_CODE_MIN_LENGTH", "60");
-define("SESSION_TIMEOUT", "2000");
+define("SESSION_TIMEOUT", 2000);
 define("_BOT_AI_RELATIVE_PATH_", "../data/bots/");
 define("_GAME_DATA_RELATIVE_PATH_", "../data/games/");
 define("_LOG_RELATIVE_PATH_", "../data/logs/");
@@ -10,7 +10,6 @@ define("_RESULTS_RELATIVE_PATH_", "../data/results/");
 function sec_session_start()
 {
     $session_name = 'crouper_s'; // Set a custom session name
-    //TODO: set this to true
     $secure = true; // Set to true if using https.
     $httponly = true; // This stops javascript being able to access the session id.
     ini_set('session.use_only_cookies', 1); // Forces sessions to only use cookies.

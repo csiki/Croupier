@@ -10,21 +10,16 @@ $email = "";
 $showCaptcha = false;
 if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pLength'])) {
     //form validation
-    if (!isset($_POST['email']) || !sanityCheck($_POST['email'], 'string', 7, 50) || !checkEmail($_POST['email']))
-        $errors[] = $tr["ERR_LOGIN"];
-    else {
-        $email = $_POST['email'];
-        if (!isset($_POST['pLength']) || !sanityCheck($_POST['pLength'], 'numeric', 0, 3)) {
-            $errors[] = $tr["ERR_LOGIN"];
-        } else {
-            $pLength = intval($_POST['pLength']);
-            if ($pLength < 6 || $pLength > 100)
-                $errors[] = $tr["ERR_LOGIN"];
-            else
-                $password = $_POST['p'];
-        }
-    }
     $email = $_POST['email'];
+    if (!isset($_POST['pLength']) || !sanityCheck($_POST['pLength'], 'numeric', 0, 3)) {
+        $errors[] = $tr["ERR_LOGIN"];
+    } else {
+        $pLength = intval($_POST['pLength']);
+        if ($pLength < 6 || $pLength > 100)
+            $errors[] = $tr["ERR_LOGIN"];
+        else
+            $password = $_POST['p'];
+    }
     $password = $_POST['p'];
     $captchaGet = false;
     $captchaWrong = false;
@@ -42,19 +37,20 @@ if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pLength'])) {
     }
 
     if ((count($errors) == 0) && (($captchaGet && !$captchaWrong) || !$captchaGet)) {
-        $res = SQL("SELECT id, username, password, salt, activated, lang FROM accounts WHERE email = ? LIMIT 1", $email);
-        if (!$res) {
+        $res = SQL("SELECT id, username, password, salt, activated, lang, email FROM accounts WHERE email = ? OR username = ? LIMIT 1", $email, $email);
+        if ($res == null) {
             $errors[] = $tr["ERR_LOGIN"];
             if (!check_brute("login", 5, 300)) {
                 $showCaptcha = true; //show captcha after 5 try
             }
-        } else if ($res[0]["activated"] == 0) {
+        }
+        else if ($res[0]["activated"] == 0) {
             $errors[] = $tr["LOGIN_ACTIVATION_ERR"];
             if (!check_brute("login", 5, 300)) {
                 $showCaptcha = true; //show captcha after 5 try
             }
         } else {
-            $password = hash('sha512', $password . $res[0]["salt"]); // hash the password with the unique salt.
+            $password = hash('sha512', $password . $res[0]["salt"]);
             if ($res[0]["password"] == $password) { // Check if the password in the database matches the password the user submitted.
                 // Password is correct!
                 clear_brute("login");
@@ -62,7 +58,7 @@ if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pLength'])) {
                 $_SESSION['accountID'] = $res[0]["id"];
                 $_SESSION['username'] = $res[0]["username"];
                 $_SESSION["lang"] = $res[0]["lang"];
-                $_SESSION['gravatar'] = md5(strtolower($email));
+                $_SESSION['gravatar'] = md5(strtolower($res[0]["email"]));
                 $_SESSION['login_string'] = hash('sha512', $password . $user_browser . getenv("REMOTE_ADDR"));
                 header('Location: ../summary.php');
                 exit();
@@ -94,7 +90,7 @@ if (isset($_POST['email']) || isset($_POST['p']) || isset($_POST['pLength'])) {
         }
         ?>
         <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post" autocomplete="on">
-            <label for="email">Email</label><br/>
+            <label for="email"><?= $tr["EMAIL_OR_USERNAME"] ?></label><br/>
             <input autocomplete="on" type="text" name="email" id="email" maxlength="50" value="<?= $email ?>">
             <br/>
             <br/>
