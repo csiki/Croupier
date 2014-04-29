@@ -2,7 +2,6 @@
 #define _GAMEOWNER_H
 
 #include "Bot.h"
-#include "Log.h"
 #include "LogXMLHandler.h"
 #include "RulzXMLHandler.h"
 #include "Croupier.h"
@@ -29,7 +28,6 @@ private:
 	BroadcastStation* broadcastStation;
 	Bot** bots;
 	BotManager** botManagers;
-	Log* log;
 	Rulz* rulz;
 	Table* table;
 	int gameState; // 1 - game initialised, 2 - game started, 3 - game ended (successfully), 4 - results saved, 5 - fatal error, else 0 (GameOwner just constructed)
@@ -68,7 +66,6 @@ public:
 		// delete others
 		delete this->gameData;
 		delete this->croupier;
-		delete this->log;
 		delete this->rulz;
 		delete this->table;
 		delete this->broadcastStation;

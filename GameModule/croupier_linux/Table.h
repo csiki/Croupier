@@ -12,15 +12,13 @@ class Table
 private:
 	size_t numOfBots;
 	BotInfo **bots;
-	int numOfCards;
-	Card* cards[5];
+	std::vector<Card> cards;
 
 public:
 	Table(int numOfBots)
 	{
 		// we increase numofbots, when a bot sits down
 		this->numOfBots = 0;
-		this->numOfCards = 0;
 		this->bots = new BotInfo*[numOfBots];
 
 		// clear bots array
@@ -28,20 +26,14 @@ public:
 		{
 			this->bots[i] = nullptr;
 		}
-
-		// clear cards array
-		for (size_t i = 0; i < 5; ++i)
-		{
-			this->cards[i] = nullptr;
-		}
 	}
 
 	virtual ~Table() {}
 
-	void addCard(Card* c); // UNIT done
+	void addCard(const Card& c); // UNIT done
 	int getNumOfCards() const;
-	Card* rmCard();
-	const Card* getCard(int index) const; // UNIT done
+	Card rmCard();
+	Card getCard(size_t index) const; // UNIT done
 	const BotInfo* getBotByIndex(int index) const;
 	int getNumOfBots() const;
 	int getPot() const;

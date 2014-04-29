@@ -3,7 +3,7 @@
 
 /**	Can see the bot's card. (returns pointer!)
 */
-const Card* BotHandler::checkCard(int index)
+Card BotHandler::checkCard(size_t index)
 {
     return this->hand[index];
 }
@@ -50,21 +50,10 @@ void BotHandler::forceBlind(int blind)
 
 /**	Adds a card to the AI's hand.
 */
-void BotHandler::receiveCard(Card* c)
+void BotHandler::receiveCard(const Card& c)
 {
-	// log
-	std::string msg = "receiveCard ";
-	msg += c->toString();
-	this->log(Severity::VERBOSE, msg);
-
-	if (this->hand[0] == nullptr)
-	{
-		this->hand[0] = c;
-	}
-	else if (this->hand[1] == nullptr)
-	{
-		this->hand[1] = c;
-	}
+	Logger::Log(this, Severity::VERBOSE, "receiveCard ", c);
+	this->hand.push_back(c);
 }
 
 /**	Adds more chips to AI's existing chips.
@@ -79,21 +68,15 @@ void BotHandler::receiveChips(int chipsAmount)
 void BotHandler::revealCards()
 {
 	this->cardsRevealed = true;
-
-	// log cards (as information)
-	std::string msg = "revealCards ";
-	msg += this->lookAtHand(0).toString();
-	msg += ",";
-	msg += this->lookAtHand(1).toString();
-	this->log(Severity::INFORMATION, msg);
+	Logger::Log(this, Severity::INFORMATION, "revealCards ", this->lookAtHand(0), ",", this->lookAtHand(1));
 }
 
 /**	Removes a card from AI's hand.
 */
-Card* BotHandler::takeHand(int cardIndex)
+Card BotHandler::takeHand()
 {
-	Card* tmp = this->hand[cardIndex];
-	this->hand[cardIndex] = nullptr;
+  Card tmp = this->hand.back();
+  this->hand.pop_back();
 	return tmp;
 }
 

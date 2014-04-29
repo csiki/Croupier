@@ -1,31 +1,38 @@
 #if !defined(_LOGGER_H)
 #define _LOGGER_H
 
-#include "BroadcastMember.h"
+#include "stdafx.h"
 #include "Entity.h"
-#include "Loggable.h"
+#include "Event.h"
 #include "Severity.h"
-#include "BroadcastMessage.h"
 
-/**	Base class for logging entities.
-*/
-class Logger : virtual public Entity
+class Logger
 {
 private:
-	Loggable *loggable;
-	bool logEnabled;
+  static std::vector<Event> events;
 
-protected:
-	void log(Severity severity, std::string msg) const;
-	void enableLog();
-	void disableLog();
+  static void toString(std::ostringstream& os) {}
+
+  template<typename Head, typename... Tail>
+  static void toString(std::ostringstream& os, Head h, Tail... t)
+  {
+    os << h;
+    toString(os, t...);
+  }
 
 public:
-	Logger(int id, Loggable* loggable) : Entity(id)
+	template<typename... T>
+	static void Log(const Entity* entty, Severity severity, T... params)
 	{
-		this->loggable = loggable;
-		this->logEnabled = true;
+	  std::ostringstream os;
+	  toString(os, params...);
+	  events.push_back(Event(severity, entty->getID(), os.str()));
 	}
+
+	static const std::vector<Event>& GetEvents()
+  {
+	  return events;
+  }
 };
 
 #endif  //_LOGGER_H

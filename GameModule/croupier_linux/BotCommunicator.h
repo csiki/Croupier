@@ -16,12 +16,12 @@ class BotCommunicator : virtual public BotInfo
 {
 public:
 
-	BotCommunicator(int playerID, BroadcastStation* broadcastStation, Loggable* loggable, int chips) :
-		BotInfo(playerID, broadcastStation, loggable, chips), Entity(playerID)
+	BotCommunicator(int playerID, BroadcastStation* broadcastStation, int chips) :
+		BotInfo(playerID, broadcastStation, chips), Entity(playerID)
 	{}
 
 	// botmanager
-	Card getHand(int cardIndex) const;
+	Card getHand(size_t cardIndex) const;
 	void setEmotion(Emotion emotion);
 	virtual int getReservedCredit() const = 0;
 	virtual int getNumOfRebuys() const = 0;

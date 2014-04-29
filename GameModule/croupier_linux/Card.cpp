@@ -11,23 +11,11 @@ Card Card::getNullCard()
 	return Card(Card::Suit::NULLSUIT, Card::Rank::NULLRANK);
 }
 
-/** Returns a pointer to a (shared) null card.
-*/
-Card* Card::getSharedNullCard()
-{
-    return &nullCard;
-}
-
 /** Returns if a given card is a null card.
 */
 bool Card::isNullCard(Card& card)
 {
-	if (card.suit == Card::Suit::NULLSUIT || card.rank == Card::Rank::NULLRANK)
-	{
-		return true;
-	}
-
-	return false;
+	return card.suit == Card::Suit::NULLSUIT || card.rank == Card::Rank::NULLRANK;
 }
 
 /** Returns unique value of a card.
@@ -119,4 +107,10 @@ Card Card::getCardByVal(int val)
 	Suit s = static_cast<Suit>((val - r) / 100);
 
 	return Card(s, r);
+}
+
+std::ostream& operator <<(std::ostream& os, const Card& c)
+{
+  os << c.toString();
+  return os;
 }

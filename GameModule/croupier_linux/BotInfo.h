@@ -12,7 +12,7 @@
 
 /**	Interface for AIs to other AIs.
 */
-class BotInfo : public Logger, public BroadcastMember
+class BotInfo : public BroadcastMember
 {
 protected:
 	int chips;
@@ -22,12 +22,12 @@ protected:
 	bool dealer;
 	bool inGame;
 	bool inRound;
-	Card *hand[2];
+	std::vector<Card> hand;
 	Emotion emotion;
 public:
 
-	BotInfo(int playerID, BroadcastStation* broadcastStation, Loggable* loggable, int chips) :
-		Entity(playerID), BroadcastMember(playerID, broadcastStation), Logger(playerID, loggable)
+	BotInfo(int playerID, BroadcastStation* broadcastStation, int chips) :
+		Entity(playerID), BroadcastMember(playerID, broadcastStation)
 	{
 		this->chips = chips;
 		this->pot = 0;
@@ -35,7 +35,6 @@ public:
 		this->dealer = false;
 		this->inGame = true;
 		this->inRound = false;
-		this->hand[0] = this->hand[1] = nullptr;
 		this->emotion = Emotion::HIDDEN;
 	}
 
@@ -46,7 +45,7 @@ public:
 	bool isHandRevealed() const;
 	bool isInGame() const;
 	bool isInRound() const;
-	Card lookAtHand(int cardIndex) const;
+	Card lookAtHand(size_t cardIndex) const;
 
 	virtual int getBotID() const = 0;
 	virtual std::string getName() const = 0;

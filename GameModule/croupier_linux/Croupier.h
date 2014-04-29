@@ -16,8 +16,7 @@ class Croupier : public Logger, public BroadcastMember
 {
 private:
 	Deck deck;
-	Card* burnt[3];
-	size_t numberOfBurntCards;
+	std::vector<Card> burnt;
 	int round;
 	int currentBotIndex;
 	int currentDealerIndex;
@@ -31,7 +30,7 @@ private:
 
 	bool botComparatorByPot(int botIndex1, int botIndex2); // UNIT done
 	int nextActiveBot(int from = -1) const; // default: -1 ~ currentBotIndex // UNIT done
-	void burn(Card* c); // UNIT done 
+	void burn(const Card& c); // UNIT done
 	void collectCards(); // UNIT done 
 	void betRound(); // UNIT done 
 	void dealing(); // UNIT done 
@@ -53,15 +52,11 @@ private:
 public:
 	/** Method to create Croupier, setting its attibrutes to default.
 	*/
-	Croupier(int numOfBots, BroadcastStation* broadcastStation, Loggable* loggable, const Rulz* rules, Table* table) :
-		BroadcastMember(0, broadcastStation), Logger(0, loggable), Entity(0)
+	Croupier(int numOfBots, BroadcastStation* broadcastStation, const Rulz* rules, Table* table) :
+		BroadcastMember(0, broadcastStation), Entity(0)
 	{
 		this->rules = rules;
 		this->table = table;
-		this->numberOfBurntCards = 0;
-		this->burnt[0] = nullptr;
-		this->burnt[1] = nullptr;
-		this->burnt[2] = nullptr;
 		this->round = 0;
 		this->currentBotIndex = 0;
 		this->currentBlindIndex = 0;
