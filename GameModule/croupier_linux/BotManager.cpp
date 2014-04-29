@@ -44,6 +44,7 @@ void BotManager::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize
 				break;
 			case QUIT:
 				this->bot->leftGame(data[0]);
+				break;
 			case RAISED:
 				this->bot->raised(data[0], data[1]);
 				break;
@@ -87,39 +88,17 @@ void BotManager::receiveBroadcast(int fromID, BroadcastMessage msg, int dataSize
 	}
 	catch (BotTimeExceededException& e)
 	{
-		// log
-		std::string msg = "timeExceeded ";
-		msg += std::to_string(this->getID());
-		msg += ",";
-		msg += std::to_string(this->bot->getID());
-		msg += ",";
-		msg += e.whatMethod();
-		this->log(Severity::ERROR, msg);
-
-		// quit bot
+		Logger::Log(this, Severity::ERROR, "timeExceeded ", this->getID(), ',', this->bot->getID(), ',', e.whatMethod());
 		this->quit();
 	}
 	catch (std::exception& e)
 	{
-	    // log
-	    std::string msg = "exceptionThrown ";
-	    msg += std::to_string(this->getID());
-	    msg += ",";
-	    msg += std::to_string(this->bot->getID());
-	    msg += ",";
-		msg += e.what();
-
-		// quit bot
+		Logger::Log(this, Severity::ERROR, "exceptionThrown ", this->getID(), ',', this->bot->getID(), ',', e.what());
 		this->quit();
 	}
 	catch (...)
 	{
-	    std::string msg = "exceptionThrown ";
-	    msg += std::to_string(this->getID());
-	    msg += ",";
-	    msg += std::to_string(this->bot->getID());
-	    this->log(Severity::ERROR, msg);
-
+		Logger::Log(this, Severity::ERROR, "exceptionThrown ", this->getID(), ',', this->bot->getID());
 	    this->quit();
 	}
 
@@ -153,66 +132,46 @@ BotLanguage BotManager::getLang() const
 */
 int BotManager::getReservedCredit() const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	this->log(Severity::VERBOSE, "getReservedCredit");
-    this->critical_to_thread_cancel.store(false);
+  Logger::Log(this, Severity::VERBOSE, "getReservedCredit");
 
-	return this->reservedCredit;
+  return this->reservedCredit;
 }
 
 /** Returns number of rebuys already done by the managed AI (in current game).
 */
 int BotManager::getNumOfRebuys() const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	this->log(Severity::VERBOSE, "getNumOfRebuys");
-	this->critical_to_thread_cancel.store(false);
+  Logger::Log(this, Severity::VERBOSE, "getNumOfRebuys");
 
-	return this->numOfRebuys;
+  return this->numOfRebuys;
 }
 
 /** Returns a specified AI's name.
 */
 std::string BotManager::getBotName(int botID) const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	std::string msg = "getBotName ";
-	msg += std::to_string(botID);
-	this->log(Severity::VERBOSE, msg);
-	this->critical_to_thread_cancel.store(false);
+  Logger::Log(this, Severity::VERBOSE, "getBotName ", botID);
 
     const BotInfo* bot = this->hostess->getBotByID(botID);
     if(bot != nullptr)
         return bot->getName();
     else
-        return false;
+        return "";
 }
 
 /** Returns if a specified AI is a dealer.
 */
 bool BotManager::isBotDealer(int botID) const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	std::string msg = "isBotDealer ";
-	msg += std::to_string(botID);
-	this->log(Severity::VERBOSE, msg);
-	this->critical_to_thread_cancel.store(false);
+  Logger::Log(this, Severity::VERBOSE, "isBotDealer ", botID);
 
     const BotInfo* bot = this->hostess->getBotByID(botID);
     if(bot != nullptr)
@@ -225,15 +184,9 @@ bool BotManager::isBotDealer(int botID) const
 */
 int BotManager::getBotChips(int botID) const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	std::string msg = "getBotChips ";
-	msg += std::to_string(botID);
-	this->log(Severity::VERBOSE, msg);
-	this->critical_to_thread_cancel.store(false);
+  Logger::Log(this, Severity::VERBOSE, "getBotChips ", botID);
 
     const BotInfo* bot = this->hostess->getBotByID(botID);
     if(bot != nullptr)
@@ -246,15 +199,9 @@ int BotManager::getBotChips(int botID) const
 */
 int BotManager::getBotPot(int botID) const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	std::string msg = "getBotPot ";
-	msg += std::to_string(botID);
-	this->log(Severity::VERBOSE, msg);
-	this->critical_to_thread_cancel.store(false);
+  Logger::Log(this, Severity::VERBOSE, "getBotPot ", botID);
 
     const BotInfo* bot = this->hostess->getBotByID(botID);
     if(bot != nullptr)
@@ -267,15 +214,9 @@ int BotManager::getBotPot(int botID) const
 */
 Emotion BotManager::getBotEmotion(int botID) const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	std::string msg = "getBotEmotion ";
-	msg += std::to_string(botID);
-	this->log(Severity::VERBOSE, msg);
-	this->critical_to_thread_cancel.store(false);
+  Logger::Log(this, Severity::VERBOSE, "getBotEmotion ", botID);
 
     const BotInfo* bot = this->hostess->getBotByID(botID);
     if(bot != nullptr)
@@ -288,15 +229,9 @@ Emotion BotManager::getBotEmotion(int botID) const
 */
 bool BotManager::isBotHandRevealed(int botID) const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	std::string msg = "isBotHandRevealed ";
-	msg += std::to_string(botID);
-	this->log(Severity::VERBOSE, msg);
-	this->critical_to_thread_cancel.store(false);
+  Logger::Log(this, Severity::VERBOSE, "isBotHandRevealed ", botID);
 
     const BotInfo* bot = this->hostess->getBotByID(botID);
     if(bot != nullptr)
@@ -309,15 +244,9 @@ bool BotManager::isBotHandRevealed(int botID) const
 */
 BotLanguage BotManager::getBotLang(int botID) const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	std::string msg = "getBotLang ";
-	msg += std::to_string(botID);
-	this->log(Severity::VERBOSE, msg);
-	this->critical_to_thread_cancel.store(false);
+  Logger::Log(this, Severity::VERBOSE, "getBotLang ", botID);
 
     const BotInfo* bot = this->hostess->getBotByID(botID);
     if(bot != nullptr)
@@ -330,15 +259,9 @@ BotLanguage BotManager::getBotLang(int botID) const
 */
 bool BotManager::isBotInGame(int botID) const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	std::string msg = "isBotInGame ";
-	msg += std::to_string(botID);
-	this->log(Severity::VERBOSE, msg);
-	this->critical_to_thread_cancel.store(false);
+  Logger::Log(this, Severity::VERBOSE, "isBotInGame ", botID);
 
     const BotInfo* bot = this->hostess->getBotByID(botID);
     if(bot != nullptr)
@@ -351,15 +274,9 @@ bool BotManager::isBotInGame(int botID) const
 */
 bool BotManager::isBotInRound(bool botID) const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	std::string msg = "isBotInRound ";
-	msg += std::to_string(botID);
-	this->log(Severity::VERBOSE, msg);
-	this->critical_to_thread_cancel.store(false);
+  Logger::Log(this, Severity::VERBOSE, "isBotInRound ", botID);
 
     const BotInfo* bot = this->hostess->getBotByID(botID);
     if(bot != nullptr)
@@ -372,15 +289,9 @@ bool BotManager::isBotInRound(bool botID) const
 */
 Card BotManager::lookAtBotHand(int botID, int cardIndex) const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	std::string msg = "lookAtBotHand ";
-	msg += std::to_string(botID);
-	this->log(Severity::VERBOSE, msg);
-	this->critical_to_thread_cancel.store(false);
+  Logger::Log(this, Severity::VERBOSE, "lookAtBotHand ", botID);
 
     const BotInfo* bot = this->hostess->getBotByID(botID);
     if(bot != nullptr)
@@ -393,13 +304,9 @@ Card BotManager::lookAtBotHand(int botID, int cardIndex) const
 */
 bool BotManager::canTalk() const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	this->log(Severity::VERBOSE, "canTalk");
-	this->critical_to_thread_cancel.store(false);
+  Logger::Log(this, Severity::VERBOSE, "canTalk");
 
 	return this->talkToken;
 }
@@ -408,28 +315,20 @@ bool BotManager::canTalk() const
 */
 bool BotManager::canStep() const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	this->log(Severity::VERBOSE, "canStep");
-	this->critical_to_thread_cancel.store(false);
+  Logger::Log(this, Severity::VERBOSE, "canStep");
 
-	return this->stepToken;
+  return this->stepToken;
 }
 
 /** Returns if allin is a possible movement.
 */
 bool BotManager::canAllin() const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	this->log(Severity::VERBOSE, "canAllin");
-	this->critical_to_thread_cancel.store(false);
+  Logger::Log(this, Severity::VERBOSE, "canAllin");
 
 	BettingSystem bs = this->rules->getBettingSystem();
 	int callAmountOfPlayer = this->hostess->getCallAmount() - this->pot;
@@ -440,20 +339,16 @@ bool BotManager::canAllin() const
 			bs == BettingSystem::NOLIMIT
 			|| (bs == BettingSystem::FIXLIMIT && this->chips <= callAmountOfPlayer) // if fixlimit, allin is only possible, when chips <= call
 			|| (bs == BettingSystem::POTLIMIT && this->chips <= this->table->getPot() + callAmountOfPlayer) // if potlimit, it's max is the whole pot + player's call
-			);
+			); // TODO
 }
 
 /** Returns if call is a possible movement.
 */
 bool BotManager::canCall() const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	this->log(Severity::VERBOSE, "canCall");
-	this->critical_to_thread_cancel.store(false);
+  Logger::Log(this, Severity::VERBOSE, "canCall");
 
 	int callAmountOfPlayer = this->hostess->getCallAmount() - this->pot;
 
@@ -466,13 +361,9 @@ bool BotManager::canCall() const
 */
 bool BotManager::canCheck() const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	this->log(Severity::VERBOSE, "canCheck");
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "canCheck");
 
 	return this->stepToken && (this->hostess->getCallAmount() - this->pot) == 0;
 }
@@ -481,13 +372,9 @@ bool BotManager::canCheck() const
 */
 bool BotManager::canFold() const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	this->log(Severity::VERBOSE, "canFold");
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "canFold");
 
 	return this->stepToken;
 }
@@ -496,15 +383,9 @@ bool BotManager::canFold() const
 */
 bool BotManager::canRaise(int raiseAmount) const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	std::string msg = "canRaise ";
-	msg += std::to_string(raiseAmount);
-	this->log(Severity::VERBOSE, msg);
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "canRaise ", raiseAmount);
 
 	int minRaise = this->hostess->getMinRaise();
 	int callAmountOfPlayer = this->hostess->getCallAmount() - this->pot;
@@ -525,19 +406,12 @@ bool BotManager::canRaise(int raiseAmount) const
 */
 bool BotManager::allin()
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-    this->critical_to_thread_cancel.store(true);
+	Logger::Log(this, Severity::INFORMATION, "allin");
 
-	// log
-	this->log(Severity::INFORMATION, "allin");
-
-	this->disableLog(); // not to log canAllin()
 	if (this->canAllin())
 	{
-		this->enableLog(); // log further
-
 		int allinAmount = this->chips;
 		this->pot += this->chips;
 		this->chips = 0;
@@ -550,12 +424,8 @@ bool BotManager::allin()
 		msgdata[1] = allinAmount;
 		this->broadcast(BroadcastMessage::ALLINED, 2, msgdata);
 		delete [] msgdata;
-
-        this->critical_to_thread_cancel.store(false);
 		return true;
 	}
-
-    this->critical_to_thread_cancel.store(false);
 	return false;
 }
 
@@ -563,20 +433,12 @@ bool BotManager::allin()
 */
 bool BotManager::call()
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-    this->critical_to_thread_cancel.store(true);
+	Logger::Log(this, Severity::INFORMATION, "call");
 
-	// log
-	this->log(Severity::INFORMATION, "call");
-
-	this->disableLog(); // not to log canCall()
 	if (this->canCall())
 	{
-		this->enableLog(); // log further
-
-
 		int callAmount = this->hostess->getCallAmount() - this->pot;
 		this->chips -= callAmount;
 		this->pot += callAmount;
@@ -589,12 +451,8 @@ bool BotManager::call()
 		msgdata[1] = callAmount;
 		this->broadcast(BroadcastMessage::CALLED, 2, msgdata);
 		delete [] msgdata;
-
-        this->critical_to_thread_cancel.store(false);
 		return true;
 	}
-
-	this->critical_to_thread_cancel.store(false);
 	return false;
 }
 
@@ -602,30 +460,21 @@ bool BotManager::call()
 */
 bool BotManager::check()
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-    this->critical_to_thread_cancel.store(true);
+	Logger::Log(this, Severity::INFORMATION, "check");
 
-	// log
-	this->log(Severity::INFORMATION, "check");
-
-	this->disableLog(); // not to log canCheck()
 	if (this->canCheck())
 	{
-		this->enableLog(); // log further
-
 		this->stepToken = false;
 
 		// broadcast check
 		int msgdata = this->getID();
 		this->broadcast(BroadcastMessage::CHECKED, 1, &msgdata);
 
-        this->critical_to_thread_cancel.store(false);
 		return true;
 	}
 
-    this->critical_to_thread_cancel.store(false);
 	return false;
 }
 
@@ -633,31 +482,20 @@ bool BotManager::check()
 */
 bool BotManager::fold()
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-    this->critical_to_thread_cancel.store(true);
+	Logger::Log(this, Severity::INFORMATION, "fold");
 
-	// log
-	this->log(Severity::INFORMATION, "fold");
-
-	this->disableLog(); // not to log canFold()
 	if (this->canFold())
 	{
-		this->enableLog(); // log further
-
 		this->inRound = false;
 		this->stepToken = false;
 
 		// broadcast fold
 		int msgdata = this->getID();
 		this->broadcast(BroadcastMessage::FOLDED, 1, &msgdata);
-
-        this->critical_to_thread_cancel.store(false);
 		return true;
 	}
-
-    this->critical_to_thread_cancel.store(false);
 	return false;
 }
 
@@ -665,21 +503,12 @@ bool BotManager::fold()
 */
 bool BotManager::raise(int raiseAmount)
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-    this->critical_to_thread_cancel.store(true);
+	Logger::Log(this, Severity::INFORMATION, "raise ", raiseAmount);
 
-	// log
-	std::string msg = "raise ";
-	msg += std::to_string(raiseAmount);
-	this->log(Severity::INFORMATION, msg);
-
-	this->disableLog(); // not to log canRaise()
 	if (this->canRaise(raiseAmount))
 	{
-		this->enableLog(); // log further
-
 		int chipsToMove = (this->hostess->getCallAmount() - this->pot) + raiseAmount;
 		this->chips -= chipsToMove;
 		this->pot += chipsToMove;
@@ -695,12 +524,8 @@ bool BotManager::raise(int raiseAmount)
 
 		// increase number of raises
 		++this->numOfRaises;
-
-        this->critical_to_thread_cancel.store(false);
 		return true;
 	}
-
-    this->critical_to_thread_cancel.store(false);
 	return false;
 }
 
@@ -708,15 +533,9 @@ bool BotManager::raise(int raiseAmount)
 */
 bool BotManager::canRebuy(int rebuyAmount) const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	std::string msg = "canRebuy ";
-	msg += std::to_string(rebuyAmount);
-	this->log(Severity::VERBOSE, msg);
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "canRebuy ", rebuyAmount);
 
 	return this->numOfRebuys < this->rules->getNumOfRebuysAllowed()
 		&& this->hostess->getCurrentRound() <= this->rules->getRebuyDeadline()
@@ -727,21 +546,12 @@ bool BotManager::canRebuy(int rebuyAmount) const
 */
 bool BotManager::rebuy(int rebuyAmount)
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-    this->critical_to_thread_cancel.store(true);
+	Logger::Log(this, Severity::INFORMATION, "rebuy ", rebuyAmount);
 
-	// log
-	std::string msg = "rebuy ";
-	msg += std::to_string(rebuyAmount);
-	this->log(Severity::INFORMATION, msg);
-
-	this->disableLog(); // not to log canRebuy()
 	if (this->canRebuy(rebuyAmount))
 	{
-		this->enableLog(); // log further
-
 		this->reservedCredit -= rebuyAmount;
 		this->chips += rebuyAmount;
 		++this->numOfRebuys;
@@ -752,12 +562,8 @@ bool BotManager::rebuy(int rebuyAmount)
 		msgdata[1] = rebuyAmount;
 		this->broadcast(BroadcastMessage::REBUYOCCURRED, 2, msgdata);
 		delete [] msgdata;
-
-        this->critical_to_thread_cancel.store(false);
 		return true;
 	}
-
-    this->critical_to_thread_cancel.store(false);
 	return false;
 }
 
@@ -765,15 +571,9 @@ bool BotManager::rebuy(int rebuyAmount)
 */
 bool BotManager::talk(Comment comment)
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-    this->critical_to_thread_cancel.store(true);
-
-	// log
-	std::string msg = "talk ";
-	msg += std::to_string(comment);
-	this->log(Severity::INFORMATION, msg);
+	Logger::Log(this, Severity::INFORMATION, "talk ", comment);
 
 	if (this->talkToken)
 	{
@@ -783,12 +583,8 @@ bool BotManager::talk(Comment comment)
 		msgdata[1] = comment;
 		this->broadcast(BroadcastMessage::LISTEN, 2, msgdata);
 		delete [] msgdata;
-
-        this->critical_to_thread_cancel.store(false);
 		return true;
 	}
-
-    this->critical_to_thread_cancel.store(false);
 	return false;
 }
 
@@ -797,13 +593,9 @@ bool BotManager::talk(Comment comment)
 */
 void BotManager::quit()
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-    this->critical_to_thread_cancel.store(true);
-
-	// log
-	this->log(Severity::INFORMATION, "quit");
+	Logger::Log(this, Severity::INFORMATION, "quit");
 
 	this->inRound = false;
 	this->inGame = false;
@@ -813,25 +605,15 @@ void BotManager::quit()
 	// broadcast left game
 	int msgdata = this->getID();
 	this->broadcast(BroadcastMessage::QUIT, 1, &msgdata);
-
-	this->critical_to_thread_cancel.store(false);
 }
 
 /** Returns the number of AIs.
 */
 int BotManager::getNumOfBots(bool onlyInGame, bool onlyInRound) const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	std::string msg = "getNumOfBots ";
-	msg += std::to_string(onlyInGame);
-	msg += ',';
-	msg += std::to_string(onlyInRound);
-	this->log(Severity::VERBOSE, msg);
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "getNumOfBots ", onlyInGame, ',', onlyInRound);
 
 	return this->hostess->getNumOfBots(onlyInGame, onlyInRound);
 }
@@ -840,15 +622,9 @@ int BotManager::getNumOfBots(bool onlyInGame, bool onlyInRound) const
 */
 int BotManager::getBotIDByIndex(int index) const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	std::string msg = "getBotIDByIndex ";
-	msg += std::to_string(index);
-	this->log(Severity::VERBOSE, msg);
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "getBotIDByIndex ", index);
 
     const BotInfo* bot = this->table->getBotByIndex(index);
     if(bot != nullptr)
@@ -861,15 +637,9 @@ int BotManager::getBotIDByIndex(int index) const
 */
 int BotManager::getBotIndexByID(int botID) const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	std::string msg = "getBotIndexByID ";
-	msg += std::to_string(botID);
-	this->log(Severity::VERBOSE, msg);
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "getBotIndexByID ", botID);
 
 	return this->hostess->getBotIDByIndex(botID);
 }
@@ -878,19 +648,9 @@ int BotManager::getBotIndexByID(int botID) const
 */
 int BotManager::getBotIDToTheRight(int nth, bool onlyInGame, bool onlyInRound) const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	std::string msg = "getBotIDToTheRight ";
-	msg += std::to_string(nth);
-	msg += ',';
-	msg += std::to_string(onlyInGame);
-	msg += ',';
-	msg += std::to_string(onlyInRound);
-	this->log(Severity::VERBOSE, msg);
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "getBotIDToTheRight ", nth, ',', onlyInGame, ',', onlyInRound);
 
 	return this->hostess->getBotIDToTheRight(this->nthAtTable, nth, onlyInGame, onlyInRound);
 }
@@ -899,19 +659,9 @@ int BotManager::getBotIDToTheRight(int nth, bool onlyInGame, bool onlyInRound) c
 */
 int BotManager::getBotIDToTheLeft(int nth, bool onlyInGame, bool onlyInRound) const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	std::string msg = "getBotIDToTheLeft ";
-	msg += std::to_string(nth);
-	msg += ',';
-	msg += std::to_string(onlyInGame);
-	msg += ',';
-	msg += std::to_string(onlyInRound);
-	this->log(Severity::VERBOSE, msg);
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "getBotIDToTheLeft ", nth, ',', onlyInGame, ',', onlyInRound);
 
 	return this->hostess->getBotIDToTheLeft(this->nthAtTable, nth, onlyInGame, onlyInRound);
 }
@@ -920,13 +670,9 @@ int BotManager::getBotIDToTheLeft(int nth, bool onlyInGame, bool onlyInRound) co
 */
 int BotManager::getCallAmount() const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	this->log(Severity::VERBOSE, "getCallAmount");
-	this->critical_to_thread_cancel.store(false);
+  Logger::Log(this, Severity::VERBOSE, "getCallAmount");
 
 	return this->hostess->getCallAmount() - this->pot;
 }
@@ -935,13 +681,9 @@ int BotManager::getCallAmount() const
 */
 int BotManager::getMinRaise() const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	this->log(Severity::VERBOSE, "getMinRaise");
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "getMinRaise");
 
 	return this->hostess->getMinRaise();
 }
@@ -950,20 +692,14 @@ int BotManager::getMinRaise() const
 */
 int BotManager::getBigBlindAtRound(int round) const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
 	if (round == -1) // -1 def arg
 	{
 		round = this->hostess->getCurrentRound();
 	}
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	std::string msg = "getBigBlindAtRound ";
-	msg += std::to_string(round);
-	this->log(Severity::VERBOSE, msg);
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "getBigBlindAtRound ", round);
 
 	return this->hostess->getBigBlindAtRound(round);
 }
@@ -972,15 +708,9 @@ int BotManager::getBigBlindAtRound(int round) const
 */
 int BotManager::getBlindShiftDeadline(int shiftDeadlineIndex) const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	std::string msg = "getBlindShiftDeadline ";
-	msg += std::to_string(shiftDeadlineIndex);
-	this->log(Severity::VERBOSE, msg);
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "getBlindShiftDeadline ", shiftDeadlineIndex);
 
 	return this->rules->getBlindShiftDeadline(shiftDeadlineIndex);
 }
@@ -989,13 +719,9 @@ int BotManager::getBlindShiftDeadline(int shiftDeadlineIndex) const
 */
 int BotManager::getNextBlindShiftDeadline() const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	this->log(Severity::VERBOSE, "getNextBlindShiftDeadline");
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "getNextBlindShiftDeadline");
 
 	return this->hostess->getNextBlindShiftDeadline();
 }
@@ -1004,20 +730,14 @@ int BotManager::getNextBlindShiftDeadline() const
 */
 int BotManager::getSmallBlindAtRound(int round) const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
 	if (round == -1)
 	{
 		round = this->hostess->getCurrentRound();
 	}
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	std::string msg = "getSmallBlindAtRound ";
-	msg += std::to_string(round);
-	this->log(Severity::VERBOSE, msg);
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "getSmallBlindAtRound ", round);
 
 	return this->hostess->getSmallBlindAtRound(round);
 }
@@ -1026,13 +746,9 @@ int BotManager::getSmallBlindAtRound(int round) const
 */
 int BotManager::getCurrentRound() const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	this->log(Severity::VERBOSE, "getCurrentRound");
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "getCurrentRound");
 
 	return this->hostess->getCurrentRound();
 }
@@ -1041,13 +757,9 @@ int BotManager::getCurrentRound() const
 */
 int BotManager::getTableNumOfCards() const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	this->log(Severity::VERBOSE, "getCurrentRound");
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "getCurrentRound");
 
 	return this->table->getNumOfCards();
 }
@@ -1056,30 +768,20 @@ int BotManager::getTableNumOfCards() const
 */
 Card BotManager::getTableCard(int cardIndex) const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	std::string msg = "getTableCard ";
-	msg += std::to_string(cardIndex);
-	this->log(Severity::VERBOSE, msg);
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "getTableCard ", cardIndex);
 
-	return *this->table->getCard(cardIndex);
+	return this->table->getCard(cardIndex);
 }
 
 /** Returns the amount of pot on table.
 */
 int BotManager::getPotSum() const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	this->log(Severity::VERBOSE, "getPotSum");
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "getPotSum");
 
 	return this->table->getPot();
 }
@@ -1088,15 +790,9 @@ int BotManager::getPotSum() const
 */
 int BotManager::getBigBlind(int blindIndex) const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	std::string msg = "getBigBlind ";
-	msg += std::to_string(blindIndex);
-	this->log(Severity::VERBOSE, msg);
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "getBigBlind ", blindIndex);
 
 	return this->rules->getBigBlind(blindIndex);
 }
@@ -1105,13 +801,9 @@ int BotManager::getBigBlind(int blindIndex) const
 */
 int BotManager::getRebuyDeadline() const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	this->log(Severity::VERBOSE, "getRebuyDeadline");
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "getRebuyDeadline");
 
 	return this->rules->getRebuyDeadline();
 }
@@ -1120,15 +812,9 @@ int BotManager::getRebuyDeadline() const
 */
 int BotManager::getSmallBlind(int blindIndex) const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	std::string msg = "getSmallBlind ";
-	msg += std::to_string(blindIndex);
-	this->log(Severity::VERBOSE, msg);
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "getSmallBlind ", blindIndex);
 
 	return this->rules->getSmallBlind(blindIndex);
 }
@@ -1137,13 +823,9 @@ int BotManager::getSmallBlind(int blindIndex) const
 */
 int BotManager::getAllowedBotCalcTime() const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	this->log(Severity::VERBOSE, "getAllowedBotCalcTime");
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "getAllowedBotCalcTime");
 
 	return this->rules->getAllowedBotCalcTime(this->bot->getLang());
 }
@@ -1152,13 +834,9 @@ int BotManager::getAllowedBotCalcTime() const
 */
 int BotManager::getStartingChips() const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	this->log(Severity::VERBOSE, "getStartingChips");
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "getStartingChips");
 
 	return this->rules->getStartingChips();
 }
@@ -1167,13 +845,9 @@ int BotManager::getStartingChips() const
 */
 int BotManager::getNumOfBlinds() const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	this->log(Severity::VERBOSE, "getNumOfBlinds");
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "getNumOfBlinds");
 
 	return this->rules->getNumOfBlinds();
 }
@@ -1182,13 +856,9 @@ int BotManager::getNumOfBlinds() const
 */
 int BotManager::getNumOfRebuysAllowed() const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	this->log(Severity::VERBOSE, "getNumOfRebuysAllowed");
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "getNumOfRebuysAllowed");
 
 	return this->rules->getNumOfRebuysAllowed();
 }
@@ -1197,13 +867,9 @@ int BotManager::getNumOfRebuysAllowed() const
 */
 bool BotManager::isTalkAllowed() const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	this->log(Severity::VERBOSE, "isTalkAllowed");
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "isTalkAllowed");
 
 	return this->rules->isTalkAllowed();
 }
@@ -1212,13 +878,9 @@ bool BotManager::isTalkAllowed() const
 */
 bool BotManager::isEmotionAllowed() const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	this->log(Severity::VERBOSE, "isEmotionAllowed");
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "isEmotionAllowed");
 
 	return this->rules->isEmotionAllowed();
 }
@@ -1227,13 +889,9 @@ bool BotManager::isEmotionAllowed() const
 */
 bool BotManager::isBotKnowledgeUseAllowed() const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	this->log(Severity::VERBOSE, "isBotKnowledgeUseAllowed");
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "isBotKnowledgeUseAllowed");
 
 	return this->rules->isBotKnowledgeUseAllowed();
 }
@@ -1242,19 +900,14 @@ bool BotManager::isBotKnowledgeUseAllowed() const
 */
 bool BotManager::isTableLoaded(int tableID) const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	this->log(Severity::VERBOSE, "isTableLoaded");
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "isTableLoaded");
 
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
 		return this->bkHandler->isTableLoaded(tableID);
 	}
-
 	return false;
 }
 
@@ -1262,19 +915,14 @@ bool BotManager::isTableLoaded(int tableID) const
 */
 HandRank BotManager::getHandRank() const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	this->log(Severity::VERBOSE, "getHandRank");
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "getHandRank");
 
-	if (this->hand[0] != nullptr) // has cards
+	if (this->hand.size() == 2) // has cards
 	{
-		return this->hostess->getBotHandRank(this->hand[0], this->hand[1]);
+		return this->hostess->getBotHandRank(this->hand);
 	}
-
 	return HandRank::None;
 }
 
@@ -1282,24 +930,14 @@ HandRank BotManager::getHandRank() const
 */
 int BotManager::addKnowledgeTableRow(int tableID)
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-    this->critical_to_thread_cancel.store(true);
-
-	// log
-	std::string msg = "addKnowledgeTableRow ";
-	msg += std::to_string(tableID);
-	this->log(Severity::VERBOSE, msg);
+	Logger::Log(this, Severity::VERBOSE, "addKnowledgeTableRow ", tableID);
 
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
-	    int res = this->bkHandler->addTableRow(tableID);
-	    this->critical_to_thread_cancel.store(false);
-		return res;
+	  return this->bkHandler->addTableRow(tableID);
 	}
-
-    this->critical_to_thread_cancel.store(false);
 	return 0;
 }
 
@@ -1307,20 +945,16 @@ int BotManager::addKnowledgeTableRow(int tableID)
 */
 int BotManager::createKnowledgeTable(int numOfCols, std::list<KnowledgeDataType> colTypes)
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-
-    this->critical_to_thread_cancel.store(true);
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
 	// log
-	std::string msg = "createKnowledgeTable ";
-	msg += std::to_string(numOfCols);
-	for (std::list<KnowledgeDataType>::iterator it = colTypes.begin(); it != colTypes.end(); ++it)
+  std::ostringstream os;
+  os << "createKnowledgeTable " << numOfCols;
+	for (const auto& it : colTypes)
 	{
-		msg += ',';
-		msg += std::to_string(*it);
+		os << ',' << it;
 	}
-	this->log(Severity::VERBOSE, msg);
+	Logger::Log(this, Severity::VERBOSE, os.str());
 
 	if (this->rules->isBotKnowledgeUseAllowed() && numOfCols == colTypes.size())
 	{
@@ -1333,12 +967,8 @@ int BotManager::createKnowledgeTable(int numOfCols, std::list<KnowledgeDataType>
 			tmpColTypes[i++] = *it;
 		}
 
-        int res = this->bkHandler->createTable(numOfCols, tmpColTypes);
-        this->critical_to_thread_cancel.store(false);
-		return res;
+    return this->bkHandler->createTable(numOfCols, tmpColTypes);
 	}
-
-    this->critical_to_thread_cancel.store(false);
 	return 0;
 }
 
@@ -1346,23 +976,14 @@ int BotManager::createKnowledgeTable(int numOfCols, std::list<KnowledgeDataType>
 */
 KnowledgeDataType BotManager::getKnowledgeTableDataType(int tableID, int col) const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	std::string msg = "getKnowledgeTableDataType ";
-	msg += std::to_string(tableID);
-	msg += ',';
-	msg += std::to_string(col);
-	this->log(Severity::VERBOSE, msg);
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "getKnowledgeTableDataType ", tableID, ',', col);
 
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
 		return this->bkHandler->getTableColumnType(tableID, col);
 	}
-
 	return KnowledgeDataType::NONE;
 }
 
@@ -1370,25 +991,14 @@ KnowledgeDataType BotManager::getKnowledgeTableDataType(int tableID, int col) co
 */
 bool BotManager::getKnowledgeTableData(int& val, int tableID, int row, int col) const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	std::string msg = "getKnowledgeTableData(int) ";
-	msg += std::to_string(tableID);
-	msg += ',';
-	msg += std::to_string(row);
-	msg += ',';
-	msg += std::to_string(col);
-	this->log(Severity::VERBOSE, msg);
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "getKnowledgeTableData(int) ", tableID, ',', row, ',', col);
 
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
 		return this->bkHandler->getTableData(val, tableID, row, col);
 	}
-
 	return false;
 }
 
@@ -1396,25 +1006,14 @@ bool BotManager::getKnowledgeTableData(int& val, int tableID, int row, int col) 
 */
 bool BotManager::getKnowledgeTableData(bool& val, int tableID, int row, int col) const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	std::string msg = "getKnowledgeTableData(bool) ";
-	msg += std::to_string(tableID);
-	msg += ',';
-	msg += std::to_string(row);
-	msg += ',';
-	msg += std::to_string(col);
-	this->log(Severity::VERBOSE, msg);
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "getKnowledgeTableData(bool) ", tableID, ',', row, ',', col);
 
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
 		return this->bkHandler->getTableData(val, tableID, row, col);
 	}
-
 	return false;
 }
 
@@ -1422,25 +1021,14 @@ bool BotManager::getKnowledgeTableData(bool& val, int tableID, int row, int col)
 */
 bool BotManager::getKnowledgeTableData(char& val, int tableID, int row, int col) const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	std::string msg = "getKnowledgeTableData(char) ";
-	msg += std::to_string(tableID);
-	msg += ',';
-	msg += std::to_string(row);
-	msg += ',';
-	msg += std::to_string(col);
-	this->log(Severity::VERBOSE, msg);
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "getKnowledgeTableData(char) ", tableID, ',', row, ',', col);
 
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
 		return this->bkHandler->getTableData(val, tableID, row, col);
 	}
-
 	return false;
 }
 
@@ -1448,25 +1036,14 @@ bool BotManager::getKnowledgeTableData(char& val, int tableID, int row, int col)
 */
 bool BotManager::getKnowledgeTableData(std::string& val, int tableID, int row, int col) const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	std::string msg = "getKnowledgeTableData(string) ";
-	msg += std::to_string(tableID);
-	msg += ',';
-	msg += std::to_string(row);
-	msg += ',';
-	msg += std::to_string(col);
-	this->log(Severity::VERBOSE, msg);
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "getKnowledgeTableData(string) ", tableID, ',', row, ',', col);
 
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
 		return this->bkHandler->getTableData(val, tableID, row, col);
 	}
-
 	return false;
 }
 
@@ -1474,25 +1051,14 @@ bool BotManager::getKnowledgeTableData(std::string& val, int tableID, int row, i
 */
 bool BotManager::getKnowledgeTableData(float& val, int tableID, int row, int col) const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	std::string msg = "getKnowledgeTableData(float) ";
-	msg += std::to_string(tableID);
-	msg += ',';
-	msg += std::to_string(row);
-	msg += ',';
-	msg += std::to_string(col);
-	this->log(Severity::VERBOSE, msg);
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "getKnowledgeTableData(float) ", tableID, ',', row, ',', col);
 
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
 		return this->bkHandler->getTableData(val, tableID, row, col);
 	}
-
 	return false;
 }
 
@@ -1500,30 +1066,14 @@ bool BotManager::getKnowledgeTableData(float& val, int tableID, int row, int col
 */
 bool BotManager::setKnowledgeTableData(int val, int tableID, int row, int col)
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-    this->critical_to_thread_cancel.store(true);
-
-	// log
-	std::string msg = "setKnowledgeTableData(int) ";
-	msg += std::to_string(tableID);
-	msg += ',';
-	msg += std::to_string(row);
-	msg += ',';
-	msg += std::to_string(col);
-	msg += ',';
-	msg += std::to_string(val);
-	this->log(Severity::VERBOSE, msg);
+	Logger::Log(this, Severity::VERBOSE, "setKnowledgeTableData(int) ", tableID, ',', row, ',', col, ',', val);
 
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
-	    bool res = this->bkHandler->setTableData(val, tableID, row, col);
-	    this->critical_to_thread_cancel.store(false);
-		return res;
+	  return this->bkHandler->setTableData(val, tableID, row, col);
 	}
-
-    this->critical_to_thread_cancel.store(false);
 	return false;
 }
 
@@ -1531,30 +1081,14 @@ bool BotManager::setKnowledgeTableData(int val, int tableID, int row, int col)
 */
 bool BotManager::setKnowledgeTableData(bool val, int tableID, int row, int col)
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-    this->critical_to_thread_cancel.store(true);
-
-	// log
-	std::string msg = "setKnowledgeTableData(bool) ";
-	msg += std::to_string(tableID);
-	msg += ',';
-	msg += std::to_string(row);
-	msg += ',';
-	msg += std::to_string(col);
-	msg += ',';
-	msg += std::to_string(val);
-	this->log(Severity::VERBOSE, msg);
+	Logger::Log(this, Severity::VERBOSE, "setKnowledgeTableData(bool) ", tableID, ',', row, ',', col, ',', val);
 
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
-	    bool res = this->bkHandler->setTableData(val, tableID, row, col);
-	    this->critical_to_thread_cancel.store(false);
-		return res;
+	  return this->bkHandler->setTableData(val, tableID, row, col);
 	}
-
-    this->critical_to_thread_cancel.store(false);
 	return false;
 }
 
@@ -1562,30 +1096,14 @@ bool BotManager::setKnowledgeTableData(bool val, int tableID, int row, int col)
 */
 bool BotManager::setKnowledgeTableData(char val, int tableID, int row, int col)
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-    this->critical_to_thread_cancel.store(true);
-
-	// log
-	std::string msg = "setKnowledgeTableData(char) ";
-	msg += std::to_string(tableID);
-	msg += ',';
-	msg += std::to_string(row);
-	msg += ',';
-	msg += std::to_string(col);
-	msg += ',';
-	msg += val;
-	this->log(Severity::VERBOSE, msg);
+	Logger::Log(this, Severity::VERBOSE, "setKnowledgeTableData(char) ", tableID, ',', row, ',', col, ',', val);
 
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
-	    bool res = this->bkHandler->setTableData(val, tableID, row, col);
-	    this->critical_to_thread_cancel.store(false);
-		return res;
+	  return this->bkHandler->setTableData(val, tableID, row, col);
 	}
-
-    this->critical_to_thread_cancel.store(false);
 	return false;
 }
 
@@ -1593,55 +1111,25 @@ bool BotManager::setKnowledgeTableData(char val, int tableID, int row, int col)
 */
 bool BotManager::setKnowledgeTableData(const char* val, int tableID, int row, int col)
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-    this->critical_to_thread_cancel.store(true);
+  Logger::Log(this, Severity::VERBOSE, "setKnowledgeTableData(str) ", tableID, ',', row, ',', col, ',', val);
 
-	// log
-	std::string msg = "setKnowledgeTableData(str) ";
-	msg += std::to_string(tableID);
-	msg += ',';
-	msg += std::to_string(row);
-	msg += ',';
-	msg += std::to_string(col);
-	msg += ',';
-	msg += val;
-	this->log(Severity::VERBOSE, msg);
-
-    bool res = this->setKnowledgeTableData(std::string(val), tableID, row, col);
-    this->critical_to_thread_cancel.store(false);
-	return res;
+  return this->setKnowledgeTableData(std::string(val), tableID, row, col);
 }
 
 /** Sets data at specific cell in a knowledge table (std::string).
 */
 bool BotManager::setKnowledgeTableData(std::string val, int tableID, int row, int col)
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-    this->critical_to_thread_cancel.store(true);
-
-	// log
-	std::string msg = "setKnowledgeTableData(str) ";
-	msg += std::to_string(tableID);
-	msg += ',';
-	msg += std::to_string(row);
-	msg += ',';
-	msg += std::to_string(col);
-	msg += ',';
-	msg += val;
-	this->log(Severity::VERBOSE, msg);
+  Logger::Log(this, Severity::VERBOSE, "setKnowledgeTableData(str) ", tableID, ',', row, ',', col, ',', val);
 
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
-	    bool res = this->bkHandler->setTableData(val, tableID, row, col);
-	    this->critical_to_thread_cancel.store(false);
-		return res;
+	  return this->bkHandler->setTableData(val, tableID, row, col);
 	}
-
-    this->critical_to_thread_cancel.store(false);
 	return false;
 }
 
@@ -1649,30 +1137,14 @@ bool BotManager::setKnowledgeTableData(std::string val, int tableID, int row, in
 */
 bool BotManager::setKnowledgeTableData(float val, int tableID, int row, int col)
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-    this->critical_to_thread_cancel.store(true);
-
-	// log
-	std::string msg = "setKnowledgeTableData(float) ";
-	msg += std::to_string(tableID);
-	msg += ',';
-	msg += std::to_string(row);
-	msg += ',';
-	msg += std::to_string(col);
-	msg += ',';
-	msg += std::to_string(val);
-	this->log(Severity::VERBOSE, msg);
+	Logger::Log(this, Severity::VERBOSE, "setKnowledgeTableData(float) ", tableID, ',', row, ',', col, ',', val);
 
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
-	    bool res = this->bkHandler->setTableData(val, tableID, row, col);
-	    this->critical_to_thread_cancel.store(false);
-		return res;
+	  return this->bkHandler->setTableData(val, tableID, row, col);
 	}
-
-    this->critical_to_thread_cancel.store(false);
 	return false;
 }
 
@@ -1680,21 +1152,14 @@ bool BotManager::setKnowledgeTableData(float val, int tableID, int row, int col)
 */
 int BotManager::getKnowledgeTableNumOfCols(int tableID) const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-    this->critical_to_thread_cancel.store(true);
-	std::string msg = "getKnowledgeTableNumOfCols ";
-	msg += std::to_string(tableID);
-	this->log(Severity::VERBOSE, msg);
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "getKnowledgeTableNumOfCols ", tableID);
 
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
 		return this->bkHandler->getTableNumOfCols(tableID);
 	}
-
 	return 0;
 }
 
@@ -1702,21 +1167,14 @@ int BotManager::getKnowledgeTableNumOfCols(int tableID) const
 */
 int BotManager::getKnowledgeTableNumOfRows(int tableID) const
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	// log
-	this->critical_to_thread_cancel.store(true);
-	std::string msg = "getKnowledgeTableNumOfRows ";
-	msg += std::to_string(tableID);
-	this->log(Severity::VERBOSE, msg);
-	this->critical_to_thread_cancel.store(false);
+	Logger::Log(this, Severity::VERBOSE, "getKnowledgeTableNumOfRows ", tableID);
 
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
 		return this->bkHandler->getTableNumOfRows(tableID);
 	}
-
 	return 0;
 }
 
@@ -1724,24 +1182,14 @@ int BotManager::getKnowledgeTableNumOfRows(int tableID) const
 */
 bool BotManager::removeKnowledgeTable(int tableID)
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-    this->critical_to_thread_cancel.store(true);
-
-	// log
-	std::string msg = "removeKnowledgeTable ";
-	msg += std::to_string(tableID);
-	this->log(Severity::VERBOSE, msg);
+	Logger::Log(this, Severity::VERBOSE, "removeKnowledgeTable ", tableID);
 
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
-	    bool res = this->bkHandler->removeTable(tableID);
-	    this->critical_to_thread_cancel.store(false);
-		return res;
+	  return this->bkHandler->removeTable(tableID);
 	}
-
-    this->critical_to_thread_cancel.store(false);
 	return false;
 }
 
@@ -1749,26 +1197,14 @@ bool BotManager::removeKnowledgeTable(int tableID)
 */
 bool BotManager::removeKnowledgeTableRow(int tableID, int row)
 {
-    if (this->timeout_occured.load()) // waiting 4 thread to cancel
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-    this->critical_to_thread_cancel.store(true);
-
-	// log
-	std::string msg = "removeKnowledgeTableRow ";
-	msg += std::to_string(tableID);
-	msg += ',';
-	msg += std::to_string(row);
-	this->log(Severity::VERBOSE, msg);
+	Logger::Log(this, Severity::VERBOSE, "removeKnowledgeTableRow ", tableID, ',', row);
 
 	if (this->rules->isBotKnowledgeUseAllowed())
 	{
-	    bool res = this->bkHandler->removeTableRow(tableID, row);
-	    this->critical_to_thread_cancel.store(false);
-		return res;
+	  return this->bkHandler->removeTableRow(tableID, row);
 	}
-
-    this->critical_to_thread_cancel.store(false);
 	return false;
 }
 
@@ -1786,27 +1222,26 @@ void BotManager::step()
 	}
 	catch (BotTimeExceededException& e)
 	{
-		// log
-		std::string msg = "timeExceeded ";
-		msg += std::to_string(this->getID());
-		msg += ",";
-		msg += std::to_string(this->bot->getID());
-		msg += ",";
-		msg += e.whatMethod();
-		this->log(Severity::ERROR, msg);
-
-		// quit bot
+		Logger::Log(this, Severity::ERROR, "timeExceeded ", this->getID(), ',', this->bot->getID(), ',', e.whatMethod());
 		this->fold();
 		this->quit();
+	}
+	catch (std::exception& e)
+	{
+		Logger::Log(this, Severity::ERROR, "exceptionThrown ", this->getID(), ',', this->bot->getID(), ',', e.what());
+        this->fold();
+		this->quit();
+	}
+	catch (...)
+	{
+   		Logger::Log(this, Severity::ERROR, "exceptionThrown ", this->getID(), ',', this->bot->getID());
+        this->fold();
+	    this->quit();
 	}
 
 	if (this->stepToken) // no step taken
 	{
-		// log
-		std::string msg = "noStepTaken";
-		this->log(Severity::WARNING, msg);
-
-		// default move
+		Logger::Log(this, Severity::WARNING, "noStepTaken");
 		this->fold();
 	}
 
@@ -1828,33 +1263,15 @@ void BotManager::leave()
 	}
 	catch (BotTimeExceededException& e)
 	{
-		// log
-		std::string msg = "timeExceeded ";
-		msg += std::to_string(this->getID());
-		msg += ",";
-		msg += std::to_string(this->bot->getID());
-		msg += ",";
-		msg += e.whatMethod();
-		this->log(Severity::ERROR, msg);
+	  Logger::Log(this, Severity::ERROR, "timeExceeded ", this->getID(), ',', this->bot->getID(), ',', e.whatMethod());
 	}
 	catch (std::exception& e)
 	{
-	    // log
-	    std::string msg = "exceptionThrown ";
-	    msg += std::to_string(this->getID());
-	    msg += ",";
-	    msg += std::to_string(this->bot->getID());
-	    msg += ",";
-		msg += e.what();
-		this->log(Severity::ERROR, msg);
+  		Logger::Log(this, Severity::ERROR, "exceptionThrown ", this->getID(), ',', this->bot->getID(), ',', e.what());
 	}
 	catch (...)
 	{
-	    std::string msg = "exceptionThrown ";
-	    msg += std::to_string(this->getID());
-	    msg += ",";
-	    msg += std::to_string(this->bot->getID());
-	    this->log(Severity::ERROR, msg);
+		Logger::Log(this, Severity::ERROR, "exceptionThrown ", this->getID(), ',', this->bot->getID());
 	}
 
 	// broadcast left game
@@ -1874,39 +1291,18 @@ void BotManager::rebuyOrLeave()
 		}
 		catch (BotTimeExceededException& e)
 		{
-			// log
-			std::string msg = "timeExceeded ";
-			msg += std::to_string(this->getID());
-			msg += ",";
-			msg += std::to_string(this->bot->getID());
-			msg += ",";
-			msg += e.whatMethod();
-			this->log(Severity::ERROR, msg);
-
+			Logger::Log(this, Severity::ERROR, "timeExceeded ", this->getID(), ',', this->bot->getID(), ',', e.whatMethod());
 			this->quit();
 		}
 		catch (std::exception& e)
         {
-            // log
-            std::string msg = "exceptionThrown ";
-            msg += std::to_string(this->getID());
-            msg += ",";
-            msg += std::to_string(this->bot->getID());
-            msg += ",";
-            msg += e.what();
-            this->log(Severity::ERROR, msg);
-
+			Logger::Log(this, Severity::ERROR, "exceptionThrown ", this->getID(), ',', this->bot->getID(), ',', e.what());
             this->quit();
         }
         catch (...)
         {
-            std::string msg = "exceptionThrown ";
-            msg += std::to_string(this->getID());
-            msg += ",";
-            msg += std::to_string(this->bot->getID());
-            this->log(Severity::ERROR, msg);
-
-            this->quit();
+      		Logger::Log(this, Severity::ERROR, "exceptionThrown ", this->getID(), ',', this->bot->getID());
+			this->quit();
         }
 	}
 }
@@ -1925,5 +1321,5 @@ int BotManager::getKickedAtRound() const
 void BotManager::monitor(Bot* bot)
 {
 	this->bot = new TimerBotProxy(bot, this->rules->getAllowedBotCalcTime(bot->getLang()),
-                               this->critical_to_thread_cancel, this->timeout_occured);
+	    this->manage_thread_mutex);
 }
