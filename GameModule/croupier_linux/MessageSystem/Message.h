@@ -19,7 +19,7 @@ public:
   typedef FN FieldNames;
   typedef std::tuple<FT...> TupleType;
   typedef MTE MessageType;
-  static const MTE Type = MT;
+  static const MTE Type;
   static const size_t Size = std::tuple_size<std::tuple<FT...>>::value;
 
   Message() {}
@@ -43,6 +43,9 @@ public:
     return fields;
   }
 };
+
+template<typename MTE, MTE MT, typename FN, typename... FT>
+const MTE Message<MTE, MT, FN, FT...>::Type = MT;
 
 #define EXPAND(...) __VA_ARGS__
 #define CREATE_MESSAGE(type, name, fieldNames, fieldTypes) \

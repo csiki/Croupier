@@ -3,11 +3,13 @@
 
 #include <atomic>
 #include <chrono>
+#include <condition_variable>
 #include <map>
 #include <memory>
 #include <mutex>
 #include <sstream>
 #include <thread>
+#include <utility>
 
 #include "Message.h"
 #include "MessageHandler.h"
@@ -34,6 +36,10 @@ template<typename MTE>
 class CommunicationManager {
   typedef std::shared_ptr<MessageHandlerBase<MTE>> MessageHandlerPtr;
   typedef std::shared_ptr<MessageSerializerBase<MTE>> MessageSerializerPtr;
+  typedef std::pair<std::mutex, std::condition_variable> ResponseCallbackType;
+  typedef std::shared_ptr<ResponseCallbackType> ResponseCallbackPtr;
+
+  const unsigned communicationTimeout;
 
   std::istream& is;
   std::ostream& os;
@@ -41,8 +47,13 @@ class CommunicationManager {
   std::map<MTE, MessageSerializerPtr> messageSerializers;
   std::map<MTE, MessageHandlerPtr> messageHandlers;
 
+  std::map<MTE, std::shared_ptr<MessageBase<MTE>>> responseMessages;
+  std::map<MTE, ResponseCallbackPtr> responseCallbacks;
+
   std::mutex messageSerializers_guard;
   std::mutex messageHandlers_guard;
+  std::mutex responseMessages_guard;
+  std::mutex responseCallbacks_guard;
 
   std::atomic_bool runReader;
   std::thread reader;
@@ -67,10 +78,25 @@ class CommunicationManager {
     }
   }
 
+  bool handleResponseCallback(std::shared_ptr<MessageBase<MTE>> message) {
+    std::lock_guard<std::mutex> lock(responseMessages_guard);
+    auto it = responseMessages.find(message->getType());
+    if(it != responseMessages.end()) {
+      it->second = message;
+      std::lock_guard<std::mutex> lock(responseCallbacks_guard);
+      responseCallbacks[message->getType()]->second.notify_one();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   void handleMessage(std::shared_ptr<MessageBase<MTE>> message) {
-    auto handler = getMessageHandler(message->getType());
-    if(handler != nullptr) {
-      handler->handle(message);
+    if(!handleResponseCallback(message)) {
+      auto handler = getMessageHandler(message->getType());
+      if(handler != nullptr) {
+        handler->handle(message);
+      }
     }
   }
 
@@ -108,9 +134,47 @@ class CommunicationManager {
     }
   }
 
+  void initResponseCallback(MTE messageType) {
+    std::lock_guard<std::mutex> lock(responseCallbacks_guard);
+    if(!responseCallbacks.count(messageType)) {
+      responseCallbacks[messageType] = std::make_shared<ResponseCallbackType>();
+    }
+  }
+
+  void setWaitingForMessage(MTE messageType) {
+    std::lock_guard<std::mutex> lock(responseMessages_guard);
+    if(responseMessages.count(messageType)) {
+      throw std::logic_error("Two message in the system with the same type");
+    } else {
+      responseMessages[messageType] = nullptr;
+    }
+  }
+
+  template<typename ResultClass>
+  std::shared_ptr<ResultClass> waitForMessage() {
+    ResponseCallbackPtr callback;
+    {
+      std::lock_guard<std::mutex> lock(responseCallbacks_guard);
+      callback = responseCallbacks[ResultClass::Type];
+    }
+    {
+      std::unique_lock<std::mutex> lock(callback->first);
+      if(callback->second.wait_for(lock, std::chrono::milliseconds(communicationTimeout)) == std::cv_status::no_timeout) {
+        std::lock_guard<std::mutex> lock(responseMessages_guard);
+        auto res = responseMessages[ResultClass::Type];
+        responseMessages.erase(ResultClass::Type);
+        return std::static_pointer_cast<ResultClass>(res);
+      } else {
+        responseMessages.erase(ResultClass::Type);
+        return nullptr;
+      }
+    }
+  }
+
 public:
-  CommunicationManager(std::istream& is, std::ostream& os) : is(is), os(os), runReader(true),
-    reader(&CommunicationManager::readMessage, this) {
+  CommunicationManager(std::istream& is, std::ostream& os, unsigned communicationTimeout = 2000)
+    : communicationTimeout(communicationTimeout), is(is), os(os), runReader(true),
+      reader(&CommunicationManager::readMessage, this) {
   }
 
   ~CommunicationManager() {
@@ -132,6 +196,14 @@ public:
   void sendMessage(std::shared_ptr<MessageClass> message) {
     std::lock_guard<std::mutex> lock(messageSerializers_guard);
     messageSerializers.at(message->getType())->write(os, message);
+  }
+
+  template<typename ResultClass, typename MessageClass>
+  std::shared_ptr<ResultClass> communicate(std::shared_ptr<MessageClass> message) {
+    initResponseCallback(message->getType());
+    setWaitingForMessage(message->getType());
+    sendMessage(message);
+    return waitForMessage<ResultClass>();
   }
 };
 
