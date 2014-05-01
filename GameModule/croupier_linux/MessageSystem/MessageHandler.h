@@ -6,6 +6,7 @@
 #include <stdexcept>
 
 #include "Message.h"
+#include "UnpackTuple.h"
 
 template<typename MTE>
 class MessageSerializerBase {
@@ -88,7 +89,7 @@ public:
 template<typename HandlerClass, typename MessageClass>
 class MessageHandler : public MessageHandlerBase<typename MessageClass::MessageType> {
 public:
-  typedef void(HandlerClass::*FunctionType)(const typename MessageClass::TupleType&);
+  typedef typename UnpackTuple::GetMemberFunctionType<void, HandlerClass, typename MessageClass::TupleType>::type FunctionType;
 
 private:
   HandlerClass& handler;
@@ -103,7 +104,7 @@ public:
 
   void handle(std::shared_ptr<MessageBase<typename MessageClass::MessageType>> message) override {
     auto typedMessage = std::dynamic_pointer_cast<MessageClass>(message);
-    (handler.*function)(typedMessage->getTuple());
+    UnpackTuple::callMemberFunction(handler, function, typedMessage->getTuple());
   }
 };
 
