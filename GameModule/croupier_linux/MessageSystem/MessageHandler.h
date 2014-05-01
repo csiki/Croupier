@@ -8,16 +8,15 @@
 #include "Message.h"
 
 template<typename MTE>
-class MessageHandlerBase {
+class MessageSerializerBase {
 public:
-  virtual ~MessageHandlerBase() {}
-  virtual void handle(std::shared_ptr<MessageBase<MTE>> message) = 0;
+  virtual ~MessageSerializerBase() {}
   virtual MTE getMessageType() const = 0;
   virtual std::shared_ptr<MessageBase<MTE>> read(std::istream&) const = 0;
   virtual void write(std::ostream&, const std::shared_ptr<MessageBase<MTE>>&) const = 0;
 };
 
-class MessageSerializer {
+class MessageSerializerImpl {
 private:
   template<typename MessageClass, unsigned I>
   struct readImpl {
@@ -62,43 +61,49 @@ public:
 };
 
 template<typename MessageClass>
-class BasicMessageHandler : public MessageHandlerBase<typename MessageClass::MessageType> {
+class MessageSerializer : public MessageSerializerBase<typename MessageClass::MessageType> {
 public:
-  virtual ~BasicMessageHandler() {}
-
-  virtual void handle(std::shared_ptr<MessageBase<typename MessageClass::MessageType>>) override {
-    throw std::runtime_error("Not expected message type received!");
+  typename MessageClass::MessageType getMessageType() const override {
+    return MessageClass::Type;
   }
 
   std::shared_ptr<MessageBase<typename MessageClass::MessageType>> read(std::istream& is) const override {
-    return MessageSerializer::read<MessageClass>(is);
+    return MessageSerializerImpl::read<MessageClass>(is);
   }
 
   void write(std::ostream& os, const std::shared_ptr<MessageBase<typename MessageClass::MessageType>>& message) const override {
     auto typedMessage = std::static_pointer_cast<MessageClass>(message);
-    MessageSerializer::write<MessageClass>(os, typedMessage);
-  }
-
-  typename MessageClass::MessageType getMessageType() const override {
-    return MessageClass::Type;
+    MessageSerializerImpl::write<MessageClass>(os, typedMessage);
   }
 };
 
+template<typename MTE>
+class MessageHandlerBase {
+public:
+  virtual ~MessageHandlerBase() {}
+  virtual MTE getMessageType() const = 0;
+  virtual void handle(std::shared_ptr<MessageBase<MTE>> message) = 0;
+};
+
 template<typename HandlerClass, typename MessageClass>
-class MessageHandler : public BasicMessageHandler<MessageClass> {
+class MessageHandler : public MessageHandlerBase<typename MessageClass::MessageType> {
 public:
   typedef void(HandlerClass::*FunctionType)(const typename MessageClass::TupleType&);
 
 private:
-  std::shared_ptr<HandlerClass> handler;
+  HandlerClass& handler;
   FunctionType function;
 
 public:
-  MessageHandler(std::shared_ptr<HandlerClass>& handler, FunctionType function) : handler(handler), function(function) {}
+  MessageHandler(HandlerClass& handler, FunctionType function) : handler(handler), function(function) {}
+
+  typename MessageClass::MessageType getMessageType() const override {
+    return MessageClass::Type;
+  }
 
   void handle(std::shared_ptr<MessageBase<typename MessageClass::MessageType>> message) override {
-    auto typesMessage = std::dynamic_pointer_cast<MessageClass>(message);
-    ((*handler).*function)(typesMessage->getTuple());
+    auto typedMessage = std::dynamic_pointer_cast<MessageClass>(message);
+    (handler.*function)(typedMessage->getTuple());
   }
 };
 
