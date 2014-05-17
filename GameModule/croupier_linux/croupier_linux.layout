@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
-	<File name="AliveBot.h" open="1" top="0" tabpos="10">
+	<File name="AliveBot.h" open="0" top="0" tabpos="10">
 		<Cursor position="0" topLine="0" />
 	</File>
 	<File name="AliveBotLoader.cpp" open="0" top="0" tabpos="7">
@@ -14,13 +14,13 @@
 		<Cursor position="0" topLine="0" />
 	</File>
 	<File name="BotData.h" open="0" top="0" tabpos="4">
-		<Cursor position="0" topLine="0" />
+		<Cursor position="271" topLine="6" />
 	</File>
 	<File name="BotDataXMLHandler.cpp" open="0" top="0" tabpos="4">
 		<Cursor position="0" topLine="0" />
 	</File>
-	<File name="BotInfo.h" open="0" top="0" tabpos="3">
-		<Cursor position="0" topLine="0" />
+	<File name="BotInfo.h" open="1" top="0" tabpos="6">
+		<Cursor position="905" topLine="20" />
 	</File>
 	<File name="BotKnowledgeHandler.cpp" open="0" top="0" tabpos="12">
 		<Cursor position="0" topLine="0" />
@@ -32,48 +32,63 @@
 		<Cursor position="0" topLine="0" />
 	</File>
 	<File name="BotManager.cpp" open="1" top="0" tabpos="4">
-		<Cursor position="300" topLine="0" />
+		<Cursor position="2496" topLine="46" />
 	</File>
-	<File name="BotManager.h" open="1" top="1" tabpos="5">
-		<Cursor position="1244" topLine="33" />
+	<File name="BotManager.h" open="0" top="0" tabpos="3">
+		<Cursor position="1303" topLine="33" />
 	</File>
 	<File name="BotTimeExceededException.h" open="0" top="0" tabpos="7">
 		<Cursor position="0" topLine="0" />
 	</File>
+	<File name="BroadcastStation.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="329" topLine="18" />
+	</File>
 	<File name="Card.cpp" open="0" top="0" tabpos="5">
-		<Cursor position="0" topLine="0" />
+		<Cursor position="1472" topLine="54" />
 	</File>
 	<File name="Card.h" open="0" top="0" tabpos="6">
-		<Cursor position="0" topLine="0" />
+		<Cursor position="228" topLine="30" />
 	</File>
 	<File name="CppBotLoader.cpp" open="0" top="0" tabpos="4">
 		<Cursor position="0" topLine="0" />
 	</File>
-	<File name="Croupier.cpp" open="1" top="0" tabpos="9">
+	<File name="Croupier.cpp" open="1" top="1" tabpos="5">
+		<Cursor position="12472" topLine="465" />
+	</File>
+	<File name="Croupier.h" open="1" top="0" tabpos="8">
+		<Cursor position="0" topLine="12" />
+	</File>
+	<File name="Entity.h" open="1" top="0" tabpos="7">
 		<Cursor position="0" topLine="0" />
 	</File>
 	<File name="GameDataXMLHandler.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="0" topLine="0" />
 	</File>
-	<File name="GameModule.cpp" open="1" top="0" tabpos="6">
-		<Cursor position="0" topLine="0" />
+	<File name="GameModule.cpp" open="1" top="0" tabpos="3">
+		<Cursor position="869" topLine="12" />
 	</File>
 	<File name="GameOwner.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="2165" topLine="66" />
+	</File>
+	<File name="GameOwner.h" open="0" top="0" tabpos="7">
 		<Cursor position="0" topLine="0" />
 	</File>
-	<File name="GameOwner.h" open="1" top="0" tabpos="7">
+	<File name="HandEvaluator.cpp" open="0" top="0" tabpos="8">
 		<Cursor position="0" topLine="0" />
 	</File>
-	<File name="HandEvaluator.cpp" open="1" top="0" tabpos="8">
-		<Cursor position="0" topLine="0" />
-	</File>
-	<File name="Hostess.cpp" open="1" top="0" tabpos="3">
+	<File name="Hostess.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="0" topLine="0" />
 	</File>
 	<File name="KnowledgeTable.h" open="0" top="0" tabpos="3">
 		<Cursor position="0" topLine="0" />
 	</File>
-	<File name="Table.cpp" open="1" top="0" tabpos="2">
+	<File name="Logger.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="55" topLine="0" />
+	</File>
+	<File name="Logger.h" open="1" top="0" tabpos="2">
+		<Cursor position="346" topLine="9" />
+	</File>
+	<File name="Table.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="0" topLine="0" />
 	</File>
 	<File name="Table.h" open="0" top="0" tabpos="6">
