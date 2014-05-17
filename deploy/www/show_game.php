@@ -41,15 +41,15 @@ $en_msg = array("Receive Card", "Fold", "Check", "Call", "Raise",
 $cardnames = array();
 $cardpics = array();
 $suits = array("HEARTS", "DIAMONDS", "CLUBS", "SPADES", "NULL");
-$ranks = array("DEUCE of ", "THREE of ", "FOUR of ", "FIVE of ", "SIX of ", "SEVEN of ", "EIGHT of ",
-    "NINE of ", "TEN of ", "JACK of ", "QUEEN of ", "KING of ", "ACE of ", "NULL of ");
+$ranks = array("DEUCE", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT",
+    "NINE", "TEN", "JACK", "QUEEN", "KING", "ACE", "NULL");
 $CWIDTH = 125;
 $CHEIGHT = 181; // in px
 
 for ($s = 0; $s < count($suits) - 1; ++$s) // null not included
 {
     for ($r = 0; $r < count($ranks) - 1; ++$r) {
-        $cname = $ranks[$r] . $suits[$s];
+        $cname = $suits[$s] ." ". $ranks[$r];
         $margin = -$s * $CHEIGHT * 0.4 . 'px 0 0 ' . -$r * $CWIDTH * 0.4 . 'px';
         $cropped_image = '<div style="width: 50px; height: 72px; overflow:hidden; display:inline-block"><img src="images/cards.png" alt="' . $cname . '" style="width:650px; height:362px; margin: ' . $margin . '" /></div>';
 
@@ -57,7 +57,7 @@ for ($s = 0; $s < count($suits) - 1; ++$s) // null not included
         array_push($cardpics, $cropped_image);
     }
 }
-array_push($cardnames, 'NULL of NULL');
+array_push($cardnames, 'NULL NULL');
 array_push($cardpics, '<div style="width: 50px; height: 72px; overflow:hidden; display:inline-block"><img src="images/cards.png" alt="NO INFORMATION" style="width:650px; height:362px; margin: 724px 0 0 0;" />');
 
 
@@ -88,6 +88,7 @@ $events = array();
 $eventsJSONOut = array();
 $botsJSONOut = array();
 $otherBots = array();
+$i = 0;
 foreach ($log->event as $event) {
     //skip hidden events
     if ($event->severity == Severity::DEBUG
@@ -107,7 +108,7 @@ foreach ($log->event as $event) {
             $otherBots[(string)($event->logger)] = $res[0]["name"];
         else
             $otherBots[(string)($event->logger)] = "bot " . (string)($event->logger);
-        $botsJSONOut[(string)($event->logger)] = $otherBots[(string)($event->logger)];
+        $botsJSONOut[$i++] = array((string)($event->logger), $otherBots[(string)($event->logger)]);
     }
 }
 
@@ -117,9 +118,9 @@ foreach ($log->event as $event) {
 <head>
     <?php require "php/head.php"; ?>
     <script>
-        var eventsJSON = JSON.parse('<?= json_encode($eventsJSONOut); ?>');
+        var eventsJSON = JSON.parse('<?= json_encode($eventsJSONOut, JSON_FORCE_OBJECT); ?>');
         var myBotID = <?=$botID?>;
-        var botsJSON = JSON.parse('<?= json_encode($botsJSONOut); ?>');
+        var botsJSON = JSON.parse('<?= json_encode($botsJSONOut, JSON_FORCE_OBJECT); ?>');
     </script>
 </head>
 <body>

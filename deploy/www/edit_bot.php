@@ -82,11 +82,14 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
                 die("Couldn't write bot to file: " . $id);
         }
 
-        //reset score
+        //remove bot from leaderboards
         $leaderBoardTables = SQL("SELECT tableName FROM leaderboards");
         for ($i = 0; $i < count($leaderBoardTables); $i++) {
-            SQL("UPDATE " . $leaderBoardTables[$i]["tableName"] . " SET score = ? WHERE botID = ?", INITIAL_SCORE, $id);
+            SQL("DELETE FROM " . $leaderBoardTables[$i]["tableName"] . " WHERE botID = ?", $id);
         }
+
+        //remove bot from games_by_bots
+        SQL("DELETE FROM games_by_bots WHERE botID = ?", $id);
 
         header('Location: ../my_bots.php');
     }

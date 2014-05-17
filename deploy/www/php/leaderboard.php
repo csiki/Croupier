@@ -8,17 +8,43 @@ class Leaderboard
     private $rulzName;
     private $gameid;
     private $bots = array();
+    private $friendlyName;
+    private $activated;
 
     function __construct($leaderboard)
     {
         $this->tableName = $leaderboard["tableName"];
+        $this->friendlyName = $leaderboard["friendlyName"];
         $this->rulzName = $leaderboard["rules"];
         $this->bots = SQL("SELECT botID, score, win, loose FROM " . $this->tableName . " ORDER BY (win+loose)");
+        $res = SQL("SELECT activated FROM leaderboards WHERE tableName = ?", $this->tableName);
+        $this->activated = $res[0]["activated"];
     }
 
     public function getBotNum()
     {
         return count($this->bots);
+    }
+
+    public function getFirendlyName()
+    {
+        return $this->friendlyName;
+    }
+
+    public function isActivated()
+    {
+        return $this->activated;
+    }
+
+    public function isBotParticipating($botID)
+    {
+        if($this->bots != null)
+            foreach($this->bots as $bot)
+            {
+                if($bot["botID"] == $botID)
+                    return true;
+            }
+        return false;
     }
 
     public function randMatchmaking($nGames, $nPlayers)

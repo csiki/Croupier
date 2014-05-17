@@ -23,7 +23,7 @@ if ($botsUnchecked != null)
         // concat create & destroy
         $create_destroy_typedefs = "\n" . 'extern "C" Bot* create(';
         $create_destroy_typedefs .= 'BotCommunicator* communicator, int id, std::string name, BotLanguage lang)';
-        $create_destroy_typedefs .= '{return new '. $botClassName .'(communicator, id, name, lang);}';
+        $create_destroy_typedefs .= '{return new ' . $botClassName . '(communicator, id, name, lang);}';
         $create_destroy_typedefs .= 'extern "C" void destroy(Bot* bot){delete bot;}';
 
         file_put_contents($src_tmp, $create_destroy_typedefs, FILE_APPEND | LOCK_EX);
@@ -71,8 +71,8 @@ if ($botsUnchecked != null)
                 fclose($pipes[2]);
                 $return_val = proc_close($process);
             }
-            echo "stdout". "\n" . $stdout . "\n";
-            echo "stderr". "\n" . $stderr . "\n";
+            echo "stdout" . "\n" . $stdout . "\n";
+            echo "stderr" . "\n" . $stderr . "\n";
             echo "bottester returned: " . $return_val . "\n";
             if ($return_val == 0) {
                 // run gamemodule
@@ -91,8 +91,8 @@ if ($botsUnchecked != null)
                     $return_val = proc_close($process);
                 }
 
-                echo "stdout". "\n" . $stdout . "\n";
-                echo "stderr". "\n" . $stderr . "\n";
+                echo "stdout" . "\n" . $stdout . "\n";
+                echo "stderr" . "\n" . $stderr . "\n";
                 echo "gamemodule returned: " . $return_val . "\n";
                 SQL("UPDATE games SET endTime = ? WHERE id = ?", time(), $gameid);
 

@@ -31,6 +31,7 @@ if (isset($_GET["botID"]) && is_numeric($_GET["botID"])) {
 
     <div class="basicContainer">
         <textarea id="compileErrorTextarea" readonly><?=$compError?></textarea>
+        <input type="button" onclick="window.history.back()" class="button" value="<?= $tr["BACK"] ?>">
     </div>
 </div>
 <footer>
