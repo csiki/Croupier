@@ -49,7 +49,7 @@ $CHEIGHT = 181; // in px
 for ($s = 0; $s < count($suits) - 1; ++$s) // null not included
 {
     for ($r = 0; $r < count($ranks) - 1; ++$r) {
-        $cname = $suits[$s] ." ". $ranks[$r];
+        $cname = $suits[$s] . " " . $ranks[$r];
         $margin = -$s * $CHEIGHT * 0.4 . 'px 0 0 ' . -$r * $CWIDTH * 0.4 . 'px';
         $cropped_image = '<div style="width: 50px; height: 72px; overflow:hidden; display:inline-block"><img src="images/cards.png" alt="' . $cname . '" style="width:650px; height:362px; margin: ' . $margin . '" /></div>';
 
@@ -102,7 +102,8 @@ foreach ($log->event as $event) {
     $events[] = $event;
     $eventsJSONOut[] = array((string)($event->logger), (string)($event->msg));
     if (!array_key_exists((string)($event->logger), $otherBots)
-        && (string)($event->logger) != "0") {
+        && (string)($event->logger) != "0"
+    ) {
         $res = SQL("SELECT name FROM bots WHERE id = ?", (string)($event->logger));
         if ($res != null)
             $otherBots[(string)($event->logger)] = $res[0]["name"];
@@ -118,10 +119,66 @@ foreach ($log->event as $event) {
 <head>
     <?php require "php/head.php"; ?>
     <script>
+        //don't scroll table header
+        function scrolify(tblAsJQueryObject, height){
+            var oTbl = tblAsJQueryObject;
+
+            // for very large tables you can remove the four lines below
+            // and wrap the table with <div> in the mark-up and assign
+            // height and overflow property
+            var oTblDiv = $("<div/>");
+            oTblDiv.css('height', height);
+            oTblDiv.css('overflow-y','scroll');
+            oTblDiv.css('overflow-x','hide');
+            oTbl.wrap(oTblDiv);
+
+            // save original width
+            oTbl.attr("data-item-original-width", oTbl.width());
+            oTbl.find('thead tr th').each(function(){
+                $(this).attr("data-item-original-width",$(this).width());
+            });
+            oTbl.find('tbody tr:eq(0) td').each(function(){
+                $(this).attr("data-item-original-width",$(this).width());
+            });
+
+            // clone the original table
+            var newTbl = oTbl.clone();
+
+            // remove table header from original table
+            oTbl.find('thead tr').remove();
+            // remove table body from new table
+            newTbl.find('tbody tr').remove();
+
+            oTbl.parent().parent().prepend(newTbl);
+            newTbl.wrap("<div/>");
+
+            // replace ORIGINAL COLUMN width
+            newTbl.width(newTbl.attr('data-item-original-width'));
+            newTbl.find('thead tr th').each(function(){
+                $(this).width($(this).attr("data-item-original-width"));
+            });
+            oTbl.width(oTbl.attr('data-item-original-width'));
+            oTbl.find('tbody tr:eq(0) td').each(function(){
+                $(this).width($(this).attr("data-item-original-width"));
+            });
+        }
+
+        $(document).ready(function(){
+            scrolify($('#logTable'), 500);
+            $('#logTable tbody tr').click(function(event)
+            {
+                gotoEvent($('#logTable tbody tr').index($(this)));
+            });
+            init();
+        });
+    </script>
+    <script>
         var eventsJSON = JSON.parse('<?= json_encode($eventsJSONOut, JSON_FORCE_OBJECT); ?>');
         var myBotID = <?=$botID?>;
         var botsJSON = JSON.parse('<?= json_encode($botsJSONOut, JSON_FORCE_OBJECT); ?>');
     </script>
+    <script src="scripts/createjs-2013.12.12.min.js"></script>
+    <script src="scripts/poker_game.js"></script>
 </head>
 <body>
 <?php require "php/header.php"; ?>
@@ -136,44 +193,54 @@ foreach ($log->event as $event) {
         <?php
         if (file_exists($logFile)) {
             ?>
-            <table>
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th><?= $tr["NAME"] ?></th>
-                    <th><?= $tr["ACTIVITY"] ?></th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php
-                $botCounter = 1;
-                foreach ($events as $event) {
-                    //calculate color for each severity
-                    $rgb = $severityColors[(int)$event->severity];
-                    echo '<tr style="background-color: ' . $rgb . '; '
-                        . ($event->logger == $botID ? 'font-weight:700; ' : '') . '">';
-                    echo '<td>' . $botCounter++ . '</td>';
-                    if ($event->logger == 0)
-                        echo '<td>Croupier</td>';
-                    else if ($event->logger == $botID)
-                        echo '<td>' . $botName . '</td>';
-                    else {
-                        echo '<td>' . $otherBots[(string)($event->logger)] . '</td>';
+            <div style="display:inline-block;">
+                <table id="logTable">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th><?= $tr["NAME"] ?></th>
+                        <th><?= $tr["ACTIVITY"] ?></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    $botCounter = 1;
+                    foreach ($events as $event) {
+                        //calculate color for each severity
+                        $rgb = $severityColors[(int)$event->severity];
+                        echo '<tr style="background-color: ' . $rgb . '; '
+                            . ($event->logger == $botID ? 'font-weight:700; ' : '') . '; cursor:pointer">';
+                        echo '<td>' . $botCounter++ . '</td>';
+                        if ($event->logger == 0)
+                            echo '<td>Croupier</td>';
+                        else if ($event->logger == $botID)
+                            echo '<td>' . $botName . '</td>';
+                        else {
+                            echo '<td>' . $otherBots[(string)($event->logger)] . '</td>';
+                        }
+
+                        $msg = ($_SESSION["lang"] == "hu") ?
+                            str_replace($orig_msg, $hun_msg, $event->msg) :
+                            str_replace($orig_msg, $en_msg, $event->msg);
+
+                        $msg = str_replace($cardnames, $cardpics, $msg);
+
+                        echo '<td>' . $msg . '</td>';
+                        echo '</tr>';
                     }
+                    ?>
 
-                    $msg = ($_SESSION["lang"] == "hu") ?
-                        str_replace($orig_msg, $hun_msg, $event->msg) :
-                        str_replace($orig_msg, $en_msg, $event->msg);
-
-                    $msg = str_replace($cardnames, $cardpics, $msg);
-
-                    echo '<td>' . $msg . '</td>';
-                    echo '</tr>';
-                }
-                ?>
-
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
+            <div id="logs" style="display:inline-block; vertical-align:top; margin-left: 20px; width: 500px; display:none;">
+                <canvas id="gameCanvas" width="530" height="400" style="background-color:#333333">
+                    <?= $tr["GAME_BROWSER_INCOMPATIBLE"] ?>
+                </canvas>
+                <br />
+                <input id="playButton" type="button" onclick="playGame()" value="Play"/>
+                <input id="pauseButton" type="button" onclick="pauseGame()" value="Stop"/>
+            </div>
         <?php
         } else
             echo "Fatal error during game";
