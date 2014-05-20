@@ -1,37 +1,69 @@
-﻿var eventsJSONLen = 0;
+﻿function clone(obj) {
+    // Handle the 3 simple types, and null or undefined
+    if (null == obj || "object" != typeof obj) return obj;
+
+    // Handle Array
+    if (obj instanceof Array) {
+        var copy = [];
+        for (var i = 0, len = obj.length; i < len; i++) {
+            copy[i] = clone(obj[i]);
+        }
+        return copy;
+    }
+
+    if (obj instanceof createjs.DisplayObject) {
+        return obj.clone(true);
+    }
+
+    // Handle Object
+    if (obj instanceof Object) {
+        var copy = {};
+        for (var attr in obj) {
+            if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr]);
+        }
+        return copy;
+    }
+
+    throw new Error("Unable to copy obj! Its type isn't supported.");
+}
+
+var eventsJSONLen = 0;
 var suits = ["HEARTS", "DIAMONDS", "CLUBS", "SPADES"];
 var ranks = ["DEUCE", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT",
                 "NINE", "TEN", "JACK", "QUEEN", "KING", "ACE"];
 var cardNames = [];
 
+var playerPositions = [[260, 342], [79, 328], [44, 142], [146, 60], [490, 141], [440, 330]];
+var cardPositions = [[225, 262], [110, 262], [52, 177], [140, 100], [407, 177], [340, 262]];
+var dealerPosition = [265, 130];
+var cardsOnTablePosition = [170, 177];
+
+var cardScale = 0.3;
+
 var stage;
 var loadqueue;
-
-var loadComleted = false;
 
 var loadingCircle;
 var loadingCircleGoesLeft = false;
 var loadingText;
+var loadingBackground;
 
+var loadComleted = false;
+
+var cardsSpriteSheet;
+var tableImage;
 var eventText;
+var titleText;
 
 var running = false;
 var animationRunning = false;
 
-var cardScale = 0.3;
-var cardsSpriteSheet;
-
-var playerPositions = [[260, 342], [79, 328], [44, 142], [146, 60], [490, 141], [440, 330]];
-var cardPositions = [[225, 262], [110, 262], [52, 177], [140, 100], [407, 177], [340, 262]];
-var dealerPosition = [265, 130];
-
 var cardsOnTable = [];
-var cardsOnTablePosition = [170, 177];
 var chipsOnTable = 0;
 var chipsOnTableText;
 
 var dealerButton;
-var dealerButtonOwner;
+var dealerButtonOwner = -1;
 
 var bots = {};
 
@@ -43,13 +75,16 @@ var currentEvent = -1;
 var targetEvent = -1;
 var lastAddedObjectID = 0;
 
-var playButton, pauseButton;
+var playButton, speedSlider;
+var selectedRow;
+
+var states = {};
 
 function Bot(botID) {
     this.botID = botID;
     this.cards = [];
     this.name = "Bot";
-    this.chips = 2000;
+    this.chips = 0;
     this.nameText = null;
     this.chipsText = null;
     this.seat = 0;
@@ -63,6 +98,27 @@ function Bot(botID) {
     }
 }
 
+function addBasicObjects() {
+    stage.addChild(tableImage);
+    stage.addChild(dealerButton);
+    stage.addChild(eventText);
+    stage.addChild(chipsOnTableText);
+    stage.addChild(titleText);
+}
+
+function setLoading(val) {
+    if (val) {
+        stage.addChild(loadingBackground);
+        stage.addChild(loadingText);
+        stage.addChild(loadingCircle);
+    }
+    else {
+        stage.removeChild(loadingBackground);
+        stage.removeChild(loadingText);
+        stage.removeChild(loadingCircle);
+    }
+}
+
 function init() {
     stage = new createjs.Stage("gameCanvas");
 
@@ -70,25 +126,37 @@ function init() {
     createjs.Ticker.setFPS(40);
 
     loadqueue = new createjs.LoadQueue(false);
-    loadqueue.on("complete", downLoadFinished, this);
+    loadqueue.on("complete", downloadFinished, this);
     loadqueue.loadManifest([
         { id: "table", src: "images/game/table.png" },
         { id: "cards", src: "images/cards.png" },
         { id: "dealer", src: "images/game/dealer_button.png" }
     ]);
 
+    loadingBackground = new createjs.Shape();
+    loadingBackground.graphics.beginFill("#333333").rect(0, 0, stage.canvas.width, stage.canvas.height);
+
     loadingText = new createjs.Text("Please wait", "20px Arial", "#ffffff");
     loadingText.x = stage.canvas.width / 2 - loadingText.getBounds().width / 2;
     loadingText.y = stage.canvas.height / 2 - 50;
     loadingText.textBaseline = "top";
-    stage.addChild(loadingText);
 
     loadingCircle = new createjs.Shape();
     loadingCircle.graphics.beginFill("blue").drawCircle(0, 0, 5);
     loadingCircle.x = 200;
     loadingCircle.y = stage.canvas.height / 2;
-    stage.addChild(loadingCircle);
+    var f = function () {
+        createjs.Tween.get(loadingCircle)
+                 .to({ x: 325 }, 700).to({ x: 200 }, 700).call(f);
+    }
+    f();
 
+    titleText = new createjs.Text("Visual log player", "15px Arial", "#ffffff");
+    titleText.x = stage.canvas.width - titleText.getBounds().width - 5;
+    titleText.y = 5;
+    titleText.textBaseline = "top";
+
+    setLoading(true);
     for (var s = 0; s < suits.length; ++s) {
         for (r = 0; r < ranks.length; ++r) {
             cname = suits[s] + " " + ranks[r];
@@ -97,86 +165,97 @@ function init() {
     }
     cardNames.push('NULL NULL');
 
-    stage.on("stagemouseup", function (evt) {
-        console.log("stageX/Y: " + evt.stageX + "," + evt.stageY); // always in bounds
-    });
+    //stage.on("stagemouseup", function (evt) {
+    //    console.log("stageX/Y: " + evt.stageX + "," + evt.stageY); // always in bounds
+    //});
 
     for (var k in eventsJSON) {
         eventsJSONLen++;
     }
 
-    playButton = document.getElementById("playButton");
-    pauseButton = document.getElementById("pauseButton");
+    playButton = $("#playButton");
+    speedSlider = $("#speedSlider");
+    $(document).keydown(function (e) {
+        if (e.which == 38) { //up
+            gotoEvent(currentEvent - 1);
+            e.preventDefault();
+            return false;
+        }
+        else if (e.which == 40) { //down
+            gotoEvent(currentEvent + 1);
+            e.preventDefault();
+            return false;
+        }
+        else if (e.which == 32) { //space
+            tooglePlayGame();
+            e.preventDefault();
+            return false;
+        }
+        return true;
+    });
 }
 
 function tick(event) {
     if (!loadComleted) {
-        if (loadingCircleGoesLeft && loadingCircle.x < 200) { loadingCircleGoesLeft = !loadingCircleGoesLeft; }
-        else if (!loadingCircleGoesLeft && loadingCircle.x > stage.canvas.width - 200) { loadingCircleGoesLeft = !loadingCircleGoesLeft; }
-        loadingCircle.x += event.delta / 2 * (loadingCircleGoesLeft ? -1 : 1);
+        stage.update();
         return;
     }
 
-    if (animations.length != 0) {
-        playNextAnimation();
+    if (animations.length != 0 && !animationRunning) {
+        animationFinished();
+        return;
     }
     if (running && !animationRunning) {
         if (currentEvent != eventsJSONLen - 1) {
             currentEvent++;
             parseEvent(eventsJSON[currentEvent]);
+            eventText.text = "#" + (currentEvent + 1);
             if (targetEvent == -1 || targetEvent == currentEvent) {
-                var logRow = $("#logTable tbody tr").eq(currentEvent);
-                logRow.parents("div").eq(0).scrollTop(logRow.position().top - logRow.parent().position().top);
+                focusRow();
             }
-            eventText.text = "Event #" + (currentEvent + 1);
-        }
-        if (targetEvent != -1) {
-            if (targetEvent < currentEvent) {
-                resetGame();
+            if (animations.length == 0) { //if there is no animation, so save and stop now
+                saveState();
+                if (targetEvent == currentEvent) {
+                    targetEvent = -1;
+                    speed = desiredSpeed;
+                    running = false;
+                    playButton.attr("disabled", false);
+                    speedSlider.slider("option", "disabled", false);
+                }
             }
-            else if (targetEvent == currentEvent) {
-                speed = desiredSpeed;
-                running = false;
-                speed = desiredSpeed;
-                targetEvent = -1;
-                playButton.disabled = false;
-                pauseButton.disabled = false;
-            }
+
         }
     }
+    if (targetEvent != -1)
+        setLoading(true);
     stage.update();
+    if (targetEvent != -1)
+        setLoading(false);
 }
 
-function downLoadFinished() {
-    loadComleted = true;
-    stage.removeChild(loadingCircle);
-    stage.removeChild(loadingText);
+function downloadFinished() {
 
-    var bmp = new createjs.Bitmap(loadqueue.getResult("table"));
-    bmp.cache(0, 0, 410, 221);
+    tableImage = new createjs.Bitmap(loadqueue.getResult("table"));
+    tableImage.cache(0, 0, 410, 221);
 
-    bmp.x = stage.canvas.width / 2 - bmp.getBounds().width / 2;
-    bmp.y = 100;
-    stage.addChild(bmp);
+    tableImage.x = stage.canvas.width / 2 - tableImage.getBounds().width / 2;
+    tableImage.y = 100;
 
     dealerButton = new createjs.Bitmap(loadqueue.getResult("dealer"));
     dealerButton.cache(0, 0, 25, 25);
     dealerButton.x = dealerPosition[0];
     dealerButton.y = dealerPosition[1];
     dealerButton.visible = false;
-    stage.addChild(dealerButton);
 
     eventText = new createjs.Text("", "14px Arial", "#FFFFFF");
     eventText.x = 5;
     eventText.y = 5;
     eventText.textBaseline = "top";
-    stage.addChild(eventText);
 
     chipsOnTableText = new createjs.Text("", "16px Arial", "#FFFFFF");
-    chipsOnTableText.x = dealerPosition[0] - 20;
+    chipsOnTableText.x = dealerPosition[0] - 30;
     chipsOnTableText.y = dealerPosition[1];
     chipsOnTableText.textBaseline = "top";
-    stage.addChild(chipsOnTableText);
 
     var data = {
         images: [loadqueue.getResult("cards")],
@@ -184,23 +263,127 @@ function downLoadFinished() {
     };
     cardsSpriteSheet = new createjs.SpriteSheet(data);
     lastAddedObjectID = stage.children.length - 1;
+    addBasicObjects();
+
+    loadComleted = true;
+    gotoEvent(0);
 }
 
-function playNextAnimation() {
-    animationRunning = false;
-    if (animations.length != 0) {
-        animationRunning = true;
-        var a = animations.shift();
-        a();
+function setSpeed(val) {
+    desiredSpeed = val;
+    speed = desiredSpeed;
+}
+
+function focusRow() {
+    if (selectedRow != null)
+        selectedRow.children("td").removeClass("gameSelectedEvent");
+    selectedRow = $("#logTable tbody tr").eq(currentEvent);
+    selectedRow.parents("div").eq(0).scrollTop(selectedRow.position().top - selectedRow.parent().position().top - 120);
+    selectedRow.children("td").addClass("gameSelectedEvent");
+}
+
+function gotoEvent(eventID) {
+    if (eventID < 0 || eventID >= eventsJSONLen || targetEvent != -1)
+        return;
+    if (states[eventID] != undefined) {
+        loadState(eventID);
+        running = false;
+    }
+    else {
+        playButton.attr("disabled", true);
+        speedSlider.slider("option", "disabled", true);
+        speed = 0;
+        targetEvent = eventID;
+        running = true;
     }
 }
 
-function playGame() {
-    running = true;
+function saveState() {
+    if (states[currentEvent] == undefined) {
+        var s = {};
+        s["stage"] = stage.clone(true);
+        s["canvas"] = stage.canvas;
+
+        s["bots"] = clone(bots);
+        s["cardsOnTable"] = clone(cardsOnTable);
+        s["chipsOnTable"] = clone(chipsOnTable);
+        s["chipsOnTableText"] = clone(chipsOnTableText);
+        s["dealerButton"] = clone(dealerButton);
+        s["dealerButtonOwner"] = clone(dealerButtonOwner);
+        s["eventText"] = clone(eventText);
+        states[currentEvent] = s;
+    }
+}
+
+function loadState(event) {
+    currentEvent = event;
+    var s = states[event];
+
+    createjs.Tween.removeAllTweens();
+    stage.autoClear = true;
+    stage.removeAllChildren();
+    stage.update();
+
+    stage = s["stage"].clone(true);
+    stage.canvas = s["canvas"];
+
+    chipsOnTable = clone(s["chipsOnTable"]);
+    chipsOnTableText = clone(s["chipsOnTableText"]);
+    dealerButton = clone(s["dealerButton"]);
+    dealerButtonOwner = clone(s["dealerButtonOwner"]);
+    eventText = clone(s["eventText"]);
+    animations = [];
+    addBasicObjects();
+
+    bots = clone(s["bots"]);
+    for (var i in bots) {
+        stage.addChild(bots[i].cards[0]);
+        stage.addChild(bots[i].cards[1]);
+        stage.addChild(bots[i].nameText);
+        stage.addChild(bots[i].chipsText);
+    }
+    cardsOnTable = clone(s["cardsOnTable"]);
+    for (var i in cardsOnTable) {
+        stage.addChild(cardsOnTable[i]);
+    }
+    focusRow();
+}
+
+function animationFinished() {
+    if (animations.length != 0) {
+        animationRunning = true;
+        animations.shift()();
+    }
+    else {
+        if (animationRunning == true) {
+            saveState();
+            if (targetEvent == currentEvent) {
+                targetEvent = -1;
+                speed = desiredSpeed;
+                running = false;
+                playButton.attr("disabled", false);
+                speedSlider.slider("option", "disabled", false);
+            }
+        }
+        animationRunning = false;
+    }
+}
+
+function tooglePlayGame() {
+    if (targetEvent != -1)
+        return;
+    if (running) {
+        playButton.val("Play");
+    }
+    else {
+        playButton.val("Pause");
+    }
+    running = !running;
 }
 
 function pauseGame() {
     running = false;
+    playButton.val("Play");
 }
 
 function parseEvent(event) {
@@ -248,7 +431,7 @@ function animateMessage(message) {
         createjs.Tween.get(t)
              .to({ y: 30, alpha: 1 }, 300 * speed).wait(1000 * speed).to({ alpha: 0, visible: false }, 200 * speed)
              .call(removeText)
-             .call(playNextAnimation);
+             .call(animationFinished);
         function removeText() {
             stage.removeChild(t);
         }
@@ -276,7 +459,7 @@ function showMessageAtBot(bot, message) {
         createjs.Tween.get(t)
              .wait(1000 * speed).to({ alpha: 0, visible: false }, 200 * speed)
              .call(removeText)
-             .call(playNextAnimation);
+             .call(animationFinished);
         function removeText() {
             stage.removeChild(t);
             stage.removeChild(b);
@@ -292,27 +475,7 @@ function getChipsOnTable() {
 function setChipsOnTable(amount) {
     amount = parseInt(amount);
     chipsOnTable = amount;
-    chipsOnTableText.text = amount == 0 ? "" : amount;
-}
-
-function resetGame() {
-    eventText.text = "";
-
-    dealerButtonOwner = null;
-    dealerButton.x = dealerPosition[0];
-    dealerButton.y = dealerPosition[1];
-    dealerButton.visible = false;
-
-    for (var i = stage.children.length - 1; i > lastAddedObjectID; i--)
-        stage.removeChildAt(i);
-    running = true;
-    animationRunning = false;
-    cardsOnTable = [];
-    setChipsOnTable(0);
-    dealerButtonOwner = null;
-    bots = {};
-    animations = [];
-    currentEvent = -1;
+    chipsOnTableText.text = amount == 0 ? "" : "Pot: " + amount;
 }
 
 function letsPoker() {
@@ -358,7 +521,7 @@ function dealing() {
             stage.addChild(card);
             createjs.Tween.get(card)
                  .to({ x: oldX, y: oldY }, 100 * speed)
-                 .call(playNextAnimation);
+                 .call(animationFinished);
             bot.cards[right ? 1 : 0] = card;
         }
     }
@@ -375,44 +538,42 @@ function dealing() {
 
 function receiveCard(logger, suite, rank) {
     var cardID = cardNames.indexOf(suite + " " + rank);
-    for (var key in bots) {
-        if (bots[key].botID == myBotID) {
-            var bot = bots[key];
-            if (bot.cards[0].currentFrame == 52) {
-                var card = createCardSprite(cardID, bot.seat, false);
-                stage.removeChild(bot.cards[0]);
-                bot.cards[0] = card;
-
-                stage.addChild(card);
-            }
-            else if (bot.cards[1].currentFrame == 52) {
-                var card = createCardSprite(cardID, bot.seat, true);
-                stage.removeChild(bot.cards[1]);
-                bot.cards[1] = card;
-
-                stage.addChild(card);
-            }
-        }
+    var bot = bots[logger];
+    var cardIndex = -1;
+    if (bot.cards[0].currentFrame == 52) {
+        cardIndex = 0;
     }
+    else if (bot.cards[1].currentFrame == 52) {
+        cardIndex = 1;
+    }
+
+    var card = createCardSprite(cardID, bot.seat, cardIndex != 0);
+    stage.removeChild(bot.cards[cardIndex]);
+    bot.cards[cardIndex] = card;
+    stage.addChild(card);
+
+    animations.push(function () {
+        window.setTimeout(animationFinished, 600 * speed);
+    });
 }
 
 function rmDealerButton(botID) {
-    dealerButtonOwner = null;
+    dealerButtonOwner = -1;
     animations.push(function () {
         createjs.Tween.get(dealerButton)
              .to({ x: dealerPosition[0], y: dealerPosition[1] }, 300 * speed)
              .call(function () { dealerButton.visible = false; })
-             .call(playNextAnimation);
+             .call(animationFinished);
     });
 }
 
 function addDealerButton(botID) {
-    dealerButtonOwner = bots[botID];
+    dealerButtonOwner = botID;
     dealerButton.visible = true;
     animations.push(function () {
         createjs.Tween.get(dealerButton)
-             .to({ x: playerPositions[dealerButtonOwner.seat][0] - dealerButton.getBounds().width / 2, y: playerPositions[dealerButtonOwner.seat][1] - 27 }, 300 * speed)
-             .call(playNextAnimation);
+             .to({ x: playerPositions[bots[dealerButtonOwner].seat][0] - dealerButton.getBounds().width / 2, y: playerPositions[bots[dealerButtonOwner].seat][1] - 27 }, 300 * speed)
+             .call(animationFinished);
     });
 }
 
@@ -432,7 +593,7 @@ function flop(cards) {
             stage.addChild(card);
             createjs.Tween.get(card)
                  .to({ x: oldX, y: oldY }, 100 * speed)
-                 .call(playNextAnimation);
+                 .call(animationFinished);
             cardsOnTable.push(card);
         }
     }
@@ -441,6 +602,9 @@ function flop(cards) {
         var cardID = cardNames.indexOf(a[0] + " " + a[1]);
         animations.push(makeFunc(cardID));
     }
+    animations.push(function () {
+        window.setTimeout(animationFinished, 1000 * speed);
+    });
 }
 
 function turn(suite, rank) {
@@ -458,8 +622,11 @@ function turn(suite, rank) {
         stage.addChild(card);
         createjs.Tween.get(card)
              .to({ x: oldX, y: oldY }, 100 * speed)
-             .call(playNextAnimation);
+             .call(animationFinished);
         cardsOnTable.push(card);
+    });
+    animations.push(function () {
+        window.setTimeout(animationFinished, 1000 * speed);
     });
 }
 
@@ -478,8 +645,11 @@ function river(suite, rank) {
         stage.addChild(card);
         createjs.Tween.get(card)
              .to({ x: oldX, y: oldY }, 100 * speed)
-             .call(playNextAnimation);
+             .call(animationFinished);
         cardsOnTable.push(card);
+    });
+    animations.push(function () {
+        window.setTimeout(animationFinished, 1000 * speed);
     });
 }
 
@@ -492,7 +662,7 @@ function fold(logger) {
         createjs.Tween.get(bots[logger].cards[1])
              .to({ x: dealerPosition[0], y: dealerPosition[1] }, 100 * speed)
              .call(removeCards)
-             .call(playNextAnimation);
+             .call(animationFinished);
 
         function removeCards() {
             stage.removeChild(bots[logger].cards[0]);
@@ -540,7 +710,7 @@ function revealCards(logger, array) {
     }
     showMessageAtBot(bot, "Reveal cards");
     animations.push(function () {
-        window.setTimeout(playNextAnimation, 300 * speed);
+        window.setTimeout(animationFinished, 300 * speed);
     });
 }
 
@@ -550,10 +720,14 @@ function showdown() {
 
 function roundWinners(arr) {
     arr.splice(0, 1);
+    var botnames = [];
+    for (var i in arr) {
+        botnames.push(bots[arr[i]].name);
+    }
     if (arr.length == 1)
-        animateMessage("Round winner: " + arr[0]);
+        animateMessage("Round winner: " + botnames[0]);
     else
-        animateMessage("Round winners: " + arr.join(", "));
+        animateMessage("Round winners: " + botnames.join(", "));
 }
 
 function handOutPot(arr) {
@@ -578,7 +752,7 @@ function collectCards(arr) {
             createjs.Tween.get(card)
                  .to({ x: dealerPosition[0], y: dealerPosition[1] }, 100 * speed)
                  .call(removeCardFromStage)
-                 .call(playNextAnimation);
+                 .call(animationFinished);
             function removeCardFromStage() {
                 stage.removeChild(card);
             }
@@ -593,7 +767,7 @@ function collectCards(arr) {
         for (var key in bots) {
             bots[key].cards = [];
         }
-        playNextAnimation();
+        animationFinished();
     });
 
     for (var key in cardsOnTable) {
@@ -602,14 +776,14 @@ function collectCards(arr) {
 
     animations.push(function () {
         cardsOnTable = [];
-        playNextAnimation();
+        animationFinished();
     });
 }
 
 function roundEnded() {
     animateMessage("Round ended");
     animations.push(function () {
-        window.setTimeout(playNextAnimation, 2000 * speed);
+        window.setTimeout(animationFinished, 1000 * speed);
     });
 }
 
@@ -631,17 +805,6 @@ function leave(botID) {
     bot.nameText.alpha = 0.4;
     bot.chipsText.alpha = 0.4;
     bot.hasLeft = true;
-}
-
-function gotoEvent(eventID) {
-    playButton.disabled = true;
-    pauseButton.disabled = true;
-    speed = 0;
-    if (currentEvent == eventID) {
-        resetGame();
-    }
-    targetEvent = eventID;
-    running = true;
 }
 
 function rebuyOrLeave(botID) {

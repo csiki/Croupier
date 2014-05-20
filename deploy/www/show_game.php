@@ -11,9 +11,7 @@ abstract class Severity
     const INFORMATION = 4; //self, other
     const VERBOSE = 5; //self
     const DEBUG = 6; //none
-}
-
-;
+};
 
 $severityColors = array(
     0 => "#000000",
@@ -27,15 +25,18 @@ $severityColors = array(
 $orig_msg = array("receiveCard", "fold", "check", "call", "raise",
     "letsPoker", "rmDealerButton", "addDealerButton", "burn", "betRound", "quit", "dealing",
     "preflop", "flop", "turn", "river", "revealCards", "handOutPot",
-    "collectCards", "roundStarted ", "roundEnded", "refreshBlinds", "showdown", "roundWinners");
+    "collectCards", "roundStarted", "roundEnded", "refreshBlinds", "showdown", "roundWinners",
+    "startingChips", "leave");
 $hun_msg = array("Kapott kártya", "Eldob", "Passzol", "Megad", "Emel",
-    "Indul a játék", "Dealer gombot eltávolítja", "Dealer gombot hozzáadja", "Éget", "Tét kör indul", "Kilép",
-    "Osztás", "PreFlop", "Flop", "Turn:", "River:", "Kártyáit megmutatja:", "Tétet vitte:",
-    "Kártyákat begyüjti", "Kör kezdődik #", "Véget ért a kör", "Vakok frissítése", "Showdown", "Nyertesek a körben:");
+    "Indul a játék", "Osztógomb elvéve", "Osztógomb kiosztva", "Éget", "Tét kör indul", "Kilép",
+    "Osztás", "Preflop", "Flop", "Turn", "River", "Kártyái", "Tétet vitte",
+    "Kártyákat begyüjti", "Kör kezdődik #", "Véget ért a kör", "Vakok frissítése", "Terítés", "Nyertesek a körben",
+    "Kezdő zseton", "Kiszáll");
 $en_msg = array("Receive Card", "Fold", "Check", "Call", "Raise",
-    "Poker starts", "Dealer removes button", "Dealer adds button", "Burn", "Bet round starts", "Quit",
-    "Dealing", "PreFlop", "Flop", "Turn:", "River:", "Shows cards:", "Pot taken by:",
-    "Collects cards", "Round started #", "Round ended", "Refesh blinds", "Showdown", "Winners in round:");
+    "Poker starts", "Dealer button taken", "Dealer button given", "Burn", "Bet round starts", "Quit",
+    "Dealing", "Preflop", "Flop", "Turn", "River", "Cards", "Pot taken by",
+    "Collects cards", "Round started #", "Round ended", "Refesh blinds", "Showdown", "Winners in round",
+    "Starting chips", "Leave");
 
 // cards
 $cardnames = array();
@@ -165,9 +166,19 @@ foreach ($log->event as $event) {
 
         $(document).ready(function(){
             scrolify($('#logTable'), 500);
-            $('#logTable tbody tr').click(function(event)
-            {
+            $('#logTable tbody tr').click(function (event) {
                 gotoEvent($('#logTable tbody tr').index($(this)));
+            });
+            $("#speedText").html(3);
+            $("#speedSlider").slider({
+                value: 3,
+                min: 0,
+                max: 6,
+                step: 1,
+                slide: function (event, ui) {
+                    $("#speedText").html(ui.value);
+                    setSpeed([4, 3, 2, 1, 0.6, 0.3, 0][ui.value]);
+                }
             });
             init();
         });
@@ -208,8 +219,10 @@ foreach ($log->event as $event) {
                     foreach ($events as $event) {
                         //calculate color for each severity
                         $rgb = $severityColors[(int)$event->severity];
-                        echo '<tr style="background-color: ' . $rgb . '; '
-                            . ($event->logger == $botID ? 'font-weight:700; ' : '') . '; cursor:pointer">';
+                        echo '<tr style="background-color: ' . $rgb . ';'
+                            . ($event->logger == $botID ? 'font-weight:700;' : '') .
+                            ' cursor:pointer;'.
+                            ($event->msg == "roundEnded" ? ' border-bottom: solid 30px #98FB98;' : '').'">';
                         echo '<td>' . $botCounter++ . '</td>';
                         if ($event->logger == 0)
                             echo '<td>Croupier</td>';
@@ -233,13 +246,18 @@ foreach ($log->event as $event) {
                     </tbody>
                 </table>
             </div>
-            <div id="logs" style="display:inline-block; vertical-align:top; margin-left: 20px; width: 500px; display:none;">
-                <canvas id="gameCanvas" width="530" height="400" style="background-color:#333333">
-                    <?= $tr["GAME_BROWSER_INCOMPATIBLE"] ?>
-                </canvas>
+            <div id="gameDiv">
+                <canvas id="gameCanvas" width="530" height="400" style="background-color:#333333"></canvas>
                 <br />
-                <input id="playButton" type="button" onclick="playGame()" value="Play"/>
-                <input id="pauseButton" type="button" onclick="pauseGame()" value="Stop"/>
+                <input id="playButton" type="button" onclick="tooglePlayGame()" value="Play" />
+                <div id="gameSpeedSliderDiv">
+                    <div style="margin-bottom:10px;">
+                        Game speed:
+                        <span id="speedText"></span>
+                    </div>
+                    <div id="speedSlider" style="width:200px;"></div>
+                </div>
+                <div style="margin-top: 20px;">Tip: <?php $a = array("You can navigate using the arrow keys!", "You can play/pause the game with space bar!"); echo $a[rand(0,1)]?></div>
             </div>
         <?php
         } else

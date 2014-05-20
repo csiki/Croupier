@@ -105,11 +105,11 @@ body {
     margin-right: 5px;
 }
 
-#accountMenu:hover{
+#accountMenu:hover {
     background-color: #ffffff;
 }
 
-#accountMenu:hover a{
+#accountMenu:hover a {
     color: #000000;
 }
 
@@ -276,7 +276,7 @@ input[type=submit].button, input[type=button].button {
     color: #444444;
 }
 
-.post>h2 {
+.post > h2 {
     margin: 5px 0px;
 }
 
@@ -354,8 +354,7 @@ input[type=submit].button, input[type=button].button {
     z-index: 11000;
 }
 
-.messageBox p
-{
+.messageBox p {
     color: #000000;
     font-size: 1.2em;
     text-align: center;
@@ -369,11 +368,11 @@ input[type=submit].button, input[type=button].button {
 
 #messageboxOverlay {
     position: fixed;
-    z-index:100;
+    z-index: 100;
     top: 0px;
     left: 0px;
-    height:100%;
-    width:100%;
+    height: 100%;
+    width: 100%;
     background: #000;
     display: block;
     opacity: 0;
@@ -466,14 +465,13 @@ input[type=submit].button, input[type=button].button {
     max-width: 700px;
 }
 
-#compileErrorTextarea{
+#compileErrorTextarea {
     width: 952px;
     height: 400px;
     resize: none;
 }
 
-.mainRegButton
-{
+.mainRegButton {
     margin: 20px 0;
     padding: 7px 20px;
     text-align: center;
@@ -483,14 +481,37 @@ input[type=submit].button, input[type=button].button {
     border: 1px solid #56AE55;
     border-color: #3B6E22 #3B6E22 #2C5114;
     border-radius: 6px;
-    box-shadow: 0 1px 1px #A4E388 inset; color: #FFFFFF;
+    box-shadow: 0 1px 1px #A4E388 inset;
+    color: #FFFFFF;
     cursor: pointer;
     display: inline-block;
     letter-spacing: 1px;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-.mainRegButton:hover
-{
+.mainRegButton:hover {
     background: linear-gradient(to bottom, #5ed45d, #6ea54b) #81ca5b;
+}
+
+#logTable tbody tr:hover td, .gameSelectedEvent {
+    background-color: #93b1cc;
+    color: white;
+}
+
+#playButton, #pauseButton {
+    height: 50px;
+    width: 50px;
+}
+
+#gameDiv {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 20px;
+    width: 500px;
+}
+
+#gameSpeedSliderDiv {
+    display:inline-block;
+    margin-left:30px;
+    vertical-align:top;
 }
