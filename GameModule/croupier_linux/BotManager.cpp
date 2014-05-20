@@ -408,8 +408,6 @@ bool BotManager::allin()
 {
   std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	Logger::Log(this, Severity::INFORMATION, "allin");
-
 	if (this->canAllin())
 	{
 		int allinAmount = this->chips;
@@ -418,7 +416,8 @@ bool BotManager::allin()
 
 		this->stepToken = false;
 
-		// broadcast allin
+		// log & broadcast allin
+		Logger::Log(this, Severity::INFORMATION, "allin ", allinAmount);
 		int* msgdata = new int[2];
 		msgdata[0] = this->getID();
 		msgdata[1] = allinAmount;
@@ -435,8 +434,6 @@ bool BotManager::call()
 {
   std::lock_guard<std::recursive_mutex> lock(manage_thread_mutex);
 
-	Logger::Log(this, Severity::INFORMATION, "call");
-
 	if (this->canCall())
 	{
 		int callAmount = this->hostess->getCallAmount() - this->pot;
@@ -445,7 +442,8 @@ bool BotManager::call()
 
 		this->stepToken = false;
 
-		// broadcast call
+		// log & broadcast call
+		Logger::Log(this, Severity::INFORMATION, "call ", callAmount);
 		int* msgdata = new int[2];
 		msgdata[0] = this->getID();
 		msgdata[1] = callAmount;

@@ -26,8 +26,8 @@ protected:
 	Emotion emotion;
 public:
 
-	BotInfo(int playerID, BroadcastStation* broadcastStation, int chips) :
-		Entity(playerID), BroadcastMember(playerID, broadcastStation)
+	BotInfo(int botID, BroadcastStation* broadcastStation, int chips) :
+		Entity(botID), BroadcastMember(botID, broadcastStation)
 	{
 		this->chips = chips;
 		this->pot = 0;

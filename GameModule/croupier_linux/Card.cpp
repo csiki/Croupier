@@ -31,67 +31,67 @@ std::string Card::toString() const
 {
 	std::string res;
 
-	// rank
-	switch (this->rank)
-	{
-	case Rank::ACE:
-		res = "ACE of ";
-		break;
-	case Rank::DEUCE:
-		res = "DEUCE of ";
-		break;
-	case Rank::EIGHT:
-		res = "EIGHT of ";
-		break;
-	case Rank::FIVE:
-		res = "FIVE of ";
-		break;
-	case Rank::FOUR:
-		res = "FOUR of ";
-		break;
-	case Rank::JACK:
-		res = "JACK of ";
-		break;
-	case Rank::KING:
-		res = "KING of ";
-		break;
-	case Rank::NINE:
-		res = "NINE of ";
-		break;
-	case Rank::QUEEN:
-		res = "QUEEN of ";
-		break;
-	case Rank::SEVEN:
-		res = "SEVEN of ";
-		break;
-	case Rank::SIX:
-		res = "SIX of ";
-		break;
-	case Rank::TEN:
-		res = "TEN of ";
-		break;
-	case Rank::THREE:
-		res = "THREE of ";
-		break;
-	default:
-		res = "NULL of ";
-		break;
-	}
-
 	// suit
 	switch (this->suit)
 	{
 	case Suit::CLUBS:
-		res += "CLUBS";
+		res = "CLUBS ";
 		break;
 	case Suit::DIAMONDS:
-		res += "DIAMONDS";
+		res = "DIAMONDS ";
 		break;
 	case Suit::HEARTS:
-		res += "HEARTS";
+		res = "HEARTS ";
 		break;
 	case Suit::SPADES:
-		res += "SPADES";
+		res = "SPADES ";
+		break;
+	default:
+		res = "NULL ";
+		break;
+	}
+
+	// rank
+	switch (this->rank)
+	{
+	case Rank::ACE:
+		res += "ACE";
+		break;
+	case Rank::DEUCE:
+		res += "DEUCE";
+		break;
+	case Rank::EIGHT:
+		res += "EIGHT";
+		break;
+	case Rank::FIVE:
+		res += "FIVE";
+		break;
+	case Rank::FOUR:
+		res += "FOUR";
+		break;
+	case Rank::JACK:
+		res += "JACK";
+		break;
+	case Rank::KING:
+		res += "KING";
+		break;
+	case Rank::NINE:
+		res += "NINE";
+		break;
+	case Rank::QUEEN:
+		res += "QUEEN";
+		break;
+	case Rank::SEVEN:
+		res += "SEVEN";
+		break;
+	case Rank::SIX:
+		res += "SIX";
+		break;
+	case Rank::TEN:
+		res += "TEN";
+		break;
+	case Rank::THREE:
+		res += "THREE";
 		break;
 	default:
 		res += "NULL";

@@ -450,7 +450,7 @@ void Croupier::determineWinners(int& numOfWinners, int** winnersIndex)
 	os << "roundWinners " << numOfWinners;
 	for (size_t i = 0; i < numOfWinners; ++i)
 	{
-		os << ',' << this->bots[((*winnersIndex)[i])]->getName();
+		os << ',' << this->bots[((*winnersIndex)[i])]->getID();
 	}
 	Logger::Log(this, Severity::NOTIFICATION, os.str());
 }
@@ -477,6 +477,7 @@ void Croupier::letsPoker()
 {
 	// log
 	Logger::Log(this, Severity::NOTIFICATION, "letsPoker");
+	Logger::Log(this, Severity::NOTIFICATION, "startingChips ", rules->getStartingChips());
 
 	this->round = 1; // the very first round, not 0
 
