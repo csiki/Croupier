@@ -1,6 +1,7 @@
 ﻿<?php
-include_once("connect_db.php");
-include_once("functions.php");
+require_once("connect_db.php");
+require_once("functions.php");
+require_once("leaderboard.php");
 
 $botsUnchecked = SQL("SELECT * FROM bots WHERE state = 'processing'");
 if ($botsUnchecked != null)
@@ -113,6 +114,14 @@ if ($botsUnchecked != null)
 
                         if ($alrighty) {
                             SQL("UPDATE bots SET state = 'ok', runError = '0' WHERE id = ?", $botid);
+                            $tablesToAdd = SQL("SELECT leaderboardID FROM compiling_bots_leaderboards WHERE botID = ?", $botid);
+                            for ($i = 0; $i < count($tablesToAdd); $i++) {
+                                $leaderboard = SQL("SELECT * FROM leaderboards WHERE id = ?", $tablesToAdd[$i]["leaderboardID"]);
+                                $loaded_leaderboard = new Leaderboard($leaderboard[0]);
+                                $loaded_leaderboard->addBot($botid);
+                            }
+
+                            SQL("DELETE FROM compiling_bots_leaderboards WHERE botID = ?", $botid);
                         } else {
                             SQL("UPDATE bots SET state = 'runtime', runError = ? WHERE id = ?", $gameid, $botid);
                         }

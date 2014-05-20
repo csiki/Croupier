@@ -35,6 +35,12 @@ if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
                 theme: "neat",
                 readOnly: true
             });
+            editor.setSize(990, 600);
+            $('.CodeMirror').resizable({
+                resize: function() {
+                    editor.setSize($(this).width(), $(this).height());
+                }
+            });
             $("#codeLang").on("change", langChanged);
             langChanged();
         }

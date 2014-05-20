@@ -83,9 +83,15 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
         }
 
         //remove bot from leaderboards
-        $leaderBoardTables = SQL("SELECT tableName FROM leaderboards");
+        SQL("DELETE FROM compiling_bots_leaderboards WHERE botID = ?", $id);
+        $leaderBoardTables = SQL("SELECT id, tableName FROM leaderboards");
         for ($i = 0; $i < count($leaderBoardTables); $i++) {
-            SQL("DELETE FROM " . $leaderBoardTables[$i]["tableName"] . " WHERE botID = ?", $id);
+            $res = SQL("SELECT COUNT(*) FROM " . $leaderBoardTables[$i]["tableName"] . " WHERE botID = ?", $id);
+            if($res != null && $res[0]["COUNT(*)"] == 1)
+            {
+                $res = SQL("DELETE FROM " . $leaderBoardTables[$i]["tableName"] . " WHERE botID = ?", $id);
+                SQL("INSERT INTO compiling_bots_leaderboards (botID, leaderboardID) VALUES (?, ?)", $id, $leaderBoardTables[$i]["id"]);
+            }
         }
 
         //remove bot from games_by_bots
@@ -110,7 +116,13 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"]) || isset($_POST["lang"])
                 matchBrackets: true,
                 theme: "neat"
             });
+            editor.setSize(990, 600);
             $("#codeLang").on("change", langChanged);
+            $('.CodeMirror').resizable({
+                resize: function() {
+                    editor.setSize($(this).width(), $(this).height());
+                }
+            });
             langChanged();
         });
 

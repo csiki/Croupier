@@ -108,6 +108,7 @@ if (isset($_POST["code"]) || isset($_FILES["codefile"])) {
                 matchBrackets: true,
                 theme: "neat"
             });
+            editor.setSize(990, 600);
             $("#codeLang").on("change", langChanged);
             langChanged();
         });
